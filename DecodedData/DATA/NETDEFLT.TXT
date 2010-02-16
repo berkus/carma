@@ -1,0 +1,84 @@
+// Driven to Destruction
+1	// Use cops
+1	// Show cars on map
+0	// Show peds on map
+0	// Random pickup generation
+1	// Pickup respawn
+0	// Open game
+0	// Grid start
+1	// Race order
+1	// Random car selection
+0	// Car choice mode
+2	// Starting credits index
+// Car Crusher
+1	// Use cops
+1	// Show cars on map
+0	// Show peds on map
+0	// Random pickup generation
+1	// Pickup respawn
+1	// Open game
+0	// Grid start
+1	// Race order
+1	// Random car selection
+0	// Car choice mode
+2	// Starting credits index
+// ^.HeiíukxaêLîo2ni H
+1	// Use cops
+1	// Show cars on map
+1	// Show peds on map
+0	// Random pickup generation
+1	// Pickup respawn
+1	// Open game
+1	// Grid start
+1	// Race order
+1	// Random car selection
+0	// Car choice mode
+2	// Starting credits index
+// ^'_hcÖ"WvSJç{3x+_
+1	// Use cops
+1	// Show cars on map
+0	// Show peds on map
+0	// Random pickup generation
+1	// Pickup respawn
+1	// Open game
+1	// Grid start
+1	// Race order
+1	// Random car selection
+0	// Car choice mode
+2	// Starting credits index
+// Sudden Death
+1	// Use cops
+1	// Show cars on map
+0	// Show peds on map
+0	// Random pickup generation
+1	// Pickup respawn
+0	// Open game
+1	// Grid start
+1	// Race order
+1	// Random car selection
+0	// Car choice mode
+2	// Starting credits index
+// Terminal Tag
+1	// Use cops
+1	// Show cars on map
+0	// Show peds on map
+0	// Random pickup generation
+1	// Pickup respawn
+0	// Open game
+0	// Grid start
+1	// Race order
+1	// Random car selection
+0	// Car choice mode
+2	// Starting credits index
+// Fox 'n' Hounds
+1	// Use cops
+1	// Show cars on map
+0	// Show peds on map
+0	// Random pickup generation
+1	// Pickup respawn
+1	// Open game
+0	// Grid start
+1	// Race order
+1	// Random car selection
+0	// Car choice mode
+2	// Starting credits index

@@ -1,0 +1,37 @@
+3									// Number of special volume types
+// Special volume type #1
+0.2									// gravity multiplier
+50									// viscosity multiplier
+0									// Car damage per millisecond
+0.002								// Pedestrian damage per millisecond
+0									// camera effect index
+1									// depth effect index
+M25.MAT								// Windscreen material to use
+5100								// Sound ID of entry noise
+5100								// Sound ID of exit noise
+2									// Engine noise index
+1									// material index
+// Special volume type #2
+1									// gravity multiplier
+1									// viscosity multiplier
+0									// Car damage per millisecond
+0									// Pedestrian damage per millisecond
+-1									// camera effect index
+-1									// depth effect index
+TUNNSCRN.MAT						// Windscreen material to use
+-1									// Sound ID of entry noise
+-1									// Sound ID of exit noise
+1									// Engine noise index
+0									// material index
+// Special volume type #3
+1									// gravity multiplier
+1									// viscosity multiplier
+0									// Car damage per millisecond
+0									// Pedestrian damage per millisecond
+-1									// camera effect index
+-1									// depth effect index
+TUNNSCRN.MAT						// Windscreen material to use
+-1									// Sound ID of entry noise
+-1									// Sound ID of exit noise
+0									// Engine noise index
+0									// material index

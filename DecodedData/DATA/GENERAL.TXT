@@ -1,0 +1,83 @@
+0.01					// Hither
+35.00					// Yon
+55.55					// Camera angle
+0						// Ambient adjustment
+7						// Headup background brightness amount
+99						// Initial rank
+7500,5000,3000			// Initial credits for each skill level
+20000,35000,40000		// Credits per rank for each skill level
+1.0						// Global crush_min_fold factor
+1.0						// Global crush_max_fold factor
+1.0						// Global crush_wibble factor
+1.0						// Global crush_limit_deviant factor
+1.0						// Global crush_split_chance factor
+0.7						// Global crush_softness factor
+10,20,30					// Repair cost for each skill level (cred per % damage)
+1000, 2000, 4000		// Recovery cost for each skill level
+20,8,5				// Time per ped kill for each skill level
+0.75,0.5,0.25			// Seconds per unit car damage for each skill level (with peds)
+11,8,5				// Credits per unit car damage for each skill level (with peds)
+120,90,60				// Time awarded for wasting car for each skill level (with peds)
+3000,2000,1000			// Credits awarded for wasting car for each skill level (with peds)
+60,30,15				// Time awarded for rolling car for each skill level (with peds)
+1000,1000,1000			// Credits awarded for rolling car for each skill level (with peds)
+2000,500,50			// Credits awarded for checkpoints for each skill level (with peds)
+0.75,0.5,0.25			// Seconds per unit car damage for each skill level (with peds)
+11,8,5				// Credits per unit car damage for each skill level (with peds)
+120,90,60				// Time awarded for wasting car for each skill level (with peds)
+3000,2000,1000			// Credits awarded for wasting car for each skill level (with peds)
+60,30,15				// Time awarded for rolling car for each skill level (with peds)
+1000,1000,1000			// Credits awarded for rolling car for each skill level (with peds)
+2000,500,50			// Credits awarded for checkpoints for each skill level (with peds)
+1000,1000,1000				// Jump start fine for each level
+15,10,5				// Credits per second of time bonus
+2000,1000,500			// Cunning stunt bonus for each skill level
+// Cars to use as defaults:
+BLKEAGLE.TXT
+ANNIECAR.TXT
+0				// Frame rate knobbler for action replay saving (zero = none)
+1.0				// Opponent nastiness influencer, < 1 = nicer, > 1 = nastier (values between 0.1 and 10 should do)
+// Default underwater special volume parameters
+0.2									// gravity multiplier
+50									// viscosity multiplier
+0									// Car damage per millisecond
+0.002								// Pedestrian damage per millisecond
+0									// camera effect index
+1									// Sky colour
+M25.MAT								// Windscreen material to use
+5100								// Sound ID of entry noise
+5100								// Sound ID of exit noise
+2									// Engine noise index
+0									// material index
+0,2000,5000,10000,20000			// Starting money in network mode (for each skill level)
+30						// Starting time in network mod ('Tag')
+30						// Starting time in network mod ('Fox')
+// Repair cost for each net game type (cred per % damage)
+15,15,7.5,7.5,7.5,7.5,7.5
+// Recovery cost for each net game type
+1000,1000,1000,1000,1000,1000,1000
+// Car softness factor for each net game type
+1.0,1.5,1.5,1.5,1.5,1.5,1.5
+// ^.H&|ö=(XpS]òw?hxoW~dÅy;UkñKY|1}=*[h`U~.M"îXî~{d?_
+2.0,3.0,1.0,1.0,1.0,1.0,1.0
+// Score targets for each net game type
+0,3,50,0,0,60,240
+90						// Pickup respawn min time (seconds)
+60						// Pickup respawn max extra time (seconds)
+60						// Demo race rank equivalent
+2						// Demo armour level
+1						// Demo power level
+2						// Demo offensive level
+// Opponents that appear in demo game
+16
+12
+22
+19
+7
+// default Gravity Multiplier
+1
+// Flic sound delays
+0						// Delay (in seconds) before sound during pre-smack flic
+0						// Delay (in seconds) before sound during post-smack flic
+0						// Delay (in seconds) before sound during 'not in demo' flic
+0						// Delay (in seconds) before sound during post-demo slideshow flic

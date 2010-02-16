@@ -1,0 +1,793 @@
+40
+// Opponent 0
+Max Damage
+Max
+100
+-1					// Strength rating (1-5)
+eagle				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+BLKEAGLE.TXT
+EAGLERED.FLI
+0					// Number of text chunks
+// Opponent 1
+Die Anna
+Anna
+101
+-1					// Strength rating (1-5)
+hawk				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+ANNIECAR.TXT
+HAWKYEL.FLI
+0					// Number of text chunks
+// Opponent 2
+Agent Orange
+Orange
+12
+4					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+LEADPUMP.FLI
+AGENTO.TXT
+AGENTO.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 150MPH
+KERB WEIGHT: 1.7 TONS
+0-60MPH: 7.6 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+5				// Number of lines
+THE MAD EX-FBI AGENT 
+WILL HUNT YOU DOWN WITH 
+EXTREME PREJUDICE IF YOU 
+DARE TO HIT HIS 
+HEAVYWEIGHT SEDAN.
+// Opponent 3
+The Cops
+Cop
+500
+-1					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+APC.TXT
+APC.FLI
+0					// Number of text chunks
+// Opponent 4
+The Cops Special Forces
+Cop
+501
+-1					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+BIGAPC.TXT
+BIGAPC.FLI
+0					// Number of text chunks
+// Opponent 5
+Auto scum
+Scum
+-1
+2					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+ROADBRAT.FLI
+BRATT.TXT
+BRATT.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 220MPH
+KERB WEIGHT: 0.6 TONS
+0-60MPH: 3.6 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+5				// Number of lines
+ROAD-GOING GANG OF
+PSYCHOS, MUGGERS & 
+MURDERERS WHO DRIVE A 
+VARIETY OF ARMORED 
+OFF-ROADERS.
+// Opponent 6
+Mech Maniac
+Mech
+16
+3					// Strength rating (1-5)
+all				// Network availability ('never', 'eagle', 'hawk' or 'all')
+GRUNGEBU.FLI
+BUSTER.TXT
+BUSTER.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 220MPH
+KERB WEIGHT: 0.4 TONS
+0-60MPH: 3.3 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+7				// Number of lines
+HE'S A HI-TECH HI-SPEC 
+SPEED FREAK WHO KNOWS 
+NO FEAR. 
+THE GRUNGEBUSTER 
+IS SUPER-QUICK BUT 
+SUPER-TWITCHY, SO MECH 
+NEEDS NERVES OF STEEL.
+// Opponent 7
+Don Dumpster
+Dumpy
+24
+5					// Strength rating (1-5)
+all				// Network availability ('never', 'eagle', 'hawk' or 'all')
+THEPLOUG.FLI
+DUMP.TXT
+DUMPSTER.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 100MPH
+KERB WEIGHT: 2.6 TONS
+0-60MPH: 14.8 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+6				// Number of lines
+BIG TRUCK, BIG GUY... 
+NO HEART. DON'S A 
+DISGRUNTLED MUNICIPAL 
+WORKER AND HE DRIVES A 
+CUSTOMIZED EARTHMOVER; 
+HARD, FAST & HEAVY.
+// Opponent 8
+Auto scum
+Scum
+-2
+3					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+STREETEA.FLI
+EATER.TXT
+STREAT.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 180MPH
+KERB WEIGHT: 0.9 TONS
+0-60MPH: 4.5 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+5				// Number of lines
+ROAD-GOING GANG OF
+PSYCHOS, MUGGERS & 
+MURDERERS WHO DRIVE A 
+VARIETY OF ARMORED 
+OFF-ROADERS.
+// Opponent 9
+Ed Hunter
+Hunter
+25
+4					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+CHEVYCAS.FLI
+ED.TXT
+CHEVY.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 160MPH
+KERB WEIGHT: 2.3 TONS
+0-60MPH: 9.6 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+7				// Number of lines
+SURVIVALIST ED WANTS 
+TO RID THE WORLD OF 
+COMMIES. BUT TO HIM, 
+EVERYONE'S A PINKO. 
+HIS ARMORED STATION 
+WAGON'S A MOVING 
+ROADBLOCK.
+// Opponent 10
+Heinz Faust
+Faust
+4
+5					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+FAUST.TXT
+FAUST.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 160MPH
+KERB WEIGHT: 3.0 TONS
+0-60MPH: 7.6 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+6				// Number of lines
+TEUTONIC TERROR HEINZ 
+HAS A SUPERCHARGED 
+SUPERHEAVY SPORT COUPE 
+WITH GO-ANYWHERE TANK 
+TRACKS... DON'T GET 
+CAUGHT IN HIS PATH!
+// Opponent 11
+Firestorm
+Fire
+99
+4					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+TANKA.FLI
+FIRE.TXT
+FIRE.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 100MPH
+KERB WEIGHT: 2.1 TONS
+0-60MPH: 8.9 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+6				// Number of lines
+CRAZED CHEM WORKER 
+FIRESTORM STOLE A 
+COMPANY TANKER AND 
+TOOK TO RACING. 
+THE RIG IS BIG AND 
+THE DRIVER IS BRUTAL.
+// Opponent 12
+The Brothers Grimm
+Grimm
+5
+2					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+STIFFSHI.FLI
+GRIMM.TXT
+GRIMM.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 230MPH
+KERB WEIGHT: 1.2 TONS
+0-60MPH: 4.2 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+6				// Number of lines
+THE FUNEREAL FUNSTERS
+WILL DELIVER YOU 
+STRAIGHT TO HELL IN 
+STYLE WITH THEIR 
+NITROUS SNORTING 
+HOT-ROD HEARSE.
+// Opponent 13
+Hammerhead
+Hammer
+6
+5					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+PROJECTX.FLI
+HAMMER.TXT
+HAMMER.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 210MPH
+KERB WEIGHT: 2.0 TONS
+0-60MPH: 6.6 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+6				// Number of lines
+HAMMY THINKS HE'S A 
+SUPERHERO, BUT ACTUALLY 
+HE'S JUST ANOTHER NUT. 
+HE DRIVES HIS OWN 
+TWISTED CREATION WITH 
+DEMENTED ZEAL.
+// Opponent 14
+Halfwit Harry
+Harry
+26
+5					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+LUMBERER.FLI
+HARRY.TXT
+HARRY.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 170MPH
+KERB WEIGHT: 1.9 TONS
+0-60MPH: 9.4 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+6				// Number of lines
+HARRY WILL TRY TO WIN 
+AT ANY COST, SO HE CAN 
+LAVISH THE WINNINGS ON 
+HIS PET PIG, SQUEALER. 
+BEST STAY OUT OF HIS 
+WAY IF YOU CAN.
+// Opponent 15
+Ivan the Bastard
+Ivan
+28
+3					// Strength rating (1-5)
+all				// Network availability ('never', 'eagle', 'hawk' or 'all')
+THEBEAR.FLI
+IVAN.TXT
+IVAN.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 150MPH
+KERB WEIGHT: 1.4 TONS
+0-60MPH: 9.4 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+7				// Number of lines
+WITH A UKRAINE-
+MANUFACTURED MONSTER 
+TRUCK AND A VODKA-
+MANUFACTURED HANGOVER, 
+IVAN'S BLACK MOOD 
+MAKES HIM A DANGEROUS 
+COMPETITOR.
+// Opponent 16
+Kutter
+Kutter
+7
+1					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+COUNTSLA.FLI
+KUTTER.TXT
+KUTTER.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 280MPH
+KERB WEIGHT: 1.1 TONS
+0-60MPH: 4.1 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+7				// Number of lines
+HE TAKES GREAT 
+PLEASURE IN CAUSING 
+PAIN, AND SEEMS 
+CURIOUSLY KEEN TO 
+RECEIVE PUNISHMENT 
+IN RETURN. 
+WHO ARE YOU TO ARGUE?
+// Opponent 17
+Wanda Lust
+Wanda
+69
+2					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+MERCILES.FLI
+MERC.TXT
+MERC.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 210MPH
+KERB WEIGHT: 1.1 TONS
+0-60MPH: 6.7 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+5				// Number of lines
+SHE'S MEAN, LEAN AND 
+SHE'S GOT A KILLING 
+MACHINE. WANDA'S LUST 
+IS PRIMARILY FOR 
+BLOOD - YOURS.
+// Opponent 18
+OK Stimpson
+OK
+8
+3					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+CHEVYCHA.FLI
+OK.TXT
+OK.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 170MPH
+KERB WEIGHT: 1.9 TONS
+0-60MPH: 8.9 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+7				// Number of lines
+HE SEEMS A FRIENDLY 
+KIND OF GUY, BUT 
+APPEARANCES CAN 
+DECEIVE, AND THE WAY 
+HE GUNS THAT 4X4 
+ALONG YOU'D THINK 
+HE WAS ON THE RUN!
+// Opponent 19
+Otis P Jivefunk
+Otis
+9
+4					// Strength rating (1-5)
+all					// Network availability ('never', 'eagle', 'hawk' or 'all')
+CADDYFAT.FLI
+OTIS.TXT
+OTIS.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 180MPH
+KERB WEIGHT: 1.8 TONS
+0-60MPH: 7.7 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+7				// Number of lines
+KING OF COOL, THE 
+LAIDBACK LORD OF 
+LOWRIDERS IS, HOWEVER, 
+INCLINED TO TURN INTO 
+A SLAVERING LUNATIC 
+IF THE CAT GETS IT'S 
+PAINTWORK SCRATCHED.
+// Opponent 20
+Psycho Pitbull
+Pitbull
+22
+4					// Strength rating (1-5)
+all				// Network availability ('never', 'eagle', 'hawk' or 'all')
+TOWMEIST.FLI
+PITBULL.TXT
+PITBULL.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 160MPH
+KERB WEIGHT: 2.0 TONS
+0-60MPH: 9.1 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+6				// Number of lines
+LIKE A RABID SCRAPYARD 
+DOG, HE'LL COME BAYING 
+FOR YOUR BLOOD AND 
+YOUR ENGINE OIL. 
+IF HE CATCHES YOU... 
+IT'S HAMBURGER TIME.
+// Opponent 21
+Auto Scum
+Scum
+-3
+3					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+RAZORBIL.FLI
+RAZOR.TXT
+RAZOR.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 210MPH
+KERB WEIGHT: 0.6 TONS
+0-60MPH: 4.5 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+5				// Number of lines
+ROAD-GOING GANG OF
+PSYCHOS, MUGGERS & 
+MURDERERS WHO DRIVE A 
+VARIETY OF ARMORED 
+OFF-ROADERS.
+// Opponent 22
+Screwie Lewie
+Screwie
+12
+3					// Strength rating (1-5)
+all				// Network availability ('never', 'eagle', 'hawk' or 'all')
+TWISTER.FLI
+SCREWIE.TXT
+SCREWIE.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 220MPH
+KERB WEIGHT: 1.7 TONS
+0-60MPH: 6.4 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+6				// Number of lines
+THIS WACKY GUY FAVORS 
+THE 'SUPERCAR/MONSTER 
+TRUCK/LIGHT AIRCRAFT/
+MOLE MACHINE' MODE OF 
+TRANSPORT. HE'S ABOUT 
+AS INSANE AS THEY COME.
+// Opponent 23
+Burly Shirley
+Shirley
+27
+5					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+PINKPULV.FLI
+SHIRLEY.TXT
+SHIRLEY.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 170MPH
+KERB WEIGHT: 2.0 TONS
+0-60MPH: 9.9 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+5				// Number of lines
+HALFWIT HARRY'S SISTER 
+IS AS DEVOTED TO 
+SQUEALER THE PET PIG 
+AS HE IS (AND HAS THE 
+SAME SINGLE FIGURE IQ).
+// Opponent 24
+Stella Stunna
+Stella
+17
+4					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+ELECTRIC.FLI
+STELLA.TXT
+STELLA.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 230MPH
+KERB WEIGHT: 1.0 TONS
+0-60MPH: 4.5 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+7				// Number of lines
+STELLA'S GOT HERSELF 
+WIRED TO THE BATTERY 
+OF HER SUPER SLEEK 
+RACER, SHE SAYS IT 
+GIVES HER AN 
+EXTRA BUZZ... 
+ENOUGH SAID.
+// Opponent 25
+Stig O'Sore
+Stig
+33
+2					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+VOLKSWER.FLI
+STIG.TXT
+STIG.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 150MPH
+KERB WEIGHT: 1.0 TONS
+0-60MPH: 11.6 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+6				// Number of lines
+STIG KNOWS THAT WHAT 
+HIS CAR LACKS IN SPEED, IT 
+MORE THAN MAKES UP FOR 
+IN STRENGTH AND 
+DURABILITY. AND HE 
+THINKS IT'S BEAUTIFUL.
+// Opponent 26
+Madam Scarlett
+Scarlett
+11
+1					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+FEARARI.FLI
+TARTLET.TXT
+TARTLET.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 270MPH
+KERB WEIGHT: 1.1 TONS
+0-60MPH: 4.1 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+5				// Number of lines
+SHE'S BEHIND THE WHEEL 
+OF ONE OF THE FASTEST 
+CARS ON THE CIRCUIT, 
+AND SHE'LL TAKE YOUR 
+BREATH AWAY... FOR GOOD.
+// Opponent 27
+Ed 101
+Ed 101
+10
+1					// Strength rating (1-5)
+all				// Network availability ('never', 'eagle', 'hawk' or 'all')
+TASHITA.FLI
+TASSLE.TXT
+TASSLE.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 280MPH
+KERB WEIGHT: 0.9 TONS
+0-60MPH: 4.2 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+7				// Number of lines
+ED BLEW A FUSE AND 
+WENT PSYCHO. THE CRAZED 
+ANDROID STOLE A 
+PROTOTYPE PRIZED 
+RACING COUPE IN ORDER 
+TO CAUSE HIGH-SPEED 
+CARNAGE.
+// Opponent 28
+Val Hella
+Val
+21
+2					// Strength rating (1-5)
+never				// Network availability ('never', 'eagle', 'hawk' or 'all')
+CLEAVER.FLI
+VALHELLA.TXT
+VALHELLA.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 220MPH
+KERB WEIGHT: 1.3 TONS
+0-60MPH: 5.5 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+5				// Number of lines
+SHE'S THE SELF-CROWNED 
+QUEEN OF THE RACE 
+SCENE, AND HER CHARIOT 
+IS APTLY EQUIPPED WITH 
+WHEEL MOUNTED BLADES.
+// Opponent 29
+Vlad
+Vlad
+20
+1					// Strength rating (1-5)
+all				// Network availability ('never', 'eagle', 'hawk' or 'all')
+ANNIHILA.FLI
+VLAD.TXT
+VLAD.FLI
+2					// Number of text chunks
+5,3				// x,y offset of first line
+41,85			// Frame start (incl), end (excl)
+3				// Number of lines
+TOP SPEED: 420MPH
+KERB WEIGHT: 1.0 TONS
+0-60MPH: 2.2 SECONDS
+5,44				// x,y offset of first line
+50,85			// Frame start (incl), end (excl)
+7				// Number of lines
+FOR VLAD, IT'S NOT THE 
+WINNING, IT'S THE 
+TAKING APART THAT 
+COUNTS. THIS CAR'S 
+SPEED IS UNBEATABLE... 
+JUST DON'T TRY TO 
+CORNER IT.
+// I*Ycfús$UmÅô?h?av&_++D0cPló\Å:c/.ì
+Max Damage
+Max
+100
+-1					// Strength rating (1-5)
+eagle				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+EAGYELE.TXT
+EAGLEYEL.FLI
+0					// Number of text chunks
+// I*Ycfús$UmÅô?h?av&_++G0cPló\Å:c/.~ì
+Max Damage
+Max
+100
+-1					// Strength rating (1-5)
+eagle				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+EAGBLUE.TXT
+EAGLEblu.FLI
+0					// Number of text chunks
+// I*Ycfús$UmÅô?h?av&_++F0cPló\Å:c/.}ì
+Max Damage
+Max
+100
+-1					// Strength rating (1-5)
+eagle				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+EAGGREE.TXT
+EAGLEgre.FLI
+0					// Number of text chunks
+// I*Ycfús$UmÅô?h?av&_++A0cPló\Å:c/.|ì
+Max Damage
+Max
+100
+-1					// Strength rating (1-5)
+eagle				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+EAGWHIE.TXT
+EAGLEwhi.FLI
+0					// Number of text chunks
+// I*Ycfús$UmÅô?h?av&_++@0cPló\Å:c/.{ì
+Max Damage
+Max
+100
+-1					// Strength rating (1-5)
+eagle				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+EAGBLAK.TXT
+EAGLEblK.FLI
+0					// Number of text chunks
+// Technicolor Annie #1 (index = 35)
+Die Anna
+Anna
+101
+-1					// Strength rating (1-5)
+hawk				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+ANNBLAK.TXT
+HAWKblK.FLI
+0					// Number of text chunks
+// Technicolor Annie #2 (index = 36)
+Die Anna
+Anna
+101
+-1					// Strength rating (1-5)
+hawk				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+ANNBLUE.TXT
+HAWKblu.FLI
+0					// Number of text chunks
+// Technicolor Annie #3 (index = 37)
+Die Anna
+Anna
+101
+-1					// Strength rating (1-5)
+hawk				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+ANNGREE.TXT
+HAWKgre.FLI
+0					// Number of text chunks
+// Technicolor Annie #4 (index = 38)
+Die Anna
+Anna
+101
+-1					// Strength rating (1-5)
+hawk				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+ANNRED.TXT
+HAWKred.FLI
+0					// Number of text chunks
+// Technicolor Annie #5 (index = 39)
+Die Anna
+Anna
+101
+-1					// Strength rating (1-5)
+hawk				// Network availability ('never', 'eagle', 'hawk' or 'all')
+KINGMERC.FLI
+ANNWHT.TXT
+HAWKwhi.FLI
+0					// Number of text chunks
+END

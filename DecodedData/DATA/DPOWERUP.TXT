@@ -1,0 +1,818 @@
+44							// Number of powerups
+// Powerup 0
+n/a
+none						// Icon
+-1							// Fizzle type
+-1							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+0							// Action index
+0							// Number of floating point params
+2							// Number of integer params
+100							// Integer param #1 (minimum credits)
+1000						// Integer param #2 (maximum credits)
+0							// Group inclusion
+37							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 1
+n/a
+none						// Icon
+-1							// Fizzle type
+-1							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+0							// Action index
+0							// Number of floating point params
+2							// Number of integer params
+2000						// Integer param #1 (minimum credits)
+10000						// Integer param #2 (maximum credits)
+0							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 2
+Pedestrians glued to ground!
+sglue.PIX					// Icon
+1							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+1							// Action index
+1							// Number of floating point params
+0							// Floating point param #1 (speed factor)
+0							// Number of integer params
+32							// Group inclusion
+38							// Pratcam sequence
+1							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 3
+Giant pedestrians!
+Sgiant.PIX					// Icon
+1							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+1							// Number of floating point params
+2.0							// Floating point param #1 (size factor)
+0							// Number of integer params
+16							// Group inclusion
+40							// Pratcam sequence
+1							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 4
+Explosive pedestrians!
+Cexplo.PIX				// Icon
+0							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+1							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 5
+Hot rod!
+chotrod.PIX					// Icon
+0							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+9							// Action index
+7							// Number of floating point params
+8							// Floating point param #1 (speed factor)
+2.2							// Grip multiplier
+1.0							// Floating point param #1 (front suspension give multiplier)
+1.5							// Floating point param #2 (rear suspension give multiplier)
+0.0							// Floating point param #3 (front extra ride height)
+0.15						// Floating point param #4 (rear extra ride height)
+1.5							// Floating point param #5 (damping multiplier)
+0							// Number of integer params
+7							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 6
+Turbo pedestrians!
+Dturbped.PIX					// Icon
+2							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+1							// Action index
+1							// Number of floating point params
+4.0							// Floating point param #1 (speed factor)
+0							// Number of integer params
+32							// Group inclusion
+39							// Pratcam sequence
+1							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 7
+Invulnerability!
+Cinvun.PIX				// Icon
+0							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+5							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 8
+Free repairs!
+Crepair.PIX					// Icon
+0							// Fizzle type
+60							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 9
+Instant repair!
+none						// Icon
+-1							// Fizzle type
+-1							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+7							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 10
+Timer frozen!/Timer thaw!/
+none						// Icon
+-1							// Fizzle type
+-1							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+2							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 11
+Underwater ability!
+Cwater.PIX					// Icon
+0							// Fizzle type
+120							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+10							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 12
+Time bonus
+none						// Icon
+-1							// Fizzle type
+-1							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+11							// Action index
+0							// Number of floating point params
+2							// Number of integer params
+5							// Integer param #1 (minimum time)
+30							// Integer param #2 (maximum time)
+0							// Group inclusion
+37							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 13
+Oh dear, bodywork trashed!
+none						// Icon
+-1							// Fizzle type
+-1							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+43							// Pratcam sequence
+2							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 14 (mine)
+n/a
+bollocks					// Icon (none!)
+1							// Fizzle type
+-1							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+30							// Action index
+4							// Number of floating point params
+2.0							// Floating point param #2 (min y strength)
+10.0						// Floating point param #2 (max y strength)
+2							// Floating point param #1 (max roll rate)
+2							// Floating point param #1 (max pitch rate)
+0							// Number of integer params
+0							// Group inclusion
+21							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 15
+Frozen opponents!
+Cofreze.PIX					// Icon
+0							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+14							// Action index
+1							// Number of floating point params
+0							// Floating point param #1 (speed factor)
+0							// Number of integer params
+64							// Group inclusion
+38							// Pratcam sequence
+2							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 16
+Frozen cops!
+Ccfreze.PIX					// Icon
+0							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+1							// Number of floating point params
+0							// Floating point param #1 (speed factor)
+0							// Number of integer params
+128							// Group inclusion
+38							// Pratcam sequence
+2							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 17
+Turbo opponents!
+Dturbopp.PIX				// Icon
+2							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+1							// Number of floating point params
+2.0							// Floating point param #1 (speed factor)
+0							// Number of integer params
+64							// Group inclusion
+39							// Pratcam sequence
+2							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 18
+Turbo cops!
+Dturbcop.PIX				// Icon
+2							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+1							// Number of floating point params
+2.0							// Floating point param #1 (speed factor)
+0							// Number of integer params
+128							// Group inclusion
+39							// Pratcam sequence
+2							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 19
+Gravity has gone strange...
+Sgrav.PIX					// Icon
+1							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+1							// Number of floating point params
+0.35						// Floating point param #1 (gravity divisor)
+0							// Number of integer params
+0							// Group inclusion
+40							// Pratcam sequence
+1							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 20
+Pinball mode!
+Srubber.PIX					// Icon
+1							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+1							// Number of floating point params
+3.0							// Floating point param #1 (collision energy factor)
+0							// Number of integer params
+0							// Group inclusion
+40							// Pratcam sequence
+1							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 21
+Wall climber!
+Swall.PIX					// Icon
+1							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 22
+Bouncey bouncey!
+sbounce.PIX					// Icon
+1							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+2							// Number of floating point params
+0.5							// Floating point param #1 (rate)
+6.0							// Floating point param #2 (strength)
+0							// Number of integer params
+0							// Group inclusion
+39							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 23
+Oh dear, jelly suspension!
+Sjelly.PIX					// Icon
+1							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+20							// Action index
+5							// Number of floating point params
+2.0							// Floating point param #1 (front suspension give multiplier)
+2.0							// Floating point param #2 (rear suspension give multiplier)
+0.25						// Floating point param #3 (front extra ride height)
+0.25						// Floating point param #4 (rear extra ride height)
+0.1							// Floating point param #5 (damping multiplier)
+0							// Number of integer params
+4							// Group inclusion
+39							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 24
+Pedestrians shown on map
+cviewped.PIX					// Icon
+0							// Fizzle type
+0							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+2							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 25
+Pedestrian Electro-bastard Ray
+Selectro.PIX					// Icon (none!)
+0							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+1							// Number of floating point params
+3.2							// Floating point param #2 (min y strength)
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 26
+Greased tyres!
+Dgrease.PIX					// Icon
+2							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+1							// Number of floating point params
+0.2							// Floating point param #1 (tyre grip multiplier)
+0							// Number of integer params
+2							// Group inclusion
+39							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 27
+Acme Damage Magnifier!
+Cdamage.PIX					// Icon
+0							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+1							// Number of floating point params
+3							// Floating point param #1 (opponent damage multiplier)
+0							// Number of integer params
+8							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 28 - Random selection
+n/a
+none						// Icon
+-1							// Fizzle type
+-1							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+4							// Action index
+0							// Number of floating point params
+63							// Number of integer params
+2			// Pedestrians glued to ground!
+2			// Pedestrians glued to ground!
+2			// Pedestrians glued to ground!
+7			// Invulnerability!
+7			// Invulnerability!
+7			// Invulnerability!
+8			// Free repairs!
+8			// Free repairs!
+8			// Free repairs!
+9			// Instant repair!
+9			// Instant repair!
+9			// Instant repair!
+15			// Frozen opponents!
+15			// Frozen opponents!
+15			// Frozen opponents!
+27			// Acme Damage Magnifier!
+27			// Acme Damage Magnifier!
+27			// Acme Damage Magnifier!
+34			// Turbo!
+34			// Turbo!
+34			// Turbo!
+38			// 5 Free recovery vouchers
+38			// 5 Free recovery vouchers
+38			// 5 Free recovery vouchers
+6			// Turbo pedestrians!
+6			// Turbo pedestrians!
+11			// Underwater ability!
+11			// Underwater ability!
+16			// Frozen cops!
+16			// Frozen cops!
+17			// Turbo opponents!
+17			// Turbo opponents!
+18			// Turbo cops!
+18			// Turbo cops!
+19			// Gravity has gone strange...
+19			// Gravity has gone strange...
+23			// Oh dear, jelly suspension!
+23			// Oh dear, jelly suspension!
+32			// Instant handbrake!
+32			// Instant handbrake!
+35			// Mega-turbo!
+35			// Mega-turbo!
+36			// Blind pedestrians
+36			// Blind pedestrians
+41			// Drugs!!!
+41			// Drugs!!!
+39			// Solid granite car!
+39			// Solid granite car!
+26			// Greased tyres!
+5			// Hot rod!
+4			// Explosive pedestrians!
+13			// Oh dear, bodywork trashed!
+43			// Pedestrian harvest!
+3			// Giant pedestrians!
+25			// Pedestrian Electro-bastard Ray
+21			// Wall climber!
+22			// Bouncey bouncey!
+24			// Pedestrians shown on map
+33			// Pedestrians from Hades
+37			// Pedestrian respawn!
+40			// Rock springs!
+42			// Grip-o-matic tyres!
+20			// Pinball mode!
+0							// Group inclusion
+-1							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 29 - Random selection
+n/a
+none						// Icon
+-1							// Fizzle type
+-1							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+4							// Action index
+0							// Number of floating point params
+63							// Number of integer params
+2			// Pedestrians glued to ground!
+2			// Pedestrians glued to ground!
+2			// Pedestrians glued to ground!
+7			// Invulnerability!
+7			// Invulnerability!
+7			// Invulnerability!
+8			// Free repairs!
+8			// Free repairs!
+8			// Free repairs!
+9			// Instant repair!
+9			// Instant repair!
+9			// Instant repair!
+15			// Frozen opponents!
+15			// Frozen opponents!
+15			// Frozen opponents!
+27			// Acme Damage Magnifier!
+27			// Acme Damage Magnifier!
+27			// Acme Damage Magnifier!
+34			// Turbo!
+34			// Turbo!
+34			// Turbo!
+38			// 5 Free recovery vouchers
+38			// 5 Free recovery vouchers
+38			// 5 Free recovery vouchers
+6			// Turbo pedestrians!
+6			// Turbo pedestrians!
+11			// Underwater ability!
+11			// Underwater ability!
+16			// Frozen cops!
+16			// Frozen cops!
+17			// Turbo opponents!
+17			// Turbo opponents!
+18			// Turbo cops!
+18			// Turbo cops!
+19			// Gravity has gone strange...
+19			// Gravity has gone strange...
+23			// Oh dear, jelly suspension!
+23			// Oh dear, jelly suspension!
+32			// Instant handbrake!
+32			// Instant handbrake!
+35			// Mega-turbo!
+35			// Mega-turbo!
+36			// Blind pedestrians
+36			// Blind pedestrians
+41			// Drugs!!!
+41			// Drugs!!!
+39			// Solid granite car!
+39			// Solid granite car!
+26			// Greased tyres!
+5			// Hot rod!
+4			// Explosive pedestrians!
+13			// Oh dear, bodywork trashed!
+43			// Pedestrian harvest!
+3			// Giant pedestrians!
+25			// Pedestrian Electro-bastard Ray
+21			// Wall climber!
+22			// Bouncey bouncey!
+24			// Pedestrians shown on map
+33			// Pedestrians from Hades
+37			// Pedestrian respawn!
+40			// Rock springs!
+42			// Grip-o-matic tyres!
+20			// Pinball mode!
+0							// Group inclusion
+-1							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 30 - Random selection
+n/a
+none						// Icon
+-1							// Fizzle type
+-1							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+4							// Action index
+0							// Number of floating point params
+63							// Number of integer params
+2			// Pedestrians glued to ground!
+2			// Pedestrians glued to ground!
+2			// Pedestrians glued to ground!
+7			// Invulnerability!
+7			// Invulnerability!
+7			// Invulnerability!
+8			// Free repairs!
+8			// Free repairs!
+8			// Free repairs!
+9			// Instant repair!
+9			// Instant repair!
+9			// Instant repair!
+15			// Frozen opponents!
+15			// Frozen opponents!
+15			// Frozen opponents!
+27			// Acme Damage Magnifier!
+27			// Acme Damage Magnifier!
+27			// Acme Damage Magnifier!
+34			// Turbo!
+34			// Turbo!
+34			// Turbo!
+38			// 5 Free recovery vouchers
+38			// 5 Free recovery vouchers
+38			// 5 Free recovery vouchers
+6			// Turbo pedestrians!
+6			// Turbo pedestrians!
+11			// Underwater ability!
+11			// Underwater ability!
+16			// Frozen cops!
+16			// Frozen cops!
+17			// Turbo opponents!
+17			// Turbo opponents!
+18			// Turbo cops!
+18			// Turbo cops!
+19			// Gravity has gone strange...
+19			// Gravity has gone strange...
+23			// Oh dear, jelly suspension!
+23			// Oh dear, jelly suspension!
+32			// Instant handbrake!
+32			// Instant handbrake!
+35			// Mega-turbo!
+35			// Mega-turbo!
+36			// Blind pedestrians
+36			// Blind pedestrians
+41			// Drugs!!!
+41			// Drugs!!!
+39			// Solid granite car!
+39			// Solid granite car!
+26			// Greased tyres!
+5			// Hot rod!
+4			// Explosive pedestrians!
+13			// Oh dear, bodywork trashed!
+43			// Pedestrian harvest!
+3			// Giant pedestrians!
+25			// Pedestrian Electro-bastard Ray
+21			// Wall climber!
+22			// Bouncey bouncey!
+24			// Pedestrians shown on map
+33			// Pedestrians from Hades
+37			// Pedestrian respawn!
+40			// Rock springs!
+42			// Grip-o-matic tyres!
+20			// Pinball mode!
+0							// Group inclusion
+-1							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 31 - Random selection
+n/a
+none						// Icon
+-1							// Fizzle type
+-1							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+4							// Action index
+0							// Number of floating point params
+63							// Number of integer params
+2			// Pedestrians glued to ground!
+2			// Pedestrians glued to ground!
+2			// Pedestrians glued to ground!
+7			// Invulnerability!
+7			// Invulnerability!
+7			// Invulnerability!
+8			// Free repairs!
+8			// Free repairs!
+8			// Free repairs!
+9			// Instant repair!
+9			// Instant repair!
+9			// Instant repair!
+15			// Frozen opponents!
+15			// Frozen opponents!
+15			// Frozen opponents!
+27			// Acme Damage Magnifier!
+27			// Acme Damage Magnifier!
+27			// Acme Damage Magnifier!
+34			// Turbo!
+34			// Turbo!
+34			// Turbo!
+38			// 5 Free recovery vouchers
+38			// 5 Free recovery vouchers
+38			// 5 Free recovery vouchers
+6			// Turbo pedestrians!
+6			// Turbo pedestrians!
+11			// Underwater ability!
+11			// Underwater ability!
+16			// Frozen cops!
+16			// Frozen cops!
+17			// Turbo opponents!
+17			// Turbo opponents!
+18			// Turbo cops!
+18			// Turbo cops!
+19			// Gravity has gone strange...
+19			// Gravity has gone strange...
+23			// Oh dear, jelly suspension!
+23			// Oh dear, jelly suspension!
+32			// Instant handbrake!
+32			// Instant handbrake!
+35			// Mega-turbo!
+35			// Mega-turbo!
+36			// Blind pedestrians
+36			// Blind pedestrians
+41			// Drugs!!!
+41			// Drugs!!!
+39			// Solid granite car!
+39			// Solid granite car!
+26			// Greased tyres!
+5			// Hot rod!
+4			// Explosive pedestrians!
+13			// Oh dear, bodywork trashed!
+43			// Pedestrian harvest!
+3			// Giant pedestrians!
+25			// Pedestrian Electro-bastard Ray
+21			// Wall climber!
+22			// Bouncey bouncey!
+24			// Pedestrians shown on map
+33			// Pedestrians from Hades
+37			// Pedestrian respawn!
+40			// Rock springs!
+42			// Grip-o-matic tyres!
+20			// Pinball mode!
+0							// Group inclusion
+-1							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 32
+Instant handbrake!
+chand.PIX					// Icon
+0							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+28							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 33
+Pedestrians from Hades
+cviewop.PIX					// Icon
+0							// Fizzle type
+0							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+2							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 34
+Turbo!
+cturbo.PIX					// Icon
+0							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+9							// Action index
+7							// Number of floating point params
+2							// Floating point param #1 (speed factor)
+1							// Grip multiplier
+1.0							// Floating point param #1 (front suspension give multiplier)
+1.0							// Floating point param #2 (rear suspension give multiplier)
+0.0							// Floating point param #3 (front extra ride height)
+0.0							// Floating point param #4 (rear extra ride height)
+1.0							// Floating point param #5 (damping multiplier)
+0							// Number of integer params
+7							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 35
+Mega-turbo!
+cmturbo.PIX					// Icon
+0							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+7							// Number of floating point params
+4							// Floating point param #1 (speed factor)
+1							// Grip multiplier
+1.0							// Floating point param #1 (front suspension give multiplier)
+1.0							// Floating point param #2 (rear suspension give multiplier)
+0.0							// Floating point param #3 (front extra ride height)
+0.0							// Floating point param #4 (rear extra ride height)
+1.0							// Floating point param #5 (damping multiplier)
+0							// Number of integer params
+7							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 36
+Blind pedestrians
+sblind.PIX					// Icon
+1							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+1							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 37
+Pedestrian respawn!
+Cpfreze.PIX					// Icon
+0							// Fizzle type
+-1							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+1							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 38
+5 Free recovery vouchers
+c5vouch.PIX					// Icon
+0							// Fizzle type
+0							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+0							// Number of floating point params
+1							// Number of integer params
+5							// Number of vouchers
+256							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 39
+Solid granite car!
+csolid.PIX					// Icon
+0							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+1							// Number of floating point params
+50							// Mass multiplier
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 40
+Rock springs!
+srockspr.PIX					// Icon
+1							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+5							// Number of floating point params
+0.5							// Floating point param #1 (front suspension give multiplier)
+0.5							// Floating point param #2 (rear suspension give multiplier)
+-0.01						// Floating point param #3 (front extra ride height)
+-0.01						// Floating point param #4 (rear extra ride height)
+1.0							// Floating point param #5 (damping multiplier)
+0							// Number of integer params
+4							// Group inclusion
+40							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 41
+Drugs!!!
+Sdrugs.PIX					// Icon
+1							// Fizzle type
+5							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+39							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 42
+Grip-o-matic tyres!
+Dgrip.PIX					// Icon
+2							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+1							// Number of floating point params
+3.5							// Floating point param #1 (tyre grip multiplier)
+0							// Number of integer params
+2							// Group inclusion
+40							// Pratcam sequence
+0							// Net type (0 = local, 1 = global, 2 = don't use)							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 43
+Pedestrian harvest!
+Sharvest.PIX					// Icon (none!)
+0							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+-1							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+1							// Net type (0 = local, 1 = global, 2 = don't use)							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 44
+Vesuvian corpses!
+Sdrugs.PIX					// Icon (none!)
+0							// Fizzle type
+120							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+33							// Action index
+0							// Number of floating point params
+0							// Number of integer params
+0							// Group inclusion
+38							// Pratcam sequence
+1							// Net type (0 = local, 1 = global, 2 = don't use)							// Net type (0 = local, 1 = global, 2 = don't use)
+// Powerup 45
+Gravity from jupiter!
+Sgrav.PIX					// Icon
+1							// Fizzle type
+30							// Time limit (-1 instantaneous, 0 whole race, x seconds)
+16							// Action index
+1							// Number of floating point params
+5							// Floating point param #1 (gravity divisor)
+0							// Number of integer params
+0							// Group inclusion
+40							// Pratcam sequence
+1							// Net type (0 = local, 1 = global, 2 = don't use)

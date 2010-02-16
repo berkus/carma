@@ -1,0 +1,33 @@
+                             Carmageddon help.
+
+  Keypad 8             Accelarate forward.
+  Keypad 2             Brake when going forwards
+  Keypad 4             Steer left
+  Keypad 6             Steer Right
+  Z                    Turn tightly
+  Spacebar             Handbrake
+  C                    Toggle between internal and external views
+  Q                    Look left from internal view
+  W                    Look forward from internal view
+  E                    Look right from internal view
+  Arrow-keys           Move external camara around
+  H                    Horn
+  P                    Toggle pratcam
+  M                    Toggle mirror on and off when in internal view
+  S                    Toggle sound on and off
+  Tab                  Show/Hid map.
+  Esc                  Go to menu
+  Backspace            Repair car
+  Ins                  Recover vehicle if it's on its roof or side
+  Keypad minus         Toggle pedestrians and giblets on and off
+  F1                   Help
+  F2                   Save
+  F9                   Quit
+  Enter                Toggle between live action and action replay modes
+  Keypad 5             Pause/unpause game
+  Keypad 0             Flip direction of playing
+  Keypad *             Cycle through different camera modes
+
+
+
+

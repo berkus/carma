@@ -1,0 +1,125 @@
+[UNDEFINED]
+uh?
+Shift
+Alt
+Control
+Command
+Caps lock
+R-Shift
+R-Alt
+R-Control
+L-Shift
+L-Alt
+L-Control
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+a
+b
+c
+d
+e
+f
+g
+h
+i
+j
+k
+l
+m
+n
+o
+p
+q
+r
+s
+t
+u
+v
+w
+x
+y
+z
+`
+-
+=
+backspace
+return
+enter
+tab
+/
+\
+;
+'
+.
+,
+[
+]
+#
+esc
+insert
+delete
+home
+end
+pg-up
+pg-down
+crsr-left
+crsr-right
+crsr-up
+crsr-down
+num-lock
+Keypad /
+Keypad *
+Keypad -
+Keypad +
+Keypad .
+Keypad =
+Keypad 0
+Keypad 1
+Keypad 2
+Keypad 3
+Keypad 4
+Keypad 5
+Keypad 6
+Keypad 7
+Keypad 8
+Keypad 9
+f1
+f2
+f3
+f4
+f5
+f6
+f7
+f8
+f9
+f10
+f11
+f12
+print sc
+scroll lk
+pause
+space
+Joy 1 B1
+Joy 1 B2
+Joy 1 B3
+Joy 1 B4
+Joy 2 B1
+Joy 2 B2
+Joy 2 B3
+Joy 2 B4
+Joy 1 L
+Joy 1 R
+Joy 1 U
+Joy 1 D
+Joy 2 L
+Joy 2 R
+Joy 2 U 
+Joy 2 D

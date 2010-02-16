@@ -1,0 +1,41 @@
+Maim Street
+CITYA1M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+NETCITYA.TXT
+0					// Number of text chunks
+Coastal Carnage
+CITYA1M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+NETCOSTC.TXT
+0					// Number of text chunks
+Fridge Racer
+CITYA1M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+NETICE.TXT
+0					// Number of text chunks
+Death Valley
+DEZRAC4M.FLI,CST1MAP.FLI,INFOBACK.FLI
+NETDESRT.TXT
+0					// Number of text chunks
+Off Quay
+CITYA1M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+NETCOSTA.TXT
+0					// Number of text chunks
+Industrial Injury
+CITYA1M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+NETINDA.TXT
+0					// Number of text chunks
+Avenue of Atrocities
+CITYA1M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+NETCITYB.TXT
+0					// Number of text chunks
+Terror on the Trails
+CITYA1M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+NETCOSTB.TXT
+0					// Number of text chunks
+MagnaChem Mayhem
+CITYA1M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+NETINDB.TXT
+0					// Number of text chunks
+Downtown Devastation
+CITYA1M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+NETCITYC.TXT
+0					// Number of text chunks
+END

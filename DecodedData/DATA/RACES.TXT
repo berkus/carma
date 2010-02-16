@@ -1,0 +1,1131 @@
+Maim Street
+CITYA1M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+CITYA1.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: BLEAK CITY
+BUSINESS DISTRICT
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 527
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 2.87 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 3
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+7				// Number of lines
+TONIGHT'S THE NIGHT OF
+THE BIG GAME - SO YOU 
+MAY WANT TO CHECK OUT 
+THE STADIUM AS YOU'RE
+PASSING. DON'T WORRY,
+BLOOD WASHES OUT OF
+ASTROTURF REAL EASY.
+Coastal Carnage
+COASTC1M.FLI,CST1MAP.FLI,INFOBACK.FLI
+COASTC1.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DUSTY TRAILS
+NATIONAL PARK
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 229
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 5.97 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 2
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+6				// Number of lines
+DUSTY TRAILS' ROADS
+WERE DESIGNED BY MAD
+PEOPLE WHO ENJOY THE
+SIGHT OF CRASHED RV'S.
+ACTUALLY, THAT'S NOT
+SO MAD.
+Fridge Racer
+ICE1M.FLI,CST1MAP.FLI,INFOBACK.FLI
+ICE.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: FROSTY PASS
+SKI RESORT
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 516
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 1.80 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 4
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+6				// Number of lines
+THE VISITORS TO FROSTY
+PASS CAN LOOK FORWARD
+TO EXPERIENCING A WHOLE 
+NEW VARIETY OF SPORTS 
+RELATED INJURIES NOW 
+YOU'RE IN TOWN!
+Death Valley
+DEZRAC4M.FLI,CST1MAP.FLI,INFOBACK.FLI
+DEZRACE4.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DEVIL'S CANYON 
+MINING TOWN
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 498
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 1.8 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 3
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+7				// Number of lines
+IF CHECKPOINT CHASING
+IS YOUR THING, (YOU
+ODD PERSON) YOU'D
+BETTER BE SURE AND
+STAY ON THE TRACK - 
+ONE WHEEL WRONG AND
+YOU'LL BE LOST!
+Pit Stop
+MINESB5.FLI,IND1MAP.FLI,INFOBACK.FLI
+MINESB5.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DEVIL'S CANYON
+MINES COMPLEX
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 581
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 1.59 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 5
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+7				// Number of lines
+THINGS START TO GET
+TRICKY AS THE CONTEST
+MOVES UNDERGROUND - 
+LOTS OF BIG AND NASTY
+OBSTACLES WAITING TO
+MAKE MR.PANEL-BEATER
+A VERY HAPPY MAN!
+Industrial Injury
+INDUSA1M.FLI,IND1MAP.FLI,INFOBACK.FLI
+INDUSTA1.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: MAGNACHEM'S
+ACID OCEAN REPROCESSOR
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 153
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 1.2 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 5
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+SINCE MAGNACHEM TURNED
+THE PACIFIC OCEAN
+99% SULPHURIC IN MID
+2000, THEY'VE BEEN
+QUITE BUSY TRYING TO
+CLEAN UP THEIR LITTLE
+MISTAKE. BRIGHTEN THEIR 
+DAY WITH A NICE RACE! 
+Avenue of Atrocities
+CITYB1M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+CITYB1.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: BLEAK CITY
+OUTSKIRTS
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 594
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 3.1 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 4
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+THIS PART OF THE CITY
+IS PERFECT FOR THE 
+DRIVING ENTHUSIAST,
+AS SPEEDS WAY OVER 
+THE LEGAL LIMIT CAN 
+BE ATTAINED WITH EASE. 
+FOR SOME REASON, THIS 
+PISSES OFF THE COPS.
+Mist Me!
+COASTA3M.FLI,CST1MAP.FLI,INFOBACK.FLI
+COASTA3.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DUSTY TRAILS
+SCENIC COASTAL DRIVE
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 423
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 3.28 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 3
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+OH DRAT, IT'S A FOGGY
+DAY. LOOKS LIKE YOU'LL
+HAVE TO PROVIDE THE
+ENTERTAINMENT TO WARM
+UP THOSE CHILLY HIKERS.
+COPS HAVE BEEN BUSY 
+TRYING TO SABOTAGE THE
+ROUTE... BE WARNED! 
+Chiller
+ICE2M.FLI,CST1MAP.FLI,INFOBACK.FLI
+ICE2.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: FROSTY PASS
+SKI RESORT
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 511
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 1.46 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 4
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+IT'S DARK, IT'S SNOWING,
+YOU DON'T HAVE LIGHTS,
+AND THERE'S LOTS OF BIG
+CONCRETE THINGS WITH
+ARROWS ON IN THE WAY.
+YOU EITHER FOLLOW THE 
+ARROWS, OR HIT THE BIG 
+CONCRETE THINGS. SIMPLE.
+Erasing Arizona
+DEZRAC1M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+DEZRACE1.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DEVIL'S CANYON
+MINING TOWN
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 500
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 1.95 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 4
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+AS EVENING DRAWS IN AND
+THE CITIZEN'S OF DEVIL'S
+CANYON GET SETTLED AFTER
+A HARD DAY, WHAT BETTER
+TIME TO CATCH THEM BY
+SURPRISE... IT'S AMAZING
+WHAT A PICK-U-UP A FAST
+APPROACHING FENDER IS!
+600ft Under
+MINESB1M.FLI,IND1MAP.FLI,INFOBACK.FLI
+MINESB1.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DEVIL'S CANYON
+MINING COMPLEX
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 618
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 2.29 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 2
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+UNDERGROUND FUNTIME
+AGAIN. WATCH OUT FOR 
+THE WATER, IT'S EASY 
+IF YOU GET THE RIGHT 
+LINE. ADMIRE THE HARD 
+WORK OF THE BRAVE AND 
+SKILFUL MINERS, BEFORE 
+YOU KILL THEM.
+Mangled at the Mall
+CITYC3M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+CITYC3.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: BLEAK CITY
+COMMERCIAL DISTRICT
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 533
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 1.95 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 4
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+A ROUTE THAT TAKES YOU
+THROUGH THE HEART OF
+THE BUSY SHOPPING
+CENTRE? SURELY NOT...
+THESE HAPPY SOULS ARE
+ABOUT TO LEARN A NEW
+MEANING FOR THE PHRASE
+SHOP 'TILL YOU DROP!
+I Scream in the Sun
+COASTB2M.FLI,CST1MAP.FLI,INFOBACK.FLI
+COASTB2.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DUSTY TRAILS
+NATIONAL PARK
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 517
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 4.19 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 3
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+6				// Number of lines
+THERE'S SOME TIGHT AND
+DANGEROUS BENDS ON 
+THIS CIRCUIT. IF YOU
+GET OVERHEATED, COOL
+DOWN AT THE BEACH -
+THE WATER'S LOVELY!
+MagnaChem Mayhem
+INDUSB3M.FLI,IND1MAP.FLI,INFOBACK.FLI
+INDUSTB3.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: MAGNACHEM
+ACID OCEAN REPROCESSOR
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 297
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 1.73 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 5
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+7				// Number of lines
+IT'S EVIL AND TWISTED,
+IT TAKES NO PRISONERS,
+IT'S DANK & DEPRESSING,
+IT GOES ON AND ON 'TIL
+YOU THINK IT WILL
+NEVER END... IT'S A BIT
+LIKE YOU, REALLY.
+Off Quay
+COASTA1M.FLI,CST1MAP.FLI,INFOBACK.FLI
+COASTA1.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DUSTY TRAILS
+QUAYSIDE COMPLEX
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 401
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 4.16 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 4
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+5				// Number of lines
+IS THERE ANYONE YOU'D
+RATHER TOSS THROUGH 
+THE AIR WITH EVIL GLEE
+THAN... PEOPLE WHO OWN 
+BOATS? THOUGHT NOT.
+Halfway to Hell
+MINESB2M.FLI,IND1MAP.FLI,INFOBACK.FLI
+MINESB2.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DEVIL'S CANYON
+MINING COMPLEX
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 610
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 4.70 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 1
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+6				// Number of lines
+DOWN INTO THE BOWELS 
+OF THE DEVIL'S CANYON
+YOU GO... FOR THE GRAND
+TOUR OF THE MINES. LOSE
+IT HERE, AND YOU'RE IN
+AN UNDERWORLD OF HURT.
+Industrial Action
+INDUSA2M.FLI,IND1MAP.FLI,INFOBACK.FLI
+INDUSTA2.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: MAGNACHEM
+ACID OCEAN REPROCESSOR
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 160
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 2.30 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 4
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+7				// Number of lines
+IF YOU SHOULD MESS UP
+AND FIND YOURSELF IN A
+BATH OF ACID, YOU WILL
+FIND THERE'S ALWAYS A
+WAY OUT. PLUS, THAT 
+ACID REALLY SHINES 
+CHROME UP A TREAT!
+Wall Street Crash
+CITYA3M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+CITYA3.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: BLEAK CITY
+FINANCIAL DISTRICT
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 602
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 4.07 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 5
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+WE ALL DREAM OF SUCCESS
+AND THE OPPORTUNITY TO
+EARN RICHES BEYOND OUR
+WILDEST IMAGINATIONS.
+WE ALL LOATH THOSE WHO
+HAVE ACHIEVED IT. THEY
+ARE THICK ON THE GROUND
+HERE... GO FOR IT!
+Terror on the Trails
+COASTB3M.FLI,CST1MAP.FLI,INFOBACK.FLI
+COASTB3.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DUSTY TRAILS
+NATIONAL PARK
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 516
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 4.16 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 3
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+IT'S NIGHT-TIME IN
+THE NATIONAL PARK, SO
+DRIVE CAREFULLY...
+YOU COULD HAVE A
+VERY NASTY ACCIDENT.
+WATCH OUT FOR HIKERS,
+THE ELDERLY, AND 
+OTHER WEIRDOS.
+Roswell That Ends Well
+DEZRAC2M.FLI,CST1MAP.FLI,INFOBACK.FLI
+DEZRACE2.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DEVIL'S CANYON
+MINING TOWN
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 470
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 1.99 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 4
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+THERE'S SOMETHING ODD
+GOING ON IN THE PYRAMID
+IN THE CENTRE OF TOWN.
+THE ENTRANCE IS BLOCKED
+AND GUARDED, AND THE
+ONLY WAY IN SEEMS TO BE 
+DOWN THE SHAFTS IN THE
+CORNERS OF THE ROOF...
+Shafts of Fright
+MINESB3M.FLI,IND1MAP.FLI,INFOBACK.FLI
+MINESB3.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DEVIL'S CANYON
+MINES COMPLEX
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 609
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 2.00 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 3
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+6				// Number of lines
+SUBTERRANEAN CARSICK
+BLUES! THIS CIRCUIT
+IS TIGHT AND TWISTY,
+FULL OF BUMPS AND
+RAMPS. GUARANTEED TO
+LOSE YOU YOUR LUNCH!
+Top Gear Thrash
+CITYB2M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+CITYB2.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: BLEAK CITY
+OUTSKIRTS
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 592
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 3.77 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 4
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+THIS HIGH-OCTANE BLAST
+AROUND THE OUTSKIRTS
+OF THE CITY IS IDEAL
+FOR SETTING NEW LAND
+SPEED RECORDS. WHEN 
+YOU'RE NOT FLYING
+THROUGH THE AIR, 
+THAT IS...
+Acid Reign
+INDUSB1M.FLI,IND1MAP.FLI,INFOBACK.FLI
+INDUSTB1.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: MAGNACHEM
+ACID OCEAN REPROCESSOR
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 265
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 2.45 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 5
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+7				// Number of lines
+THERE'S A WHOLE BUNCH
+OF BONUS BARRELS ON
+THIS CIRCUIT, BUT 
+GETTING TO THEM CAN 
+BE TRICKY. TIME TO 
+PUT YOUR THINKING 
+HELMET ON...
+Hitch hiker Harvest
+COASTC3M.FLI,CST1MAP.FLI,INFOBACK.FLI
+COASTC3.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DUSTY TRAILS
+NATIONAL PARK
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 243
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 3.91 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 3
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+ECOLOGICALLY, HIKERS DO
+AN ENORMOUS AMOUNT OF
+DAMAGE TO OUR GREAT
+NATIONAL PARKS. WHEN
+THE CONCENTRATION OF
+BACK-PACKERS GETS TOO
+HIGH, IT'S HIGH TIME
+FOR A CULLING...
+Slaughter City
+CITYA2M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+CITYA2.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: BLEAK CITY
+FINANCIAL DISTRICT
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 576
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 2.79 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 5
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+GET SOME SERIOUS AIR 
+AT THE END OF THE LONG
+STRAIGHT, TAKING YOU
+INTO THE FINANCIAL
+HEART OF BLEAK CITY.
+FROM THERE, WHY NOT
+DO THE 'SIDEWALK SWEEP'
+FOR A COUPLE OF BLOCKS?
+Mine's a Large One
+MINESB4M.FLI,IND1MAP.FLI,INFOBACK.FLI
+MINESB4.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DEVIL'S CANYON
+MINING COMPLEX
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 613
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 4.08 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 1
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+THE GRAND FINALE OF 
+THE MINING CIRCUITS
+IS DESIGNED TO DENT
+YOUR CAR AND YOUR
+PRIDE... IT WILL 
+PUT ALL YOUR SKILLS
+AND KNOWLEDGE TO
+THE TEST...
+Slalom Slayfest
+ICE3M.FLI,CST1MAP.FLI,INFOBACK.FLI
+ICE3.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: BLEAK CITY
+OUTSKIRTS
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 509
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 3.78 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 4
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+ON THE PISTE AGAIN!
+SOMEONE FORGOT TO PACK
+THE SNOW CHAINS, WHICH
+IS A SHAME... THIS
+CIRCUIT TAKES THE 
+SCENIC ROUTE SO WRAP
+UP WARM AND UPGRADE
+YOUR ARMOR!
+High Rise Horror
+CITYC2M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+CITYC2.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: BLEAK CITY
+COMMERCIAL DISTRICT
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 404
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 1.54 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 6
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+VERTIGO SUFFERERS, GIVE
+UP NOW! EVERYONE ELSE,
+YOU'D BETTER KEEP YOUR
+FINGER HOVERING OVER
+THE 'RECOVER' KEY IF
+YOU WANT TO COMPLETE
+IT... THERE'S ONLY ONE 
+ROAD BACK TO THE TRACK.
+Fragged at the Factory
+INDUSA3M.FLI,IND1MAP.FLI,INFOBACK.FLI
+INDUSTA3.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: MAGNACHEM
+ACID OCEAN REPROCESSOR
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 148
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 2.08 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 6
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+THINGS ARE GETTING
+TOUGHER, AND THE LEVEL
+OF OPPOSITION WILL BE
+GREATER NOW THAN EVER
+BEFORE. YOU'RE GOING
+TO NEED SOME HEAVY
+METAL AROUND YOU IF
+YOU WANT TO WIN!
+By the seascythe
+COASTA2M.FLI,CST1MAP.FLI,INFOBACK.FLI
+COASTA2.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DUSTY TRAILS
+OCEAN DRIVE
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 399
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 4.01 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 5
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+7				// Number of lines
+BEAT THE BLOCKADES, 
+BEAT THE ROADBLOCKS,
+BEAT THE COPS, BEAT 
+THE LIVING DAYLIGHTS 
+OUT OF THE OPPOSITION.
+IT'S THE ONLY WAY TO
+BE SURE...
+Desert Storm
+DEZRAC3M.FLI,CST1MAP.FLI,INFOBACK.FLI
+DEZRACE3.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DEVIL'S CANYON
+MINING TOWN
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 470
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 1.56 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 8
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+7				// Number of lines
+THIS IS A VERY TOUGH
+CIRCUIT. YOU SHOULD
+ASK YOURSELF: DO I 
+WANT TO COMPLETE IT, 
+OR DO I STAND AND 
+FIGHT? TIME TO WASTE
+SOME OPPOSITION...
+Ramp Rampage
+INDUSB2M.FLI,IND1MAP.FLI,INFOBACK.FLI
+INDUSTB2.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: MAGNACHEM
+ACID OCEAN REPROCESSOR
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 281
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 0.95 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 6
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+IF YOU'D LIKE A BREAK
+FROM THE AUTOMOTIVE
+CARNAGE, AND YOU'VE
+GOT THE SPEED, YOU CAN
+GET ROUND THIS CIRCUIT
+IN ULTRA QUICK TIME
+AND LEAVE THE OTHERS
+STANDING. YAWN.
+Blood on the Rooftops
+CITYB3M.FLI,CITYB3MP.FLI,INFOBACK.FLI
+CITYB3.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: BLEAK CITY
+OUTSKIRTS
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 544
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 4.4 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 10
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+THE WORD IS, THE COPS
+ARE USING THEIR NEW
+TOP OF THE RANGE APC
+IN THIS AREA OF THE
+CITY. IT'S VIRTUALLY
+INDESTRUCTIBLE. IF 
+ONLY THERE WAS A WAY
+TO GET HOLD OF IT...
+Downtown Devastation
+CITYC1M.FLI,CTY1MAP.FLI,INFOBACK.FLI
+CITYC1.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: BLEAK CITY
+COMMERCIAL DISTRICT
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 506
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 5.76 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 12
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+LOTS OF LONG STRAIGHTS,
+PERFECT TO TRY OUT ANY 
+REALLY TOUGH NEW HARD-
+WARE YOU MAY HAVE ON 
+THE OPPOSITION. GET
+WELL AHEAD, THEN TURN
+IT ROUND. WHAT COULD
+BE MORE FUN?
+Beaches of Blood
+COASTB1M.FLI,CST1MAP.FLI,INFOBACK.FLI
+COASTB1.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DUSTY TRAILS
+NATIONAL PARK
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 519
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 3.14 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 12
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+7				// Number of lines
+THERE'S A LOT OF TWISTY
+MOUNTAIN ROAD AT THE 
+START OF THE RACE, AND 
+IT'S A LONG, LONG DROP
+TO THE BOTTOM OF THE
+CLIFFS. WHY NOT SHOW
+SOMEONE JUST HOW LONG?
+Beef Curtains
+COASTC2M.FLI,CST1MAP.FLI,INFOBACK.FLI
+COASTC2.TXT
+5					// Number of text chunks
+5,3				// x,y offset of first line
+5,99			// Frame start (incl), end (excl)
+2				// Number of lines
+LOCATION: DUSTY TRAILS
+NATIONAL PARK
+5,24				// x,y offset of first line
+15,99			// Frame start (incl), end (excl)
+1				// Number of lines
+PEDESTRIAN COUNT: 260
+5,35				// x,y offset of first line
+25,99			// Frame start (incl), end (excl)
+1				// Number of lines
+1 LAP: 2.78 MILES
+5,46				// x,y offset of first line
+35,99			// Frame start (incl), end (excl)
+1				// Number of lines
+NUMBER OF LAPS: 15
+5,64				// x,y offset of first line
+45,99			// Frame start (incl), end (excl)
+8				// Number of lines
+CATTLE ARE DANGEROUS.
+THEY CAN BE DANGEROUS
+IN THE WILD, AND THEY
+CAN BE DANGEROUS TO
+EAT. IT'S TIME FOR YOU
+TO REDUCE THIS TERRIBLE
+THREAT TO HUMANITY.
+IT'S CURTAINS FOR BEEF.
+END

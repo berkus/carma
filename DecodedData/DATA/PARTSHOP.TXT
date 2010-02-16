@@ -1,0 +1,21 @@
+6									// Number of Armour power-ups
+99,ARM1.FLI,500,1000,1500			// Image #1, cost for each skill level
+99,ARM2.FLI,100000,125000,250000	// Image #2, cost for each skill level
+75,ARM3.FLI,200000,250000,375000	// Image #3, cost for each skill level
+50,ARM4.FLI,300000,375000,500000	// Image #4, cost for each skill level
+25,ARM5.FLI,400000,500000,750000	// Image #5, cost for each skill level
+0,ARM6.FLI,500,500,500				// Image #5, cost for each skill level
+6									// Number of power power-ups
+99,POW1.FLI,500,1000,1500			// Image #1, cost for each skill level
+99,POW2.FLI,100000,125000,250000	// Image #2, cost for each skill level
+75,POW3.FLI,200000,250000,375000	// Image #3, cost for each skill level
+50,POW4.FLI,300000,375000,500000	// Image #4, cost for each skill level
+25,POW5.FLI,400000,500000,750000	// Image #5, cost for each skill level
+0,POW6.FLI,500,500,500				// Image #5, cost for each skill level
+6									// Number of offsensive power-ups
+99,OFF1.FLI,500,1000,1500			// Image #1, cost for each skill level
+99,OFF2.FLI,100000,125000,250000	// Image #2, cost for each skill level
+75,OFF3.FLI,200000,250000,375000	// Image #3, cost for each skill level
+50,OFF4.FLI,300000,375000,500000	// Image #4, cost for each skill level
+25,OFF5.FLI,400000,500000,750000	// Image #5, cost for each skill level
+0,OFF6.FLI,500,500,500				// Image #5, cost for each skill level
