@@ -22,14 +22,15 @@ struct uvmap {
 
 struct polygon {
     int16_t v1, v2, v3; // vertex indices
-    int16_t flags; // looks like flags, always only one bit set
+    int16_t flags; // looks like flags, always only one bit set -- not always, see CITYA81.DAT!!
     int8_t unknown; // something, no idea yet, might be related to flags
 };
 
-struct mat_poly {
-    int16_t mat_idx; // index of material from material list for Nth polygon
-    // ED.DAT's wheel.dat breaks this assumption by using indices 0,1,2 with list of just 1 material. TODO
-};
+// struct mat_poly {
+//     int32_t something; // always 0x2 so far
+//     int16_t mat_idx[M]; // array of indices of material from material list for i-th polygon
+//     int32_t something_else, and_more; // dummy pad? always 0x0, 0x0 so far
+// };
 
 // Typical layout:
 // Filename
@@ -63,7 +64,7 @@ struct chunk
 
 char *name_chunk(unsigned char c) //returns the name of a chunk (to display)
 {
-    switch(c)
+    switch (c)
     {
         case MATERIAL_LIST:return("Material list"); // text
         case VERTEX_LIST:return("Vertex list");   // 3 components * 4 bytes
