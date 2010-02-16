@@ -149,6 +149,8 @@ main(int argc,char *argv[])
                         puts("\n\n\n ERROR!!!  Unexpected end of file!\n");
                         return(1);
                     }
+                    if (!buffer)
+                        break;
                     putchar(buffer);
                 }
                 putchar('\n');
@@ -210,7 +212,10 @@ main(int argc,char *argv[])
                 puts("\n\n\n ERROR!!!  Unexpected end of file!\n");
                 return(1);
             }
-            if(chunk_header.type[3]==0x36) putchar(buffer);
+            if(chunk_header.type[3]==0x36) {
+                if (buffer)
+                    putchar(buffer);
+            }
             else printf("%02hX ",buffer);
             if(count%12==11) putchar('\n');
         }
