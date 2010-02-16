@@ -20,6 +20,26 @@ struct uvmap {
     int32_t v;
 };
 
+struct polygon {
+    int16_t v1, v2, v3; // vertex indices
+    int16_t flags; // looks like flags, always only one bit set
+    int8_t unknown; // always 0? need more data
+};
+
+struct mat_poly {
+    int16_t mat_idx; // index of material from material list for Nth polygon
+    // ED.DAT's wheel.dat breaks this assumption by using indices 0,1,2 with list of just 1 material. TODO
+};
+
+// Typical layout:
+// Filename
+// N vertices
+// N uvmaps (per vertex)
+// M polygons (triangles, actually)
+// K materials
+// M mat_polys assigning material to poly
+// ..repeat
+
 void print_fixed_16_16(int32_t v)
 {
     printf("%f", conv_fixed_16_16(ntohl(v)));
@@ -67,32 +87,29 @@ main(int argc,char *argv[])
 
     if(argc<2)       //Was a file name specified?
     {
-    putchar(7);
-    printf("\n\n ERROR!!!   ");
-    puts("File name required\n");
-    return(1);    //if not, exit
+        printf("\n\n ERROR!!!   ");
+        puts("File name required\n");
+        return(1);    //if not, exit
     }
 
     if ((FP = fopen(argv[1], "rb"))== NULL)   //open the specified file
     {
-    putchar(7);
-    puts("\n\n ERROR!!!  Cannot open input file.\n");
-    return(1);
+        puts("\n\n ERROR!!!  Cannot open input file.\n");
+        return(1);
     }
 
     count=fread(file_header,1,16,FP);        //Read 16 byte file header
 
     if(count<16)
     {
-    putchar(7);
-    puts("\n\n ERROR!!!  File header truncated.\n");     //exit if file header short
-    return(1);
+        puts("\n\n ERROR!!!  File header truncated.\n");     //exit if file header short
+        return(1);
     }
 
     printf("File header Data: ");      //Print file header to the screen
     for(loop=0;loop<16;loop++)
     {
-    printf("%02hX ",(file_header[loop]));
+        printf("%02hX ",(file_header[loop]));
     }
     puts("\nReading Chunks:");
 
@@ -108,8 +125,8 @@ main(int argc,char *argv[])
         chunk_size = ntohl(chunk_header.size);
 
         chunk_size-=4;  //Total Chunk size is usually -4
-        if(chunk_header.type[3]==0x1a)chunk_size+=8; //1A chunks aren't :)
-        if(chunk_count==1)chunk_size+=2;             //The first name chunk starts 2 bytes early
+        if(chunk_header.type[3]==MAT_POLY_LIST)chunk_size+=8; //1A chunks aren't :)
+        if(chunk_count==1) chunk_size+=2;             //The first name chunk starts 2 bytes early
 
         // Convert number of entries to little endian format
         number_entries=ntohl(chunk_header.entries);
@@ -199,7 +216,7 @@ main(int argc,char *argv[])
         }
         putchar('\n');
 
-        count=fread(&chunk_header,12,1,FP);//Read header for next ckunk
+        count=fread(&chunk_header,12,1,FP);//Read header for next chunk
     }
 
     fclose(FP);                        //Close input file
