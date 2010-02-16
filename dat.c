@@ -23,7 +23,7 @@ struct uvmap {
 struct polygon {
     int16_t v1, v2, v3; // vertex indices
     int16_t flags; // looks like flags, always only one bit set
-    int8_t unknown; // always 0? need more data
+    int8_t unknown; // something, no idea yet, might be related to flags
 };
 
 struct mat_poly {
