@@ -2,6 +2,7 @@
 #include <arpa/inet.h>
 #include <stdint.h>
 
+//TODO: use city map in RACES/ to find out actual scale?
 float conv_fixed_16_16(int32_t fx)
 {
     double fp = fx;
@@ -49,8 +50,8 @@ void print_fixed_16_16(int32_t v)
 unsigned char file_header[16];   //      The file header
 
 struct chunk
-{                    //      Each file chunk
-    unsigned char type[4];     //chunk type
+{
+    uint32_t type;     //chunk type
     uint32_t size;     //size of chunk -4
     uint32_t entries;  //number of entires
 };
@@ -122,23 +123,25 @@ main(int argc,char *argv[])
     {
         chunk_count++;                  //add one to chunk count
 
+        chunk_header.type = ntohl(chunk_header.type);
+
         // Convert chunk size to little endian format
         chunk_size = ntohl(chunk_header.size);
 
-        chunk_size-=4;  //Total Chunk size is usually -4
-        if(chunk_header.type[3]==MAT_POLY_LIST)chunk_size+=8; //1A chunks aren't :)
-        if(chunk_count==1) chunk_size+=2;             //The first name chunk starts 2 bytes early
+        chunk_size -= 4;  //Total Chunk size is usually -4
+        if (chunk_header.type == MAT_POLY_LIST) chunk_size+=8; //1A chunks aren't :)
+        if (chunk_count==1) chunk_size+=2;             //The first name chunk starts 2 bytes early
 
         // Convert number of entries to little endian format
         number_entries=ntohl(chunk_header.entries);
 
-        printf("\nChunk #%d, Type: %02hXh [",chunk_count,chunk_header.type[3]);
-        printf(name_chunk(chunk_header.type[3]));
+        printf("\nChunk #%d, Type: %02hXh [",chunk_count,chunk_header.type);
+        printf(name_chunk(chunk_header.type));
         printf("]\n");
 
         printf("Chunk size = %lu bytes, Number of entries = %lu\n",chunk_size,number_entries);
 
-        if (chunk_header.type[3]==MATERIAL_LIST)
+        if (chunk_header.type == MATERIAL_LIST)
         {     //If it's a MAT-list type chunk, chunk size may not be good
             for(count=0;count<number_entries;count++)
             {
@@ -157,7 +160,7 @@ main(int argc,char *argv[])
                 putchar('\n');
             }
         }
-        else if (chunk_header.type[3]==VERTEX_LIST)
+        else if (chunk_header.type == VERTEX_LIST)
         {
             struct vertex v;
             for (count=0;count<number_entries;count++)
@@ -176,7 +179,7 @@ main(int argc,char *argv[])
                 printf("}\n");
             }
         }
-        else if (chunk_header.type[3] == POLYGON_LIST)
+        else if (chunk_header.type == POLYGON_LIST)
         {
             for (count=0;count<chunk_size;count++)
             {
@@ -189,7 +192,7 @@ main(int argc,char *argv[])
                 if(count%9==8) putchar('\n');
             }
         }
-        else if (chunk_header.type[3] == UVMAP_LIST)
+        else if (chunk_header.type == UVMAP_LIST)
         {
             struct uvmap uv;
             for(count=0;count<number_entries;count++)
@@ -213,7 +216,7 @@ main(int argc,char *argv[])
                 puts("\n\n\n ERROR!!!  Unexpected end of file!\n");
                 return(1);
             }
-            if(chunk_header.type[3]==0x36) {
+            if(chunk_header.type == FILE_NAME) {
                 if (buffer)
                     putchar(buffer);
             }
