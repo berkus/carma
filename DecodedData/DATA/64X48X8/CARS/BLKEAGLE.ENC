@@ -1,0 +1,39 @@
+CKPT80F.PIX					// Cockpit forward image file names
+32,40,672,427					// Left, top, right, bottom rendering coordinates
+CKPT80L.PIX					// Cockpit left image file names
+32,45,672,451					// Left, top, right, bottom rendering coordinates
+CKPT80R.PIX					// Cockpit right image file names
+32,44,672,389					// Left, top, right, bottom rendering coordinates
+d,88,442,HSPEEDO.PIX,14				// Speedo type, x, y, filename, x-pitch
+d,242,458,HSPEEDO.PIX,14			// Speedo type, x, y, filename, x-pitch
+a,8,375,HIRESTCH.PIX,64,432,0,44,215,0,-4	// tacho type, x, y, filename, x-pitch
+d,241,474,HTACHO.PIX				// Tacho x, y, filename
+62,442,HGEARS.PIX				// Gear display x,y,image (external)
+285,432,HGEARS.PIX				// Gear display x,y,image (internal)
+7						// Number of hands frames
+308,394,STR680.PIX,0,0,none			// Left-most hands frame
+328,415,STR580.PIX,0,0,none			// Leftish hands frame
+356,444,STR480.PIX,108,494,STL480.PIX		// Leftish hands frame
+366,468,STR380.PIX,110,468,STL380.PIX		// Centre hands frame
+366,478,STR280.PIX,120,451,STL280.PIX		// Rightish hands frame
+0,0,none,128,432,STL180.PIX			// Rightish hands frame
+0,0,none,120,410,STL080.PIX			// Right-most hands frame
+524,72,700,149					// Left, top, right, bottom of mirror
+0,0,104,110						// Left, top, right, bottom of pratcam (*** relative to screen, not cockpit)
+619,394,1,1,2,3,1,HENG.PIX			// Engine damage x,y,flash1..5
+621,417,1,1,2,3,1,HTRN.PIX			// Transmission damage x,y,flash1..5
+613,417,1,1,2,3,1,HSTR.PIX			// Steering damage x,y,flash1..5
+611,396,1,1,2,3,1,HLSUS.PIX			// lf brake damage x,y,flash1..5
+635,396,1,1,2,3,1,HRSUS.PIX			// rf brake damage x,y,flash1..5
+612,459,1,1,2,3,1,HLSUS.PIX			// lr brake damage x,y,flash1..5
+634,459,1,1,2,3,1,HRSUS.PIX			// rr brake damage x,y,flash1..5
+603,394,1,1,2,3,1,HTYR.PIX			// lf wheel damage x,y,flash1..5
+643,394,1,1,2,3,1,HTYR.PIX			// rf wheel damage x,y,flash1..5
+603,457,1,1,2,3,1,HTYR.PIX			// lr wheel damage x,y,flash1..5
+643,457,1,1,2,3,1,HTYR.PIX			// rr wheel damage x,y,flash1..5
+0,0,571,357,EXTDAM0.PIX
+3						// Number of dimmed areas (external)
+566,353,623,467					// Dim rectangle
+60,437,81,474					// Dim rectangle
+86,437,135,474					// Dim rectangle
+0						// Number of dimmed areas (internal)

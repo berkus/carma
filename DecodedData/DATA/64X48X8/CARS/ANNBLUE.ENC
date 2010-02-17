@@ -1,0 +1,39 @@
+CKPT81F.PIX								// Cockpit forward image file names
+32,53,672,432							// Left, top, right, bottom rendering coordinates
+CKPT81L.PIX								// Cockpit left image file names
+32,28,672,444							// Left, top, right, bottom rendering coordinates
+CKPT81R.PIX								// Cockpit right image file names
+32,77,650,370							// Left, top, right, bottom rendering coordinates
+d,88,442,HSPEEDO1.PIX,14			// Speedo type, x, y, filename, x-pitch
+d,282,439,HSPEEDO1.PIX,14			// Speedo type, x, y, filename, x-pitch
+a,8,375,HIRESTCH.PIX,64,432,0,44,215,0,-4	// tacho type, x, y, filename, x-pitch
+d,284,480,HTACHO1.PIX				// Tacho x, y, filename
+62,442,HGEARS.PIX					// Gear display x,y,image (external)
+230,444,HGEARS.PIX				// Gear display x,y,image (internal)
+7							// Number of hands frames
+332,394,STR680.PIX,0,0,none			// Left-most hands frame
+352,415,STR580.PIX,0,0,none			// Leftish hands frame
+380,444,STR480.PIX,132,494,STL480.PIX	// Leftish hands frame
+390,468,STR380.PIX,134,468,STL380.PIX	// Centre hands frame
+390,478,STR280.PIX,144,451,STL280.PIX	// Rightish hands frame
+0,0,none,152,432,STL180.PIX			// Rightish hands frame
+0,0,none,144,410,STL080.PIX			// Right-most hands frame
+538,36,688,93					// Left, top, right, bottom of mirror
+0,0,104,110						// Left, top, right, bottom of pratcam (*** relative to screen, not cockpit)
+607,466,1,1,2,3,1,HENG.PIX			// Engine damage x,y,flash1..5
+609,408,1,1,2,3,1,HTRN.PIX			// Transmission damage x,y,flash1..5
+603,418,1,1,2,3,1,HSTR.PIX			// Steering damage x,y,flash1..5
+601,406,1,1,2,3,1,HLSUS.PIX			// lf brake damage x,y,flash1..5
+621,406,1,1,2,3,1,HRSUS.PIX			// rf brake damage x,y,flash1..5
+599,468,1,1,2,3,1,HLSUS.PIX			// lr brake damage x,y,flash1..5
+623,468,1,1,2,3,1,HRSUS.PIX			// rr brake damage x,y,flash1..5
+593,403,1,1,2,3,1,HTYR.PIX			// lf wheel damage x,y,flash1..5
+629,403,1,1,2,3,1,HTYR.PIX			// rf wheel damage x,y,flash1..5
+591,466,1,1,2,3,1,HTYR.PIX			// lr wheel damage x,y,flash1..5
+631,466,1,1,2,3,1,HTYR.PIX			// rr wheel damage x,y,flash1..5
+3,-4,562,362,EXTDAM1.PIX
+3						// Number of dimmed areas (external)
+556,359,616,475					// Dim rectangle
+60,437,81,474					// Dim rectangle
+86,437,135,474					// Dim rectangle
+0						// Number of dimmed areas (internal)

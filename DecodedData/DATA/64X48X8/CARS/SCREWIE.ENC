@@ -1,0 +1,37 @@
+CKPT82F.PIX						// Cockpit forward image file names
+32,38,670,415					// Left, top, right, bottom rendering coordinates
+CKPT82L.PIX						// Cockpit left image file names
+32,58,670,444					// Left, top, right, bottom rendering coordinates
+CKPT82R.PIX						// Cockpit right image file names
+32,55,652,394					// Left, top, right, bottom rendering coordinates
+d,88,442,HSPEEDO.PIX,14				// Speedo type, x, y, filename, x-pitch
+d,163,425,HSPEEDO3.PIX,14				// Speedo type, x, y, filename, x-pitch
+a,8,375,HIRESTCH.PIX,64,432,0,44,215,0,-4	// tacho type, x, y, filename, x-pitch
+d,274,415,HTACHO3.PIX				// Tacho x, y, filename
+62,442,HGEARS.PIX					// Gear display x,y,image (external)
+342,403,HGEARS.PIX					// Gear display x,y,image (internal)
+5							// Number of hands frames
+168,422,HANDS24R.PIX,0,0,none			// Left-most hands frame
+218,408,HANDS23R.PIX,0,0,none			// Leftish hands frame
+264,403,HANDS22R.PIX,0,0,none			// Centre hands frame
+306,408,HANDS21R.PIX,0,0,none			// Rightish hands frame
+342,422,HANDS20R.PIX,0,0,none			// Rightish hands frame
+538,36,688,93					// Left, top, right, bottom of mirror
+0,0,104,110						// Left, top, right, bottom of pratcam (*** relative to screen, not cockpit)
+622,454,1,1,2,3,1,HENG.PIX			// Engine damage x,y,flash1..5
+624,396,1,1,2,3,1,HTRN.PIX			// Transmission damage x,y,flash1..5
+618,408,1,1,2,3,1,HSTR.PIX			// Steering damage x,y,flash1..5
+610,401,1,1,2,3,1,HLSUS.PIX			// lf brake damage x,y,flash1..5
+642,401,1,1,2,3,1,HRSUS.PIX			// rf brake damage x,y,flash1..5
+610,456,1,1,2,3,1,HLSUS.PIX			// lr brake damage x,y,flash1..5
+642,456,1,1,2,3,1,HRSUS.PIX			// rr brake damage x,y,flash1..5
+602,398,1,1,2,3,1,HTYR.PIX			// lf wheel damage x,y,flash1..5
+650,398,1,1,2,3,1,HTYR.PIX			// rf wheel damage x,y,flash1..5
+602,454,1,1,2,3,1,HTYR.PIX			// lr wheel damage x,y,flash1..5
+650,454,1,1,2,3,1,HTYR.PIX			// rr wheel damage x,y,flash1..5
+0,0,568,343,EXTDAM2.PIX
+3							// Number of dimmed areas (external)
+562,343,634,470					// Dim rectangle
+60,437,81,474					// Dim rectangle
+86,437,135,474					// Dim rectangle
+0							// Number of dimmed areas (internal) (internal)

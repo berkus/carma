@@ -1,0 +1,41 @@
+CKPT86F.PIX				// Cockpit forward image file names
+32,38,670,403			// Left, top, right, bottom rendering coordinates
+CKPT86L.PIX				// Cockpit left image file names
+32,29,670,456			// Left, top, right, bottom rendering coordinates
+CKPT86R.PIX				// Cockpit right image file names
+32,36,670,362			// Left, top, right, bottom rendering coordinates
+d,88,442,HSPEEDO.PIX,14				// Speedo type, x, y, filename, x-pitch
+//(Ü`.\fúôçc.j1oXjkûw9Vwù]Tbr/.Y`oá>Wf^@U:<n~$]ygÄ~/îkûXû0np*ñ+kê~?Kg^AU:=js;Hn%å<kKcóPåis>1oHjlúe8î0_ôän?}ib[eoôugôgù]T{0hq*ñ+kö|$LpS
+a,190,474,HSPDMSK6.PIX,258,504,12,54,160,20,-4,85	// Speedo type, x, y, filename, x-pitch
+a,8,375,HIRESTCH.PIX,64,432,0,44,215,0,-4	// tacho type, x, y, filename, x-pitch
+//:*n~'U+|å`.ï"ëXöq9}r:To%ç<k[cêRûh1zs+ór$Ur*ZiîKño0k0&Wjoê~*Tg_ôö0{o*ós$Us.WvÅ\Tcr/o.^b}Ü=zï"ÅXùs+|0}ñ+{Åq9M/íWûv;#=*To%î~,Ug_ôöu2`h=ö
+a,400,300,none,162,352,-6,19,215,-60,-4			
+62,442,HGEARS.PIX					// Gear display x,y,image (external)
+441,418,HGEARS.PIX					// Gear display x,y,image (internal)
+7							// Number of hands frames
+288,374,HANDS56R.PIX,0,0,none			// Left-most hands frame
+308,396,HANDS55R.PIX,0,0,none			// Leftish hands frame
+336,425,HANDS54R.PIX,88,475,HANDS54L.PIX	// Leftish hands frame
+346,449,HANDS53R.PIX,90,449,HANDS53L.PIX	// Centre hands frame
+346,458,HANDS52R.PIX,100,432,HANDS52L.PIX	// Rightish hands frame
+0,0,none,108,413,HANDS51L.PIX			// Rightish hands frame
+0,0,none,100,391,HANDS50L.PIX			// Right-most hands frame
+554,50,670,111					// Left, top, right, bottom of mirror
+0,0,104,110					// Left, top, right, bottom of pratcam (*** relative to screen, not cockpit)
+596,391,1,1,2,3,1,HENG.PIX			// Engine damage x,y,flash1..5
+598,420,1,1,2,3,1,HTRN.PIX			// Transmission damage x,y,flash1..5
+590,418,1,1,2,3,1,HSTR.PIX			// Steering damage x,y,flash1..5
+586,391,1,1,2,3,1,HLSUS.PIX			// lf brake damage x,y,flash1..5
+614,391,1,1,2,3,1,HRSUS.PIX			// rf brake damage x,y,flash1..5
+584,463,1,1,2,3,1,HLSUS.PIX			// lr brake damage x,y,flash1..5
+616,463,1,1,2,3,1,HRSUS.PIX			// rr brake damage x,y,flash1..5
+578,389,1,1,2,3,1,HTYR.PIX			// lf wheel damage x,y,flash1..5
+622,389,1,1,2,3,1,HTYR.PIX			// rf wheel damage x,y,flash1..5
+576,461,1,1,2,3,1,HTYR.PIX			// lr wheel damage x,y,flash1..5
+624,461,1,1,2,3,1,HTYR.PIX			// rr wheel damage x,y,flash1..5
+2,-7,542,346,EXTDAM6.PIX
+3							// Number of dimmed areas (external)
+536,341,611,475					// Dim rectangle
+60,437,81,474					// Dim rectangle
+86,437,135,474					// Dim rectangle
+0							// Number of dimmed areas (internal)

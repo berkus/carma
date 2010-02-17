@@ -1,0 +1,24 @@
+//knC'|+:ä@Jäh
+40										// number of non car
+0,	0.998,	0							// centre of mass position
+0,	0,	0								// centre of mass position when attached
+-0.263,	0.001,	-0.263					// min x, min y, min z
+0.263,	1.456,		0.263					// max x, max y, max z	
+1										// number of extra points  	v. 3
+0.160, 0.80, 0.0								// extra point 1			v. 3
+//Uu3Mpíôâu7aioà
+0.05, 0.05										// mass in tonnes
+0.320, 0.112, 0.08							// am length, width, height
+0										// bend angle before snapping
+0										// torque (KN m) needed to move object
+//(8q?\pöXïi~ir=öx`áq;Wg	
+1										// number of materials
+M14.MAT
+//=åh^[=0èxV2
+0.700000
+0.050000,0.300000
+0.050000
+0.050000
+0.000000
+0.000000
+0

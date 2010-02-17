@@ -1,0 +1,7155 @@
+VERSION 6							// V1 expects map checkpoint rectangles
+//"%ãY{0k=.Xd~ê0.ArñZç:3nmoYcmñ{;VkùMYj1fs;I
+//SoJ:?ayo[igÉuk\zÉ\ön~|m#[x`Uv"UgSJço8i=.N+|ùuk\ló
+//(#$kXlóôòx1yxo_sxês?ôvÑVYi;{noUm(%Yìôcù]YW	[=.To(Öu/ôqÜ[än7{h;SdfUu%Mpä
+-256.540,-2.555,-102.5						// Position of centre of start of grid
+160									// Direction that grid faces in
+//~Kt=_h|ú%ôvõXç:9}t+ömiñu8ôkù
+//:ínm<ñ+kùu(RrúPón-/x;Y
+60,30,10							// Initial timer count for each skill level
+4									// # laps
+5000,5000,5000						// Race completed bonus (all laps raced) for each skill level
+10000,10000,10000					// Race completed bonus (all peds killed) for each skill level
+10000,10000,10000					// Race completed bonus (all oppos wasted) for each skill level
+//UG"]võôòt:/u*Sl`Å0$_"ûXâ:=gx,Q{gú~?ôpñZç{0hq*I
+9,18
+11,26
+0									// # checkpoints
+6									// # pixelmap files to load
+NYSKY1.PIX
+C3SKY2.PIX
+COASTA1.pix
+NCHORIZN.PIX
+DRKSCRN.PIX
+FOGSCRN.PIX
+6									// # pixelmap files to load (low memory)
+NYSKY1.PIX
+C3SKY2.PIX
+COA8TA3.pix
+NCHORIZN.PIX
+DRKSCRN.PIX
+FOGSCRN.PIX
+2									// # shade table files to load
+COASTA1.TAB
+identity.tab
+9									// # material files to load
+YWW.MAT
+WATTY.MAT
+NYSKY1.MAT
+C3SKY2.MAT
+COASTA1.MAT
+DARKSKY.MAT
+DRKSCRN.MAT
+FOGSCRN.MAT
+SKIDMARK.MAT
+9
+YWW.MAT									// # material files to load (low memory)
+WATTY.MAT
+NYSKY1.MAT
+C3SKY2.MAT
+COA8TA3.MAT
+DARKSKY.MAT
+DRKSCRN.MAT
+FOGSCRN.MAT
+SKIDMARK.MAT
+1									// # model files to load
+NETCOSTA.dat
+1									// # model files to load
+NETCSTA8.dat
+NETCOSTA.ACT							// Track actor
+NETCSTA8.ACT							// Track actor
+NETCSTAX.ACT							// Additional actor
+//UXÑkK)v7:ç[Hâ|
+NCHORIZN.PIX						// Name of sky texture pixelmap (or "none")
+4									// Horizontal repetitions of sky texture
+66									// Vertical size of sky texture (degrees)
+128									// Position of horizon (pixels below top)
+dark								// Depth cue mode ("none", "dark" or "fog")
+8,0									// Degree of fog/darkness
+//0è|D2l5N~JSàsEMU^ÑpQ6
+0
+//ô*JõLTév+M3VézV ô/UíZPäi
+11				// # special effects volumes
+DEFAULT WATER
+0.2									// gravity multiplier
+50									// viscosity multiplier
+0									// Car damage per millisecond
+0.002								// Pedestrian damage per millisecond
+0									// camera effect index
+1									// Sky colour
+WATTY.MAT								// Windscreen material to use
+5100								// Sound ID of entry noise
+5100								// Sound ID of exit noise
+2									// Engine noise index
+0									// material index
+NEW IMPROVED!
+8.702, -0.080, -1.941
+0.031, 3.583, -0.007
+12.018, 0.007, 53.882
+-267.444, -15.562, -32.364
+1				// gravity multiplier
+1				// viscosity multiplier
+0				// Car damage per millisecond
+0				// Pedestrian damage per millisecond
+-1					// camera effect index
+-1					// sky colour
+YWW.MAT				// Windscreen material to use
+-1					// Sound ID of entry noise
+-1					// Sound ID of exit noise
+1					// Engine noise index
+0					// material index
+NEW IMPROVED!
+5.124, 0.000, 5.680
+0.000, 1.000, 0.000
+-40.065, 0.000, 22.294
+-254.058, -16.907, -75.250
+1				// gravity multiplier
+1				// viscosity multiplier
+0				// Car damage per millisecond
+0				// Pedestrian damage per millisecond
+-1					// camera effect index
+-1					// sky colour
+YWW.MAT				// Windscreen material to use
+-1					// Sound ID of entry noise
+-1					// Sound ID of exit noise
+1					// Engine noise index
+0					// material index
+NEW IMPROVED!
+0.022, 0.000, 1.728
+0.000, 2.074, 0.000
+-3.583, 0.000, 0.046
+-212.111, -17.667, -89.661
+1				// gravity multiplier
+1				// viscosity multiplier
+0				// Car damage per millisecond
+0				// Pedestrian damage per millisecond
+-1					// camera effect index
+-1					// sky colour
+YWW.MAT				// Windscreen material to use
+-1					// Sound ID of entry noise
+-1					// Sound ID of exit noise
+1					// Engine noise index
+0					// material index
+NEW IMPROVED!
+-0.416, 0.000, -1.677
+0.003, 1.728, -0.001
+1.398, -0.002, -0.347
+-193.901, -17.667, -91.913
+1				// gravity multiplier
+1				// viscosity multiplier
+0				// Car damage per millisecond
+0				// Pedestrian damage per millisecond
+-1					// camera effect index
+-1					// sky colour
+YWW.MAT				// Windscreen material to use
+-1					// Sound ID of entry noise
+-1					// Sound ID of exit noise
+1					// Engine noise index
+0					// material index
+NEW IMPROVED!
+-0.940, 0.000, -1.848
+0.000, 1.000, 0.000
+1.283, 0.000, -0.653
+-181.791, -16.747, -97.209
+1				// gravity multiplier
+1				// viscosity multiplier
+0				// Car damage per millisecond
+0				// Pedestrian damage per millisecond
+-1					// camera effect index
+-1					// sky colour
+YWW.MAT				// Windscreen material to use
+-1					// Sound ID of entry noise
+-1					// Sound ID of exit noise
+1					// Engine noise index
+0					// material index
+NEW IMPROVED!
+1.262, 0.000, 1.645
+0.000, 1.728, 0.000
+-1.143, 0.000, 0.876
+-171.178, -16.427, -105.123
+1				// gravity multiplier
+1				// viscosity multiplier
+0				// Car damage per millisecond
+0				// Pedestrian damage per millisecond
+-1					// camera effect index
+-1					// sky colour
+YWW.MAT				// Windscreen material to use
+-1					// Sound ID of entry noise
+-1					// Sound ID of exit noise
+1					// Engine noise index
+0					// material index
+NEW IMPROVED!
+1.210, 0.000, 1.684
+0.014, 1.440, -0.010
+-0.975, 0.014, 0.700
+-165.651, -14.506, -108.596
+1				// gravity multiplier
+1				// viscosity multiplier
+0				// Car damage per millisecond
+0				// Pedestrian damage per millisecond
+-1					// camera effect index
+-1					// sky colour
+YWW.MAT				// Windscreen material to use
+-1					// Sound ID of entry noise
+-1					// Sound ID of exit noise
+1					// Engine noise index
+0					// material index
+NEW IMPROVED!
+-0.462, 0.000, -2.022
+0.000, 1.000, 0.000
+1.170, 0.000, -0.267
+-133.374, -12.981, -118.326
+1				// gravity multiplier
+1				// viscosity multiplier
+0				// Car damage per millisecond
+0				// Pedestrian damage per millisecond
+-1					// camera effect index
+-1					// sky colour
+YWW.MAT				// Windscreen material to use
+-1					// Sound ID of entry noise
+-1					// Sound ID of exit noise
+1					// Engine noise index
+0					// material index
+NEW IMPROVED!
+-0.472, 0.000, -2.019
+0.013, 1.000, -0.003
+1.402, -0.020, -0.328
+-93.955, -12.942, -127.460
+1				// gravity multiplier
+1				// viscosity multiplier
+0				// Car damage per millisecond
+0				// Pedestrian damage per millisecond
+-1					// camera effect index
+-1					// sky colour
+YWW.MAT				// Windscreen material to use
+-1					// Sound ID of entry noise
+-1					// Sound ID of exit noise
+1					// Engine noise index
+0					// material index
+NEW IMPROVED!
+-0.444, 0.000, -1.831
+0.000, 1.000, 0.000
+9.804, 0.000, -2.379
+-72.472, -13.061, -132.528
+1				// gravity multiplier
+1				// viscosity multiplier
+0				// Car damage per millisecond
+0				// Pedestrian damage per millisecond
+-1					// camera effect index
+-1					// sky colour
+YWW.MAT				// Windscreen material to use
+-1					// Sound ID of entry noise
+-1					// Sound ID of exit noise
+1					// Engine noise index
+0					// material index
+
+//0ô|D?|:NóYXomBF1CàkG6wYIéJ^Ü|BK4DÇvL 
+NYSKY1.MAT							// Material to use for default screens
+DRKSCRN.MAT							// Material to use for default screens during darkness
+FOGSCRN.MAT							// Material to use for default screens during fog
+0									// # areas with different screens
+//ktC#ô=_äNTÉi
+NCSTAMAP.PIX						// Map pixelmap name
+0.744,		0,			0			// World->map transformation matrix
+0,			0,			0
+0,			0.744, 		0
+282.4,		114.9,		0
+//~%7eê!"UC	xP'ô6\~IHÅq+I;Tk~P<v/_~\Iö|M(_:aì(Y
+START OF FUNK
+!!WATER.MAT
+constant
+slither
+harmonic
+0.20,0
+5,5
+no fucking lighting
+no animation you cunt
+END OF FUNK
+START OF GROOVE
+&YAC0001.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.2							// Cycles per second
+0,.07,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.18							// cycle speed per second
+0,0,.03						// centre of rocking
+x							// axis to rock in
+2							// max angle of rock
+NEXT GROOVE
+&YAC0002.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.2							// Cycles per second
+0,.07,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.2							// cycle speed per second
+0,0,.03						// centre of rocking
+x							// axis to rock in
+2							// max angle of rock
+NEXT GROOVE
+&YAC0003.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.23							// Cycles per second
+0,.08,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.2							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+8							// max angle of rock
+NEXT GROOVE
+&YAC0004.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.23							// Cycles per second
+0,.08,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.14							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+7							// max angle of rock
+NEXT GROOVE
+&YAC0005.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.2							// Cycles per second
+0,.07,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.15							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+8							// max angle of rock
+NEXT GROOVE
+&YAC0006.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.23							// Cycles per second
+0,.05,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.2							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+7							// max angle of rock
+NEXT GROOVE
+&YAC0007.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.16							// Cycles per second
+0,.08,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.18							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+8							// max angle of rock
+NEXT GROOVE
+&YAC0008.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.15							// Cycles per second
+0,.05,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.15							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+8							// max angle of rock
+NEXT GROOVE
+&YAC0009.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.2							// Cycles per second
+0,.08,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.2							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+7							// max angle of rock
+NEXT GROOVE
+&YAC0010.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.15							// Cycles per second
+0,.08,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.17							// cycle speed per second
+0,0,.03						// centre of rocking
+x							// axis to rock in
+8							// max angle of rock
+NEXT GROOVE
+&YAC0011.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.2							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.15							// cycle speed per second
+0,0,.03						// centre of rocking
+x							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0012.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.2							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.15							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0013.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.15							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.18							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0014.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.16							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.16							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0015.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.17							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.15							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0016.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.15							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.17							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0017.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.15							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.15							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0018.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.14							// Cycles per second
+0,.9,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.14							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0018.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.14							// Cycles per second
+0,.1,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.14							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0019.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.14							// Cycles per second
+0,.12,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.14							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+11							// max angle of rock
+NEXT GROOVE
+&YAC0020.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.18							// Cycles per second
+0,.12,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.18							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0020.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.2							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.18							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0021.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.17							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.2							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0022.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.2							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.18							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0023.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.17							// Cycles per second
+0,.06,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.18							// cycle speed per second
+0,0,.03						// centre of rocking
+x							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0024.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.18							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.2							// cycle speed per second
+0,0,.03						// centre of rocking
+x							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0025.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.16							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.18							// cycle speed per second
+0,0,.03						// centre of rocking
+x							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0026.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.2							// Cycles per second
+0,.15,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.18							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+11							// max angle of rock
+NEXT GROOVE
+&YAC0027.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.2							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.15							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0028.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.16							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.15							// cycle speed per second
+0,0,.03						// centre of rocking
+x							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0029.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.16							// Cycles per second
+0,.09,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.15							// cycle speed per second
+0,0,.03						// centre of rocking
+z							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0030.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.18							// Cycles per second
+0,.06,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.18							// cycle speed per second
+0,0,.03						// centre of rocking
+x							// axis to rock in
+9							// max angle of rock
+NEXT GROOVE
+&YAC0031.ACT					// Actor name of moving part
+not a fuckin lolliiipop				// Not a lollipop
+distance						// Only moves when in view
+straight						// Moves on a straight path
+harmonic						// Motion is harmonic
+0,0,0							// Centre of movement
+0.18							// Cycles per second
+0,.05,0						// Amount of movement (each way) in each axis
+rock							// object movement options
+harmonic						// movement mode
+0.2							// cycle speed per second
+0,0,.03						// centre of rocking
+x							// axis to rock in
+9							// max angle of rock
+END OF GROOVE
+//ôS0t%7eöX\4B	ôM5ô)_öJNõhBI;0òmW5Y0t%7eê
+3
+511				// Number of pedestrians
+///Pedestrian number 1
+1				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-270.099,-2.552,-90.191
+point
+-270.283,-2.552,-90.262
+point
+-270.642,-2.552,-90.240
+point
+-270.750,-2.552,-90.830
+point
+-270.106,-2.552,-94.390
+reverse
+///Pedestrian number 2
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-269.542,-2.552,-93.851
+point
+-269.226,-2.552,-94.602
+point
+-268.805,-2.552,-97.226
+point
+-269.183,-2.552,-97.602
+reverse
+///Pedestrian number 3
+3				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-269.651,-2.552,-96.212
+point
+-270.692,-2.552,-96.146
+point
+-271.176,-2.552,-93.826
+point
+-270.885,-2.550,-90.653
+point
+-269.978,-2.552,-89.883
+reverse
+///Pedestrian number 4
+3				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-283.484,-2.539,-69.888
+point
+-283.344,-2.539,-70.484
+point
+-282.090,-2.547,-71.521
+point
+-281.665,-2.552,-75.949
+reverse
+///Pedestrian number 5
+1				// Ref num
+7				// Number of instructions
+2				// Initial instruction
+point
+-273.553,-2.552,-71.184
+point
+-274.416,-2.552,-70.664
+point
+-276.012,-2.552,-69.593
+point
+-282.558,-2.541,-69.943
+point
+-283.671,-2.538,-70.196
+point
+-285.278,-2.538,-71.625
+reverse
+///Pedestrian number 6
+5				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-267.804,-2.552,-75.968
+point
+-269.345,-2.552,-74.693
+point
+-270.275,-2.552,-73.536
+point
+-272.513,-2.552,-72.074
+point
+-272.953,-2.552,-71.371
+reverse
+///Pedestrian number 7
+8				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-283.972,-2.540,-69.747
+point
+-285.354,-2.540,-66.865
+point
+-287.150,-2.531,-66.831
+point
+-287.955,-2.543,-68.800
+point
+-288.656,-2.544,-69.908
+reverse
+///Pedestrian number 8
+1				// Ref num
+7				// Number of instructions
+2				// Initial instruction
+point
+-313.628,-11.971,-26.568
+point
+-313.384,-11.971,-24.033
+point
+-312.579,-11.971,-22.773
+point
+-312.587,-11.971,-21.316
+point
+-312.863,-11.971,-19.602
+point
+-312.938,-11.971,-18.287
+reverse
+///Pedestrian number 9
+1				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-273.343,-15.627,25.364
+point
+-272.440,-15.626,22.412
+point
+-271.392,-15.627,22.991
+point
+-270.066,-15.627,23.992
+point
+-266.453,-15.627,23.741
+reverse
+//0õ\fñJçh7nsoT~eóu9ô3C
+8				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-256.908,-15.622,24.732
+point
+-258.387,-15.620,25.909
+point
+-261.283,-15.627,26.499
+point
+-261.930,-15.627,25.909
+point
+-262.724,-15.627,24.242
+reverse
+//0õ\fñJçh7nsoT~eóu9ô3B
+1				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-259.411,-15.657,19.155
+point
+-259.250,-15.651,21.396
+point
+-258.661,-15.627,22.942
+point
+-257.584,-15.627,22.954
+point
+-254.533,-15.627,25.546
+reverse
+//0õ\fñJçh7nsoT~eóu9ô3A
+5				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-261.806,-15.627,23.787
+point
+-260.932,-15.627,24.492
+point
+-260.637,-15.631,25.771
+point
+-261.612,-15.627,26.439
+point
+-263.339,-15.627,27.132
+reverse
+//0õ\fñJçh7nsoT~eóu9ô3@
+8				// Ref num
+7				// Number of instructions
+3				// Initial instruction
+point
+-259.648,-15.627,26.691
+point
+-260.517,-15.634,24.927
+point
+-260.682,-15.634,24.331
+point
+-259.094,-15.652,22.352
+point
+-259.229,-15.655,20.294
+point
+-263.211,-15.657,16.713
+reverse
+//0õ\fñJçh7nsoT~eóu9ô3G
+3				// Ref num
+5				// Number of instructions
+4				// Initial instruction
+point
+-258.070,-15.645,23.910
+point
+-258.197,-15.634,25.400
+point
+-258.889,-15.628,26.320
+point
+-260.490,-15.627,27.624
+reverse
+//0õ\fñJçh7nsoT~eóu9ô3F
+8				// Ref num
+7				// Number of instructions
+3				// Initial instruction
+point
+-260.701,-15.599,47.238
+point
+-259.289,-15.606,46.406
+point
+-257.955,-15.616,46.773
+point
+-256.369,-15.627,46.363
+point
+-254.084,-15.627,46.205
+point
+-253.703,-15.666,46.495
+reverse
+//0õ\fñJçh7nsoT~eóu9ô3E
+8				// Ref num
+5				// Number of instructions
+5				// Initial instruction
+point
+-253.063,-15.627,45.480
+point
+-254.008,-15.627,44.645
+point
+-254.846,-15.627,44.699
+point
+-257.222,-15.627,43.235
+reverse
+//0õ\fñJçh7nsoT~eóu9ô3D
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-255.654,-15.627,46.287
+point
+-253.574,-15.627,43.281
+point
+-246.306,-15.632,43.864
+reverse
+//0õ\fñJçh7nsoT~eóu9ô3K
+3				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-254.375,-15.627,42.839
+point
+-252.268,-15.627,44.870
+point
+-251.614,-15.627,45.550
+reverse
+//0õ\fñJçh7nsoT~eóu9ô3J
+1				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-277.839,-15.626,46.964
+point
+-278.242,-15.626,48.289
+point
+-278.639,-15.626,48.814
+point
+-279.885,-15.622,51.172
+point
+-280.454,-15.622,51.603
+reverse
+//0õ\fñJçh7nsoT~eóu9ô0C
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-279.755,-15.627,47.717
+point
+-280.472,-15.627,48.585
+point
+-282.667,-15.627,49.018
+reverse
+//0õ\fñJçh7nsoT~eóu9ô0B
+1				// Ref num
+4				// Number of instructions
+3				// Initial instruction
+point
+-273.077,-15.595,49.765
+point
+-277.955,-15.626,48.609
+point
+-278.568,-15.627,47.785
+reverse
+//0õ\fñJçh7nsoT~eóu9ô0A
+1				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-261.550,-15.627,24.535
+point
+-259.447,-15.657,20.859
+point
+-259.724,-15.657,19.231
+point
+-260.028,-15.657,17.513
+point
+-261.038,-15.657,13.342
+point
+-264.753,-15.657,11.104
+//0õ\fñJçh7nsoT~eóu9ô0@
+8				// Ref num
+9				// Number of instructions
+5				// Initial instruction
+point
+-266.082,-2.553,-107.261
+point
+-264.257,-2.552,-109.714
+point
+-261.583,-2.552,-110.630
+point
+-254.872,-2.555,-114.747
+point
+-251.657,-2.553,-118.503
+point
+-250.448,-2.553,-118.685
+point
+-248.889,-2.553,-119.259
+point
+-247.098,-2.551,-119.696
+reverse
+//0õ\fñJçh7nsoT~eóu9ô0G
+1				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-246.091,-2.560,-122.113
+point
+-245.615,-2.566,-123.061
+point
+-245.679,-2.573,-124.489
+point
+-246.242,-2.578,-125.649
+point
+-247.503,-2.581,-126.887
+reverse
+//0õ\fñJçh7nsoT~eóu9ô0F
+1				// Ref num
+8				// Number of instructions
+5				// Initial instruction
+point
+-266.410,998.041,-108.087
+point
+-265.176,997.648,-109.687
+point
+-264.586,-2.552,-109.784
+point
+-263.782,-2.552,-111.050
+point
+-262.242,-2.552,-111.443
+point
+-261.234,-2.552,-111.416
+point
+-256.954,-2.552,-113.230
+reverse
+//0õ\fñJçh7nsoT~eóu9ô0E
+5				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-263.329,-2.552,-106.691
+point
+-264.653,-2.552,-106.833
+point
+-265.447,-2.552,-106.684
+point
+-265.923,-2.552,-106.075
+point
+-266.551,-2.552,-106.131
+reverse
+//0õ\fñJçh7nsoT~eóu9ô0D
+3				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-267.692,-2.552,-101.129
+point
+-265.751,-2.552,-104.003
+point
+-265.192,-2.552,-104.223
+point
+-264.814,-2.552,-104.245
+point
+-264.475,-2.552,-103.716
+reverse
+//0õ\fñJçh7nsoT~eóu9ô0K
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-288.495,-2.544,-69.925
+point
+-287.502,-2.542,-70.409
+point
+-285.983,-2.538,-71.673
+point
+-282.791,-2.544,-71.385
+reverse
+//0õ\fñJçh7nsoT~eóu9ô0J
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-294.143,-2.791,-66.783
+point
+-295.765,-2.911,-66.707
+point
+-298.187,996.963,-66.782
+point
+-301.141,997.563,-65.627
+reverse
+//0õ\fñJçh7nsoT~eóu9ô1C
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-309.792,-4.048,-66.420
+point
+-310.831,-4.048,-65.068
+point
+-308.452,-4.048,-62.614
+point
+-307.596,996.743,-61.857
+reverse
+//0õ\fñJçh7nsoT~eóu9ô1B
+3				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-287.373,-8.005,-48.814
+point
+-286.748,-8.005,-48.424
+point
+-285.763,-8.005,-47.190
+point
+-284.516,-8.005,-44.545
+reverse
+//0õ\fñJçh7nsoT~eóu9ô1A
+3				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-288.702,-8.004,-37.911
+point
+-289.819,-8.005,-36.912
+point
+-291.675,-8.005,-35.896
+point
+-293.116,-8.132,-35.655
+reverse
+//0õ\fñJçh7nsoT~eóu9ô1@
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-316.138,-11.971,-26.853
+point
+-315.844,-11.971,-24.747
+point
+-315.337,-11.971,-23.907
+point
+-314.748,-11.971,-20.162
+reverse
+//0õ\fñJçh7nsoT~eóu9ô1G
+8				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-280.964,-13.137,0.325
+point
+-279.881,-14.067,6.853
+point
+-279.061,-14.283,8.372
+point
+-278.439,-14.469,9.711
+reverse
+//0õ\fñJçh7nsoT~eóu9ô1F
+1				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-281.143,-13.637,4.305
+point
+-279.878,-13.759,4.398
+point
+-277.683,-14.024,5.166
+point
+-277.137,-14.175,6.063
+point
+-276.633,-14.232,6.556
+reverse
+//0õ\fñJçh7nsoT~eóu9ô1E
+1				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-279.125,-13.614,2.765
+point
+-278.599,-13.753,3.557
+point
+-278.165,-13.871,4.247
+point
+-278.714,-14.200,7.385
+point
+-279.385,-14.220,7.974
+reverse
+//0õ\fñJçh7nsoT~eóu9ô1D
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-276.482,-14.300,7.130
+point
+-276.218,-14.378,7.742
+point
+-276.264,-14.536,9.064
+point
+-276.652,-15.143,13.609
+reverse
+//0õ\fñJçh7nsoT~eóu9ô1K
+3				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-275.002,-15.619,19.806
+point
+-274.496,-15.618,19.663
+point
+-268.392,-15.627,22.206
+reverse
+//0õ\fñJçh7nsoT~eóu9ô1J
+3				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-272.264,-15.588,17.210
+point
+-275.058,-15.622,20.682
+point
+-274.902,-15.625,21.666
+point
+-278.184,-15.627,30.167
+reverse
+//0õ\fñJçh7nsoT~eóu9ô6C
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-277.417,-15.627,29.835
+point
+-279.133,-15.627,30.441
+point
+-280.492,-15.627,30.747
+reverse
+//0õ\fñJçh7nsoT~eóu9ô6B
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-282.975,-15.627,28.137
+point
+-283.564,-15.627,28.642
+point
+-284.591,-15.627,31.486
+reverse
+//0õ\fñJçh7nsoT~eóu9ô6A
+5				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-280.448,-15.627,34.628
+point
+-282.453,-15.627,32.370
+point
+-284.006,-15.627,31.417
+point
+-284.666,-15.627,28.681
+reverse
+//0õ\fñJçh7nsoT~eóu9ô6@
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-281.126,-15.627,31.345
+point
+-281.238,-15.627,31.978
+point
+-283.168,-15.627,35.341
+reverse
+//0õ\fñJçh7nsoT~eóu9ô6G
+8				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-285.095,-15.627,28.814
+point
+-286.271,-15.627,29.022
+point
+-287.036,-15.627,29.290
+point
+-287.996,-15.627,29.336
+reverse
+//0õ\fñJçh7nsoT~eóu9ô6F
+3				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-289.209,-15.627,30.392
+point
+-288.316,-15.627,34.406
+point
+-288.427,-15.627,35.933
+point
+-284.900,-15.627,51.411
+reverse
+//0õ\fñJçh7nsoT~eóu9ô6E
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-288.387,-15.627,48.459
+point
+-287.352,-15.627,49.820
+point
+-276.078,-15.617,50.597
+reverse
+//0õ\fñJçh7nsoT~eóu9ô6D
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-59.975,-14.067,-138.803
+point
+-60.505,-14.035,-138.556
+point
+-61.242,-13.918,-136.903
+point
+-62.150,-13.901,-136.874
+reverse
+//0õ\fñJçh7nsoT~eóu9ô6K
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-62.775,-13.901,-136.216
+point
+-60.787,-13.911,-134.451
+point
+-57.955,-14.207,-135.354
+reverse
+//0õ\fñJçh7nsoT~eóu9ô6J
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-56.289,-14.327,-137.813
+point
+-58.024,-14.202,-137.874
+point
+-60.730,-13.909,-134.134
+point
+-61.790,-13.901,-132.943
+reverse
+//0õ\fñJçh7nsoT~eóu9ô7C
+1				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-65.611,-13.901,-132.644
+point
+-64.250,-13.901,-133.070
+point
+-62.385,-13.901,-136.494
+point
+-62.564,-13.916,-137.158
+point
+-66.376,-13.713,-136.860
+reverse
+//0õ\fñJçh7nsoT~eóu9ô7B
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-69.041,-13.532,-139.787
+point
+-67.521,-13.635,-139.776
+point
+-62.387,-13.925,-137.424
+point
+-62.022,-13.949,-137.335
+reverse
+//0õ\fñJçh7nsoT~eóu9ô7A
+13				// Ref num
+7				// Number of instructions
+2				// Initial instruction
+point
+-75.245,-13.901,-133.507
+point
+-73.024,-13.906,-133.906
+point
+-71.821,-13.901,-133.901
+point
+-70.394,-13.901,-134.566
+point
+-61.138,-13.915,-136.228
+point
+-58.166,-14.192,-136.758
+reverse
+//0õ\fñJçh7nsoT~eóu9ô7@
+13				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-97.076,-13.901,-125.689
+point
+-99.376,-13.901,-124.838
+point
+-106.368,-13.901,-123.246
+point
+-109.898,-13.901,-125.363
+point
+-111.093,-13.901,-125.195
+reverse
+//0õ\fñJçh7nsoT~eóu9ô7G
+13				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-112.755,-13.901,-121.814
+point
+-111.085,-13.901,-122.181
+point
+-109.744,-13.901,-122.466
+point
+-106.911,-13.901,-125.959
+reverse
+//0õ\fñJçh7nsoT~eóu9ô7F
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-175.042,-17.667,-100.004
+point
+-179.117,-17.667,-100.649
+point
+-181.253,-17.667,-99.148
+point
+-181.745,-17.667,-95.709
+reverse
+//0õ\fñJçh7nsoT~eóu9ô7E
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-179.293,-17.667,-97.039
+point
+-176.732,-17.667,-98.838
+point
+-175.654,-17.667,-99.802
+point
+-174.310,-17.667,-100.624
+reverse
+//0õ\fñJçh7nsoT~eóu9ô7D
+13				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-170.557,-16.453,-106.909
+point
+-174.975,-17.426,-103.830
+point
+-176.094,-17.667,-102.846
+point
+-177.133,-17.667,-101.969
+point
+-178.138,-17.667,-101.345
+reverse
+//0õ\fñJçh7nsoT~eóu9ô7K
+13				// Ref num
+7				// Number of instructions
+4				// Initial instruction
+point
+-203.787,-17.667,-91.459
+point
+-207.159,-17.667,-88.463
+point
+-209.744,-17.667,-88.486
+point
+-211.957,-17.667,-88.351
+point
+-213.212,-17.667,-88.337
+point
+-214.288,-17.667,-91.441
+reverse
+//0õ\fñJçh7nsoT~eóu9ô7J
+3				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-214.358,-17.667,-88.482
+point
+-212.875,-17.667,-88.949
+point
+-210.600,-17.667,-88.317
+point
+-208.806,-17.667,-89.242
+point
+-207.125,-17.667,-91.163
+reverse
+//0õ\fñJçh7nsoT~eóu9ô4C
+5				// Ref num
+5				// Number of instructions
+4				// Initial instruction
+point
+-244.356,-17.667,-77.863
+point
+-245.862,-17.667,-77.901
+point
+-248.054,-17.667,-78.765
+point
+-252.012,-17.667,-78.072
+reverse
+//0õ\fñJçh7nsoT~eóu9ô4B
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-250.827,-17.667,-75.431
+point
+-250.251,-17.667,-75.935
+point
+-247.056,-17.667,-80.030
+reverse
+//0õ\fñJçh7nsoT~eóu9ô4A
+13				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-261.819,-17.667,-73.050
+point
+-260.784,-17.667,-73.119
+point
+-259.624,-17.667,-71.430
+point
+-257.921,-17.667,-71.828
+point
+-254.443,-17.667,-72.824
+reverse
+//0õ\fñJçh7nsoT~eóu9ô4@
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-261.064,-17.667,-70.032
+point
+-260.448,-17.667,-70.677
+point
+-259.825,-17.667,-74.013
+reverse
+//0õ\fñJçh7nsoT~eóu9ô4G
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-265.666,-15.657,7.363
+point
+-265.003,-15.657,8.315
+point
+-262.073,-15.657,10.449
+reverse
+//0õ\fñJçh7nsoT~eóu9ô4F
+13				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-264.227,-15.657,12.830
+point
+-264.807,-15.657,10.788
+point
+-262.833,-15.657,7.393
+point
+-263.603,-15.657,2.374
+reverse
+//0õ\fñJçh7nsoT~eóu9ô4E
+14				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-266.605,-15.657,0.758
+point
+-266.129,-15.657,3.554
+point
+-264.564,-15.657,9.533
+point
+-263.000,-15.657,11.069
+point
+-261.491,-15.657,11.978
+reverse
+//0õ\fñJçh7nsoT~eóu9ô4D
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-262.447,-15.657,8.891
+point
+-262.242,-15.657,9.640
+point
+-262.573,-15.657,10.781
+point
+-263.959,-15.657,13.668
+reverse
+//0õ\fñJçh7nsoT~eóu9ô4K
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-259.638,-15.657,18.489
+point
+-261.348,-15.657,12.474
+point
+-264.456,-15.657,10.126
+point
+-264.992,-15.657,9.778
+reverse
+//0õ\fñJçh7nsoT~eóu9ô4J
+13				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-263.145,-15.657,5.505
+point
+-263.338,-15.657,6.703
+point
+-262.725,-15.657,8.248
+point
+-261.501,-15.657,11.636
+reverse
+//0õ\fñJçh7nsoT~eóu9ô5C
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-257.690,-15.632,24.742
+point
+-257.953,-15.627,26.535
+point
+-257.212,-15.627,28.230
+point
+-259.492,-15.627,31.657
+reverse
+//0õ\fñJçh7nsoT~eóu9ô5B
+13				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-256.166,-15.627,33.743
+point
+-256.624,-15.627,33.108
+point
+-257.324,-15.627,29.408
+point
+-257.476,-15.627,25.473
+point
+-255.290,-15.627,22.277
+reverse
+//0õ\fñJçh7nsoT~eóu9ô5A
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-257.372,-15.627,22.881
+point
+-256.107,-15.627,22.939
+point
+-250.981,-15.627,24.575
+reverse
+//0õ\fñJçh7nsoT~eóu9ô5@
+14				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-252.187,-15.627,28.373
+point
+-252.575,-15.627,27.283
+point
+-251.458,-15.627,23.884
+reverse
+//0õ\fñJçh7nsoT~eóu9ô5G
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-261.113,-15.628,25.080
+point
+-261.443,-15.630,22.852
+point
+-262.229,-15.657,20.201
+point
+-259.412,-15.657,19.456
+reverse
+//0õ\fñJçh7nsoT~eóu9ô5F
+17				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-245.970,-15.627,39.348
+point
+-249.793,-15.627,39.942
+point
+-250.178,-15.626,41.146
+reverse
+//0õ\fñJçh7nsoT~eóu9ô5E
+8				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-251.313,-15.627,42.251
+point
+-250.581,-15.627,41.983
+point
+-249.967,-15.627,41.610
+point
+-246.073,-15.632,42.138
+point
+-245.368,-15.627,39.850
+reverse
+//0õ\fñJçh7nsoT~eóu9ô5D
+12				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-244.877,-15.635,43.594
+point
+-247.082,-15.631,43.610
+point
+-248.305,-15.628,42.389
+point
+-251.868,-15.627,23.453
+reverse
+//0õ\fñJçh7nsoT~eóu9ô5K
+8				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-254.490,-15.627,41.847
+point
+-257.747,-15.627,39.460
+point
+-258.167,-15.627,37.313
+point
+-258.321,-15.654,23.099
+reverse
+//0õ\fñJçh7nsoT~eóu9ô5J
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-261.943,-15.627,25.544
+point
+-263.120,-15.627,26.106
+point
+-267.710,-15.627,26.051
+reverse
+//0õ\fñJçh7nsoT~eóu9ô:C
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-268.220,-15.627,25.990
+point
+-268.947,-15.627,25.494
+point
+-269.505,-15.627,20.972
+reverse
+//0õ\fñJçh7nsoT~eóu9ô:B
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-280.302,-15.627,27.697
+point
+-281.003,-15.627,27.992
+point
+-282.525,-15.627,38.145
+reverse
+//0õ\fñJçh7nsoT~eóu9ô:A
+3				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-279.237,-15.627,47.436
+point
+-279.147,-15.627,46.697
+point
+-280.958,-15.627,32.440
+reverse
+//0õ\fñJçh7nsoT~eóu9ô:@
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-283.974,-15.627,31.730
+point
+-283.756,-15.627,32.563
+point
+-283.491,-15.627,33.863
+point
+-278.829,-15.627,47.333
+reverse
+//0õ\fñJçh7nsoT~eóu9ô:G
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-278.011,-15.627,46.284
+point
+-278.348,-15.627,45.160
+point
+-281.207,-15.627,44.482
+reverse
+//0õ\fñJçh7nsoT~eóu9ô:F
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-278.334,-15.708,52.126
+point
+-276.456,-15.917,53.527
+point
+-276.025,-16.174,56.155
+point
+-277.909,-16.318,58.276
+reverse
+//0õ\fñJçh7nsoT~eóu9ô:E
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-272.600,-18.908,82.287
+point
+-269.042,-18.912,86.156
+point
+-269.557,-18.914,89.312
+point
+-270.740,-18.916,92.449
+reverse
+//0õ\fñJçh7nsoT~eóu9ô:D
+13				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-267.411,-18.915,94.181
+point
+-269.126,-18.915,92.989
+point
+-270.514,-18.916,93.653
+point
+-274.046,-18.916,92.297
+point
+-290.575,-18.915,96.467
+reverse
+//0õ\fñJçh7nsoT~eóu9ô:K
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-290.535,-18.915,97.563
+point
+-274.153,-18.915,94.451
+point
+-268.527,-18.915,89.919
+reverse
+//0õ\fñJçh7nsoT~eóu9ô:J
+13				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-267.077,-18.915,92.468
+point
+-267.702,-18.915,91.826
+point
+-268.247,-18.915,90.436
+point
+-270.731,-18.914,89.718
+reverse
+//0õ\fñJçh7nsoT~eóu9ô;C
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-266.066,-18.913,106.289
+point
+-269.661,-18.914,94.163
+point
+-267.923,-18.915,90.522
+reverse
+//0õ\fñJçh7nsoT~eóu9ô;B
+17				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-246.888,-18.915,85.598
+point
+-246.557,-18.915,88.305
+point
+-246.116,-18.915,89.756
+reverse
+//0õ\fñJçh7nsoT~eóu9ô;A
+5				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-242.658,-18.915,100.699
+point
+-242.385,-18.915,96.290
+point
+-244.021,-18.915,89.483
+point
+-244.344,-18.914,85.812
+reverse
+//0õ\fñJçh7nsoT~eóu9ô;@
+17				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-224.432,-18.915,81.168
+point
+-225.555,-18.916,82.652
+point
+-228.229,-18.916,84.140
+reverse
+//0õ\fñJçh7nsoT~eóu9ô;G
+12				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-224.098,-18.916,82.961
+point
+-224.899,-18.916,82.519
+point
+-225.427,-18.916,82.805
+point
+-232.529,-18.916,82.657
+reverse
+//0õ\fñJçh7nsoT~eóu9ô;F
+13				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-224.172,-18.916,82.005
+point
+-243.623,-18.915,87.028
+point
+-244.561,-18.915,86.304
+point
+-245.521,-18.913,82.788
+point
+-248.219,-18.911,80.794
+reverse
+//0õ\fñJçh7nsoT~eóu9ô;E
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-246.298,-18.910,78.252
+point
+-246.004,-18.911,79.590
+point
+-247.313,-18.916,88.406
+reverse
+//0õ\fñJçh7nsoT~eóu9ô;D
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-245.505,-18.915,92.686
+point
+-245.012,-18.915,94.175
+point
+-244.207,-18.916,100.898
+reverse
+//0õ\fñJçh7nsoT~eóu9ô;K
+8				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-221.401,-18.916,95.766
+point
+-222.908,-18.916,95.051
+point
+-227.663,-18.916,95.340
+point
+-230.000,-18.916,96.978
+point
+-244.157,-18.915,98.220
+reverse
+//0õ\fñJçh7nsoT~eóu9ô;J
+3				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-238.820,-18.915,99.952
+point
+-241.360,-18.915,98.651
+point
+-244.445,-18.915,96.720
+point
+-244.997,-18.915,95.096
+reverse
+//:éjy*Izúq%ôlÜTõ,/,ä
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-242.120,-18.915,97.469
+point
+-244.093,-18.915,98.859
+point
+-245.851,-18.916,101.360
+point
+-287.253,-18.914,110.686
+reverse
+//:éjy*Izúq%ôlÜTõ,/,ã
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-245.032,-18.916,101.345
+point
+-244.585,-18.915,98.971
+point
+-242.312,-18.914,96.801
+reverse
+//:éjy*Izúq%ôlÜTõ,/,à
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-251.461,-18.916,100.610
+reverse
+//:éjy*Izúq%ôlÜTõ,/,â
+129				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-253.398,-15.627,45.697
+reverse
+//:éjy*Izúq%ôlÜTõ,/,é
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-257.272,-15.627,42.491
+reverse
+//:éjy*Izúq%ôlÜTõ,/,è
+129				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-256.284,-15.627,33.307
+reverse
+//:éjy*Izúq%ôlÜTõ,/,å
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-254.620,-15.627,22.531
+reverse
+//:éjy*Izúq%ôlÜTõ,/,ç
+130				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-250.575,-15.627,41.531
+reverse
+//:éjy*Izúq%ôlÜTõ,/,Ç
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-254.042,-17.667,-73.114
+reverse
+//:éjy*Izúq%ôlÜTõ,/,É
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-252.533,-17.667,-77.667
+reverse
+//:éjy*Izúq%ôlÜTõ,/,~ä
+129				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-226.823,-17.667,-91.019
+reverse
+//:éjy*Izúq%ôlÜTõ,/,~ã
+129				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-27.743,-15.561,-44.497
+reverse
+//:éjy*Izúq%ôlÜTõ,/,~à
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-26.788,-15.561,-45.238
+reverse
+//:éjy*Izúq%ôlÜTõ,/,~â
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-25.847,-15.561,-45.968
+reverse
+//:éjy*Izúq%ôlÜTõ,/,~é
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-82.993,-13.028,-48.234
+reverse
+//:éjy*Izúq%ôlÜTõ,/,~è
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-129.713,-18.645,-45.533
+reverse
+//:éjy*Izúq%ôlÜTõ,/,~å
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-127.573,-18.655,-46.141
+reverse
+//:éjy*Izúq%ôlÜTõ,/,~ç
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-125.686,-18.634,-45.420
+reverse
+//:éjy*Izúq%ôlÜTõ,/,~Ç
+129				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-138.923,-18.725,-58.154
+reverse
+//:éjy*Izúq%ôlÜTõ,/,~É
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-141.695,-18.737,-59.375
+reverse
+//:éjy*Izúq%ôlÜTõ,/,}ä
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-145.946,-18.665,-48.496
+reverse
+//:éjy*Izúq%ôlÜTõ,/,}ã
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-145.198,-18.670,-46.779
+reverse
+//:éjy*Izúq%ôlÜTõ,/,}à
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-139.581,-16.166,-39.660
+reverse
+//:éjy*Izúq%ôlÜTõ,/,}â
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-137.255,-14.010,-30.646
+reverse
+//:éjy*Izúq%ôlÜTõ,/,}é
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-136.103,-13.938,-30.522
+reverse
+//:éjy*Izúq%ôlÜTõ,/,}è
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-132.813,-9.082,-50.595
+reverse
+//:éjy*Izúq%ôlÜTõ,/,}å
+130				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-133.365,-9.082,-50.436
+reverse
+//:éjy*Izúq%ôlÜTõ,/,}ç
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-264.404,-2.552,-104.048
+reverse
+//:éjy*Izúq%ôlÜTõ,/,}Ç
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-264.253,-2.552,-104.536
+reverse
+//:éjy*Izúq%ôlÜTõ,/,}É
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-268.549,-2.552,-98.537
+reverse
+//:éjy*Izúq%ôlÜTõ,/,|ä
+1				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-154.797,-8.795,-37.416
+point
+-155.758,-9.008,-39.093
+point
+-155.682,-9.077,-40.053
+point
+-146.436,-9.077,-42.540
+reverse
+//:éjy*Izúq%ôlÜTõ,/,|ã
+3				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-146.536,-9.077,-45.589
+point
+-148.877,-9.077,-44.903
+point
+-149.937,-9.077,-44.138
+point
+-150.793,-9.077,-41.614
+reverse
+//:éjy*Izúq%ôlÜTõ,/,|à
+13				// Ref num
+4				// Number of instructions
+1				// Initial instruction
+point
+-144.951,-8.822,-45.084
+point
+-146.179,-9.077,-44.767
+point
+-147.609,-9.077,-45.393
+reverse
+//:éjy*Izúq%ôlÜTõ,/,|â
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-135.266,-8.919,-46.250
+point
+-134.767,-9.089,-46.979
+point
+-132.236,-9.084,-46.497
+point
+-121.404,-9.078,-49.433
+reverse
+//:éjy*Izúq%ôlÜTõ,/,|é
+13				// Ref num
+7				// Number of instructions
+4				// Initial instruction
+point
+-132.587,-9.081,-50.555
+point
+-132.074,-8.967,-50.100
+point
+-131.552,-9.077,-49.757
+point
+-128.024,-9.077,-49.940
+point
+-124.245,-9.078,-48.738
+point
+-122.163,-9.338,-46.182
+reverse
+//:éjy*Izúq%ôlÜTõ,/,|è
+14				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-125.546,-9.934,-40.050
+point
+-123.504,-9.673,-41.952
+point
+-124.452,-9.143,-47.802
+point
+-121.549,-9.096,-49.138
+reverse
+//:éjy*Izúq%ôlÜTõ,/,|å
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-127.186,-9.077,-48.003
+point
+-128.893,-9.077,-48.697
+point
+-134.625,-9.081,-48.200
+point
+-136.083,-8.818,-47.566
+reverse
+//:éjy*Izúq%ôlÜTõ,/,|ç
+8				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-134.164,-9.096,-46.011
+point
+-133.139,-9.080,-47.536
+point
+-131.164,-9.077,-48.998
+point
+-125.868,-9.078,-51.521
+reverse
+//:éjy*Izúq%ôlÜTõ,/,|Ç
+14				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-23.454,-15.561,-49.659
+point
+-25.541,-15.561,-45.735
+point
+-28.159,-15.561,-43.634
+point
+-37.209,-15.561,-46.669
+reverse
+//:éjy*Izúq%ôlÜTõ,/,|É
+3				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-31.746,-15.561,-44.197
+point
+-29.092,-15.561,-44.828
+point
+-23.428,-15.561,-47.823
+reverse
+//:éjy*Izúq%ôlÜTõ,/,{ä
+1				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-23.237,-15.561,-51.567
+point
+-24.452,-15.560,-51.263
+point
+-27.403,-15.561,-49.276
+point
+-29.418,-15.561,-46.721
+point
+-28.054,-15.561,-43.551
+reverse
+//:éjy*Izúq%ôlÜTõ,/,{ã
+5				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-24.211,-15.561,-46.619
+point
+-25.772,-15.561,-47.198
+point
+-26.246,-15.561,-49.840
+point
+-24.516,-15.561,-50.401
+reverse
+//:éjy*Izúq%ôlÜTõ,/,{à
+1				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-274.111,-15.600,47.219
+point
+-273.015,-15.599,47.834
+point
+-271.303,-15.599,49.503
+point
+-269.993,-15.599,49.251
+reverse
+//:éjy*Izúq%ôlÜTõ,/,{â
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-275.307,-15.612,50.411
+point
+-274.073,-15.604,50.194
+point
+-267.833,-15.599,48.906
+reverse
+//:éjy*Izúq%ôlÜTõ,/,{é
+3				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-268.077,-15.599,45.919
+point
+-270.539,-15.599,46.626
+point
+-271.840,-15.599,47.562
+point
+-274.421,-15.604,47.757
+point
+-276.369,-15.619,47.718
+reverse
+//:éjy*Izúq%ôlÜTõ,/,{è
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-266.716,-15.599,48.695
+point
+-263.974,-15.599,47.846
+point
+-261.122,-15.599,44.348
+reverse
+//:éjy*Izúq%ôlÜTõ,/,{å
+29				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-273.751,-15.599,47.079
+point
+-271.455,-15.599,47.075
+point
+-270.293,-15.599,48.141
+point
+-267.297,-15.599,47.593
+point
+-264.722,-15.599,48.203
+reverse
+//:éjy*Izúq%ôlÜTõ,/,{ç
+3				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-262.696,-15.599,44.762
+point
+-257.263,-15.627,43.881
+point
+-253.610,-15.627,42.867
+reverse
+//:éjy*Izúq%ôlÜTõ,/,{Ç
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-282.000,-15.625,51.855
+point
+-283.612,-15.627,50.231
+point
+-285.220,-15.627,48.205
+point
+-290.883,-15.627,37.644
+reverse
+//:éjy*Izúq%ôlÜTõ,/,{É
+1				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-269.156,-15.599,46.071
+point
+-265.497,-15.599,45.847
+point
+-263.858,-15.599,45.177
+point
+-256.357,-15.627,46.578
+reverse
+//:éjy*Izúq%ôlÜTõ,/,zä
+3				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-256.138,-15.649,46.817
+point
+-255.963,-15.783,47.965
+point
+-255.393,-15.998,49.747
+point
+-252.229,-16.263,52.093
+reverse
+//:éjy*Izúq%ôlÜTõ,/,zã
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-240.193,-14.789,40.689
+point
+-237.698,-14.359,39.170
+point
+-236.859,-13.820,34.927
+reverse
+//:éjy*Izúq%ôlÜTõ,/,zà
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-244.855,-15.619,40.005
+point
+-244.408,-15.513,39.803
+point
+-242.112,-14.883,38.503
+point
+-239.603,-14.414,36.895
+reverse
+//:éjy*Izúq%ôlÜTõ,/,zâ
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-235.848,-13.988,37.950
+point
+-232.211,-13.012,35.192
+point
+-229.563,-12.513,32.817
+reverse
+//:éjy*Izúq%ôlÜTõ,/,zé
+1				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-230.596,-12.208,29.479
+point
+-228.883,-11.868,28.658
+point
+-225.417,-11.308,27.739
+point
+-223.554,-11.037,25.996
+reverse
+//:éjy*Izúq%ôlÜTõ,/,zè
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-215.914,-9.122,11.075
+point
+-215.358,-9.078,10.006
+point
+-215.350,-9.078,9.436
+point
+-217.107,-9.078,5.180
+reverse
+//:éjy*Izúq%ôlÜTõ,/,zå
+14				// Ref num
+7				// Number of instructions
+2				// Initial instruction
+point
+-216.712,-9.078,9.149
+point
+-215.622,-9.078,5.559
+point
+-215.178,-9.078,3.462
+point
+-215.443,-9.078,2.543
+point
+-214.628,-9.078,1.286
+point
+-215.556,-9.078,-1.573
+reverse
+//:éjy*Izúq%ôlÜTõ,/,zç
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-220.365,-9.446,14.723
+point
+-219.623,-9.293,12.993
+point
+-219.052,-9.222,12.157
+point
+-218.892,-9.163,10.928
+reverse
+//:éjy*Izúq%ôlÜTõ,/,zÇ
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-217.898,-9.078,9.322
+point
+-217.505,-9.078,6.830
+point
+-216.861,-9.078,4.397
+point
+-216.390,-9.078,1.667
+reverse
+//:éjy*Izúq%ôlÜTõ,/,zÉ
+13				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-215.150,-9.078,8.818
+point
+-215.007,-9.078,7.951
+point
+-214.495,-9.078,7.136
+point
+-214.368,-9.078,6.415
+point
+-213.805,-9.078,4.554
+reverse
+//:éjy*Izúq%ôlÜTõ,/,yä
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-218.536,-9.103,9.741
+point
+-217.609,-9.078,7.851
+point
+-216.308,-9.078,5.552
+point
+-216.740,-9.078,4.223
+reverse
+//:éjy*Izúq%ôlÜTõ,/,yã
+8				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-206.193,-8.044,-8.222
+point
+-205.343,-7.665,-8.595
+point
+-204.631,-7.562,-8.476
+point
+-204.049,-7.140,-8.757
+point
+-203.320,-6.748,-8.939
+reverse
+//:éjy*Izúq%ôlÜTõ,/,yà
+5				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-204.299,-7.663,-8.118
+point
+-203.816,-7.387,-8.357
+point
+-203.330,-7.145,-8.425
+point
+-202.910,-7.249,-8.038
+point
+-201.931,-7.245,-7.347
+reverse
+//:éjy*Izúq%ôlÜTõ,/,yâ
+1				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-206.737,-8.135,-8.164
+point
+-205.643,-7.958,-7.995
+point
+-203.866,-7.672,-7.739
+point
+-203.208,-7.562,-7.607
+point
+-201.235,-7.058,-6.994
+reverse
+//:éjy*Izúq%ôlÜTõ,/,yé
+8				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-197.295,-5.839,-1.871
+point
+-194.701,-5.332,-0.287
+point
+-193.775,-5.328,0.480
+point
+-193.307,-5.328,0.595
+point
+-192.870,-5.328,1.078
+reverse
+//:éjy*Izúq%ôlÜTõ,/,yè
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-188.596,-5.325,0.546
+point
+-187.717,-5.327,1.713
+point
+-186.019,-5.427,3.168
+point
+-184.273,-5.428,3.262
+reverse
+//:éjy*Izúq%ôlÜTõ,/,yå
+8				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-190.226,-5.270,3.747
+point
+-190.782,-4.797,3.803
+point
+-191.406,-4.735,3.288
+point
+-191.612,-5.327,2.311
+reverse
+//:éjy*Izúq%ôlÜTõ,/,yç
+1				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-188.997,-5.362,4.469
+point
+-186.993,-5.407,4.074
+point
+-186.415,-5.427,3.910
+point
+-183.962,-5.428,3.497
+point
+-181.176,-5.421,3.071
+reverse
+//:éjy*Izúq%ôlÜTõ,/,yÇ
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-184.261,-5.428,6.319
+point
+-185.743,-5.428,5.912
+point
+-187.377,-5.421,5.567
+reverse
+//:éjy*Izúq%ôlÜTõ,/,yÉ
+8				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-185.924,-5.427,2.800
+point
+-185.395,-5.428,4.132
+point
+-183.905,-5.428,5.366
+point
+-181.818,-5.423,6.072
+point
+-179.124,-5.425,5.360
+reverse
+//:éjy*Izúq%ôlÜTõ,/,xä
+1				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-174.318,-5.442,-0.457
+point
+-174.188,-5.446,-0.956
+point
+-174.107,-5.498,-4.044
+point
+-175.052,-5.851,-7.078
+reverse
+//:éjy*Izúq%ôlÜTõ,/,xã
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-177.642,-5.713,-5.465
+point
+-177.881,-5.840,-6.393
+point
+-178.966,-6.300,-8.660
+reverse
+//:éjy*Izúq%ôlÜTõ,/,xà
+8				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-177.301,-5.594,-4.567
+point
+-176.429,-5.872,-6.928
+point
+-176.337,-6.116,-8.542
+point
+-176.405,-6.376,-10.122
+reverse
+//:éjy*Izúq%ôlÜTõ,/,xâ
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-180.871,-8.504,-21.449
+point
+-180.128,-8.799,-25.143
+point
+-179.896,-8.854,-25.811
+point
+-178.526,-9.042,-27.987
+reverse
+//:éjy*Izúq%ôlÜTõ,/,xé
+29				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-178.132,-9.078,-28.560
+point
+-175.555,-9.078,-29.629
+point
+-173.209,-9.078,-30.268
+point
+-170.662,-9.078,-32.453
+reverse
+//:éjy*Izúq%ôlÜTõ,/,xè
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-170.287,-9.078,-32.745
+point
+-169.972,-9.078,-34.458
+point
+-168.781,-9.078,-35.482
+point
+-164.568,-9.078,-36.741
+reverse
+//:éjy*Izúq%ôlÜTõ,/,xå
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-166.497,-9.078,-39.067
+point
+-164.967,-9.078,-39.826
+point
+-163.602,-9.078,-40.411
+point
+-158.816,-9.078,-39.141
+reverse
+//:éjy*Izúq%ôlÜTõ,/,xç
+3				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-93.141,-10.699,-46.567
+point
+-90.667,-11.282,-46.195
+point
+-88.743,-11.763,-45.902
+point
+-86.841,-12.221,-46.212
+point
+-83.983,-12.934,-45.274
+reverse
+//:éjy*Izúq%ôlÜTõ,/,xÇ
+8				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-79.598,-13.281,-47.890
+point
+-76.790,-13.067,-46.072
+point
+-76.641,-13.072,-45.976
+point
+-74.152,-13.200,-44.051
+reverse
+//:éjy*Izúq%ôlÜTõ,/,xÉ
+5				// Ref num
+7				// Number of instructions
+6				// Initial instruction
+point
+-63.452,-15.005,-45.914
+point
+-59.726,-15.561,-45.200
+point
+-56.465,-15.561,-44.719
+point
+-55.502,-15.561,-44.850
+point
+-54.827,-15.561,-44.541
+point
+-54.827,-15.561,-44.541
+reverse
+//:éjy*Izúq%ôlÜTõ,/,wä
+8				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-50.902,-15.561,-41.216
+point
+-48.469,-15.561,-41.442
+point
+-46.856,-15.561,-41.425
+point
+-44.620,-15.561,-41.528
+reverse
+//:éjy*Izúq%ôlÜTõ,/,wã
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-51.913,-15.561,-41.452
+point
+-54.157,-15.561,-41.768
+point
+-56.903,-15.561,-42.016
+reverse
+//:éjy*Izúq%ôlÜTõ,/,wà
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-58.522,-15.561,-45.328
+point
+-57.228,-15.561,-44.640
+point
+-53.892,-15.561,-44.153
+point
+-52.330,-15.561,-44.363
+reverse
+//:éjy*Izúq%ôlÜTõ,/,wâ
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-60.416,-15.465,-45.270
+point
+-61.681,-15.280,-45.454
+point
+-64.002,-14.903,-45.808
+point
+-65.282,-14.658,-46.072
+reverse
+//:éjy*Izúq%ôlÜTõ,/,wé
+29				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-33.680,-15.561,-48.367
+point
+-29.151,-15.561,-47.717
+point
+-23.574,-15.561,-49.720
+reverse
+//:éjy*Izúq%ôlÜTõ,/,wè
+29				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-28.036,-15.561,-52.219
+point
+-29.046,-15.561,-51.305
+point
+-30.114,-15.561,-50.544
+point
+-31.076,-15.561,-50.004
+reverse
+//:éjy*Izúq%ôlÜTõ,/,wå
+29				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-27.654,-15.561,-47.388
+point
+-28.060,-15.561,-45.289
+point
+-28.902,-15.561,-43.269
+reverse
+//:éjy*Izúq%ôlÜTõ,/,wç
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-18.146,-15.561,-61.368
+point
+-16.833,-15.561,-64.439
+point
+-15.727,-15.547,-68.677
+reverse
+//:éjy*Izúq%ôlÜTõ,/,wÇ
+3				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-18.611,-15.561,-60.084
+point
+-18.493,-15.561,-61.007
+point
+-15.497,-15.515,-70.280
+reverse
+//:éjy*Izúq%ôlÜTõ,/,wÉ
+1				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-18.380,-15.539,-69.591
+point
+-18.681,-15.518,-68.230
+point
+-19.311,-15.562,-66.305
+point
+-19.974,-15.561,-64.060
+point
+-20.299,-15.561,-63.560
+reverse
+//:éjy*Izúq%ôlÜTõ,/,vä
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-18.388,-15.521,-70.426
+point
+-17.230,-15.495,-71.950
+point
+-15.033,-15.495,-73.694
+point
+-15.044,-15.495,-75.395
+reverse
+//:éjy*Izúq%ôlÜTõ,/,vã
+3				// Ref num
+7				// Number of instructions
+2				// Initial instruction
+point
+-14.173,-14.288,-115.232
+point
+-12.458,-14.162,-117.244
+point
+-11.531,-14.109,-118.322
+point
+-11.367,-14.010,-120.702
+point
+-11.328,-14.015,-120.886
+point
+-11.564,-14.210,-121.700
+reverse
+//:éjy*Izúq%ôlÜTõ,/,và
+13				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-11.554,-14.326,-114.336
+point
+-12.126,-14.253,-115.646
+point
+-13.671,-14.128,-118.100
+point
+-13.738,-14.154,-118.514
+point
+-14.235,-14.340,-120.942
+reverse
+//:éjy*Izúq%ôlÜTõ,/,vâ
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-14.431,-14.362,-114.006
+point
+-14.209,-14.161,-117.414
+point
+-14.245,-14.245,-119.162
+reverse
+//:éjy*Izúq%ôlÜTõ,/,vé
+29				// Ref num
+8				// Number of instructions
+3				// Initial instruction
+point
+-14.019,-14.830,-124.818
+point
+-13.509,-15.444,-127.889
+point
+-11.893,-15.631,-131.178
+point
+-12.495,-15.631,-131.975
+point
+-12.980,-15.631,-133.519
+point
+-14.167,-15.631,-134.831
+point
+-15.643,-15.631,-136.253
+reverse
+//:éjy*Izúq%ôlÜTõ,/,vè
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-15.503,-15.631,-132.103
+point
+-11.967,-15.594,-130.452
+point
+-11.549,-15.528,-129.287
+reverse
+//:éjy*Izúq%ôlÜTõ,/,vå
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-11.584,-15.483,-128.504
+point
+-11.700,-15.576,-130.153
+point
+-12.536,-15.631,-132.708
+reverse
+//:éjy*Izúq%ôlÜTõ,/,vç
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-17.200,-15.631,-133.775
+point
+-19.067,-15.629,-134.677
+point
+-21.511,-15.585,-137.659
+reverse
+//:éjy*Izúq%ôlÜTõ,/,vÇ
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-30.188,-15.562,-137.478
+point
+-33.425,-15.562,-137.417
+point
+-38.063,-15.555,-137.825
+reverse
+//:éjy*Izúq%ôlÜTõ,/,vÉ
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-37.519,-15.562,-134.767
+point
+-41.532,-15.437,-137.507
+point
+-42.737,-15.345,-137.747
+reverse
+//:éjy*Izúq%ôlÜTõ,//00
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-52.536,-14.601,-134.892
+point
+-54.431,-14.461,-134.946
+point
+-58.037,-14.201,-137.413
+point
+-59.248,-14.119,-138.455
+reverse
+//:éjy*Izúq%ôlÜTõ,//01
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-61.996,-13.901,-136.617
+point
+-61.204,-13.916,-136.545
+point
+-58.575,-14.148,-134.805
+reverse
+//:éjy*Izúq%ôlÜTõ,//02
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-61.172,-13.901,-133.827
+point
+-62.598,-13.901,-135.916
+point
+-64.597,-13.901,-135.750
+reverse
+//:éjy*Izúq%ôlÜTõ,//03
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-78.384,-13.021,-140.037
+point
+-82.901,-12.812,-137.255
+point
+-86.013,-12.670,-137.159
+reverse
+//:éjy*Izúq%ôlÜTõ,//04
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-89.978,-12.488,-137.208
+point
+-92.780,-12.357,-137.667
+point
+-98.558,-12.093,-137.310
+reverse
+//:éjy*Izúq%ôlÜTõ,//05
+3				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-164.897,-9.029,-141.292
+point
+-168.279,-8.767,-140.352
+point
+-169.487,-8.668,-139.876
+point
+-171.154,-8.530,-139.352
+reverse
+//:éjy*Izúq%ôlÜTõ,//06
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-167.121,-8.860,-137.879
+point
+-168.014,-8.788,-137.578
+point
+-169.239,-8.690,-136.999
+reverse
+//:éjy*Izúq%ôlÜTõ,//07
+1				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-174.566,-8.230,-136.773
+point
+-175.795,-8.117,-135.328
+point
+-176.785,-8.026,-134.361
+point
+-177.411,-7.967,-133.357
+point
+-178.164,-7.895,-132.071
+reverse
+//:éjy*Izúq%ôlÜTõ,//08
+5				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-175.648,-8.132,-130.543
+point
+-176.472,-8.055,-129.160
+point
+-176.824,-8.022,-127.301
+point
+-177.463,-7.962,-123.708
+reverse
+//:éjy*Izúq%ôlÜTõ,//09
+8				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-179.881,-7.728,-118.107
+point
+-182.502,-7.468,-115.060
+point
+-183.518,-7.358,-113.824
+point
+-183.699,-6.793,-112.925
+reverse
+//:éjy*Izúq%ôlÜTõ,//10
+29				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-188.039,-6.870,-114.709
+point
+-190.069,-6.641,-113.765
+point
+-191.402,-6.484,-113.622
+point
+-193.168,-6.279,-113.335
+reverse
+//:éjy*Izúq%ôlÜTõ,//11
+8				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-199.733,-5.456,-110.360
+point
+-199.119,-5.069,-109.733
+point
+-198.364,-4.985,-109.470
+point
+-196.892,-5.166,-109.341
+point
+-195.723,-5.966,-109.956
+reverse
+//:éjy*Izúq%ôlÜTõ,//12
+5				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-201.463,-5.228,-110.850
+point
+-199.630,-5.469,-110.555
+point
+-198.233,-5.649,-110.207
+point
+-196.739,-5.838,-110.503
+point
+-196.414,-5.879,-110.232
+reverse
+//:éjy*Izúq%ôlÜTõ,//13
+5				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-195.802,-5.956,-113.173
+point
+-198.498,-5.616,-113.263
+point
+-200.035,-5.416,-113.415
+point
+-201.760,-5.191,-113.866
+point
+-203.892,-4.901,-114.969
+reverse
+//:éjy*Izúq%ôlÜTõ,//14
+1				// Ref num
+7				// Number of instructions
+4				// Initial instruction
+point
+-203.170,-4.999,-111.287
+point
+-204.126,-4.867,-112.350
+point
+-205.630,-4.660,-112.790
+point
+-206.713,-4.508,-113.248
+point
+-208.206,-4.297,-114.389
+point
+-209.045,-4.174,-114.956
+reverse
+//:éjy*Izúq%ôlÜTõ,//15
+1				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-208.288,-4.285,-118.682
+point
+-209.033,-4.169,-119.281
+point
+-209.737,-4.050,-120.532
+point
+-210.064,-3.995,-121.123
+point
+-210.623,-3.889,-123.040
+reverse
+//:éjy*Izúq%ôlÜTõ,//16
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-214.008,-3.465,-124.467
+point
+-213.698,-3.484,-122.753
+point
+-213.185,-3.555,-121.988
+point
+-213.022,-3.582,-121.021
+reverse
+//:éjy*Izúq%ôlÜTõ,//17
+29				// Ref num
+9				// Number of instructions
+5				// Initial instruction
+point
+-210.892,-3.885,-123.878
+point
+-212.017,-3.744,-126.687
+point
+-211.713,-3.774,-127.972
+point
+-212.090,-3.720,-128.330
+point
+-212.071,-3.717,-128.962
+point
+-211.915,-3.737,-130.228
+point
+-212.109,-3.715,-131.658
+point
+-212.803,-3.621,-134.944
+reverse
+//:éjy*Izúq%ôlÜTõ,//18
+13				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-214.005,-3.464,-137.958
+point
+-214.545,-3.400,-139.444
+point
+-215.451,-3.325,-141.219
+point
+-215.887,-3.274,-141.797
+point
+-216.623,-3.208,-143.140
+reverse
+//:éjy*Izúq%ôlÜTõ,//19
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-220.808,-2.963,-142.879
+point
+-220.916,-2.427,-142.407
+point
+-220.608,-2.227,-141.860
+reverse
+//:éjy*Izúq%ôlÜTõ,//20
+13				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-217.864,-3.159,-139.088
+point
+-217.953,-2.966,-138.941
+point
+-217.926,-2.739,-138.378
+point
+-217.757,-2.537,-137.481
+reverse
+//:éjy*Izúq%ôlÜTõ,//21
+8				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-218.020,-3.154,-139.890
+point
+-218.784,-3.133,-141.209
+point
+-219.332,-3.118,-142.147
+point
+-220.767,-3.087,-143.468
+point
+-222.002,-3.059,-144.447
+reverse
+//:éjy*Izúq%ôlÜTõ,//22
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-221.117,-3.071,-147.339
+point
+-221.770,-3.063,-147.743
+point
+-223.903,-3.018,-148.851
+point
+-226.591,-2.962,-150.613
+reverse
+//:éjy*Izúq%ôlÜTõ,//23
+5				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-230.681,-2.863,-152.229
+point
+-229.772,-2.879,-151.728
+point
+-228.778,-2.899,-151.598
+point
+-227.521,-2.465,-151.751
+reverse
+//:éjy*Izúq%ôlÜTõ,//24
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-231.665,-2.845,-152.564
+point
+-233.043,-2.856,-152.639
+point
+-234.060,-2.806,-152.317
+reverse
+//:éjy*Izúq%ôlÜTõ,//25
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-235.199,-2.734,-148.686
+point
+-235.321,-2.719,-148.387
+point
+-235.541,-2.713,-147.544
+reverse
+//:éjy*Izúq%ôlÜTõ,//26
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-237.421,-2.731,-150.636
+point
+-237.956,-2.717,-150.020
+point
+-239.148,-2.700,-147.260
+reverse
+//:éjy*Izúq%ôlÜTõ,//27
+3				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-239.394,-2.695,-146.363
+point
+-238.514,-2.706,-148.017
+point
+-238.122,-2.711,-148.836
+point
+-237.989,-2.714,-149.518
+reverse
+//:éjy*Izúq%ôlÜTõ,//28
+12				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-234.193,-2.780,-149.292
+point
+-234.523,-2.762,-149.024
+point
+-235.733,-2.741,-147.978
+point
+-236.225,-2.705,-146.210
+reverse
+//:éjy*Izúq%ôlÜTõ,//29
+3				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-233.743,-2.796,-149.489
+point
+-233.018,-2.828,-149.670
+point
+-231.980,-2.846,-149.519
+reverse
+//:éjy*Izúq%ôlÜTõ,//30
+1				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-237.762,-2.682,-142.292
+point
+-238.988,-2.665,-139.503
+point
+-240.981,-2.654,-138.347
+point
+-243.640,-2.635,-136.066
+point
+-244.050,-2.630,-135.209
+reverse
+//:éjy*Izúq%ôlÜTõ,//31
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-242.575,-2.650,-138.481
+point
+-241.791,-2.662,-139.986
+point
+-240.409,-2.682,-144.017
+reverse
+//:éjy*Izúq%ôlÜTõ,//32
+5				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-235.696,-2.711,-147.185
+point
+-236.687,-2.708,-146.130
+point
+-236.887,-2.693,-144.744
+point
+-237.605,-2.685,-142.872
+reverse
+//:éjy*Izúq%ôlÜTõ,//33
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-237.685,-2.683,-142.634
+point
+-238.632,-2.674,-141.185
+point
+-240.579,-2.640,-135.349
+reverse
+//:éjy*Izúq%ôlÜTõ,//34
+29				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-241.063,-2.634,-134.364
+point
+-241.720,-2.626,-133.080
+point
+-242.694,-2.611,-130.614
+point
+-243.371,-2.601,-128.796
+reverse
+//:éjy*Izúq%ôlÜTõ,//35
+29				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-246.510,-2.595,-129.308
+point
+-246.510,-2.595,-129.308
+point
+-241.963,-2.618,-131.668
+point
+-241.075,-1.949,-132.197
+reverse
+//:éjy*Izúq%ôlÜTõ,//36
+17				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-246.760,-2.592,-128.747
+point
+-247.714,-2.576,-125.882
+point
+-248.654,-2.565,-124.034
+reverse
+//:éjy*Izúq%ôlÜTõ,//37
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-250.127,-2.552,-120.536
+point
+-250.502,-2.552,-119.241
+point
+-251.703,-2.552,-118.814
+reverse
+//:éjy*Izúq%ôlÜTõ,//38
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-252.670,-2.555,-115.362
+point
+-255.373,-2.552,-114.200
+point
+-256.381,-2.552,-113.722
+reverse
+//:éjy*Izúq%ôlÜTõ,//39
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-257.974,-2.552,-116.086
+point
+-258.710,-2.553,-113.521
+point
+-258.878,-2.552,-111.778
+reverse
+//:éjy*Izúq%ôlÜTõ,//40
+17				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-259.951,-2.552,-111.080
+point
+-261.131,-2.552,-110.314
+point
+-262.437,-2.552,-108.285
+point
+-263.675,-2.552,-105.560
+reverse
+//:éjy*Izúq%ôlÜTõ,//41
+14				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-249.319,-2.552,-113.961
+point
+-248.765,-2.556,-115.149
+point
+-248.531,-2.556,-116.031
+reverse
+//:éjy*Izúq%ôlÜTõ,//42
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-251.094,-2.553,-118.841
+point
+-251.966,-2.553,-118.639
+point
+-254.392,-2.553,-114.695
+reverse
+//:éjy*Izúq%ôlÜTõ,//43
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-252.938,-2.553,-118.360
+point
+-254.900,-2.553,-117.529
+point
+-255.599,-2.553,-117.270
+point
+-256.842,-2.552,-116.703
+reverse
+//:éjy*Izúq%ôlÜTõ,//44
+13				// Ref num
+7				// Number of instructions
+4				// Initial instruction
+point
+-256.254,-1.949,-118.131
+point
+-254.857,-2.538,-117.934
+point
+-254.685,-2.551,-117.868
+point
+-252.227,-2.555,-115.463
+point
+-249.649,-2.552,-113.015
+point
+-249.474,-2.375,-112.792
+reverse
+//:éjy*Izúq%ôlÜTõ,//45
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-248.059,-2.552,-116.864
+point
+-253.718,-2.552,-118.154
+point
+-255.578,-2.553,-116.628
+point
+-263.178,-2.552,-112.017
+reverse
+//:éjy*Izúq%ôlÜTõ,//46
+12				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-267.119,-2.552,-105.096
+point
+-268.950,-2.552,-100.688
+point
+-268.972,-2.552,-99.885
+point
+-268.770,-2.552,-98.700
+reverse
+//:éjy*Izúq%ôlÜTõ,//47
+17				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-265.747,-2.552,-102.873
+point
+-266.213,-2.552,-102.369
+point
+-267.388,-2.552,-101.191
+point
+-268.140,-2.552,-99.290
+reverse
+//:éjy*Izúq%ôlÜTõ,//48
+12				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-268.510,-2.552,-96.082
+point
+-269.419,-2.552,-95.982
+point
+-269.996,-2.552,-96.009
+point
+-270.965,-2.552,-95.727
+reverse
+//:éjy*Izúq%ôlÜTõ,//49
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-270.612,-2.552,-93.539
+point
+-272.192,-2.552,-92.011
+point
+-273.328,-2.552,-89.927
+reverse
+//:éjy*Izúq%ôlÜTõ,//50
+17				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-271.353,-2.552,-86.780
+point
+-270.768,-2.552,-88.015
+point
+-271.118,-2.552,-89.710
+point
+-271.604,-2.552,-94.356
+reverse
+//:éjy*Izúq%ôlÜTõ,//51
+14				// Ref num
+7				// Number of instructions
+3				// Initial instruction
+point
+-273.074,-2.552,-90.576
+point
+-271.751,-2.552,-91.215
+point
+-270.852,-2.552,-92.071
+point
+-270.782,-2.552,-92.561
+point
+-270.966,-2.552,-93.711
+point
+-270.543,-2.552,-94.764
+reverse
+//:éjy*Izúq%ôlÜTõ,//52
+13				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-269.747,-2.552,-95.901
+point
+-269.889,-2.552,-96.406
+point
+-269.582,-2.552,-97.218
+point
+-269.587,-2.552,-99.100
+reverse
+//:éjy*Izúq%ôlÜTõ,//53
+3				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-270.059,-2.552,-97.862
+point
+-270.202,-2.552,-96.389
+point
+-269.989,-2.552,-96.204
+point
+-269.321,-2.552,-95.592
+point
+-268.932,-2.552,-95.083
+reverse
+//:éjy*Izúq%ôlÜTõ,//54
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-270.161,-2.552,-95.634
+point
+-270.684,-2.552,-95.088
+point
+-271.006,-2.552,-93.934
+point
+-270.847,-2.552,-93.521
+reverse
+//:éjy*Izúq%ôlÜTõ,//55
+8				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-269.579,-2.552,-93.592
+point
+-270.703,-2.552,-92.680
+point
+-270.711,-2.552,-91.995
+point
+-271.785,-2.552,-89.840
+point
+-274.849,-2.552,-86.565
+reverse
+//:éjy*Izúq%ôlÜTõ,//56
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-276.199,-2.552,-83.962
+point
+-275.976,-2.552,-81.561
+point
+-276.119,-2.552,-78.714
+reverse
+//:éjy*Izúq%ôlÜTõ,//57
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-277.056,-2.552,-77.404
+point
+-279.163,-2.552,-76.725
+point
+-282.674,-2.552,-75.077
+reverse
+//:éjy*Izúq%ôlÜTõ,//58
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-282.977,-2.552,-74.724
+point
+-283.517,-2.543,-71.793
+point
+-284.632,-2.543,-66.837
+reverse
+//:éjy*Izúq%ôlÜTõ,//59
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-285.338,-2.538,-71.991
+point
+-283.194,-2.549,-72.864
+point
+-280.490,-2.558,-73.152
+reverse
+//:éjy*Izúq%ôlÜTõ,//60
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-283.911,-2.549,-73.598
+point
+-283.794,-2.544,-72.309
+point
+-283.355,-2.540,-70.791
+point
+-283.430,-2.549,-66.934
+reverse
+//:éjy*Izúq%ôlÜTõ,//61
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-283.092,-2.539,-70.381
+point
+-282.657,-2.547,-71.956
+point
+-281.994,-2.552,-75.766
+reverse
+//:éjy*Izúq%ôlÜTõ,//62
+13				// Ref num
+7				// Number of instructions
+3				// Initial instruction
+point
+-290.901,-2.611,-66.648
+point
+-288.910,-2.545,-67.798
+point
+-285.894,-2.539,-70.891
+point
+-285.276,-2.538,-71.726
+point
+-285.246,-2.538,-72.306
+point
+-284.425,-2.536,-73.187
+reverse
+//:éjy*Izúq%ôlÜTõ,//63
+5				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-301.475,-3.692,-66.697
+point
+-302.839,-3.869,-66.676
+point
+-304.337,-3.982,-66.926
+point
+-304.980,-4.043,-66.621
+point
+-305.100,-4.048,-66.229
+reverse
+//:éjy*Izúq%ôlÜTõ,//64
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-305.706,-4.048,-65.861
+point
+-307.220,-4.048,-65.232
+point
+-308.040,-4.048,-64.304
+point
+-308.729,-4.048,-62.258
+reverse
+//:éjy*Izúq%ôlÜTõ,//65
+12				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-303.969,-3.932,-69.400
+point
+-305.848,-4.041,-69.120
+point
+-306.448,-4.048,-68.937
+point
+-308.740,-4.048,-67.573
+point
+-309.267,-4.048,-67.093
+reverse
+//:éjy*Izúq%ôlÜTõ,//66
+17				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-307.891,-4.048,-64.913
+point
+-308.340,-4.048,-64.183
+point
+-309.051,-4.048,-61.428
+point
+-309.025,-4.048,-59.326
+reverse
+//:éjy*Izúq%ôlÜTõ,//67
+12				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-308.805,-4.048,-58.997
+point
+-308.080,-4.048,-57.100
+point
+-307.767,-4.048,-56.761
+point
+-307.414,-4.048,-56.369
+reverse
+//:éjy*Izúq%ôlÜTõ,//68
+17				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-309.587,-4.048,-54.168
+point
+-310.881,-4.048,-57.725
+point
+-312.007,-4.048,-60.843
+reverse
+//:éjy*Izúq%ôlÜTõ,//69
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-311.804,-4.048,-61.502
+point
+-310.921,-4.048,-64.048
+point
+-310.213,-4.048,-66.074
+reverse
+//:éjy*Izúq%ôlÜTõ,//70
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-308.079,-4.048,-68.005
+point
+-308.182,-4.048,-63.287
+point
+-306.977,-3.161,-62.076
+point
+-306.926,-3.032,-61.235
+reverse
+//:éjy*Izúq%ôlÜTõ,//71
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-307.824,-3.507,-61.157
+point
+-308.813,-4.048,-59.570
+point
+-308.793,-4.048,-58.301
+reverse
+//:éjy*Izúq%ôlÜTõ,//72
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-307.130,-4.048,-55.946
+point
+-306.899,-4.048,-55.779
+point
+-305.834,-4.096,-55.090
+reverse
+//:éjy*Izúq%ôlÜTõ,//73
+17				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-304.480,-4.189,-54.490
+point
+-301.394,-4.602,-53.573
+point
+-298.731,-5.309,-52.973
+reverse
+//:éjy*Izúq%ôlÜTõ,//74
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-301.548,-4.739,-50.540
+point
+-298.747,-5.509,-49.881
+point
+-294.961,-6.758,-49.008
+reverse
+//:éjy*Izúq%ôlÜTõ,//75
+29				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-294.532,-6.654,-51.923
+point
+-291.191,-7.824,-50.756
+point
+-290.127,-7.884,-50.524
+reverse
+//:éjy*Izúq%ôlÜTõ,//76
+5				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-289.188,-7.940,-50.205
+point
+-287.985,-8.005,-49.575
+point
+-286.891,-8.005,-45.905
+point
+-287.160,-8.005,-42.215
+point
+-287.398,-8.005,-40.596
+reverse
+//:éjy*Izúq%ôlÜTõ,//77
+3				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-284.490,-8.005,-43.511
+point
+-284.121,-8.005,-42.692
+point
+-283.543,-7.696,-41.533
+point
+-282.199,-6.852,-41.083
+reverse
+//:éjy*Izúq%ôlÜTõ,//78
+1				// Ref num
+9				// Number of instructions
+7				// Initial instruction
+point
+-284.061,-8.005,-41.127
+point
+-284.608,-8.005,-40.453
+point
+-284.884,-8.005,-39.560
+point
+-284.993,-8.005,-37.977
+point
+-287.371,-8.005,-34.764
+point
+-287.551,-7.986,-34.585
+point
+-287.611,-7.921,-34.413
+point
+-288.716,-7.151,-32.136
+reverse
+//:éjy*Izúq%ôlÜTõ,//79
+29				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-289.499,-8.005,-37.279
+point
+-288.412,-8.004,-38.154
+point
+-287.520,-8.005,-38.325
+point
+-284.597,-8.005,-39.560
+reverse
+//:éjy*Izúq%ôlÜTõ,//80
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-287.740,-8.005,-39.147
+point
+-284.316,-8.005,-42.046
+point
+-284.425,-8.005,-44.507
+reverse
+//:éjy*Izúq%ôlÜTõ,//81
+8				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-284.152,-7.877,-44.685
+point
+-284.000,-7.508,-45.728
+point
+-283.980,-7.130,-46.951
+point
+-283.854,-6.798,-47.763
+reverse
+//:éjy*Izúq%ôlÜTõ,//82
+5				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-285.223,-8.005,-46.513
+point
+-286.407,-8.005,-43.838
+point
+-286.426,-8.005,-42.530
+point
+-287.079,-8.005,-41.616
+point
+-288.226,-8.005,-38.548
+reverse
+//:éjy*Izúq%ôlÜTõ,//83
+8				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-286.337,-8.005,-35.899
+point
+-290.809,-8.008,-35.344
+point
+-293.451,-8.166,-35.358
+point
+-296.326,-8.525,-35.300
+reverse
+//:éjy*Izúq%ôlÜTõ,//84
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-294.880,-8.344,-35.505
+point
+-296.654,-8.568,-35.057
+point
+-298.035,-9.013,-34.785
+point
+-299.920,-9.442,-35.244
+reverse
+//:éjy*Izúq%ôlÜTõ,//85
+29				// Ref num
+9				// Number of instructions
+4				// Initial instruction
+point
+-298.103,-9.166,-32.271
+point
+-298.430,-9.285,-32.439
+point
+-298.882,-9.455,-32.377
+point
+-299.777,-9.776,-32.361
+point
+-300.623,-9.943,-32.472
+point
+-301.872,-10.077,-33.420
+point
+-303.143,-10.477,-33.677
+point
+-304.486,-10.909,-34.832
+reverse
+//:éjy*Izúq%ôlÜTõ,//86
+29				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-307.012,-11.793,-31.538
+point
+-309.669,-11.971,-32.758
+point
+-311.882,-11.971,-33.109
+point
+-313.365,-11.971,-32.132
+reverse
+//:éjy*Izúq%ôlÜTõ,//87
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-312.356,-11.971,-32.852
+point
+-313.862,-11.971,-31.535
+point
+-315.467,-11.971,-29.014
+reverse
+//:éjy*Izúq%ôlÜTõ,//88
+17				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-312.483,-11.971,-28.242
+point
+-313.842,-11.971,-28.279
+point
+-315.790,-11.970,-27.237
+point
+-316.223,-11.971,-25.335
+reverse
+//:éjy*Izúq%ôlÜTõ,//89
+29				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-310.193,-11.971,-30.589
+point
+-311.153,-11.971,-30.196
+point
+-312.376,-11.970,-28.775
+point
+-313.233,-11.971,-26.534
+point
+-313.226,-11.971,-25.457
+reverse
+//:éjy*Izúq%ôlÜTõ,//90
+12				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-315.747,-11.971,-28.199
+point
+-316.031,-11.971,-26.501
+point
+-316.089,-11.970,-24.197
+point
+-314.094,-11.971,-19.618
+reverse
+//:éjy*Izúq%ôlÜTõ,//91
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-311.120,-11.971,-20.670
+point
+-315.798,-11.970,-23.028
+point
+-316.008,-11.970,-23.627
+reverse
+//:éjy*Izúq%ôlÜTõ,//92
+8				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-315.036,-11.971,-21.178
+point
+-313.307,-11.971,-25.137
+point
+-312.906,-11.971,-28.068
+point
+-312.947,-11.971,-32.545
+reverse
+//:éjy*Izúq%ôlÜTõ,//93
+1				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-311.320,-11.971,-33.469
+point
+-309.793,-11.956,-33.640
+point
+-308.575,-11.841,-34.222
+point
+-307.413,-11.808,-34.660
+reverse
+//:éjy*Izúq%ôlÜTõ,//94
+12				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-310.494,-11.971,-33.931
+point
+-312.101,-11.970,-28.817
+point
+-313.131,-11.971,-26.533
+point
+-313.080,-11.971,-24.407
+point
+-312.879,-11.971,-23.506
+reverse
+//:éjy*Izúq%ôlÜTõ,//95
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-309.599,-12.052,-19.766
+point
+-307.176,-12.105,-18.568
+point
+-304.902,-12.106,-18.046
+reverse
+//:éjy*Izúq%ôlÜTõ,//96
+3				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-303.618,-12.106,-17.323
+point
+-297.948,-12.106,-11.354
+point
+-295.342,-12.106,-9.547
+reverse
+//:éjy*Izúq%ôlÜTõ,//97
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-294.592,-12.106,-12.659
+point
+-293.640,-12.106,-11.881
+point
+-290.160,-12.119,-9.516
+reverse
+//:éjy*Izúq%ôlÜTõ,//98
+8				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-293.474,-12.106,-8.167
+point
+-292.018,-12.119,-7.229
+point
+-291.375,-12.134,-6.629
+point
+-290.872,-12.106,-6.118
+reverse
+//:éjy*Izúq%ôlÜTõ,//99
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-287.163,-12.203,-7.032
+point
+-286.617,-11.939,-7.076
+point
+-285.686,-11.252,-7.410
+reverse
+//:éjy*Izúq%ôlÜTõ,/.ä
+8				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-285.871,-12.313,-5.671
+point
+-283.815,-12.540,-3.074
+point
+-283.024,-12.625,-2.703
+point
+-282.159,-12.592,-2.212
+reverse
+//:éjy*Izúq%ôlÜTõ,/.ã
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-275.947,-15.455,15.963
+point
+-274.709,-15.615,18.590
+point
+-268.921,-15.627,21.687
+reverse
+//:éjy*Izúq%ôlÜTõ,/.à
+13				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-269.260,-15.627,21.154
+point
+-269.260,-15.627,21.154
+point
+-274.742,-15.616,19.025
+point
+-274.987,-15.613,18.556
+reverse
+//:éjy*Izúq%ôlÜTõ,/.â
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-275.048,-15.617,19.181
+point
+-275.296,-15.626,21.891
+point
+-274.156,-15.627,26.848
+point
+-275.075,-15.627,28.241
+reverse
+//:éjy*Izúq%ôlÜTõ,/.é
+13				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-276.114,-15.627,28.865
+point
+-276.806,-15.627,28.757
+point
+-276.806,-15.627,28.757
+point
+-278.927,-15.627,27.563
+point
+-279.874,-15.627,27.672
+reverse
+//:éjy*Izúq%ôlÜTõ,/.è
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-275.915,-15.627,28.331
+point
+-274.419,-15.627,26.937
+point
+-273.867,-15.627,26.357
+reverse
+//:éjy*Izúq%ôlÜTõ,/.å
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-275.798,-15.627,23.631
+point
+-275.376,-15.627,22.759
+point
+-269.842,-15.625,20.327
+point
+-269.526,-15.626,20.538
+reverse
+//:éjy*Izúq%ôlÜTõ,/.ç
+13				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-269.464,-15.627,20.822
+point
+-271.195,-15.627,21.548
+point
+-273.283,-15.622,20.901
+point
+-275.121,-15.621,20.428
+reverse
+//:éjy*Izúq%ôlÜTõ,/.Ç
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-271.521,-15.627,23.166
+point
+-270.772,-15.627,23.565
+point
+-267.721,-15.627,22.818
+reverse
+//:éjy*Izúq%ôlÜTõ,/.É
+13				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-264.867,-15.627,23.968
+point
+-266.649,-15.627,23.637
+point
+-269.462,-15.627,22.086
+point
+-275.319,-15.623,21.089
+reverse
+//:éjy*Izúq%ôlÜTõ,/.~ä
+13				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-270.668,-15.621,19.419
+point
+-269.911,-15.627,20.721
+point
+-270.254,-15.629,22.299
+point
+-270.389,-15.627,23.600
+point
+-269.725,-15.627,24.812
+reverse
+//:éjy*Izúq%ôlÜTõ,/.~ã
+14				// Ref num
+7				// Number of instructions
+2				// Initial instruction
+point
+-272.612,-15.627,23.147
+point
+-273.271,-15.627,24.415
+point
+-273.594,-15.627,24.889
+point
+-273.671,-15.627,25.698
+point
+-275.341,-15.627,26.548
+point
+-278.109,-15.627,26.682
+reverse
+//:éjy*Izúq%ôlÜTõ,/.~à
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-280.589,-15.627,33.937
+point
+-280.646,-15.627,35.766
+point
+-279.847,-15.627,37.526
+reverse
+//:éjy*Izúq%ôlÜTõ,/.~â
+14				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-282.105,-15.627,40.554
+point
+-281.144,-15.627,41.464
+point
+-280.896,-15.627,45.967
+reverse
+//:éjy*Izúq%ôlÜTõ,/.~é
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-275.261,-16.364,57.993
+point
+-275.306,-16.591,59.619
+point
+-274.518,-16.875,61.463
+reverse
+//:éjy*Izúq%ôlÜTõ,/.~è
+17				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-274.434,-16.902,61.736
+point
+-275.504,-17.083,63.476
+point
+-276.184,-17.419,66.389
+point
+-275.677,-17.638,68.356
+reverse
+//:éjy*Izúq%ôlÜTõ,/.~å
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-276.525,-17.276,65.334
+point
+-276.656,-17.120,64.043
+point
+-277.100,-16.921,62.514
+reverse
+//:éjy*Izúq%ôlÜTõ,/.~ç
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-274.600,-16.823,61.127
+point
+-277.527,-16.613,60.288
+point
+-277.928,-16.431,59.083
+reverse
+//:éjy*Izúq%ôlÜTõ,/.~Ç
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-277.329,-16.783,61.450
+point
+-274.153,-17.132,63.567
+point
+-273.629,-17.375,65.448
+reverse
+//:éjy*Izúq%ôlÜTõ,/.~É
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-272.091,-18.286,72.098
+point
+-273.900,-18.648,76.202
+point
+-273.648,-18.772,77.788
+reverse
+//:éjy*Izúq%ôlÜTõ,/.}ä
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-273.480,-18.815,78.534
+point
+-272.702,-18.907,81.642
+point
+-272.380,-18.909,83.736
+reverse
+//:éjy*Izúq%ôlÜTõ,/.}ã
+3				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-272.125,-18.910,84.419
+point
+-268.699,-18.913,87.433
+point
+-268.551,-18.914,88.454
+reverse
+//:éjy*Izúq%ôlÜTõ,/.}à
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-267.860,-18.915,90.476
+point
+-267.589,-18.915,92.464
+point
+-267.190,-18.917,93.251
+reverse
+//:éjy*Izúq%ôlÜTõ,/.}â
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-267.361,-18.915,93.750
+point
+-267.103,-18.915,94.906
+point
+-266.904,-18.915,96.369
+reverse
+//:éjy*Izúq%ôlÜTõ,/.}é
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-266.662,-18.915,97.291
+point
+-265.214,-18.915,103.269
+point
+-263.493,-18.915,105.492
+reverse
+//:éjy*Izúq%ôlÜTõ,/.}è
+12				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-264.258,-18.915,103.497
+point
+-262.888,-18.915,103.594
+point
+-259.906,-18.916,102.546
+point
+-258.473,-18.916,102.074
+reverse
+//:éjy*Izúq%ôlÜTõ,/.}å
+12				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-260.209,-18.915,104.902
+point
+-261.442,-18.915,105.097
+point
+-262.568,-18.915,105.461
+point
+-264.052,-18.915,105.634
+reverse
+//:éjy*Izúq%ôlÜTõ,/.}ç
+17				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-264.786,-18.914,105.968
+point
+-266.973,-18.915,105.454
+point
+-268.860,-18.916,104.565
+reverse
+//:éjy*Izúq%ôlÜTõ,/.}Ç
+17				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-265.318,-18.915,102.577
+point
+-267.780,-18.916,104.111
+point
+-271.038,-18.916,107.321
+reverse
+//:éjy*Izúq%ôlÜTõ,/.}É
+14				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-271.659,-18.916,107.585
+point
+-272.700,-18.916,107.682
+point
+-275.621,-18.916,108.434
+reverse
+//:éjy*Izúq%ôlÜTõ,/.|ä
+12				// Ref num
+7				// Number of instructions
+5				// Initial instruction
+point
+-277.279,-18.916,106.409
+point
+-278.052,-18.916,106.785
+point
+-279.855,-18.916,106.897
+point
+-280.732,-18.916,107.190
+point
+-281.522,-18.916,107.353
+point
+-287.395,-18.916,108.702
+reverse
+//:éjy*Izúq%ôlÜTõ,/.|ã
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-287.781,-18.915,109.007
+point
+-287.005,-18.915,109.530
+point
+-284.483,-18.915,110.371
+reverse
+//:éjy*Izúq%ôlÜTõ,/.|à
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-285.320,-18.915,110.565
+point
+-283.753,-18.914,110.043
+point
+-282.909,-18.914,108.214
+point
+-282.223,-18.916,107.447
+reverse
+//:éjy*Izúq%ôlÜTõ,/.|â
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-278.529,-18.914,108.997
+point
+-276.784,-18.916,108.745
+point
+-272.298,-18.916,105.406
+reverse
+//:éjy*Izúq%ôlÜTõ,/.|é
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-271.767,-18.916,105.116
+point
+-270.238,-18.916,105.152
+point
+-268.600,-18.916,104.356
+reverse
+//:éjy*Izúq%ôlÜTõ,/.|è
+29				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-257.403,-18.916,104.343
+point
+-256.166,-18.915,103.924
+point
+-253.647,-18.916,101.001
+reverse
+//:éjy*Izúq%ôlÜTõ,/.|å
+29				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-251.203,-18.916,100.337
+point
+-248.252,-18.916,101.620
+point
+-243.906,-18.916,101.111
+reverse
+//:éjy*Izúq%ôlÜTõ,/.|ç
+12				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-241.962,-18.915,100.665
+point
+-239.599,-18.916,97.883
+point
+-236.994,-18.916,97.068
+point
+-236.052,-18.916,96.823
+reverse
+//:éjy*Izúq%ôlÜTõ,/.|Ç
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-230.100,-18.916,95.496
+point
+-227.497,-18.916,96.367
+point
+-224.827,-18.916,96.739
+reverse
+//:éjy*Izúq%ôlÜTõ,/.|É
+17				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-224.247,-18.916,96.663
+point
+-223.229,-18.916,95.255
+point
+-222.475,-18.916,93.876
+reverse
+//:éjy*Izúq%ôlÜTõ,/.{ä
+17				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-222.129,-18.916,96.112
+point
+-225.941,-18.916,95.009
+point
+-227.570,-18.916,94.916
+reverse
+//:éjy*Izúq%ôlÜTõ,/.{ã
+29				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-230.675,-18.916,95.681
+point
+-232.337,-18.916,98.317
+point
+-234.208,-18.916,98.923
+reverse
+//:éjy*Izúq%ôlÜTõ,/.{à
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-236.473,-18.916,99.195
+point
+-237.403,-18.916,99.547
+point
+-239.771,-18.916,99.977
+reverse
+//:éjy*Izúq%ôlÜTõ,/.{â
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-244.636,-18.916,101.256
+point
+-243.045,-18.915,100.927
+point
+-240.603,-18.916,100.428
+reverse
+//:éjy*Izúq%ôlÜTõ,/.{é
+17				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-241.676,-18.916,97.872
+point
+-242.133,-18.915,99.371
+point
+-243.668,-18.916,101.059
+reverse
+//:éjy*Izúq%ôlÜTõ,/.{è
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-258.016,-18.916,101.915
+point
+-256.635,-18.915,101.778
+point
+-251.856,-18.916,102.896
+reverse
+//:éjy*Izúq%ôlÜTõ,/.{å
+3				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-242.661,-18.915,94.750
+point
+-243.590,-18.915,93.460
+point
+-245.618,-18.915,91.881
+point
+-245.822,-18.915,91.091
+point
+-246.407,-18.915,89.219
+reverse
+//:éjy*Izúq%ôlÜTõ,/.{ç
+1				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-248.346,-18.916,88.619
+point
+-248.651,-18.916,88.589
+point
+-250.594,-18.916,89.034
+point
+-253.616,-18.916,89.690
+reverse
+//:éjy*Izúq%ôlÜTõ,/.{Ç
+5				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-256.635,-18.916,90.560
+point
+-253.937,-18.916,89.438
+point
+-252.016,-18.916,89.394
+point
+-250.196,-18.916,87.138
+reverse
+//:éjy*Izúq%ôlÜTõ,/.{É
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-248.563,-18.916,86.478
+point
+-249.387,-18.916,87.020
+point
+-253.946,-18.916,87.627
+reverse
+//:éjy*Izúq%ôlÜTõ,/.zä
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-255.604,-18.916,87.920
+point
+-257.768,-18.915,90.792
+point
+-258.445,-18.916,90.861
+reverse
+//:éjy*Izúq%ôlÜTõ,/.zã
+17				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-240.526,-18.915,84.616
+point
+-239.882,-18.915,84.350
+point
+-235.910,-18.915,83.580
+reverse
+//:éjy*Izúq%ôlÜTõ,/.zà
+8				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-235.968,-18.916,85.765
+point
+-239.119,-18.916,86.048
+point
+-240.148,-18.916,86.797
+point
+-241.421,-18.916,86.919
+point
+-242.623,-18.916,87.273
+reverse
+//:éjy*Izúq%ôlÜTõ,/.zâ
+1				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-243.849,-18.916,87.634
+point
+-244.802,-18.915,85.567
+point
+-245.180,-18.914,83.335
+point
+-245.664,-18.913,82.051
+point
+-245.604,-18.912,81.275
+reverse
+//:éjy*Izúq%ôlÜTõ,/.zé
+17				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-249.726,-18.892,75.676
+point
+-247.778,-18.859,74.234
+point
+-247.643,-18.786,72.308
+point
+-247.717,-18.737,71.682
+reverse
+//:éjy*Izúq%ôlÜTõ,/.zè
+14				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-246.677,-18.906,75.374
+point
+-248.844,-18.909,77.993
+point
+-248.383,-18.911,80.406
+reverse
+//:éjy*Izúq%ôlÜTõ,/.zå
+12				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-249.638,-18.916,89.036
+point
+-246.949,-18.915,88.290
+point
+-244.024,-18.916,87.838
+point
+-242.617,-18.915,85.084
+point
+-241.820,-18.915,84.752
+reverse
+//:éjy*Izúq%ôlÜTõ,/.zç
+29				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-230.822,-18.916,84.707
+point
+-229.908,-18.916,84.146
+point
+-228.819,-18.916,84.256
+point
+-226.632,-18.916,83.831
+point
+-224.363,-18.916,81.696
+reverse
+//:éjy*Izúq%ôlÜTõ,/.zÇ
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-223.842,-18.916,82.470
+point
+-225.192,-18.916,81.939
+point
+-227.269,-18.916,81.629
+reverse
+//:éjy*Izúq%ôlÜTõ,/.zÉ
+17				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-225.378,-18.916,81.111
+point
+-227.952,-18.917,81.760
+point
+-232.958,-18.916,85.192
+reverse
+//:éjy*Izúq%ôlÜTõ,/.yä
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-233.629,-18.916,85.244
+point
+-235.137,-18.915,85.428
+point
+-237.883,-18.916,84.002
+reverse
+//:éjy*Izúq%ôlÜTõ,/.yã
+1				// Ref num
+7				// Number of instructions
+5				// Initial instruction
+point
+-234.603,-18.916,83.075
+point
+-237.291,-18.916,84.277
+point
+-239.141,-18.916,84.414
+point
+-240.060,-18.916,84.651
+point
+-241.329,-18.914,84.995
+point
+-243.182,-18.916,87.368
+reverse
+//:éjy*Izúq%ôlÜTõ,/.yà
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-243.846,-18.915,89.669
+point
+-243.772,-18.915,91.633
+point
+-242.658,-18.915,94.584
+reverse
+//:éjy*Izúq%ôlÜTõ,/.yâ
+17				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-225.214,-18.916,96.958
+point
+-224.474,-18.916,96.468
+point
+-224.210,-18.916,95.897
+point
+-223.458,-18.916,94.270
+reverse
+//:éjy*Izúq%ôlÜTõ,/.yé
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-289.800,-18.915,98.099
+point
+-287.528,-18.915,97.391
+point
+-286.992,-18.915,95.275
+reverse
+//:éjy*Izúq%ôlÜTõ,/.yè
+1				// Ref num
+7				// Number of instructions
+3				// Initial instruction
+point
+-286.584,-18.916,95.062
+point
+-285.122,-18.916,94.775
+point
+-284.024,-18.916,94.553
+point
+-282.993,-18.916,94.208
+point
+-281.769,-18.916,94.357
+point
+-279.257,-18.916,93.459
+reverse
+//:éjy*Izúq%ôlÜTõ,/.yå
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-278.403,-18.916,93.124
+point
+-276.421,-18.916,92.787
+point
+-273.351,-18.916,92.168
+reverse
+//:éjy*Izúq%ôlÜTõ,/.yç
+12				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-276.536,-18.916,95.028
+point
+-277.883,-18.916,95.336
+point
+-279.189,-18.916,95.195
+point
+-281.667,-18.916,96.371
+reverse
+//:éjy*Izúq%ôlÜTõ,/.yÇ
+17				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-280.027,-18.916,95.991
+point
+-278.853,-18.916,95.361
+point
+-277.985,-18.916,93.932
+point
+-277.008,-18.916,92.852
+reverse
+//:éjy*Izúq%ôlÜTõ,/.yÉ
+8				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-275.923,-18.916,92.597
+point
+-274.557,-18.916,92.760
+point
+-272.792,-18.916,92.171
+point
+-267.385,-18.915,90.680
+reverse
+//:éjy*Izúq%ôlÜTõ,/.xä
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-249.956,-17.586,62.402
+point
+-253.447,-17.126,59.029
+point
+-253.663,-16.985,57.797
+reverse
+//:éjy*Izúq%ôlÜTõ,/.xã
+17				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-252.848,-17.401,61.382
+point
+-251.877,-16.860,56.561
+point
+-251.740,-16.522,54.063
+point
+-252.232,-16.232,51.727
+reverse
+//:éjy*Izúq%ôlÜTõ,/.xà
+12				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-255.093,-16.136,51.243
+point
+-255.367,-16.081,50.658
+point
+-253.478,-15.866,48.171
+reverse
+//:éjy*Izúq%ôlÜTõ,/.xâ
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-259.604,-15.627,19.171
+point
+-263.137,-15.657,16.034
+point
+-263.787,-15.657,14.920
+reverse
+//:éjy*Izúq%ôlÜTõ,/.xé
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-266.962,-15.680,-2.238
+point
+-267.167,-15.791,-4.341
+point
+-267.122,-15.904,-6.260
+reverse
+//:éjy*Izúq%ôlÜTõ,/.xè
+1				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-264.090,-15.692,-2.653
+point
+-264.235,-15.791,-4.428
+point
+-264.105,-15.851,-5.513
+point
+-264.434,-16.113,-10.220
+point
+-264.228,-16.144,-10.802
+reverse
+//:éjy*Izúq%ôlÜTõ,/.xå
+8				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-264.208,-16.184,-11.530
+point
+-264.744,-16.682,-17.259
+point
+-265.236,-16.733,-17.799
+point
+-265.035,-16.840,-18.964
+reverse
+//:éjy*Izúq%ôlÜTõ,/.xç
+3				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-119.834,-13.901,-123.061
+point
+-117.564,-13.901,-123.633
+point
+-115.680,-13.901,-123.977
+reverse
+//:éjy*Izúq%ôlÜTõ,/.xÇ
+29				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-109.031,-13.901,-125.677
+point
+-105.715,-13.901,-126.182
+point
+-102.975,-13.901,-127.024
+reverse
+//:éjy*Izúq%ôlÜTõ,/.xÉ
+1				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-101.611,-13.901,-127.207
+point
+-99.451,-13.901,-127.706
+point
+-96.372,-13.901,-128.519
+point
+-93.558,-13.901,-129.240
+reverse
+//:éjy*Izúq%ôlÜTõ,/.wä
+5				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-91.666,-13.901,-126.863
+point
+-90.408,-13.901,-126.956
+point
+-87.817,-13.901,-127.590
+point
+-86.489,-13.901,-128.258
+point
+-85.750,-13.901,-130.193
+reverse
+//:éjy*Izúq%ôlÜTõ,/.wã
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-84.949,-13.901,-131.149
+point
+-80.765,-13.901,-129.335
+point
+-79.234,-13.901,-129.693
+reverse
+//:éjy*Izúq%ôlÜTõ,/.wà
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-77.973,-13.901,-129.919
+point
+-76.168,-13.900,-133.065
+point
+-73.672,-13.901,-133.667
+reverse
+//:éjy*Izúq%ôlÜTõ,/.wâ
+13				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-83.065,-13.901,-131.665
+point
+-84.022,-13.901,-131.468
+point
+-87.263,-13.901,-130.582
+point
+-88.684,-13.901,-130.165
+point
+-89.755,-13.901,-129.999
+reverse
+//:éjy*Izúq%ôlÜTõ,/.wé
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-91.735,-13.901,-126.627
+point
+-93.750,-13.901,-126.619
+point
+-97.768,-13.901,-125.274
+reverse
+//:éjy*Izúq%ôlÜTõ,/.wè
+29				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-98.194,-13.901,-125.123
+point
+-101.434,-13.901,-124.704
+point
+-103.321,-13.901,-124.105
+point
+-104.968,-13.901,-123.493
+reverse
+//:éjy*Izúq%ôlÜTõ,/.wå
+5				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-111.649,-13.901,-124.905
+point
+-113.716,-13.901,-122.206
+point
+-115.137,-13.901,-121.271
+point
+-116.340,-13.901,-120.804
+point
+-118.246,-13.901,-120.392
+reverse
+//:éjy*Izúq%ôlÜTõ,/.wç
+3				// Ref num
+7				// Number of instructions
+4				// Initial instruction
+point
+-121.292,-13.901,-119.788
+point
+-123.196,-13.901,-119.728
+point
+-124.535,-13.901,-118.956
+point
+-125.394,-13.901,-118.697
+point
+-126.965,-13.901,-118.549
+point
+-128.145,-13.901,-118.237
+reverse
+//:éjy*Izúq%ôlÜTõ,/.wÇ
+1				// Ref num
+7				// Number of instructions
+3				// Initial instruction
+point
+-132.275,-13.901,-119.952
+point
+-135.456,-13.817,-119.294
+point
+-137.788,-13.901,-118.554
+point
+-140.212,-13.901,-118.253
+point
+-140.870,-13.901,-117.947
+point
+-141.976,-13.977,-117.808
+reverse
+//:éjy*Izúq%ôlÜTõ,/.wÉ
+3				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-145.000,-14.111,-114.419
+point
+-147.714,-14.343,-113.757
+point
+-148.978,-14.441,-113.374
+point
+-150.077,-14.520,-113.405
+point
+-151.259,-14.618,-112.759
+reverse
+//:éjy*Izúq%ôlÜTõ,/.vä
+29				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-154.072,-14.744,-114.431
+point
+-156.939,-14.906,-113.855
+point
+-158.349,-14.962,-112.972
+point
+-160.074,-15.001,-112.697
+reverse
+//:éjy*Izúq%ôlÜTõ,/.vã
+13				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-163.051,-15.344,-108.087
+point
+-164.301,-15.485,-107.578
+point
+-166.077,-15.909,-106.568
+point
+-166.565,-16.010,-106.127
+point
+-167.904,-16.244,-105.358
+reverse
+//:éjy*Izúq%ôlÜTõ,/.và
+8				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-169.241,-16.457,-104.871
+point
+-170.250,-16.652,-104.404
+point
+-172.089,-17.158,-102.408
+point
+-173.911,-17.623,-100.836
+reverse
+//:éjy*Izúq%ôlÜTõ,/.vâ
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-183.381,-17.667,-94.703
+point
+-185.582,-17.667,-93.495
+point
+-187.395,-17.667,-92.805
+point
+-188.499,-17.667,-92.221
+reverse
+//:éjy*Izúq%ôlÜTõ,/.vé
+13				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-189.212,-17.667,-92.062
+point
+-193.357,-17.667,-93.250
+point
+-194.419,-17.667,-93.268
+point
+-195.772,-17.667,-92.864
+point
+-196.934,-17.667,-92.532
+reverse
+//:éjy*Izúq%ôlÜTõ,/.vè
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-200.913,-17.667,-89.040
+point
+-202.033,-17.667,-88.797
+point
+-204.014,-17.667,-88.626
+point
+-205.983,-17.667,-88.356
+reverse
+//:éjy*Izúq%ôlÜTõ,/.vå
+1				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-205.578,-17.667,-91.182
+point
+-207.331,-17.667,-90.489
+point
+-208.538,-17.667,-90.705
+point
+-209.648,-17.667,-91.079
+point
+-212.465,-17.667,-91.333
+reverse
+//:éjy*Izúq%ôlÜTõ,/.vç
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-222.421,-17.667,-90.108
+point
+-225.237,-17.667,-90.657
+point
+-228.646,-17.667,-94.731
+reverse
+//:éjy*Izúq%ôlÜTõ,/.vÇ
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-222.851,-17.667,-92.715
+point
+-225.380,-17.667,-93.718
+point
+-230.772,-17.667,-92.287
+reverse
+//:éjy*Izúq%ôlÜTõ,/.vÉ
+13				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-231.315,-17.667,-92.144
+point
+-236.308,-17.667,-91.844
+point
+-237.168,-17.667,-90.632
+point
+-238.428,-17.667,-88.917
+reverse
+//:éjy*Izúq%ôlÜTõ,/)ä
+14				// Ref num
+7				// Number of instructions
+4				// Initial instruction
+point
+-234.244,-17.667,-90.010
+point
+-234.876,-17.667,-89.574
+point
+-235.287,-17.667,-88.471
+point
+-236.050,-17.667,-87.275
+point
+-237.103,-17.667,-85.875
+point
+-237.296,-17.667,-85.318
+reverse
+//:éjy*Izúq%ôlÜTõ,/)ã
+8				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-239.589,-17.667,-87.027
+point
+-238.759,-17.667,-88.124
+point
+-233.632,-17.667,-90.893
+point
+-233.018,-17.667,-91.433
+point
+-231.069,-17.667,-95.099
+reverse
+//:éjy*Izúq%ôlÜTõ,/)à
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-229.490,-17.667,-94.925
+point
+-232.882,-17.667,-94.231
+point
+-234.970,-17.667,-93.341
+reverse
+//:éjy*Izúq%ôlÜTõ,/)â
+29				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-235.881,-17.667,-92.742
+point
+-237.468,-17.667,-89.190
+point
+-237.576,-17.667,-86.398
+point
+-237.810,-17.667,-84.738
+point
+-239.074,-17.667,-83.249
+reverse
+//:éjy*Izúq%ôlÜTõ,/)é
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-239.940,-17.667,-81.940
+point
+-241.389,-17.667,-80.509
+point
+-242.760,-17.667,-79.235
+point
+-243.512,-17.667,-78.624
+reverse
+//:éjy*Izúq%ôlÜTõ,/)è
+5				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-245.986,-17.667,-80.303
+point
+-244.407,-17.667,-81.344
+point
+-243.769,-17.667,-82.153
+point
+-242.335,-17.667,-83.856
+reverse
+//:éjy*Izúq%ôlÜTõ,/)å
+1				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-241.138,-17.667,-85.195
+point
+-241.675,-17.667,-83.809
+point
+-242.744,-17.667,-82.883
+point
+-243.966,-17.667,-78.255
+reverse
+//:éjy*Izúq%ôlÜTõ,/)ç
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-245.521,-17.667,-77.607
+point
+-247.017,-17.667,-77.002
+point
+-249.465,-17.667,-76.193
+reverse
+//:éjy*Izúq%ôlÜTõ,/)Ç
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-251.893,-17.667,-74.479
+point
+-256.607,-17.667,-74.979
+point
+-259.508,-17.667,-74.238
+reverse
+//:éjy*Izúq%ôlÜTõ,/)É
+13				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-264.458,-17.667,-70.671
+point
+-265.318,-17.667,-65.596
+point
+-266.224,-17.667,-63.769
+point
+-266.944,-17.667,-63.032
+point
+-267.397,-17.667,-61.949
+reverse
+//:éjy*Izúq%ôlÜTõ,/)~ä
+14				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-268.182,-17.667,-60.830
+point
+-267.928,-17.667,-62.571
+point
+-266.643,-17.667,-64.806
+point
+-266.713,-17.667,-67.852
+point
+-265.824,-17.667,-68.878
+reverse
+//:éjy*Izúq%ôlÜTõ,/)~ã
+3				// Ref num
+6				// Number of instructions
+3				// Initial instruction
+point
+-264.989,-17.667,-69.779
+point
+-262.826,-17.667,-72.031
+point
+-262.093,-17.667,-72.685
+point
+-260.609,-17.667,-73.550
+point
+-257.839,-17.667,-74.706
+reverse
+//:éjy*Izúq%ôlÜTõ,/)~à
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-255.378,-17.667,-75.598
+point
+-252.351,-17.667,-77.418
+point
+-250.216,-17.667,-79.156
+reverse
+//:éjy*Izúq%ôlÜTõ,/)~â
+29				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-252.969,-17.667,-73.850
+point
+-256.132,-17.667,-73.995
+point
+-258.440,-17.667,-73.304
+point
+-261.503,-17.667,-69.874
+point
+-264.039,-17.667,-66.725
+reverse
+//:éjy*Izúq%ôlÜTõ,/)~é
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-271.027,-17.667,-61.583
+point
+-272.535,-17.667,-58.840
+point
+-274.032,-17.667,-52.526
+reverse
+//:éjy*Izúq%ôlÜTõ,/)~è
+8				// Ref num
+6				// Number of instructions
+2				// Initial instruction
+point
+-271.331,-17.667,-49.860
+point
+-271.311,-17.667,-48.130
+point
+-271.297,-17.667,-46.380
+point
+-271.427,-17.667,-44.970
+point
+-271.157,-17.667,-43.681
+reverse
+//:éjy*Izúq%ôlÜTõ,/)~å
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-268.855,-17.667,-30.778
+point
+-268.559,-17.667,-30.243
+point
+-267.896,-17.667,-29.450
+reverse
+//:éjy*Izúq%ôlÜTõ,/)~ç
+3				// Ref num
+5				// Number of instructions
+2				// Initial instruction
+point
+-271.924,-17.667,-32.767
+point
+-272.570,-17.667,-36.082
+point
+-272.706,-17.667,-37.178
+point
+-273.465,-17.667,-39.753
+reverse
+//:éjy*Izúq%ôlÜTõ,/)~Ç
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-270.747,-17.667,-40.455
+point
+-272.866,-17.667,-36.484
+point
+-272.339,-17.667,-34.237
+reverse
+//:éjy*Izúq%ôlÜTõ,/)~É
+8				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-271.845,-17.667,-31.923
+point
+-269.676,-17.667,-34.570
+point
+-270.281,-17.667,-37.579
+reverse
+//:éjy*Izúq%ôlÜTõ,/)}ä
+3				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-270.493,-17.667,-38.015
+point
+-271.410,-17.667,-36.914
+point
+-272.664,-17.667,-35.041
+point
+-272.133,-17.667,-33.504
+reverse
+//:éjy*Izúq%ôlÜTõ,/)}ã
+8				// Ref num
+7				// Number of instructions
+4				// Initial instruction
+point
+-271.174,-17.667,-31.072
+point
+-271.721,-17.667,-33.570
+point
+-272.730,-17.667,-35.622
+point
+-273.163,-17.667,-37.531
+point
+-271.921,-17.667,-39.174
+point
+-271.089,-17.667,-42.821
+reverse
+//:éjy*Izúq%ôlÜTõ,/)}à
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-270.053,-17.667,-26.369
+point
+-269.945,-17.667,-27.000
+point
+-270.647,-17.667,-28.010
+reverse
+//:éjy*Izúq%ôlÜTõ,/)}â
+13				// Ref num
+6				// Number of instructions
+4				// Initial instruction
+point
+-269.690,-17.667,-25.496
+point
+-269.842,-17.667,-25.983
+point
+-270.298,-17.667,-26.927
+point
+-270.337,-17.667,-28.194
+point
+-270.756,-17.667,-28.940
+reverse
+//:éjy*Izúq%ôlÜTõ,/)}é
+14				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-269.406,-17.667,-25.153
+point
+-268.996,-17.666,-24.854
+point
+-268.898,-17.355,-22.439
+reverse
+//:éjy*Izúq%ôlÜTõ,/)}è
+5				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-266.252,-17.443,-23.823
+point
+-265.947,-17.238,-22.254
+point
+-267.972,-16.891,-18.890
+reverse
+//:éjy*Izúq%ôlÜTõ,/)}å
+13				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-267.071,-17.667,-26.394
+point
+-266.334,-17.478,-24.081
+point
+-266.049,-17.349,-23.131
+reverse
+//:éjy*Izúq%ôlÜTõ,/)}ç
+1				// Ref num
+4				// Number of instructions
+2				// Initial instruction
+point
+-267.927,-17.000,-19.824
+point
+-268.300,-17.152,-21.026
+point
+-266.443,-17.541,-24.563
+reverse
+//:éjy*Izúq%ôlÜTõ,/)}Ç
+8				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-266.648,-17.641,-25.315
+point
+-266.742,-17.514,-24.281
+point
+-266.126,-17.317,-22.841
+point
+-265.068,-16.746,-17.961
+reverse
+//:éjy*Izúq%ôlÜTõ,/)}É
+29				// Ref num
+5				// Number of instructions
+3				// Initial instruction
+point
+-269.300,-17.624,-24.315
+point
+-268.899,-17.480,-23.371
+point
+-268.473,-17.260,-21.869
+point
+-265.572,-17.078,-21.051
+reverse
+//:éjy*Izúq%ôlÜTõ,/)|ä
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-287.459,-15.627,39.118
+reverse
+//:éjy*Izúq%ôlÜTõ,/)|ã
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-287.210,-15.627,40.372
+reverse
+//:éjy*Izúq%ôlÜTõ,/)|à
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-286.898,-15.627,41.898
+reverse
+//:éjy*Izúq%ôlÜTõ,/)|â
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-280.139,-15.627,35.601
+reverse
+//:éjy*Izúq%ôlÜTõ,/)|é
+130				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-239.364,-18.916,86.650
+reverse
+//:éjy*Izúq%ôlÜTõ,/)|è
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-271.043,-18.916,91.502
+reverse
+//:éjy*Izúq%ôlÜTõ,/)|å
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-271.787,-18.916,91.665
+reverse
+//:éjy*Izúq%ôlÜTõ,/)|ç
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-277.022,-18.916,95.333
+reverse
+//:éjy*Izúq%ôlÜTõ,/)|Ç
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-278.585,-18.916,95.637
+reverse
+//:éjy*Izúq%ôlÜTõ,/)|É
+129				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-287.680,-18.915,96.539
+reverse
+//:éjy*Izúq%ôlÜTõ,/){ä
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-288.693,-18.915,96.701
+reverse
+//:éjy*Izúq%ôlÜTõ,/){ã
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-286.898,-18.915,109.796
+reverse
+//:éjy*Izúq%ôlÜTõ,/){à
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-285.751,-18.915,109.419
+reverse
+//:éjy*Izúq%ôlÜTõ,/){â
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-275.152,-18.916,105.913
+reverse
+//:éjy*Izúq%ôlÜTõ,/){é
+130				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-267.579,-18.915,103.067
+reverse
+//:éjy*Izúq%ôlÜTõ,/){è
+130				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-253.508,-18.916,101.013
+reverse
+//:éjy*Izúq%ôlÜTõ,/){å
+130				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-234.220,-18.916,96.708
+reverse
+//:éjy*Izúq%ôlÜTõ,/){ç
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-233.295,-18.916,96.507
+reverse
+//:éjy*Izúq%ôlÜTõ,/){Ç
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-227.150,-18.916,97.137
+reverse
+//:éjy*Izúq%ôlÜTõ,/){É
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-226.593,-18.916,97.000
+reverse
+//:éjy*Izúq%ôlÜTõ,/)zä
+129				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-222.481,-18.916,94.977
+reverse
+//:éjy*Izúq%ôlÜTõ,/)zã
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-221.543,-18.916,95.059
+reverse
+//:éjy*Izúq%ôlÜTõ,/)zà
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-221.642,-18.916,94.409
+reverse
+//:éjy*Izúq%ôlÜTõ,/)zâ
+131				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-226.181,-18.916,82.248
+reverse
+//:éjy*Izúq%ôlÜTõ,/)zé
+131				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-226.707,-18.916,82.354
+reverse
+//:éjy*Izúq%ôlÜTõ,/)zè
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-274.307,-17.667,-46.446
+reverse
+//:éjy*Izúq%ôlÜTõ,/)zå
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-274.257,-17.667,-44.535
+reverse
+//:éjy*Izúq%ôlÜTõ,/)zç
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-274.284,-17.667,-49.706
+reverse
+//:éjy*Izúq%ôlÜTõ,/)zÇ
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-259.818,-17.667,-70.806
+reverse
+//:éjy*Izúq%ôlÜTõ,/)zÉ
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-259.365,-17.667,-71.060
+reverse
+//:éjy*Izúq%ôlÜTõ,/)yä
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-260.450,-17.667,-70.372
+reverse
+//:éjy*Izúq%ôlÜTõ,/)yã
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-134.149,-13.901,-116.744
+reverse
+//:éjy*Izúq%ôlÜTõ,/)yà
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-133.133,-13.901,-116.986
+reverse
+//:éjy*Izúq%ôlÜTõ,/)yâ
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-94.608,-13.901,-125.770
+reverse
+//:éjy*Izúq%ôlÜTõ,/)yé
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-93.850,-13.901,-125.954
+reverse
+//:éjy*Izúq%ôlÜTõ,/)yè
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-55.923,-13.561,-133.129
+reverse
+//:éjy*Izúq%ôlÜTõ,/)yå
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-87.012,-11.865,-136.051
+reverse
+//:éjy*Izúq%ôlÜTõ,/)yç
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-88.779,-12.543,-137.107
+reverse
+//:éjy*Izúq%ôlÜTõ,/)yÇ
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-99.301,-12.059,-137.304
+reverse
+//:éjy*Izúq%ôlÜTõ,/)yÉ
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-177.768,-7.933,-122.214
+reverse
+//:éjy*Izúq%ôlÜTõ,/)xä
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-178.348,-7.878,-120.801
+reverse
+//:éjy*Izúq%ôlÜTõ,/)xã
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-208.762,-4.206,-119.494
+reverse
+//:éjy*Izúq%ôlÜTõ,/)xà
+129				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-209.185,-4.137,-120.047
+reverse
+//:éjy*Izúq%ôlÜTõ,/)xâ
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-258.207,-2.552,-100.866
+reverse
+//:éjy*Izúq%ôlÜTõ,/)xé
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-260.159,-2.552,-96.271
+reverse
+//:éjy*Izúq%ôlÜTõ,/)xè
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-260.816,-2.552,-94.565
+reverse
+//:éjy*Izúq%ôlÜTõ,/)xå
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-268.781,-2.552,-98.559
+reverse
+//:éjy*Izúq%ôlÜTõ,/)xç
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-269.871,-2.552,-90.295
+reverse
+//:éjy*Izúq%ôlÜTõ,/)xÇ
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-269.961,-2.552,-90.025
+reverse
+//:éjy*Izúq%ôlÜTõ,/)xÉ
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-301.068,-3.636,-66.648
+reverse
+//:éjy*Izúq%ôlÜTõ,/)wä
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-306.901,-4.048,-65.192
+reverse
+//:éjy*Izúq%ôlÜTõ,/)wã
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-307.481,-4.048,-64.478
+reverse
+//:éjy*Izúq%ôlÜTõ,/)wà
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-307.952,-4.048,-63.872
+reverse
+//:éjy*Izúq%ôlÜTõ,/)wâ
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-287.591,-8.005,-40.262
+reverse
+//:éjy*Izúq%ôlÜTõ,/)wé
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-302.234,-12.106,-16.937
+reverse
+//:éjy*Izúq%ôlÜTõ,/)wè
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-301.804,-12.106,-16.744
+reverse
+//:éjy*Izúq%ôlÜTõ,/)wå
+138				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-271.668,-15.627,24.710
+reverse
+//:éjy*Izúq%ôlÜTõ,/)wç
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-272.063,-15.627,24.805
+reverse
+//:éjy*Izúq%ôlÜTõ,/)wÇ
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-271.201,-15.627,24.549
+reverse
+//:éjy*Izúq%ôlÜTõ,/)wÉ
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-272.084,-15.627,23.357
+reverse
+//:éjy*Izúq%ôlÜTõ,/)vä
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-214.152,-8.352,-7.375
+reverse
+//:éjy*Izúq%ôlÜTõ,/)vã
+129				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-213.866,-8.290,-7.552
+reverse
+//:éjy*Izúq%ôlÜTõ,/)và
+129				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-202.868,-7.280,-4.228
+reverse
+//:éjy*Izúq%ôlÜTõ,/)vâ
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-182.746,-5.425,6.452
+reverse
+//:éjy*Izúq%ôlÜTõ,/)vé
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-188.515,-5.380,4.779
+reverse
+//:éjy*Izúq%ôlÜTõ,/)vè
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-179.419,-5.431,2.074
+reverse
+//:éjy*Izúq%ôlÜTõ,/)vå
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-178.465,-5.432,1.182
+reverse
+//:éjy*Izúq%ôlÜTõ,/)vç
+125				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-146.391,-7.508,-46.202
+reverse
+//:éjy*Izúq%ôlÜTõ,/)vÇ
+125				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-135.465,-7.487,-49.345
+reverse
+//:éjy*Izúq%ôlÜTõ,/)vÉ
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-135.327,-18.640,-34.027
+reverse
+//:éjy*Izúq%ôlÜTõ,/(ä
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-135.395,-18.641,-34.552
+reverse
+//:éjy*Izúq%ôlÜTõ,/(ã
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-83.241,-13.039,-45.299
+reverse
+//:éjy*Izúq%ôlÜTõ,/(à
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-82.370,-13.120,-45.117
+reverse
+//:éjy*Izúq%ôlÜTõ,/(â
+129				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-23.442,-15.561,-51.867
+reverse
+//:éjy*Izúq%ôlÜTõ,/(é
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-19.152,-14.991,-77.396
+reverse
+//:éjy*Izúq%ôlÜTõ,/(è
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-19.127,-14.982,-78.241
+reverse
+//:éjy*Izúq%ôlÜTõ,/(å
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-14.327,-15.489,-128.504
+reverse
+//:éjy*Izúq%ôlÜTõ,/(ç
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-16.435,-15.631,-132.987
+reverse
+//:éjy*Izúq%ôlÜTõ,/(Ç
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-43.317,-14.684,-133.268
+reverse
+//:éjy*Izúq%ôlÜTõ,/(É
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-42.642,-14.745,-133.291
+reverse
+//:éjy*Izúq%ôlÜTõ,/(~ä
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-61.800,-13.901,-133.221
+reverse
+//:éjy*Izúq%ôlÜTõ,/(~ã
+130				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-62.341,-13.901,-136.832
+reverse
+START OF OPPONENT PATHS
+143                             // Number of path nodes
+-250.508,  -15.624,   29.209   // Node #0
+-248.031,  -15.627,   38.838   // Node #1
+-243.893,  -15.508,   41.091   // Node #2
+-229.045,  -11.606,   30.295   // Node #3
+-219.342,   -9.352,   16.413   // Node #4
+-211.405,   -8.951,   -5.008   // Node #5
+-205.429,   -7.881,   -6.354   // Node #6
+-193.708,   -5.328,   -1.252   // Node #7
+-185.485,   -5.428,    4.234   // Node #8
+-180.135,   -5.649,    4.007   // Node #9
+-176.502,   -5.435,    0.724   // Node #10
+-175.172,   -5.578,   -4.666   // Node #11
+-179.573,   -8.050,  -17.537   // Node #12
+-178.480,   -8.840,  -24.813   // Node #13
+-170.047,   -9.078,  -35.110   // Node #14
+-145.562,   -8.802,  -44.806   // Node #15
+-134.637,   -8.880,  -48.147   // Node #16
+-114.706,   -8.874,  -52.829   // Node #17
+-98.251,   -9.426,  -49.700   // Node #18
+-70.570,  -12.833,  -45.715   // Node #19
+-49.297,  -14.595,  -42.864   // Node #20
+-29.777,  -14.596,  -49.524   // Node #21
+-21.244,  -14.596,  -58.412   // Node #22
+-16.074,  -14.536,  -74.221   // Node #23
+-13.154,  -13.419, -116.560   // Node #24
+-13.090,  -14.543, -129.299   // Node #25
+-15.123,  -14.656, -134.091   // Node #26
+-18.705,  -14.657, -136.028   // Node #27
+-54.190,  -13.641, -136.953   // Node #28
+-152.848,  -13.820, -114.594   // Node #29
+-182.531,  -17.667,  -97.063   // Node #30
+-196.978,  -17.667,  -91.815   // Node #31
+-213.702,  -16.453,  -90.431   // Node #32
+-231.135,  -16.453,  -94.236   // Node #33
+-235.669,  -16.453,  -91.053   // Node #34
+-239.736,  -16.453,  -84.356   // Node #35
+-262.737,  -16.453,  -70.095   // Node #36
+-271.548,  -16.453,  -59.852   // Node #37
+-272.065,  -16.453,  -44.221   // Node #38
+-266.345,  -15.303,  -13.850   // Node #39
+-264.770,  -14.680,    3.261   // Node #40
+-254.830,  -15.627,   43.612   // Node #41
+-246.000,  -15.631,   41.796   // Node #42
+-164.508,  -15.443, -109.296   // Node #43
+-261.168,  -14.680,   17.931   // Node #44
+-42.843,  -14.595,  -43.566   // Node #45
+-61.143,  -13.907, -135.604   // Node #46
+-61.029,  -14.008, -137.895   // Node #47
+-63.087,  -13.880, -138.545   // Node #48
+-165.655,   -8.969, -139.964   // Node #49
+-169.548,   -8.663, -138.876   // Node #50
+-173.986,   -8.280, -135.278   // Node #51
+-177.553,   -7.952, -129.515   // Node #52
+-179.660,   -7.749, -122.705   // Node #53
+-182.390,   -7.474, -117.350   // Node #54
+-186.456,   -7.046, -113.764   // Node #55
+-194.200,   -6.154, -111.558   // Node #56
+-201.944,   -5.168, -112.301   // Node #57
+-207.828,   -4.353, -115.465   // Node #58
+-211.222,   -3.839, -120.541   // Node #59
+-214.289,   -3.446, -132.081   // Node #60
+-217.671,   -3.160, -141.537   // Node #61
+-222.794,   -3.040, -146.983   // Node #62
+-231.198,   -2.851, -151.002   // Node #63
+-234.592,   -2.789, -150.888   // Node #64
+-236.819,   -2.714, -148.580   // Node #65
+-248.357,   -2.552, -120.940   // Node #66
+-263.688,   -2.553,  -83.516   // Node #67
+-269.866,   -2.554,  -75.771   // Node #68
+-277.831,   -2.553,  -70.214   // Node #69
+-287.929,   -2.543,  -68.170   // Node #70
+-303.068,   -3.882,  -68.291   // Node #71
+-308.129,   -4.050,  -66.676   // Node #72
+-310.546,   -4.048,  -61.708   // Node #73
+-309.817,   -4.051,  -56.793   // Node #74
+-305.228,   -4.165,  -53.014   // Node #75
+-290.748,   -7.872,  -49.147   // Node #76
+-286.828,   -8.007,  -46.024   // Node #77
+-285.659,   -8.007,  -41.168   // Node #78
+-287.814,   -8.006,  -36.492   // Node #79
+-292.722,   -8.112,  -34.205   // Node #80
+-308.248,  -11.861,  -33.059   // Node #81
+-312.892,  -11.973,  -30.429   // Node #82
+-314.787,  -11.972,  -24.998   // Node #83
+-313.710,  -11.972,  -21.294   // Node #84
+-311.184,  -11.997,  -18.843   // Node #85
+-298.018,  -12.107,  -13.002   // Node #86
+-287.082,  -12.304,   -4.837   // Node #87
+-275.559,  -15.002,   12.043   // Node #88
+-273.364,  -15.620,   19.899   // Node #89
+-275.513,  -15.628,   26.232   // Node #90
+-279.528,  -15.628,   29.152   // Node #91
+-287.257,  -15.630,   30.917   // Node #92
+-289.703,  -15.627,   34.061   // Node #93
+-289.404,  -15.627,   37.637   // Node #94
+-287.760,  -15.627,   47.198   // Node #95
+-286.602,  -15.627,   48.854   // Node #96
+-283.707,  -15.627,   50.241   // Node #97
+-278.500,  -15.622,   50.878   // Node #98
+-259.234,  -15.607,   46.407   // Node #99
+-256.702,  -15.627,   46.017   // Node #100
+-254.571,  -15.627,   45.821   // Node #101
+-253.865,  -15.810,   47.777   // Node #102
+-243.116,  -18.915,   98.813   // Node #103
+-244.045,  -18.915,   99.848   // Node #104
+-263.285,  -18.915,  104.667   // Node #105
+-265.357,  -18.915,  103.936   // Node #106
+-266.277,  -18.915,  102.814   // Node #107
+-249.110,   -2.552, -118.924   // Node #108
+-258.219,   -2.552, -113.832   // Node #109
+-264.577,   -2.553, -106.675   // Node #110
+-272.315,   -2.552,  -88.420   // Node #111
+-281.437,   -2.552,  -74.518   // Node #112
+-251.441,  -15.623,   26.693   // Node #113
+-252.870,  -15.622,   24.867   // Node #114
+-255.388,  -15.622,   23.642   // Node #115
+-257.148,  -15.621,   23.266   // Node #116
+-259.491,  -15.621,   23.901   // Node #117
+-266.616,  -15.620,   24.606   // Node #118
+-121.550,   -9.078,  -51.179   // Node #119
+-123.816,   -9.356,  -45.510   // Node #120
+-125.287,  -10.162,  -38.526   // Node #121
+-131.912,  -13.190,  -32.790   // Node #122
+-140.261,  -13.512,  -30.740   // Node #123
+-145.006,  -12.423,  -30.887   // Node #124
+-152.848,  -10.049,  -33.455   // Node #125
+-155.717,   -8.795,  -36.452   // Node #126
+-157.728,   -9.078,  -41.463   // Node #127
+-136.791,  -14.001,  -31.257   // Node #128
+-143.569,  -18.690,  -47.648   // Node #129
+-142.298,  -18.654,  -39.284   // Node #130
+-147.869,  -18.642,  -36.886   // Node #131
+-151.331,  -18.664,  -39.018   // Node #132
+-140.591,  -18.730,  -50.247   // Node #133
+-138.024,  -18.671,  -49.664   // Node #134
+-136.208,  -18.636,  -45.375   // Node #135
+-134.454,  -18.587,  -41.220   // Node #136
+-127.194,  -18.571,  -41.632   // Node #137
+-126.725,  -18.567,  -41.644   // Node #138
+-213.557,   -9.078,    0.401   // Node #139
+-271.215,  -18.907,   81.140   // Node #140
+-248.192,  -18.907,   75.861   // Node #141
+-284.540,  -12.656,   -1.126   // Node #142
+149                                           // Number of path sections
+0,   1,   0, 255,   0, 255,    1.0,    0   // Section #0
+1,   2,   0, 255,   0, 255,    1.0,    0   // Section #1
+2,   3,   0, 255,   0, 255,    1.0,    0   // Section #2
+3,   4,   0, 255,   0, 255,    1.0,    0   // Section #3
+4, 139,   0, 255,   0, 255,    1.0,    0   // Section #4
+5,   6,   0, 255,   0, 255,    1.0,    0   // Section #5
+6,   7,   0, 255,   0, 255,    1.0,    0   // Section #6
+7,   8,   0, 255,   0, 255,    1.0,    0   // Section #7
+8,   9,   0, 255,   0, 255,    1.0,    0   // Section #8
+9,  10,   0, 255,   0, 255,    1.0,    0   // Section #9
+10,  11,   0, 255,   0, 255,    1.0,    0   // Section #10
+11,  12,   0, 170,   0, 255,    1.0,    0   // Section #11
+12,  13,   0, 255,   0, 255,    1.0,    0   // Section #12
+13,  14,   0, 255,   0, 255,    1.0,    0   // Section #13
+14, 127,   0, 255,   0, 255,    1.0,    0   // Section #14
+15,  16,   0, 255,   0, 255,    1.0,    0   // Section #15
+16, 119,   0, 255,   0, 255,    1.0,    0   // Section #16
+17,  18,   0, 255,   0, 255,    1.0,    0   // Section #17
+18,  19,   0, 255,   0, 255,    1.0,    0   // Section #18
+19,  20,   0, 255,   0, 255,    1.0,    0   // Section #19
+20,  45,   0, 255,   0, 255,    1.0,    0   // Section #20
+21,  22,   0, 255,   0, 255,    1.0,    0   // Section #21
+22,  23,   0, 255,   0, 255,    1.0,    0   // Section #22
+23,  24,   0, 255,   0,  40,    1.0,    0   // Section #23
+24,  25,   0, 255,   0, 255,    1.0,    0   // Section #24
+25,  26,   0, 255,   0, 255,    1.0,    0   // Section #25
+26,  27,   0, 255,   0, 255,    1.0,    0   // Section #26
+27,  28,   0, 255,   0, 255,    1.0,    0   // Section #27
+28,  46,   0, 255,   0, 255,    1.0,    0   // Section #28
+43,  29,   0,  70,   0, 255,    1.0,    1   // Section #29
+31,  30,   0, 255,   0, 255,    1.0,    1   // Section #30
+32,  31,   0, 255,   0, 255,    1.0,    1   // Section #31
+33,  32,   0,  35,   0, 255,    1.0,    1   // Section #32
+34,  33,   0, 255,   0,  35,    1.0,    1   // Section #33
+35,  34,   0, 255,   0, 255,    1.0,    1   // Section #34
+36,  35,   0, 255,   0, 255,    0.6,    1   // Section #35
+37,  36,   0, 255,   0, 255,    0.6,    1   // Section #36
+38,  37,   0, 255,   0, 255,    0.6,    1   // Section #37
+39,  38,   0, 255,   0, 255,    0.6,    1   // Section #38
+40,  39,   0, 255,   0, 255,    0.6,    1   // Section #39
+44,  40,   0, 255,   0, 255,    1.1,    1   // Section #40
+41,  42,   0, 255,   0, 255,    1.1,    0   // Section #41
+30,  43,   0, 255,   0, 255,    1.0,    1   // Section #42
+41, 117,   0,  15,   0, 255,    1.1,    1   // Section #43
+42,   2,   0, 255,   0, 255,    1.1,    0   // Section #44
+45,  21,   0, 255,   0, 255,    1.0,    0   // Section #45
+46,  47,   0, 255,   0, 255,    1.0,    1   // Section #46
+29,  46,   0, 255,   0, 255,    1.0,    1   // Section #47
+47,  48,   0, 255,   0, 255,    1.0,    1   // Section #48
+48,  49,   0, 255,   0, 255,    1.0,    1   // Section #49
+49,  50,   0,  65,   0,  65,    1.0,    1   // Section #50
+50,  51,   0,  50,   0,  45,    1.0,    1   // Section #51
+51,  52,   0,  40,   0,  50,    1.0,    1   // Section #52
+52,  53,   0, 255,   0, 255,    1.0,    1   // Section #53
+53,  54,   0, 255,   0,  70,    1.0,    1   // Section #54
+54,  55,   0,  55,   0,  40,    1.0,    1   // Section #55
+55,  56,   0,  45,   0,  40,    1.0,    1   // Section #56
+56,  57,   0,  40,   0,  30,    1.0,    1   // Section #57
+57,  58,   0,  35,   0,  40,    1.0,    1   // Section #58
+58,  59,   0,  45,   0,  50,    1.0,    1   // Section #59
+59,  60,   0, 255,   0, 255,    1.0,    1   // Section #60
+60,  61,   0, 255,   0, 255,    1.0,    1   // Section #61
+61,  62,   0, 255,   0, 255,    1.0,    1   // Section #62
+62,  63,   0,  65,   0,  40,    1.0,    1   // Section #63
+63,  64,   0,  35,   0,  30,    1.0,    1   // Section #64
+64,  65,   0,  25,   0,  35,    1.0,    1   // Section #65
+65,  66,   0, 255,   0, 255,    1.0,    1   // Section #66
+66, 108,   0, 255,   0, 255,    1.0,    1   // Section #67
+67,  68,   0, 255,   0, 255,    1.0,    1   // Section #68
+68,  69,   0, 255,   0, 255,    1.0,    1   // Section #69
+69,  70,   0, 255,   0, 255,    1.0,    1   // Section #70
+70,  71,   0, 255,   0, 255,    1.0,    1   // Section #71
+71,  72,   0, 255,   0, 255,    1.0,    1   // Section #72
+72,  73,   0, 255,   0, 255,    1.0,    1   // Section #73
+73,  74,   0, 255,   0, 255,    1.0,    1   // Section #74
+74,  75,   0, 255,   0, 255,    1.0,    1   // Section #75
+75,  76,   0, 255,   0, 255,    1.0,    1   // Section #76
+76,  77,   0, 255,   0, 255,    1.0,    1   // Section #77
+77,  78,   0, 255,   0, 255,    1.0,    1   // Section #78
+78,  79,   0, 255,   0, 255,    1.0,    1   // Section #79
+79,  80,   0, 255,   0, 255,    1.0,    1   // Section #80
+80,  81,   0, 255,   0, 255,    1.0,    1   // Section #81
+81,  82,   0, 255,   0, 255,    1.0,    1   // Section #82
+82,  83,   0, 255,   0, 255,    1.0,    1   // Section #83
+83,  84,   0, 255,   0, 255,    1.0,    1   // Section #84
+84,  85,   0, 255,   0, 255,    1.0,    1   // Section #85
+85,  86,   0, 255,   0, 255,    1.0,    1   // Section #86
+86,  87,   0, 255,   0, 255,    1.0,    1   // Section #87
+87, 142,   0, 255,   0, 255,    1.0,    1   // Section #88
+88,  89,   0, 255,   0, 255,    1.0,    1   // Section #89
+89,  90,   0, 255,   0, 255,    1.0,    1   // Section #90
+90,  91,   0, 255,   0, 255,    1.0,    1   // Section #91
+91,  92,   0, 255,   0, 255,    1.0,    1   // Section #92
+92,  93,   0, 255,   0, 255,    1.0,    1   // Section #93
+93,  94,   0, 255,   0, 255,    1.0,    1   // Section #94
+94,  95,   0, 255,   0, 255,    1.0,    1   // Section #95
+95,  96,   0, 255,   0, 255,    1.0,    1   // Section #96
+96,  97,   0, 255,   0, 255,    1.0,    1   // Section #97
+97,  98,   0, 255,   0, 255,    1.0,    1   // Section #98
+98,  99,   0, 255,   0, 255,    1.0,    0   // Section #99
+99, 100,   0, 255,   0, 255,    1.0,    0   // Section #100
+100, 101,   0, 255,   0, 255,    1.0,    0   // Section #101
+102, 101,   0, 255,   0, 255,    1.0,    1   // Section #102
+103, 141,   0, 255,   0, 255,    1.0,    1   // Section #103
+104, 103,   0, 255,   0, 255,    1.0,    1   // Section #104
+105, 104,   0, 255,   0, 255,    1.0,    1   // Section #105
+106, 105,   0, 255,   0, 255,    1.0,    1   // Section #106
+107, 106,   0, 255,   0, 255,    1.0,    1   // Section #107
+98, 140,   0, 255,   0, 255,    1.0,    1   // Section #108
+108, 109,   0, 255,   0, 255,    1.0,    0   // Section #109
+108,  67,   0, 255,   0, 255,    1.0,    1   // Section #110
+109, 110,   0, 255,   0, 255,    1.0,    0   // Section #111
+110, 111,   0, 255,   0, 255,    1.0,    0   // Section #112
+111, 112,   0, 255,   0, 255,    1.0,    0   // Section #113
+112,  70,   0, 255,   0, 255,    1.0,    0   // Section #114
+101,  41,   0, 255,   0, 255,    1.0,    1   // Section #115
+0, 113,   0, 255,   0, 255,    1.0,    0   // Section #116
+113, 114,   0, 255,   0, 255,    1.0,    0   // Section #117
+114, 115,   0, 255,   0, 255,    0.9,    0   // Section #118
+115, 116,   0, 255,   0, 255,    0.7,    0   // Section #119
+116, 117,   0, 255,   0, 255,    0.7,    0   // Section #120
+117,  44,   0, 255,   0,  25,    1.1,    1   // Section #121
+89, 118,   0, 255,   0, 255,    0.8,    0   // Section #122
+118, 117,   0, 255,   0, 255,    0.5,    0   // Section #123
+119, 120,   0, 255,   0, 255,    1.0,    0   // Section #124
+119,  17,   0, 255,   0, 255,    1.0,    0   // Section #125
+120, 121,   0, 255,   0, 255,    1.0,    0   // Section #126
+121, 122,   0, 255,   0, 255,    1.0,    0   // Section #127
+122, 128,   0, 255,   0, 255,    1.0,    0   // Section #128
+123, 124,   0, 255,   0, 255,    1.0,    0   // Section #129
+124, 125,   0, 255,   0, 255,    1.0,    0   // Section #130
+125, 126,   0, 255,   0, 255,    1.0,    0   // Section #131
+126, 127,   0, 255,   0, 255,    1.0,    0   // Section #132
+127,  15,   0, 255,   0, 255,    1.0,    0   // Section #133
+128, 133,   0, 255,   0, 255,    1.0,    0   // Section #134
+128, 123,   0, 255,   0, 255,    1.0,    0   // Section #135
+129, 130,   0, 255,   0, 255,    1.3,    0   // Section #136
+130, 131,   0, 255,   0, 255,    1.3,    0   // Section #137
+131, 132,   0, 255,   0, 255,    1.5,    0   // Section #138
+133, 134,   0, 255,   0, 255,    1.0,    0   // Section #139
+133, 129,   0, 255,   0, 255,    1.0,    0   // Section #140
+134, 135,   0, 255,   0, 255,    1.3,    0   // Section #141
+135, 136,   0, 255,   0, 255,    1.3,    0   // Section #142
+136, 137,   0, 255,   0, 255,    1.5,    0   // Section #143
+137, 138,   0, 255,   0, 255,    1.5,    0   // Section #144
+139,   5,   0, 255,   0,  25,    1.0,    0   // Section #145
+140, 107,   0, 255,   0, 255,    1.0,    1   // Section #146
+141, 102,   0, 255,   0, 255,    1.0,    1   // Section #147
+142,  88,   0, 255,   0, 255,    1.0,    1   // Section #148
+0                                                             // Number of cop start points
+
+END OF OPPONENT PATHS
+7										// number of material modifiers
+//S]ú|?zq;öfiÅu9Pc	
+1.0										// car wall friction
+1.0										// tyre road friction
+1.0										// down force
+0.0										// bumpiness
+0										// tyre sound index
+0										// crash sound index
+0										// scrape noise index
+1.0										// sparkiness
+1										// room for expansion
+ROAD1.MAT							// skid mark material
+//Ab|;_yaî|kû2T
+1										// car wall friction
+1										// tyre road friction
+0.90										// down force
+6.0										// bumpiness
+0										// tyre sound index
+0										// crash sound index
+0										// scrape noise index
+0										// sparkiness
+3										// room for expansion
+MUD2.MAT										// room for expansion
+//Ab|;_yaî|kû3T
+1.2										// car wall friction
+1.2										// tyre road friction
+1.0										// down force
+10.0										// bumpiness
+-1										// tyre sound index
+0										// crash sound index
+0										// scrape noise index
+2.0										// sparkiness
+4										// room for expansion
+SAND2.MAT										// room for expansion
+//Ab|;_yaî|kû0T
+1.2										// car wall friction
+1										// tyre road friction
+1.0										// down force
+5										// bumpiness
+-1										// tyre sound index
+0										// crash sound index
+0										// scrape noise index
+0.0										// sparkiness
+3										// room for expansion
+MUD1.MAT										// room for expansion
+//Ab|;_yaî|kû1T
+1.2										// car wall friction
+1.00										// tyre road friction
+1.0										// down force
+8.0										// bumpiness
+-1										// tyre sound index
+0										// crash sound index
+0										// scrape noise index
+0.0										// sparkiness
+3										// room for expansion
+MUD2.MAT										// room for expansion
+//Ab|;_yaî|kû6T
+1										// car wall friction
+1										// tyre road friction
+2										// down force
+1										// bumpiness
+-1										// tyre sound index
+0										// crash sound index
+0										// scrape noise index
+20										// sparkiness
+1										// room for expansion
+1										// room for expansion
+//Ab|;_yaî|kû7T
+1										// car wall friction
+1										// tyre road friction
+2.0										// down force
+4.0										// bumpiness
+-1										// tyre sound index
+0										// crash sound index
+0										// scrape noise index
+1										// sparkiness
+4										// room for expansion
+SAND2.MAT										// room for expansion
+//YT1a=å[yGóz.ZvÄ
+5										// number of non car objects
+GASPUMP.TXT
+GREENCAR.TXT
+WRECK.TXT
+PALM2.TXT
+PHONE.TXT
+3										// number of dust shade tables
+61, 84, 33								// r g b values
+0.25, 0.5, 0.75							// quarter, half and three quarter "strength"
+92, 51, 34							// r g b values
+0.25, 0.5, 0.75							// quarter, half and three quarter "strength"
+117, 94, 38							// r g b values
+0.25, 0.5, 0.75							// quarter, half and three quarter "strength"
+12										// Number of network start points
+-248.296,-15.630,43.190							//1
+100													
+-253.514,-15.627,23.641							//2						
+101									
+-260.518,-15.656,20.924							//3						
+189									
+-274.246,-15.627,23.641							//4						
+146									
+-269.537,-15.627,23.339							//5						
+256									
+-282.704,-15.627,30.227							//6						
+187									
+-278.421,-15.624,49.670							//7						
+280									
+-271.077,-18.908,81.830							//8						
+9									
+-255.535,-15.627,43.903							//9						
+11									
+-248.102,-18.907,75.910							//10						
+11									
+-275.029,-15.251,13.741							//11						
+198									
+-281.298,-15.627,37.148							//12						
+9									
+1										// number of splash files
+SPLSHBLU.PIX 								//  name of pixelmapfile for splashes
+1
+NETCOSTA.TXT

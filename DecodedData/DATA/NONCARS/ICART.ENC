@@ -1,0 +1,24 @@
+///Industrial minecart
+45										// number of non car
+0,	0.110,	0							// centre of mass position
+0,	0,	0								// centre of mass position when attached
+-0.231,	0.010,	-0.268					// min x, min y, min z
+0.205,	0.239,		0.262					// max x, max y, max z	
+0										// number of extra points  	v. 3
+//0.AvÅXYj1fs;ö:ójè=ó"@
+//Uu3Mpíôâu7aioà
+1, 1										// mass in tonnes
+0.43, 0.23, 0.52							// am length, width, height
+0										// bend angle before snapping
+.5										// torque (KN m) needed to move object
+//(8q?\pöXïi~ir=öx`áq;Wg	
+1										// number of materials
+M14.MAT
+//=åh^[=0èxV2
+0.700000
+0.050000,0.300000
+0.050000
+0.050000
+0.000000
+0.000000
+0

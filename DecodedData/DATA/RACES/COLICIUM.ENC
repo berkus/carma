@@ -1,0 +1,439 @@
+VERSION 5		// V1 expects map checkpoint rectangles
+//"%‹Y{0k=.Xd~0.Ar–Z:3nmoYcm–{;VkMYj1fs;I
+//SoJ:?ayo[igƒuk\zƒ\šn~|m#[x`Uv"UgSJo8i=.N+|uk\l—
+//(#$kXl—™˜x1yxo_sxs?™v„VYi;{noUm(%Y“™c]YW	[=.To(…u/™q†[Šn7{h;SdfUu%MpŠ
+//™TF™˜t:/|-U}mUu3IgMY{~(d T+e€|?Pr	Pœhy/|;š`0=\pŠ™œt:/r)š`0-Pn–
+
+-0.411,-0.247,-12.001   						// Position of centre of start of grid
+181									// Direction that grid faces in
+//:’nm<–+ku(RrœP—n-/x;Y
+60,30,10							// Initial timer count for each skill level
+4									// # laps
+5000,5000,5000						// Race completed bonus (all laps raced) for each skill level
+10000,10000,10000					// Race completed bonus (all peds killed) for each skill level
+10000,10000,10000					// Race completed bonus (all oppos wasted) for each skill level
+//UG"]v›™˜t:/u*Sl`0$_"X‰:=gx,Q{gœ~?™p–Z{0hq*I
+9,18
+11,26
+0									// # checkpoints
+4									// # pixelmap files to load
+COLICIUM.PIX
+BIGSTAND.PIX
+DRKSCRN.PIX
+FOGSCRN.PIX
+4									// # pixelmap files to load(low memory)
+COLICIUM.PIX
+BIGSTAND.PIX
+DRKSCRN.PIX
+FOGSCRN.PIX
+2									// # shade table files to load
+DRRENDER.TAB
+IDENTITY.TAB
+4									// # material files to load
+COLICIUM.MAT
+DARKSKY.MAT
+DRKSCRN.MAT
+FOGSCRN.MAT
+4									// # material files to load(low memory)
+COLICIUM.MAT
+DARKSKY.MAT
+DRKSCRN.MAT
+FOGSCRN.MAT
+1									// # model files to load
+COLICIUM.DAT
+COLICIUM.ACT							// Track actor
+COLCMX.ACT							// Additional actor
+//UX„kK)v7:[H‰|
+BIGSTAND.PIX						// Name of sky texture pixelmap (or "none")
+4									// Horizontal repetitions of sky texture
+90									// Vertical size of sky texture (degrees)
+140									// Position of horizon (pixels below top)
+NONE								// Depth cue mode ("none", "dark" or "fog")
+7,0									// Degree of fog/darkness
+//0|D2l5N~JSˆsEMU^„pQ6
+0
+//™*J›LTv+M3VzV ™/U’ZPŠi
+0				// # special effects volumes
+
+//0™|D?|:N—YXomBF1CˆkG6wYIJ^†|BK4D‚vL 
+DARKSKY.MAT							// Material to use for default screens
+DRKSCRN.MAT							// Material to use for default screens during darkness
+FOGSCRN.MAT							// Material to use for default screens during fog
+0									// # areas with different screens
+//ktC#™=_ŠNTƒi
+NCOLOSUM.PIX						// Map pixelmap name
+-3.66,		0,			0			// World->map transformation matrix
+0,			0,			0
+0,			-3.66,		0
+159.6,		100.2,		0
+//~%7e!"UC	xP'™6\~IHq+I;Tk~P<v/_~\Iš|M(_:a“(Y
+START OF FUNK
+END OF FUNK
+START OF GROOVE
+END OF GROOVE
+//™S0t%7ešX\4B	™M5™)_šJN›hBI;0˜mW5Y0t%7e
+5
+46				// Number of pedestrians
+//0›\f–Jh7nsoT~e—u9™1@
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-0.914,0.788,-1.823
+reverse
+//0›\f–Jh7nsoT~e—u9™1G
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-2.055,0.788,-0.019
+reverse
+//0›\f–Jh7nsoT~e—u9™1F
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-1.030,0.788,1.872
+reverse
+//0›\f–Jh7nsoT~e—u9™1E
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+0.930,0.788,1.770
+reverse
+//0›\f–Jh7nsoT~e—u9™1D
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+2.101,0.788,0.058
+reverse
+//0›\f–Jh7nsoT~e—u9™1K
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+1.206,0.788,0.507
+reverse
+//0›\f–Jh7nsoT~e—u9™1J
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-1.239,0.788,0.698
+reverse
+//0›\f–Jh7nsoT~e—u9™6C
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-1.254,0.788,-0.481
+reverse
+//0›\f–Jh7nsoT~e—u9™6B
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-0.301,0.788,-1.206
+reverse
+//0›\f–Jh7nsoT~e—u9™6A
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+1.230,0.788,-0.572
+reverse
+//0›\f–Jh7nsoT~e—u9™6@
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+0.352,0.788,-1.265
+reverse
+//0›\f–Jh7nsoT~e—u9™6G
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+0.348,0.788,1.377
+reverse
+//0›\f–Jh7nsoT~e—u9™6F
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-0.311,0.788,1.331
+reverse
+//0›\f–Jh7nsoT~e—u9™6E
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+8.534,-0.247,14.256
+reverse
+//0›\f–Jh7nsoT~e—u9™6D
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-8.151,-0.247,14.658
+reverse
+//0›\f–Jh7nsoT~e—u9™6K
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-16.640,-0.247,0.261
+reverse
+//0›\f–Jh7nsoT~e—u9™6J
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-8.576,-0.247,-14.383
+reverse
+//0›\f–Jh7nsoT~e—u9™7C
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+8.289,-0.247,-14.653
+reverse
+//0›\f–Jh7nsoT~e—u9™7B
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+16.703,-0.247,-0.370
+reverse
+//0›\f–Jh7nsoT~e—u9™7A
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+23.532,-1.547,-5.984
+reverse
+//0›\f–Jh7nsoT~e—u9™7@
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+18.803,-1.547,-14.243
+reverse
+//0›\f–Jh7nsoT~e—u9™7G
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+13.509,-1.547,-20.771
+reverse
+//0›\f–Jh7nsoT~e—u9™7F
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+6.407,-1.547,-23.249
+reverse
+//0›\f–Jh7nsoT~e—u9™7E
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-11.691,-1.547,-21.914
+reverse
+//0›\f–Jh7nsoT~e—u9™7D
+130				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-16.483,-1.547,-17.658
+reverse
+//0›\f–Jh7nsoT~e—u9™7K
+131				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-24.771,-1.547,-1.255
+reverse
+//0›\f–Jh7nsoT~e—u9™7J
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-22.812,-1.547,6.973
+reverse
+//0›\f–Jh7nsoT~e—u9™4C
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-18.133,-1.547,15.482
+reverse
+//0›\f–Jh7nsoT~e—u9™4B
+131				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-12.839,-1.547,21.048
+reverse
+//0›\f–Jh7nsoT~e—u9™4A
+130				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-5.327,-1.547,23.256
+reverse
+//0›\f–Jh7nsoT~e—u9™4@
+131				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+2.325,-0.247,3.992
+reverse
+//0›\f–Jh7nsoT~e—u9™4G
+128				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+4.439,-0.247,0.176
+reverse
+//0›\f–Jh7nsoT~e—u9™4F
+129				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-2.399,-0.247,-3.840
+reverse
+//0›\f–Jh7nsoT~e—u9™4E
+129				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-4.596,-0.247,-0.055
+reverse
+//0›\f–Jh7nsoT~e—u9™4D
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-0.523,-0.247,0.117
+reverse
+//0›\f–Jh7nsoT~e—u9™4K
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-0.469,-0.247,0.345
+reverse
+//0›\f–Jh7nsoT~e—u9™4J
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-0.160,-0.247,0.160
+reverse
+//0›\f–Jh7nsoT~e—u9™5C
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-13.876,-0.247,5.688
+reverse
+//0›\f–Jh7nsoT~e—u9™5B
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-11.346,-0.247,10.056
+reverse
+//0›\f–Jh7nsoT~e—u9™5A
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-2.403,-0.247,14.974
+reverse
+//0›\f–Jh7nsoT~e—u9™5@
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+12.022,-0.248,9.336
+reverse
+//0›\f–Jh7nsoT~e—u9™5G
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+14.122,-0.247,-5.281
+reverse
+//0›\f–Jh7nsoT~e—u9™5F
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+2.443,-0.248,-14.934
+reverse
+//0›\f–Jh7nsoT~e—u9™5E
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+-11.619,-0.241,-9.657
+reverse
+//0›\f–Jh7nsoT~e—u9™5D
+100				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+15.644,-1.547,22.869
+reverse
+//0›\f–Jh7nsoT~e—u9™5K
+112				// Ref num
+2				// Number of instructions
+1				// Initial instruction
+point
+18.949,-1.547,19.066
+reverse
+START OF OPPONENT PATHS
+0                             // Number of path nodes
+
+0                                           // Number of path sections
+
+0                                                             // Number of cop start points
+END OF OPPONENT PATHS
+1										// number of material modifiers
+//S]œ|?zq;šfiu9Pc	
+1.0										// car wall friction
+1.0										// tyre road friction
+1.0										// down force
+0.0										// bumpiness
+0										// tyre sound index
+0										// crash sound index
+0										// scrape noise index
+1.0										// sparkiness
+1										// room for expansion
+ROAD1.MAT										// room for expansion
+//YT1a=Œ[yG—z.Zv€
+0									// number of non car objects
+1									// Number of smoke shadetables
+222, 230, 245								// r g b values
+0.25, 0.5, 0.75							// quarter, half and three quarter "strength"
+6								// Number of network start points
+-0.685,-1.547,-24.986
+181
+21.293,-1.547,-13.032
+117
+21.933,-1.547,11.959
+66
+0.678,-1.547,25.296
+1
+-21.537,-1.547,13.257
+294
+-21.810,-1.547,-11.789
+249
+1								// number of splash files
+SPLSHGRN.PIX 						//  name of pixelmapfile for splashes
+3.0								// Yon multiplier
+COLICIUM.TXT
