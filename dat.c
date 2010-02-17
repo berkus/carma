@@ -56,11 +56,13 @@ struct chunk
     uint32_t entries;  //number of entires
 };
 
+// for material list disregard size, use entries
 #define MATERIAL_LIST 0x16
 #define VERTEX_LIST 0x17
 #define UVMAP_LIST 0x18
 #define POLYGON_LIST 0x35
 #define FILE_NAME 0x36
+// for MAT_POLY_LIST add 8 to size
 #define MAT_POLY_LIST 0x1a
 
 char *name_chunk(unsigned char c) //returns the name of a chunk (to display)
@@ -78,7 +80,7 @@ char *name_chunk(unsigned char c) //returns the name of a chunk (to display)
 }
 
 
-main(int argc,char *argv[])
+int main(int argc,char *argv[])
 {
     FILE *FP;
     int loop;
