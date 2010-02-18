@@ -18,6 +18,10 @@ def set_options(opts): pass
 def configure(conf):
     conf.check_tool('gcc g++')
 
+    conf.check(lib='GL', uselib_store='gl', mandatory=True)
+    conf.check(lib='GLU', uselib_store='glu', mandatory=True)
+    conf.check(lib='glut', uselib_store='glut', mandatory=True)
+
     conf.env.append_unique('CCFLAGS', cflags)
     conf.env.append_unique('CXXFLAGS', cflags)
 
@@ -49,3 +53,10 @@ def build(bld):
     mdl.includes = include_dirs
     mdl.env = bld.env_of_name('debug').copy()
     mdl.target = 'model'
+
+    glook = bld.new_task_gen('cxx', 'program')
+    glook.source = 'glook.cpp'
+    glook.includes = include_dirs
+    glook.env = bld.env_of_name('debug').copy()
+    glook.target = 'glook'
+    glook.uselib = 'gl glu glut'
