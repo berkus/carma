@@ -38,28 +38,7 @@ bool chunk_t::read(file& f)
     return true;
 }
 
-static inline float conv_fixed_16_16(int32_t fx)
-{
-    double fp = fx;
-    fp = fp / ((double)(1<<16)); // multiplication by a constant
-    return fp;
-}
-
-static inline float conv_fixed_8_24(int32_t fx)
-{
-    double fp = fx;
-    fp = fp / ((double)(1<<16)); // multiplication by a constant
-    return fp;
-}
-
-static inline float conv_fixed_1_31(int32_t fx)
-{
-    double fp = fx;
-    fp = fp / ((double)(1<<31)); // multiplication by a constant
-    return fp;
-}
-
-#define fix2float(x) conv_fixed_1_31((x))
+#define fix2float(x) *reinterpret_cast<float*>(&x)
 
 bool vertex_t::read(file& f)
 {
