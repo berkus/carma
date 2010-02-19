@@ -11,6 +11,6 @@ void mesh_t::dump()
     }
     for (size_t i = 0; i < faces.size(); i++)
     {
-        printf("Face{%d,%d,%d} Mat: %s\n", faces[i].v1, faces[i].v2, faces[i].v3, materials[faces[i].material_id-1].c_str());
+        printf("Face{%d,%d,%d} Mat: %s\n", faces[i].v1, faces[i].v2, faces[i].v3, faces[i].material_id == 0 ? "<DEFAULT?>" : materials[faces[i].material_id-1].c_str());
     }
 }
