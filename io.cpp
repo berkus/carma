@@ -14,6 +14,29 @@ using namespace raii_wrapper;
 
 #define CHECK_READ(v)  if(!(v)) return false
 
+bool chunk_header_t::read(file& f)
+{
+    filebinio fio(f);
+    CHECK_READ(fio.read32be(type));
+    CHECK_READ(fio.read32be(size));
+    return true;
+}
+
+bool chunk_header_t::read_c_string(file& f, std::string& str)
+{
+    filebinio fio(f);
+    str = "";
+    int8_t datum = 1;
+
+    while (datum)
+    {
+        CHECK_READ(fio.read8(datum));
+        str.push_back(datum);
+    }
+
+    return true;
+}
+
 bool chunk_t::read(file& f)
 {
     filebinio fio(f);
@@ -149,14 +172,7 @@ bool mesh_t::read(file& f)
     for (size_t s = 0; s < header.entries; s++)
     {
         string str;
-        int8_t datum = 1;
-
-        while (datum)
-        {
-            CHECK_READ(fio.read8(datum));
-            str.push_back(datum);
-        }
-
+        CHECK_READ(chunk_header_t::read_c_string(f, str));
         materials.push_back(str);
     }
 
@@ -176,3 +192,20 @@ bool mesh_t::read(file& f)
 
     return true;
 }
+
+// bool pixmap_t::read(file& f)
+// {
+    // chunk: type 0x3
+    // 1 byte: marker?
+    // 2 bytes: width
+    // 2 bytes: height
+    // 2 bytes: ??
+    // 2 bytes: half-width
+    // 2 bytes: half-height
+    // filename
+
+    // chunk: type 0x21
+    // 4 bytes: payload length?
+    // payload length: pixmap data
+    // 8 bytes: zeros
+// }

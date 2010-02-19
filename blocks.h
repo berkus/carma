@@ -4,6 +4,18 @@
 #include <vector>
 
 // File structures.
+class chunk_header_t
+{
+public:
+    uint32_t type;     //chunk type
+    uint32_t size;     //size of chunk -4
+
+    bool read(raii_wrapper::file& f);
+
+    /* Helper to read C strings */
+    static bool read_c_string(raii_wrapper::file& f, std::string& str);
+};
+
 class chunk_t
 {
 public:
@@ -58,3 +70,11 @@ public:
 // Materials.
 
 // MAT file is an index of: material internal name, PIX file name and TAB file name.
+
+// Pixmap consists of two chunks: name and data
+class pixmap_t
+{
+public:
+    std::string name;
+//     ??? data;
+};

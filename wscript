@@ -60,3 +60,10 @@ def build(bld):
     glook.env = bld.env_of_name('debug').copy()
     glook.target = 'glook'
     glook.uselib = 'gl glu glut'
+
+    pixdec = bld.new_task_gen('cxx', 'program')
+    pixdec.source = 'pixdec.cpp io.cpp dump.cpp'
+    pixdec.includes = include_dirs
+    pixdec.env = bld.env_of_name('debug').copy()
+    pixdec.target = 'pixdec'
+
