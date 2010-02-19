@@ -17,16 +17,16 @@ void displayCB(void)        /* function called whenever redisplay needed */
 {
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);     /* clear the display */
 
+    glBegin(GL_TRIANGLES);
     // Draw all faces of the mesh
     for (size_t n = 0; n < mesh.faces.size(); n++)
     {
-        glBegin(GL_TRIANGLES);
-            glColor3fv(colors[(mesh.faces[n].material_id - 1) % NCOLORS]);
-            glVertex3f(mesh.vertices[mesh.faces[n].v1].x, mesh.vertices[mesh.faces[n].v1].y, mesh.vertices[mesh.faces[n].v1].z);
-            glVertex3f(mesh.vertices[mesh.faces[n].v2].x, mesh.vertices[mesh.faces[n].v2].y, mesh.vertices[mesh.faces[n].v2].z);
-            glVertex3f(mesh.vertices[mesh.faces[n].v3].x, mesh.vertices[mesh.faces[n].v3].y, mesh.vertices[mesh.faces[n].v3].z);
-        glEnd();
+        glColor3fv(colors[(mesh.faces[n].material_id - 1) % NCOLORS]);
+        glVertex3f(mesh.vertices[mesh.faces[n].v1].x, mesh.vertices[mesh.faces[n].v1].y, mesh.vertices[mesh.faces[n].v1].z);
+        glVertex3f(mesh.vertices[mesh.faces[n].v2].x, mesh.vertices[mesh.faces[n].v2].y, mesh.vertices[mesh.faces[n].v2].z);
+        glVertex3f(mesh.vertices[mesh.faces[n].v3].x, mesh.vertices[mesh.faces[n].v3].y, mesh.vertices[mesh.faces[n].v3].z);
     }
+    glEnd();
     glFlush();
 }
 
@@ -81,6 +81,8 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    mesh.dump();
+
     glutInitDisplayMode(GLUT_RGB);
     glutInitWindowSize(800,600);      /* width, height */
     GLfloat aspect = 800.0f / 600.0f;
@@ -105,6 +107,8 @@ int main(int argc, char *argv[])
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glTranslatef(0.0f, 0.0f, -5.0f);
+    glRotatef(45.0f, 1.0f, 0.0f, 0.0f);
+    glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
 
     glutDisplayFunc(displayCB);       /* set window's display callback */
     glutKeyboardFunc(keyCB);      /* set window's key callback */
