@@ -174,13 +174,18 @@ static void init(GLsizei w, GLsizei h)
 {
     // Set up the OpenGL state
     glClearColor(0.0, 0.0, 0.0, 0.0);    /* set background to black */
-    glEnable(GL_DEPTH_TEST);
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
 
     glLightfv(GL_LIGHT0, GL_POSITION, LightPos);
     glLightfv(GL_LIGHT0, GL_AMBIENT,  Ambient);
+
+    glShadeModel(GL_SMOOTH); // enable Gouraud
+
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
 
     reshape(w, h);
 
