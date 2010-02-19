@@ -55,7 +55,7 @@ def build(bld):
     mdl.target = 'model'
 
     glook = bld.new_task_gen('cxx', 'program')
-    glook.source = 'glook.cpp'
+    glook.source = 'glook.cpp io.cpp'
     glook.includes = include_dirs
     glook.env = bld.env_of_name('debug').copy()
     glook.target = 'glook'
