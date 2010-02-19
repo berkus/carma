@@ -3,16 +3,18 @@
 #include "raiifile.h"
 #include <vector>
 
+// File structures.
 class chunk_t
 {
 public:
     uint32_t type;     //chunk type
     uint32_t size;     //size of chunk -4
-    uint32_t entries;  //number of entires
+    uint32_t entries;  //number of entires  -- only in DAT, not part of chunk header actually (different for other types)
 
     bool read(raii_wrapper::file& f);
 };
 
+// Meshes.
 class vertex_t
 {
 public:
@@ -52,3 +54,7 @@ public:
     bool read(raii_wrapper::file& f);
     void dump();
 };
+
+// Materials.
+
+// MAT file is an index of: material internal name, PIX file name and TAB file name.

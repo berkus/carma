@@ -65,6 +65,11 @@ struct chunk
 // for MAT_POLY_LIST add 8 to size
 #define MAT_POLY_LIST 0x1a
 
+// PIX files
+#define PIX_ENTRY 0x03
+#define PIX_DATA 0x21
+
+
 char *name_chunk(unsigned char c) //returns the name of a chunk (to display)
 {
     switch (c)
