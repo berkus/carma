@@ -49,13 +49,13 @@ def build(bld):
     dat.target = 'dat'
 
     mdl = bld.new_task_gen('cxx', 'program')
-    mdl.source = 'io.cpp dump.cpp model.cpp'
+    mdl.source = 'model.cpp io.cpp dump.cpp'
     mdl.includes = include_dirs
     mdl.env = bld.env_of_name('debug').copy()
     mdl.target = 'model'
 
     glook = bld.new_task_gen('cxx', 'program')
-    glook.source = 'glook.cpp io.cpp'
+    glook.source = 'glook.cpp io.cpp dump.cpp'
     glook.includes = include_dirs
     glook.env = bld.env_of_name('debug').copy()
     glook.target = 'glook'
