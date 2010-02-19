@@ -4,35 +4,99 @@
 #include <math.h>
 #include "blocks.h"
 
+// The time in milliseconds between timer ticks
+#define TIMERMSECS 33
+
+// rotation rate in degrees per second
+#define ROTRATE 45.0f
+
 using namespace std;
 using raii_wrapper::file;
 
 #define NCOLORS 7
 GLfloat colors[][3] = { {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 1.0f},
                         {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f} };
+GLfloat LightPos[4]={-5.0f,5.0f,10.0f,0.0f};
+GLfloat Ambient[4]={0.5f,0.5f,0.5f,1.0f};
 
 mesh_t mesh;
 
-void displayCB(void)        /* function called whenever redisplay needed */
+// Global variables for measuring time (in milli-seconds)
+int startTime;
+int prevTime;
+
+static GLfloat rot = 0.0f;
+
+// Calculate normal from vertices in counter-clockwise order.
+vertex_t calc_normal(vertex_t v1, vertex_t v2, vertex_t v3)
+{
+    double v1x,v1y,v1z,v2x,v2y,v2z;
+    double nx,ny,nz;
+    double vLen;
+
+    vertex_t Result;
+
+    // Calculate vectors
+    v1x = v1.x - v2.x;
+    v1y = v1.y - v2.y;
+    v1z = v1.z - v2.z;
+
+    v2x = v2.x - v3.x;
+    v2y = v2.y - v3.y;
+    v2z = v2.z - v3.z;
+
+    // Get cross product of vectors
+    nx = (v1y * v2z) - (v1z * v2y);
+    ny = (v1z * v2x) - (v1x * v2z);
+    nz = (v1x * v2y) - (v1y * v2x);
+
+    // Normalise final vector
+    vLen = sqrt( (nx * nx) + (ny * ny) + (nz * nz) );
+
+    Result.x = (float)(nx / vLen);
+    Result.y = (float)(ny / vLen);
+    Result.z = (float)(nz / vLen);
+
+    return Result;
+}
+
+static void render()        /* function called whenever redisplay needed */
 {
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);     /* clear the display */
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glTranslatef(0.0f, 0.0f, -3.0f);
+    glRotatef(45.0f, 1.0f, 0.0f, 0.0f);
+    glRotatef(rot, 0.0f, 1.0f, 0.0f);
 
     glBegin(GL_TRIANGLES);
     // Draw all faces of the mesh
     for (size_t n = 0; n < mesh.faces.size(); n++)
     {
-        glColor3fv(colors[(mesh.faces[n].material_id - 1) % NCOLORS]);
+        vertex_t normal = calc_normal(mesh.vertices[mesh.faces[n].v1], mesh.vertices[mesh.faces[n].v2], mesh.vertices[mesh.faces[n].v3]);
+        glNormal3f(normal.x, normal.y, normal.z);
+
+        glColor3fv(colors[(mesh.faces[n].material_id - 1) % NCOLORS]);// to be replaced with textures
+//         glTexCoord2f(uv);
         glVertex3f(mesh.vertices[mesh.faces[n].v1].x, mesh.vertices[mesh.faces[n].v1].y, mesh.vertices[mesh.faces[n].v1].z);
+//         glTexCoord2f(uv);
         glVertex3f(mesh.vertices[mesh.faces[n].v2].x, mesh.vertices[mesh.faces[n].v2].y, mesh.vertices[mesh.faces[n].v2].z);
+//         glTexCoord2f(uv);
         glVertex3f(mesh.vertices[mesh.faces[n].v3].x, mesh.vertices[mesh.faces[n].v3].y, mesh.vertices[mesh.faces[n].v3].z);
     }
     glEnd();
+
+    glutSwapBuffers();
     glFlush();
 }
 
 void keyCB(unsigned char key, int /*x*/, int /*y*/) /* called on key press */
 {
-    if( key == 'q' ) exit(0);
+    if (key == 'q') exit(0);
+    if (key == 27) exit(0);
+    // Force a redraw of the screen in order to update the display
+    glutPostRedisplay();
 }
 
 bool load_mesh(const char* fname)
@@ -59,6 +123,25 @@ bool load_mesh(const char* fname)
     return mesh.read(f);
 }
 
+static void animate(int /*value*/)
+{
+    // Set up the next timer tick (do this first)
+    glutTimerFunc(TIMERMSECS, animate, 0);
+
+    // Measure the elapsed time
+    int currTime = glutGet(GLUT_ELAPSED_TIME);
+//     int timeSincePrevFrame = currTime - prevTime;
+    int elapsedTime = currTime - startTime;
+
+    // Rotate the model
+    rot = (ROTRATE / 1000) * elapsedTime;
+
+    // Force a redisplay to render the new image
+    glutPostRedisplay();
+
+    prevTime = currTime;
+}
+
 int main(int argc, char *argv[])
 {
     GLfloat fovy = 45.0f;
@@ -83,7 +166,7 @@ int main(int argc, char *argv[])
 
     mesh.dump();
 
-    glutInitDisplayMode(GLUT_RGB);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize(800,600);      /* width, height */
     GLfloat aspect = 800.0f / 600.0f;
     win = glutCreateWindow("Glook");   /* create window */
@@ -104,14 +187,23 @@ int main(int argc, char *argv[])
 
     printf("Viewport: (%f,%f)-(%f,%f)\n", xmin,ymin, xmax,ymax);
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, -5.0f);
-    glRotatef(45.0f, 1.0f, 0.0f, 0.0f);
-    glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
+    glEnable(GL_DEPTH_TEST);
 
-    glutDisplayFunc(displayCB);       /* set window's display callback */
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+    glLightfv(GL_LIGHT0, GL_POSITION, LightPos);
+    glLightfv(GL_LIGHT0, GL_AMBIENT,  Ambient);
+
+    glutDisplayFunc(render);       /* set window's display callback */
     glutKeyboardFunc(keyCB);      /* set window's key callback */
+
+    // Start the timer
+    glutTimerFunc(TIMERMSECS, animate, 0);
+
+    // Initialize the time variables
+    startTime = glutGet(GLUT_ELAPSED_TIME);
+    prevTime = startTime;
 
     glutMainLoop();           /* start processing events... */
 
