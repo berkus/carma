@@ -127,16 +127,16 @@ public:
     inline void write16be(uint16_t datum) { datum = htons(datum); file_.write(&datum, sizeof(uint16_t)); }
     inline void write32be(uint32_t datum) { datum = htonl(datum); file_.write(&datum, sizeof(uint32_t)); }
 
-    inline void read8(int8_t datum)       { file_.read(&datum, sizeof(int8_t)); }
-    inline void read8(uint8_t datum)      { file_.read(&datum, sizeof(uint8_t)); }
-    inline void read16le(int16_t& datum)  { file_.read(&datum, sizeof(int16_t)); }
-    inline void read16le(uint16_t& datum) { file_.read(&datum, sizeof(uint16_t)); }
-    inline void read32le(int32_t& datum)  { file_.read(&datum, sizeof(int32_t)); }
-    inline void read32le(uint32_t& datum) { file_.read(&datum, sizeof(uint32_t)); }
-    inline void read16be(int16_t& datum)  { file_.read(&datum, sizeof(int16_t)); datum = ntohs(datum); }
-    inline void read16be(uint16_t& datum) { file_.read(&datum, sizeof(uint16_t)); datum = ntohs(datum); }
-    inline void read32be(int32_t& datum)  { file_.read(&datum, sizeof(int32_t)); datum = ntohl(datum); }
-    inline void read32be(uint32_t& datum) { file_.read(&datum, sizeof(uint32_t)); datum = ntohl(datum); }
+    inline bool read8(int8_t& datum)      { return file_.read(&datum, sizeof(int8_t)) == sizeof(int8_t); }
+    inline bool read8(uint8_t& datum)     { return file_.read(&datum, sizeof(uint8_t)) == sizeof(uint8_t); }
+    inline bool read16le(int16_t& datum)  { return file_.read(&datum, sizeof(int16_t)) == sizeof(int16_t); }
+    inline bool read16le(uint16_t& datum) { return file_.read(&datum, sizeof(uint16_t)) == sizeof(uint16_t); }
+    inline bool read32le(int32_t& datum)  { return file_.read(&datum, sizeof(int32_t)) == sizeof(int32_t); }
+    inline bool read32le(uint32_t& datum) { return file_.read(&datum, sizeof(uint32_t)) == sizeof(uint32_t); }
+    inline bool read16be(int16_t& datum)  { bool res = file_.read(&datum, sizeof(int16_t)) == sizeof(int16_t); datum = ntohs(datum); return res; }
+    inline bool read16be(uint16_t& datum) { bool res = file_.read(&datum, sizeof(uint16_t)) == sizeof(uint16_t); datum = ntohs(datum); return res; }
+    inline bool read32be(int32_t& datum)  { bool res = file_.read(&datum, sizeof(int32_t)) == sizeof(int32_t); datum = ntohl(datum); return res; }
+    inline bool read32be(uint32_t& datum) { bool res = file_.read(&datum, sizeof(uint32_t)) == sizeof(uint32_t); datum = ntohl(datum); return res; }
 
 private:
     file& file_;
