@@ -39,20 +39,24 @@ int main(int argc, char **argv)
 
     ch.read(f);
     uint8_t marker;
-    uint16_t w, h, what, half_w, half_h;
+    uint16_t w, h, what, use_w, use_h;
     string str;
     fio.read8(marker);
     fio.read16be(w);
+    fio.read16be(use_w);
     fio.read16be(h);
+    fio.read16be(use_h);
     fio.read16be(what);
-    fio.read16be(half_w);
-    fio.read16be(half_h);
     chunk_header_t::read_c_string(f, str);
 
+    printf("Pixmap header chunk [type %02x, size %d]: %s (%d, %d[%d] x %d[%d], %d)\n", ch.type, ch.size, str.c_str(), marker, w, use_w, h, use_h, what);
+
     ch.read(f);
-    uint32_t chunk_size, payload_size;
-    fio.read32be(chunk_size);
+    uint32_t payload_size, whatnot;
     fio.read32be(payload_size);
+    fio.read32be(whatnot);
+
+    printf("Pixmap data chunk [type %02x, size %d]: payload %d, whatnot %d\n", ch.type, ch.size, payload_size, whatnot);
 
     char* buf = new char [payload_size];
     f.read(buf, payload_size);
@@ -60,11 +64,11 @@ int main(int argc, char **argv)
     const char* arr = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,_!@#$%^&*()_+";
     size_t sz = strlen(arr);
 
-    for (int y = 0; y < 64; y++)
+    for (int y = 0; y < h; y++)
     {
-        for (int x = 0; x < 64; x++)
+        for (int x = 0; x < use_w; x++)
         {
-            printf("%c", arr[buf[y*64+x] % sz]);
+            printf("%c", arr[buf[y*w+x] % sz]);
         }
         printf("\n");
     }
