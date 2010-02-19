@@ -6,7 +6,7 @@
 float conv_fixed_16_16(int32_t fx)
 {
     double fp = fx;
-    fp = fp / ((double)(1<<16)); // multiplication by a constant
+    fp = fp / ((double)(1<<31)); // multiplication by a constant
     return fp;
 }
 
