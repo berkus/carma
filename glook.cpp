@@ -4,6 +4,9 @@
 #include <math.h>
 #include "blocks.h"
 
+#define WIDTH 800
+#define HEIGHT 600
+
 // The time in milliseconds between timer ticks
 #define TIMERMSECS 33
 
@@ -64,7 +67,6 @@ static void render()        /* function called whenever redisplay needed */
 {
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);     /* clear the display */
 
-    glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glTranslatef(0.0f, 0.0f, -3.0f);
     glRotatef(45.0f, 1.0f, 0.0f, 0.0f);
@@ -91,7 +93,7 @@ static void render()        /* function called whenever redisplay needed */
     glFlush();
 }
 
-void keyCB(unsigned char key, int /*x*/, int /*y*/) /* called on key press */
+static void key(unsigned char key, int /*x*/, int /*y*/) /* called on key press */
 {
     if (key == 'q') exit(0);
     if (key == 27) exit(0);
@@ -99,7 +101,7 @@ void keyCB(unsigned char key, int /*x*/, int /*y*/) /* called on key press */
     glutPostRedisplay();
 }
 
-bool load_mesh(const char* fname)
+static bool load_mesh(const char* fname)
 {
     size_t count;
     unsigned char file_header[16];   //      The file header
@@ -142,11 +144,51 @@ static void animate(int /*value*/)
     prevTime = currTime;
 }
 
-int main(int argc, char *argv[])
+// Respond to a window resize event
+static void reshape(GLsizei w, GLsizei h)
 {
     GLfloat fovy = 45.0f;
-    GLfloat znear = 1.0f;
-    GLfloat zfar = 500.0f;
+    GLfloat znear = 0.1f;
+    GLfloat zfar = 100.0f;
+
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    GLfloat aspect = (GLfloat)w/(GLfloat)h;
+
+    gluPerspective(fovy, aspect, znear, zfar);   /* how object is mapped to window */
+
+    GLfloat xmin, xmax, ymin, ymax;
+    ymax = znear * tan(fovy * M_PI / 360.0);
+    ymin = -ymax;
+    xmin = ymin * aspect;
+    xmax = ymax * aspect;
+
+    printf("Viewport: (%f,%f)-(%f,%f)\n", xmin,ymin, xmax,ymax);
+
+    glMatrixMode(GL_MODELVIEW);
+}
+
+static void init(GLsizei w, GLsizei h)
+{
+    // Set up the OpenGL state
+    glClearColor(0.0, 0.0, 0.0, 0.0);    /* set background to black */
+    glEnable(GL_DEPTH_TEST);
+
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+    glLightfv(GL_LIGHT0, GL_POSITION, LightPos);
+    glLightfv(GL_LIGHT0, GL_AMBIENT,  Ambient);
+
+    reshape(w, h);
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+int main(int argc, char *argv[])
+{
     int win;
 
     glutInit(&argc, argv);        /* initialize GLUT system */
@@ -167,36 +209,16 @@ int main(int argc, char *argv[])
     mesh.dump();
 
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutInitWindowSize(800,600);      /* width, height */
-    GLfloat aspect = 800.0f / 600.0f;
+    glutInitWindowSize(WIDTH, HEIGHT);
     win = glutCreateWindow("Glook");   /* create window */
-
     /* from this point on the current window is win */
 
-    glClearColor(0.0,0.0,0.0,0.0);    /* set background to black */
+    init(WIDTH, HEIGHT);
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(fovy, aspect, znear, zfar);   /* how object is mapped to window */
-
-    GLfloat xmin, xmax, ymin, ymax;
-    ymax = znear * tan(fovy * M_PI / 360.0);
-    ymin = -ymax;
-    xmin = ymin * aspect;
-    xmax = ymax * aspect;
-
-    printf("Viewport: (%f,%f)-(%f,%f)\n", xmin,ymin, xmax,ymax);
-
-    glEnable(GL_DEPTH_TEST);
-
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-
-    glLightfv(GL_LIGHT0, GL_POSITION, LightPos);
-    glLightfv(GL_LIGHT0, GL_AMBIENT,  Ambient);
-
-    glutDisplayFunc(render);       /* set window's display callback */
-    glutKeyboardFunc(keyCB);      /* set window's key callback */
+    glutDisplayFunc(render);
+    glutKeyboardFunc(key);
+    glutReshapeFunc(reshape);
+    glutPostRedisplay();
 
     // Start the timer
     glutTimerFunc(TIMERMSECS, animate, 0);
