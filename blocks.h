@@ -10,6 +10,7 @@ class resource_file_t
 public:
     /* Helper to read resource file header. */
     static bool read_file_header(raii_wrapper::file& f);
+    /* File header itself is a type 0x12 chunk! */
 
     /* Helper to read C strings */
     static bool read_c_string(raii_wrapper::file& f, std::string& str);
@@ -77,10 +78,24 @@ public:
 };
 
 // Materials.
-
 // MAT file is an index of: material internal name, PIX file name and TAB file name.
 
+// Chunk type: 0x4
+class material_t
+{
+public:
+    float params[12];
+    std::string name;
+    std::string pixelmap_name;
+    std::string rendertab_name;
+
+    bool read(raii_wrapper::file& f);
+    void dump();
+};
+
+// Pixelmaps.
 // Pixmap consists of two chunks: name and data
+
 class pixelmap_t
 {
 public:

@@ -2,6 +2,10 @@
 #include "blocks.h"
 #include <stdio.h>
 
+// Chunk types
+#define FILE_HEADER   0x12
+
+// Chunks in mesh .DAT file
 #define MATERIAL_LIST 0x16
 #define VERTEX_LIST   0x17
 #define UVMAP_LIST    0x18
@@ -9,32 +13,36 @@
 #define FILE_NAME     0x36
 #define FACE_MAT_LIST 0x1a
 
+// Chunks in pixelmap .PIX file
 #define PIXELMAP_HEAD 0x03
 #define PIXELMAP_DATA 0x21
+
+// Chunks in material .MAT file
+#define MATERIAL_DESC 0x04
+#define PIXELMAP_REF  0x1c
+#define RENDERTAB_REF 0x1f
+
+// File types specified in file header:
+#define FILE_TYPE_MESH     0xface
+#define FILE_TYPE_MATERIAL 0x5
+#define FILE_TYPE_PIXELMAP 0x2
 
 using namespace std;
 using namespace raii_wrapper;
 
-// TODO: make non-static and add dump()?
 bool resource_file_t::read_file_header(file& f)
 {
-    size_t count;
-    unsigned char file_header[16];   //      The file header
-
-    count = f.read(file_header, 16);        //Read 16 byte file header
-
-    if(count < 16)
+    filebinio fio(f);
+    chunk_header_t ch;
+    CHECK_READ(ch.read(f));
+    if (ch.type != FILE_HEADER)
         return false;
-/*    {
-        puts("\n\n ERROR!!!  File header truncated.\n");     //exit if file header short
+    if (ch.size != 8)
         return false;
-    }
 
-    printf("File header Data: ");      //Print file header to the screen
-    for(int loop=0;loop<16;loop++)
-    {
-        printf("%02hX ",(file_header[loop]));
-    }*/
+    uint32_t type, dummy;
+    CHECK_READ(fio.read32be(type));
+    CHECK_READ(fio.read32be(dummy));
 
     return true;
 }
@@ -132,6 +140,7 @@ bool mesh_t::read(file& f)
 
     filebinio fio(f);
     chunk_t header;
+    chunk_header_t ch;
     uint32_t dummy;
 
     printf("Reading filename entry...\n");
@@ -212,8 +221,46 @@ bool mesh_t::read(file& f)
     {
         CHECK_READ(fio.read16be(faces[s].material_id));
     }
-    CHECK_READ(fio.read32be(dummy));
-    CHECK_READ(fio.read32be(dummy));
+
+    // This is a NULL chunk_header_t marking end of one mesh!
+    CHECK_READ(ch.read(f));
+    if (!(ch.type == 0 && ch.size == 0))
+        return false;
+
+    return true;
+}
+
+bool material_t::read(raii_wrapper::file& f)
+{
+    filebinio fio(f);
+    chunk_header_t ch;
+    int32_t datum;
+
+    CHECK_READ(ch.read(f));
+    if (ch.type != MATERIAL_DESC)
+        return false;
+
+    for (int i = 0; i < 12; i++)
+    {
+        CHECK_READ(fio.read32be(datum));
+        params[i] = fix2float(datum);
+    }
+    CHECK_READ(resource_file_t::read_c_string(f, name));
+
+    CHECK_READ(ch.read(f));
+    if (ch.type != PIXELMAP_REF)
+        return false;
+    CHECK_READ(resource_file_t::read_c_string(f, pixelmap_name));
+
+    CHECK_READ(ch.read(f));
+    if (ch.type != RENDERTAB_REF)
+        return false;
+    CHECK_READ(resource_file_t::read_c_string(f, rendertab_name));
+
+    // This is a NULL chunk_header_t marking end of one material!
+    CHECK_READ(ch.read(f));
+    if (!(ch.type == 0 && ch.size == 0))
+        return false;
 
     return true;
 }
@@ -222,7 +269,6 @@ bool pixelmap_t::read(raii_wrapper::file& f)
 {
     filebinio fio(f);
     chunk_header_t ch;
-    uint32_t dummy;
 
     CHECK_READ(ch.read(f));
     if (ch.type != PIXELMAP_HEAD)
@@ -247,8 +293,11 @@ bool pixelmap_t::read(raii_wrapper::file& f)
         return false;
     if (f.read(data, payload_size) < payload_size)
         return false;
-    CHECK_READ(fio.read32be(dummy));
-    CHECK_READ(fio.read32be(dummy));
+
+    // This is a NULL chunk_header_t marking end of one pixmap!
+    CHECK_READ(ch.read(f));
+    if (!(ch.type == 0 && ch.size == 0))
+        return false;
 
     return true;
 }

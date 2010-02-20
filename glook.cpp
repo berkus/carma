@@ -1,5 +1,6 @@
 #include <GL/glut.h>
 #include <cstdlib>
+#include <cstring>
 #include <cstdio>
 #include <math.h>
 #include "blocks.h"
@@ -15,7 +16,7 @@
 #define ROTRATE 45.0f
 
 using namespace std;
-using raii_wrapper::file;
+using namespace raii_wrapper;
 
 #define NCOLORS 7
 static GLfloat colors[][3] = { {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 1.0f},
@@ -112,9 +113,33 @@ static bool load_mesh(const char* fname)
     return mesh.read(f);
 }
 
-static bool load_textures(mesh_t& mesh)
+static bool load_textures(const char* fname, mesh_t& mesh)
 {
-    mesh.dump();
+    // Pathname fidgeting...
+    char pathbuf[256];
+    strncpy(pathbuf, "DecodedData/DATA/MATERIAL/", 256);
+    if (strchr(fname, '/'))
+        strncat(pathbuf, strrchr(fname, '/') + 1, 256 - 1 - strlen(pathbuf));
+    else
+        strncat(pathbuf, fname, 256 - 1 - strlen(pathbuf));
+    pathbuf[strlen(pathbuf) - 3] = 'M'; // change DAT to MAT (FIXME a hack)
+
+    printf("Opening %s, from %s\n", pathbuf, get_current_dir_name()); //FIXME: leaks
+
+    // Load materials from MAT file.
+    file f(pathbuf, ios::in|ios::binary);
+    CHECK_READ(resource_file_t::read_file_header(f));
+
+    material_t mat;
+
+    while (mat.read(f))
+        mat.dump();
+
+    for (size_t i = 0; i < mesh.materials.size(); i++)
+    {
+//         printf("Loading material %s...\n", mesh.materials[i].c_str());
+    }
+
     return true;
 }
 
@@ -198,16 +223,23 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    if (!load_mesh(argv[1]))
-    {
-        printf("Mesh load failed!\n");
-        return 1;
-    }
-    mesh.dump();
+    try {
+        if (!load_mesh(argv[1]))
+        {
+            printf("Mesh load failed!\n");
+            return 1;
+        }
+        mesh.dump();
 
-    if (!load_textures(mesh))
+        if (!load_textures(argv[1], mesh))
+        {
+            printf("Textures load failed!\n");
+            return 1;
+        }
+    }
+    catch(file_error& e)
     {
-        printf("Textures load failed!\n");
+        printf("File error: %s, aborting.\n", e.message());
         return 1;
     }
 
