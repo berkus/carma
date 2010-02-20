@@ -1,6 +1,7 @@
 #include <GL/glut.h>
 #include <cstdlib>
 #include <cstring>
+#include <climits>
 #include <cstdio>
 #include <math.h>
 #include "blocks.h"
@@ -8,6 +9,8 @@
 
 #define WIDTH 800
 #define HEIGHT 600
+
+#define BASE_DIR "DecodedData/DATA/"
 
 // The time in milliseconds between timer ticks
 #define TIMERMSECS 33
@@ -113,31 +116,62 @@ static bool load_mesh(const char* fname)
     return mesh.read(f);
 }
 
-static bool load_textures(const char* fname, mesh_t& mesh)
+/*!
+ * Creates a pathname to file fname at new location newpath and optionally changing extension to newext.
+ * New pathname is created using strdup() and must be freed by client.
+ */
+static char* pathsubst(const char* fname, const char* newpath, const char* newext)
 {
-    // Pathname fidgeting...
-    char pathbuf[256];
-    strncpy(pathbuf, "DecodedData/DATA/MATERIAL/", 256);
+    if (!fname || !newpath)
+        return 0;
+
+    char pathbuf[PATH_MAX];
+    strncpy(pathbuf, newpath, PATH_MAX);
     if (strchr(fname, '/'))
-        strncat(pathbuf, strrchr(fname, '/') + 1, 256 - 1 - strlen(pathbuf));
+        strncat(pathbuf, strrchr(fname, '/') + 1, PATH_MAX - 1 - strlen(pathbuf));
     else
         strncat(pathbuf, fname, 256 - 1 - strlen(pathbuf));
-    pathbuf[strlen(pathbuf) - 3] = 'M'; // change DAT to MAT (FIXME a hack)
 
-    printf("Opening %s, from %s\n", pathbuf, get_current_dir_name()); //FIXME: leaks
+    if (newext)
+    {
+        if (strchr(pathbuf, '.'))
+        {
+            int used = strrchr(pathbuf, '.') - pathbuf;
+            strncpy(strrchr(pathbuf, '.'), newext, PATH_MAX - 1 - used);
+        }
+        else
+            strncat(pathbuf, newext, PATH_MAX - 1 - strlen(pathbuf));
+    }
+
+    return strdup(pathbuf);
+}
+
+static bool load_textures(const char* fname, mesh_t& mesh)
+{
+    char* matfile = pathsubst(fname, BASE_DIR"MATERIAL/", ".MAT");
+    char* curdir = getcwd(NULL, 0);
+
+    printf("Opening %s, from %s\n", matfile, curdir);
+    free(curdir);
 
     // Load materials from MAT file.
-    file f(pathbuf, ios::in|ios::binary);
+    file f(matfile, ios::in|ios::binary);
+    free(matfile);
     CHECK_READ(resource_file_t::read_file_header(f));
 
     material_t mat;
+    std::map<std::string, material_t> materials;
 
     while (mat.read(f))
-        mat.dump();
+        materials[mat.name] = mat;
 
     for (size_t i = 0; i < mesh.materials.size(); i++)
     {
-//         printf("Loading material %s...\n", mesh.materials[i].c_str());
+        printf("Loading material %s...", mesh.materials[i].c_str());
+        if (materials.find(mesh.materials[i]) != materials.end())
+            printf("FOUND\n");
+        else
+            printf("NOT FOUND\n");
     }
 
     return true;
