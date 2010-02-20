@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <math.h>
 #include "blocks.h"
+#include "texturizer.h"
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -17,21 +18,23 @@ using namespace std;
 using raii_wrapper::file;
 
 #define NCOLORS 7
-GLfloat colors[][3] = { {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 1.0f},
+static GLfloat colors[][3] = { {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 1.0f},
                         {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f} };
-GLfloat LightPos[4]={-5.0f,5.0f,10.0f,0.0f};
-GLfloat Ambient[4]={0.5f,0.5f,0.5f,1.0f};
 
-mesh_t mesh;
+static GLfloat LightPos[4]={-5.0f,5.0f,10.0f,0.0f};
+static GLfloat Ambient[4]={0.5f,0.5f,0.5f,1.0f};
+
+static mesh_t mesh;
+static texture_renderer_t texturizer;
 
 // Global variables for measuring time (in milli-seconds)
-int startTime;
-int prevTime;
+static int startTime;
+static int prevTime;
 
 static GLfloat rot = 0.0f;
 
 // Calculate normal from vertices in counter-clockwise order.
-vertex_t calc_normal(vertex_t v1, vertex_t v2, vertex_t v3)
+static vertex_t calc_normal(vertex_t v1, vertex_t v2, vertex_t v3)
 {
     double v1x,v1y,v1z,v2x,v2y,v2z;
     double nx,ny,nz;
@@ -101,28 +104,18 @@ static void key(unsigned char key, int /*x*/, int /*y*/) /* called on key press 
     glutPostRedisplay();
 }
 
+// TODO: actual file contains multiple meshes combined using actor spec.
 static bool load_mesh(const char* fname)
 {
-    size_t count;
-    unsigned char file_header[16];   //      The file header
     file f(fname, ios::in|ios::binary);
-
-    count = f.read(file_header, 16);        //Read 16 byte file header
-
-    if(count < 16)
-    {
-        puts("\n\n ERROR!!!  File header truncated.\n");     //exit if file header short
-        return false;
-    }
-
-    printf("File header Data: ");      //Print file header to the screen
-    for(int loop=0;loop<16;loop++)
-    {
-        printf("%02hX ",(file_header[loop]));
-    }
-    puts("\nReading Chunks:");
-
+    CHECK_READ(resource_file_t::read_file_header(f));
     return mesh.read(f);
+}
+
+static bool load_textures(mesh_t& mesh)
+{
+    mesh.dump();
+    return true;
 }
 
 static void animate(int /*value*/)
@@ -210,8 +203,13 @@ int main(int argc, char *argv[])
         printf("Mesh load failed!\n");
         return 1;
     }
-
     mesh.dump();
+
+    if (!load_textures(mesh))
+    {
+        printf("Textures load failed!\n");
+        return 1;
+    }
 
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize(WIDTH, HEIGHT);
