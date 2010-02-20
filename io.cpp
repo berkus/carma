@@ -9,31 +9,56 @@
 #define FILE_NAME     0x36
 #define FACE_MAT_LIST 0x1a
 
+#define PIXELMAP_HEAD 0x03
+#define PIXELMAP_DATA 0x21
+
 using namespace std;
 using namespace raii_wrapper;
 
-#define CHECK_READ(v)  if(!(v)) return false
+// TODO: make non-static and add dump()?
+bool resource_file_t::read_file_header(file& f)
+{
+    size_t count;
+    unsigned char file_header[16];   //      The file header
+
+    count = f.read(file_header, 16);        //Read 16 byte file header
+
+    if(count < 16)
+        return false;
+/*    {
+        puts("\n\n ERROR!!!  File header truncated.\n");     //exit if file header short
+        return false;
+    }
+
+    printf("File header Data: ");      //Print file header to the screen
+    for(int loop=0;loop<16;loop++)
+    {
+        printf("%02hX ",(file_header[loop]));
+    }*/
+
+    return true;
+}
+
+bool resource_file_t::read_c_string(file& f, std::string& str)
+{
+    filebinio fio(f);
+    str = "";
+    int8_t datum = 1;
+    
+    while (datum)
+    {
+        CHECK_READ(fio.read8(datum));
+        str.push_back(datum);
+    }
+    
+    return true;
+}
 
 bool chunk_header_t::read(file& f)
 {
     filebinio fio(f);
     CHECK_READ(fio.read32be(type));
     CHECK_READ(fio.read32be(size));
-    return true;
-}
-
-bool chunk_header_t::read_c_string(file& f, std::string& str)
-{
-    filebinio fio(f);
-    str = "";
-    int8_t datum = 1;
-
-    while (datum)
-    {
-        CHECK_READ(fio.read8(datum));
-        str.push_back(datum);
-    }
-
     return true;
 }
 
@@ -105,9 +130,9 @@ bool mesh_t::read(file& f)
     faces.clear();
     materials.clear();
 
+    filebinio fio(f);
     chunk_t header;
     uint32_t dummy;
-    filebinio fio(f);
 
     printf("Reading filename entry...\n");
     CHECK_READ(header.read(f));
@@ -172,7 +197,7 @@ bool mesh_t::read(file& f)
     for (size_t s = 0; s < header.entries; s++)
     {
         string str;
-        CHECK_READ(chunk_header_t::read_c_string(f, str));
+        CHECK_READ(resource_file_t::read_c_string(f, str));
         materials.push_back(str);
     }
 
@@ -193,19 +218,37 @@ bool mesh_t::read(file& f)
     return true;
 }
 
-// bool pixmap_t::read(file& f)
-// {
-    // chunk: type 0x3
-    // 1 byte: marker?
-    // 2 bytes: width
-    // 2 bytes: height
-    // 2 bytes: ??
-    // 2 bytes: half-width
-    // 2 bytes: half-height
-    // filename
+bool pixelmap_t::read(raii_wrapper::file& f)
+{
+    filebinio fio(f);
+    chunk_header_t ch;
+    uint32_t dummy;
 
-    // chunk: type 0x21
-    // 4 bytes: payload length?
-    // payload length: pixmap data
-    // 8 bytes: zeros
-// }
+    CHECK_READ(ch.read(f));
+    if (ch.type != PIXELMAP_HEAD)
+        return false;
+    fio.read8(what1);
+    fio.read16be(w);
+    fio.read16be(use_w);
+    fio.read16be(h);
+    fio.read16be(use_h);
+    fio.read16be(what2);
+    CHECK_READ(resource_file_t::read_c_string(f, name));
+
+    CHECK_READ(ch.read(f));
+    if (ch.type != PIXELMAP_DATA)
+        return false;
+
+    fio.read32be(payload_size);
+    fio.read32be(what3);
+
+    data = new char [payload_size];
+    if (!data)
+        return false;
+    if (f.read(data, payload_size) < payload_size)
+        return false;
+    CHECK_READ(fio.read32be(dummy));
+    CHECK_READ(fio.read32be(dummy));
+
+    return true;
+}

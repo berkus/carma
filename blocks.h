@@ -3,6 +3,18 @@
 #include "raiifile.h"
 #include <vector>
 
+#define CHECK_READ(v)  if(!(v)) return false
+
+class resource_file_t
+{
+public:
+    /* Helper to read resource file header. */
+    static bool read_file_header(raii_wrapper::file& f);
+
+    /* Helper to read C strings */
+    static bool read_c_string(raii_wrapper::file& f, std::string& str);
+};
+
 // File structures.
 class chunk_header_t
 {
@@ -11,9 +23,6 @@ public:
     uint32_t size;     //size of chunk -4
 
     bool read(raii_wrapper::file& f);
-
-    /* Helper to read C strings */
-    static bool read_c_string(raii_wrapper::file& f, std::string& str);
 };
 
 class chunk_t
@@ -72,9 +81,16 @@ public:
 // MAT file is an index of: material internal name, PIX file name and TAB file name.
 
 // Pixmap consists of two chunks: name and data
-class pixmap_t
+class pixelmap_t
 {
 public:
     std::string name;
-//     ??? data;
+    uint16_t w, h, use_w, use_h; /* Actual texture w & h and how much of that is used for useful data */
+    uint8_t what1;
+    uint16_t what2;
+    uint32_t payload_size, what3;
+    char* data;
+
+    bool read(raii_wrapper::file& f);
+    void dump();
 };
