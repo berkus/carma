@@ -1,7 +1,16 @@
+//
+// Part of Roadkill Project. Check http://<urlhere> for latest version.
+//
+// Copyright 2010, Stanislav Karchebnyy <berkus@exquance.com>
+//
+// Distributed under the Boost Software License, Version 1.0.
+// (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
+//
 #pragma once
 
 #include "raiifile.h"
 #include <vector>
+#include "math/vector.h"
 
 #define CHECK_READ(v)  if(!(v)) return false
 
@@ -36,15 +45,6 @@ public:
     bool read(raii_wrapper::file& f);
 };
 
-// Meshes.
-class vertex_t
-{
-public:
-    float x, y, z;
-
-    bool read(raii_wrapper::file& f);
-};
-
 class uvcoord_t
 {
 public:
@@ -68,12 +68,14 @@ class mesh_t
 {
 public:
     std::string name;
-    std::vector<vertex_t> vertices;
+    std::vector<vector_t<float> > vertices;
+    std::vector<vector_t<float> > normals; // calculated normals for each vertex
     std::vector<uvcoord_t> uvcoords;
     std::vector<face_t> faces;
     std::vector<std::string> materials;
 
     bool read(raii_wrapper::file& f);
+    void calc_normals();
     void dump();
 };
 
