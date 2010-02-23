@@ -72,7 +72,8 @@ bool resource_file_t::read_c_string(file& f, std::string& str)
     while (datum)
     {
         CHECK_READ(fio.read8(datum));
-        str.push_back(datum);
+        if (datum)
+            str.push_back(datum);
     }
 
     return true;
