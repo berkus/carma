@@ -39,14 +39,14 @@ bool texture_renderer_t::read(file& f)
 void texture_renderer_t::dump_cache()
 {
     for(std::map<std::string, texture_t*>::iterator it = cache.begin(); it != cache.end(); ++it)
-        printf("'%s' -> %p\n", (*it).first.c_str(), (*it).second);
+        printf("'%s'(%d) -> %p\n", (*it).first.c_str(), (*it).first.length(), (*it).second);
 }
 
 bool texture_renderer_t::set_texture(std::string name)
 {
     if (cache.find(name) == cache.end())
     {
-        printf("Texture %s not found in cache!\n", name.c_str());
+        printf("Texture %s(%d) not found in cache!\n", name.c_str(), name.length());
         dump_cache();
         return false;
     }
@@ -64,9 +64,7 @@ bool texture_renderer_t::set_texture(std::string name)
     glBindTexture(GL_TEXTURE_2D, tex->bound_id); // Set our texture handle as current
 
     // Create the texture
-    // try GL_INTENSITY or GL_INTENSITY8
-    //                             v
-    glTexImage2D(GL_TEXTURE_2D, 0, 1, w, h, 0, GL_COLOR_INDEX, GL_UNSIGNED_BYTE, tex->pixelmap.data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE_3_3_2, tex->pixelmap.data);
 
     // Specify filtering and edge actions
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
