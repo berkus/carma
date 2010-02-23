@@ -36,6 +36,7 @@ public:
     static matrix_t<type_t> scale(const vector_t<type_t>& vec);
     static matrix_t<type_t> inv_scale(const vector_t<type_t>& vec);
 
+    // Counter-clockwise rotation around axes
     static matrix_t<type_t> rotate_x(type_t radians);
     static matrix_t<type_t> rotate_y(type_t radians);
     static matrix_t<type_t> rotate_z(type_t radians);

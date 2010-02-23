@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# Part of Roadkill Project. Check http://<urlhere> for latest version.
+#
+# Copyright 2010, Stanislav Karchebnyy <berkus@exquance.com>
+#
+# Distributed under the Boost Software License, Version 1.0.
+# (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
+#
 
 VERSION = '0.0.1'
 APPNAME = 'carma'
@@ -55,7 +63,7 @@ def build(bld):
     mdl.target = 'model'
 
     glook = bld.new_task_gen('cxx', 'program')
-    glook.source = 'glook.cpp io.cpp dump.cpp'
+    glook.source = 'glook.cpp texturizer.cpp io.cpp dump.cpp'
     glook.includes = include_dirs
     glook.env = bld.env_of_name('debug').copy()
     glook.target = 'glook'
@@ -66,4 +74,3 @@ def build(bld):
     pixdec.includes = include_dirs
     pixdec.env = bld.env_of_name('debug').copy()
     pixdec.target = 'pixdec'
-
