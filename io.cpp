@@ -1,3 +1,11 @@
+//
+// Part of Roadkill Project. Check http://<urlhere> for latest version.
+//
+// Copyright 2010, Stanislav Karchebnyy <berkus@exquance.com>
+//
+// Distributed under the Boost Software License, Version 1.0.
+// (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
+//
 #include "raiifile.h"
 #include "blocks.h"
 #include <stdio.h>
@@ -22,10 +30,18 @@
 #define PIXELMAP_REF  0x1c
 #define RENDERTAB_REF 0x1f
 
+// Chunks in actor .ACT file
+#define ACTOR_NAME    0x23  // byte + byte + cstring
+#define ACTOR_DATA    0x2b  // position data? 48 bytes (3 groups of 4 floats? trans/rot/scale matrix?)
+#define UNKNOWN_NODATA 0x25
+#define UNKNOWN2_NODATA 0x2a // might be tree child/parent specifier? 0x25 goes deeper, 0x2a goes higher? no, not really.
+#define MESHFILE_REF  0x24 // cstring
+
 // File types specified in file header:
 #define FILE_TYPE_MESH     0xface
 #define FILE_TYPE_MATERIAL 0x5
 #define FILE_TYPE_PIXELMAP 0x2
+#define FILE_TYPE_ACTOR    0x1
 
 using namespace std;
 using namespace raii_wrapper;
@@ -52,13 +68,13 @@ bool resource_file_t::read_c_string(file& f, std::string& str)
     filebinio fio(f);
     str = "";
     int8_t datum = 1;
-    
+
     while (datum)
     {
         CHECK_READ(fio.read8(datum));
         str.push_back(datum);
     }
-    
+
     return true;
 }
 
@@ -96,7 +112,8 @@ bool chunk_t::read(file& f)
 
 #define fix2float(x) *reinterpret_cast<float*>(&x)
 
-bool vertex_t::read(file& f)
+template <>
+bool vector_t<float>::read(file& f)
 {
     filebinio fio(f);
     int32_t datum;
@@ -166,7 +183,7 @@ bool mesh_t::read(file& f)
 
     for (size_t s = 0; s < header.entries; s++)
     {
-        vertex_t v;
+        vector_t<float> v;
         CHECK_READ(v.read(f));
         vertices.push_back(v);
     }
