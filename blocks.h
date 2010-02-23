@@ -10,6 +10,7 @@
 
 #include "raiifile.h"
 #include <vector>
+#include <map>
 #include "math/vector.h"
 
 #define CHECK_READ(v)  if(!(v)) return false
@@ -64,25 +65,8 @@ public:
     bool read(raii_wrapper::file& f);
 };
 
-class mesh_t
-{
-public:
-    std::string name;
-    std::vector<vector_t<float> > vertices;
-    std::vector<vector_t<float> > normals; // calculated normals for each vertex
-    std::vector<uvcoord_t> uvcoords;
-    std::vector<face_t> faces;
-    std::vector<std::string> materials;
-
-    bool read(raii_wrapper::file& f);
-    void calc_normals();
-    void dump();
-};
-
 // Materials.
 // MAT file is an index of: material internal name, PIX file name and TAB file name.
-
-// Chunk type: 0x4
 class material_t
 {
 public:
@@ -92,6 +76,23 @@ public:
     std::string rendertab_name;
 
     bool read(raii_wrapper::file& f);
+    void dump();
+};
+
+// Mesh.
+class mesh_t
+{
+public:
+    std::string name;
+    std::vector<vector_t<float> > vertices;
+    std::vector<vector_t<float> > normals; // calculated normals for each vertex
+    std::vector<uvcoord_t> uvcoords;
+    std::vector<face_t> faces;
+    std::vector<std::string> material_names;
+    std::map<std::string, material_t> materials;
+
+    bool read(raii_wrapper::file& f);
+    void calc_normals();
     void dump();
 };
 

@@ -68,8 +68,8 @@ void mesh_t::calc_normals()
 
 static void render()        /* function called whenever redisplay needed */
 {
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);     /* clear the display */
-//     glEnable(GL_TEXTURE_2D);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     /* clear the display */
+    glEnable(GL_TEXTURE_2D);
 
     glLoadIdentity();
     glTranslatef(0.0f, 0.0f, -3.0f);
@@ -81,7 +81,7 @@ static void render()        /* function called whenever redisplay needed */
     // Draw all faces of the mesh
     for (size_t n = 0; n < mesh.faces.size(); n++)
     {
-//         texturizer.set_texture(mesh.materials[mesh.faces[n].material_id - 1]);
+        texturizer.set_texture(mesh.materials[mesh.material_names[mesh.faces[n].material_id - 1]].pixelmap_name);
 
         glNormal3f(mesh.normals[mesh.faces[n].v1].x, mesh.normals[mesh.faces[n].v1].y, mesh.normals[mesh.faces[n].v1].z);
         glTexCoord2f(mesh.uvcoords[mesh.faces[n].v1].u, mesh.uvcoords[mesh.faces[n].v1].v);
@@ -161,10 +161,10 @@ static bool load_textures(const char* fname, mesh_t& mesh)
     CHECK_READ(resource_file_t::read_file_header(f));
 
     material_t mat;
-    std::map<std::string, material_t> materials;
 
+    mesh.materials.clear();
     while (mat.read(f))
-        materials[mat.name] = mat;
+        mesh.materials[mat.name] = mat;
     f.close();
 
     // Load pixmaps from PIX file.
@@ -174,12 +174,12 @@ static bool load_textures(const char* fname, mesh_t& mesh)
     CHECK_READ(texturizer.read(pix));
     pix.close();
 
-    for (size_t i = 0; i < mesh.materials.size(); i++)
+    for (size_t i = 0; i < mesh.material_names.size(); i++)
     {
-        printf("Loading material %s...", mesh.materials[i].c_str());
-        if (materials.find(mesh.materials[i]) != materials.end())
+        printf("Loading material %s...", mesh.material_names[i].c_str());
+        if (mesh.materials.find(mesh.material_names[i]) != mesh.materials.end())
         {
-            std::string& pixmap = materials[mesh.materials[i]].pixelmap_name;
+            std::string& pixmap = mesh.materials[mesh.material_names[i]].pixelmap_name;
 //             std::transform(pixmap.begin(), pixmap.end(), pixmap.begin(), toupper);
             printf("FOUND, binding texture %s\n", pixmap.c_str());
             if (!texturizer.set_texture(pixmap))

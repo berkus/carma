@@ -154,7 +154,7 @@ bool mesh_t::read(file& f)
     vertices.clear();
     uvcoords.clear();
     faces.clear();
-    materials.clear();
+    material_names.clear();
 
     filebinio fio(f);
     chunk_t header;
@@ -225,7 +225,7 @@ bool mesh_t::read(file& f)
     {
         string str;
         CHECK_READ(resource_file_t::read_c_string(f, str));
-        materials.push_back(str);
+        material_names.push_back(str);
     }
 
     printf("Reading face material list...\n");
