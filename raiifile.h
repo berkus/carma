@@ -44,7 +44,7 @@ public:
         open(fname.c_str(), mode);
     }
 
-    ~file() { file_.close(); }
+    ~file() { close(); }
 
     void open(const char* fname, fstream::openmode mode)
     {
@@ -52,6 +52,8 @@ public:
         if (!file_.good())
             throw file_error("file open failure");
     }
+
+    void close() { file_.close(); }
 
     void write(const void* buf, size_t count)
     {
