@@ -55,6 +55,7 @@ public:
     static vector_t<type_t> random();
 
     bool read(raii_wrapper::file& f);
+    void dump();
 };
 
 /*inline int vector_t::operator < (const vector_t& v)

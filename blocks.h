@@ -125,7 +125,7 @@ class actor_t
 public:
     uint8_t visible, what2;
     std::string name;
-    float values[12]; // 1 matrix? 3 quaternions (wxyz)? 4 vectors?
+    vector_t<float> x, y, z, w; /* x,y,z is scaling matrix; w is translation vector, -x is to the left, -z is to the front */
     std::string material_name;
     std::string mesh_name;
 

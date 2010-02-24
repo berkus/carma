@@ -10,13 +10,19 @@
 #include <cstdio>
 #include <cstring>
 
+template <>
+void vector_t<float>::dump()
+{
+    printf("vector{%f,%f,%f}\n", x, y, z);
+}
+
 void mesh_t::dump()
 {
     printf("Name: %s\n", name.c_str());
     // Print vertices.
     for (size_t i = 0; i < vertices.size(); i++)
     {
-        printf("Vertex{%f,%f,%f}\n", vertices[i].x, vertices[i].y, vertices[i].z);
+        vertices[i].dump();
     }
     for (size_t i = 0; i < faces.size(); i++)
     {
@@ -51,9 +57,11 @@ void pixelmap_t::dump()
 
 void actor_t::dump()
 {
-    printf("Actor: %s, visible %d, what2 %d, mesh %s, material %s\n", name.c_str(), what1, what2, mesh_name.c_str(), material_name.c_str());
-    for (size_t i = 0; i < 12; ++i)
-        printf("%f  ", values[i]);
+    printf("Actor: %s, visible %d, what2 %d, mesh %s, material %s\n", name.c_str(), visible, what2, mesh_name.c_str(), material_name.c_str());
+    x.dump();
+    y.dump();
+    z.dump();
+    w.dump();
     printf("\n");
 }
 

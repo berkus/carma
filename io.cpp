@@ -342,8 +342,10 @@ bool model_t::read(raii_wrapper::file& f)
                 CHECK_READ(resource_file_t::read_c_string(f, actor->name));
                 break;
             case ACTOR_DATA:
-                for (size_t i = 0; i < 12; ++i)
-                    CHECK_READ(read_float32be(f, actor->values[i]));
+                CHECK_READ(actor->x.read(f));
+                CHECK_READ(actor->y.read(f));
+                CHECK_READ(actor->z.read(f));
+                CHECK_READ(actor->w.read(f));
                 break;
             case MATERIAL_REF:
                 CHECK_READ(resource_file_t::read_c_string(f, actor->material_name));
