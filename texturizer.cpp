@@ -99,3 +99,12 @@ bool texture_renderer_t::draw_texture(std::string name)
 
     return true;
 }
+
+// The carma palette pixmap is as follows:
+// ARGB, 1 byte per component
+// 256 rows
+// Convert it into GL_PIXEL_MAP tables.
+bool texture_renderer_t::set_palette(pixelmap_t /*palette*/)
+{
+    return true;
+}

@@ -166,8 +166,21 @@ static bool load_textures(const char* fname, mesh_t& mesh)
         mesh.materials[mat.name] = mat;
     f.close();
 
+    // Load palette from PIX file.
+    pixelmap_t palette;
+    char* palfile = pathsubst("DRRENDER.PAL", BASE_DIR"REG/PALETTES/", NULL);
+    printf("Opening %s\n", palfile);
+    file pal(palfile, ios::in|ios::binary);
+    free(palfile);
+    CHECK_READ(resource_file_t::read_file_header(pal));
+    CHECK_READ(palette.read(pal));
+    pal.close();
+
+    texturizer.set_palette(palette);
+
     // Load pixmaps from PIX file.
     char* pixfile = pathsubst(fname, BASE_DIR"PIXELMAP/", ".PIX");
+    printf("Opening %s\n", pixfile);
     file pix(pixfile, ios::in|ios::binary);
     free(pixfile);
     CHECK_READ(texturizer.read(pix));
