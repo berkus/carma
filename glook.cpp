@@ -66,6 +66,13 @@ void mesh_t::calc_normals()
     }
 }
 
+static void render_vertex(vector_t<float> vertex, vector_t<float> normal, uvcoord_t uv)
+{
+    glNormal3f(normal.x, normal.y, normal.z);
+    glTexCoord2f(uv.u, uv.v);
+    glVertex3f(vertex.x, vertex.y, vertex.z);
+}
+
 static void render()        /* function called whenever redisplay needed */
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     /* clear the display */
@@ -76,26 +83,18 @@ static void render()        /* function called whenever redisplay needed */
     glRotatef(45.0f, 1.0f, 0.0f, 0.0f);
     glRotatef(rot, 0.0f, 1.0f, 0.0f);
 
-//     texturizer.draw_texture("SCWHEEL.PIX");
     glBegin(GL_TRIANGLES);
     // Draw all faces of the mesh
     for (size_t n = 0; n < mesh.faces.size(); n++)
     {
         texturizer.set_texture(mesh.materials[mesh.material_names[mesh.faces[n].material_id - 1]].pixelmap_name);
 
-        glNormal3f(mesh.normals[mesh.faces[n].v1].x, mesh.normals[mesh.faces[n].v1].y, mesh.normals[mesh.faces[n].v1].z);
-        glTexCoord2f(mesh.uvcoords[mesh.faces[n].v1].u, mesh.uvcoords[mesh.faces[n].v1].v);
-        glVertex3f(mesh.vertices[mesh.faces[n].v1].x, mesh.vertices[mesh.faces[n].v1].y, mesh.vertices[mesh.faces[n].v1].z);
-
-        glNormal3f(mesh.normals[mesh.faces[n].v2].x, mesh.normals[mesh.faces[n].v2].y, mesh.normals[mesh.faces[n].v2].z);
-        glTexCoord2f(mesh.uvcoords[mesh.faces[n].v2].u, mesh.uvcoords[mesh.faces[n].v2].v);
-        glVertex3f(mesh.vertices[mesh.faces[n].v2].x, mesh.vertices[mesh.faces[n].v2].y, mesh.vertices[mesh.faces[n].v2].z);
-
-        glNormal3f(mesh.normals[mesh.faces[n].v3].x, mesh.normals[mesh.faces[n].v3].y, mesh.normals[mesh.faces[n].v3].z);
-        glTexCoord2f(mesh.uvcoords[mesh.faces[n].v3].u, mesh.uvcoords[mesh.faces[n].v3].v);
-        glVertex3f(mesh.vertices[mesh.faces[n].v3].x, mesh.vertices[mesh.faces[n].v3].y, mesh.vertices[mesh.faces[n].v3].z);
+        render_vertex(mesh.vertices[mesh.faces[n].v1], mesh.normals[mesh.faces[n].v1], mesh.uvcoords[mesh.faces[n].v1]);
+        render_vertex(mesh.vertices[mesh.faces[n].v2], mesh.normals[mesh.faces[n].v2], mesh.uvcoords[mesh.faces[n].v2]);
+        render_vertex(mesh.vertices[mesh.faces[n].v3], mesh.normals[mesh.faces[n].v3], mesh.uvcoords[mesh.faces[n].v3]);
     }
     glEnd();
+    glDisable(GL_TEXTURE_2D);
 
     glutSwapBuffers();
     glFlush();
