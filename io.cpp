@@ -34,6 +34,7 @@
 #define ACTOR_NAME    0x23  // byte + byte + cstring
 #define ACTOR_DATA    0x2b  // position data? 48 bytes (3 groups of 4 floats? trans/rot/scale matrix?)
 #define UNKNOWN_NODATA 0x25
+#define MATERIAL_REF   0x26
 #define UNKNOWN2_NODATA 0x2a // might be tree child/parent specifier? 0x25 goes deeper, 0x2a goes higher? no, not really.
 #define MESHFILE_REF  0x24 // cstring
 
@@ -42,6 +43,8 @@
 #define FILE_TYPE_MATERIAL 0x5
 #define FILE_TYPE_PIXELMAP 0x2
 #define FILE_TYPE_ACTOR    0x1
+
+//TODO: there are some two-sided materials - find how these are specified (see STIG's spikes and SCREWIE's driveshaft)
 
 using namespace std;
 using namespace raii_wrapper;
@@ -111,30 +114,28 @@ bool chunk_t::read(file& f)
     return true;
 }
 
-#define fix2float(x) *reinterpret_cast<float*>(&x)
-
-template <>
-bool vector_t<float>::read(file& f)
+static bool read_float32be(file& f, float& val)
 {
     filebinio fio(f);
     int32_t datum;
     CHECK_READ(fio.read32be(datum));
-    x = fix2float(datum);
-    CHECK_READ(fio.read32be(datum));
-    y = fix2float(datum);
-    CHECK_READ(fio.read32be(datum));
-    z = fix2float(datum);
+    val = *reinterpret_cast<float*>(&datum);
+    return true;
+}
+
+template <>
+bool vector_t<float>::read(file& f)
+{
+    CHECK_READ(read_float32be(f, x));
+    CHECK_READ(read_float32be(f, y));
+    CHECK_READ(read_float32be(f, z));
     return true;
 }
 
 bool uvcoord_t::read(file& f)
 {
-    filebinio fio(f);
-    int32_t datum;
-    CHECK_READ(fio.read32be(datum));
-    u = fix2float(datum);
-    CHECK_READ(fio.read32be(datum));
-    v = fix2float(datum);
+    CHECK_READ(read_float32be(f, u));
+    CHECK_READ(read_float32be(f, v));
     return true;
 }
 
@@ -252,7 +253,6 @@ bool material_t::read(raii_wrapper::file& f)
 {
     filebinio fio(f);
     chunk_header_t ch;
-    int32_t datum;
 
     CHECK_READ(ch.read(f));
     if (ch.type != MATERIAL_DESC)
@@ -260,8 +260,7 @@ bool material_t::read(raii_wrapper::file& f)
 
     for (int i = 0; i < 12; i++)
     {
-        CHECK_READ(fio.read32be(datum));
-        params[i] = fix2float(datum);
+        CHECK_READ(read_float32be(f, params[i]));
     }
     CHECK_READ(resource_file_t::read_c_string(f, name));
 
@@ -315,6 +314,56 @@ bool pixelmap_t::read(raii_wrapper::file& f)
 
     // This is a NULL chunk_header_t marking end of one pixmap!
     CHECK_READ(ch.read(f));
+    if (!(ch.type == 0 && ch.size == 0))
+        return false;
+
+    return true;
+}
+
+bool model_t::read(raii_wrapper::file& f)
+{
+    filebinio fio(f);
+    chunk_header_t ch;
+    actor_t* actor = 0;
+
+    ch.type = 1;
+    while (ch.type != 0)
+    {
+        CHECK_READ(ch.read(f));
+        switch (ch.type)
+        {
+            case ACTOR_NAME:
+                // new actor starts
+                if (actor)
+                    parts[actor->name] = actor;
+                actor = new actor_t;
+                CHECK_READ(fio.read8(actor->visible));
+                CHECK_READ(fio.read8(actor->what2));
+                CHECK_READ(resource_file_t::read_c_string(f, actor->name));
+                break;
+            case ACTOR_DATA:
+                for (size_t i = 0; i < 12; ++i)
+                    CHECK_READ(read_float32be(f, actor->values[i]));
+                break;
+            case MATERIAL_REF:
+                CHECK_READ(resource_file_t::read_c_string(f, actor->material_name));
+                break;
+            case MESHFILE_REF:
+                CHECK_READ(resource_file_t::read_c_string(f, actor->mesh_name));
+                break;
+            case UNKNOWN_NODATA:
+            case UNKNOWN2_NODATA:
+                if (ch.size != 0)
+                    return false;
+            case 0:
+                if (actor)
+                    parts[actor->name] = actor;
+                break;
+            default:
+                return false;
+        }
+    }
+
     if (!(ch.type == 0 && ch.size == 0))
         return false;
 

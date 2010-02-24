@@ -48,3 +48,18 @@ void pixelmap_t::dump()
         printf("\n");
     }
 }
+
+void actor_t::dump()
+{
+    printf("Actor: %s, visible %d, what2 %d, mesh %s, material %s\n", name.c_str(), what1, what2, mesh_name.c_str(), material_name.c_str());
+    for (size_t i = 0; i < 12; ++i)
+        printf("%f  ", values[i]);
+    printf("\n");
+}
+
+void model_t::dump()
+{
+    for(std::map<std::string, actor_t*>::iterator it = parts.begin(); it != parts.end(); ++it)
+        (*it).second->dump();
+    printf("\n");
+}

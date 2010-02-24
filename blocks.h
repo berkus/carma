@@ -116,3 +116,26 @@ public:
     bool read(raii_wrapper::file& f);
     void dump();
 };
+
+// Actors.
+// Actors group multiple meshes into a single car body with pivots, shafts and wheels.
+
+class actor_t
+{
+public:
+    uint8_t visible, what2;
+    std::string name;
+    float values[12]; // 1 matrix? 3 quaternions (wxyz)? 4 vectors?
+    std::string material_name;
+    std::string mesh_name;
+
+    void dump();
+};
+
+class model_t
+{
+public:
+    std::map<std::string, actor_t*> parts;
+    bool read(raii_wrapper::file& f);
+    void dump();
+};
