@@ -57,8 +57,8 @@ bool texture_renderer_t::set_texture(std::string name)
 {
     if (cache.find(name) == cache.end())
     {
-        printf("Texture %s(%d) not found in cache!\n", name.c_str(), name.length());
-        dump_cache();
+//         printf("Texture %s(%d) not found in cache!\n", name.c_str(), name.length());
+//         dump_cache();
         return false;
     }
     texture_t* tex = cache[name];
