@@ -303,8 +303,9 @@ bool pixelmap_t::read(raii_wrapper::file& f)
     if (ch.type != PIXELMAP_DATA)
         return false;
 
-    fio.read32be(payload_size);
-    fio.read32be(what3);
+    fio.read32be(units);
+    fio.read32be(unit_bytes);
+    uint32_t payload_size = units * unit_bytes;
 
     data = new char [payload_size];
     if (!data)

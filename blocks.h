@@ -106,7 +106,7 @@ public:
     uint16_t w, h, use_w, use_h; /* Actual texture w & h and how much of that is used for useful data */
     uint8_t what1;
     uint16_t what2;
-    uint32_t payload_size, what3;
+    uint32_t units, unit_bytes;
     char* data;
 
     bool read(raii_wrapper::file& f);

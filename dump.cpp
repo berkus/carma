@@ -34,9 +34,9 @@ void material_t::dump()
 void pixelmap_t::dump()
 {
     printf("Pixmap header: %s (what1 %d, %d[%d] x %d[%d], what2 %d)\n", name.c_str(), what1, w, use_w, h, use_h, what2);
-    printf("Pixmap data: payload %d bytes, what3 %d\n", payload_size, what3);
+    printf("Pixmap data: payload %d units x %d bytes\n", units, unit_bytes);
 
-    const char* arr = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,_!@#$%^&*()_+";
+    const char* arr = " .,_+*^!$@#%&abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     size_t sz = strlen(arr);
 
     for (int y = 0; y < h; y++)
