@@ -27,14 +27,54 @@
 #define TIMERMSECS 33
 
 // rotation rate in degrees per second
-#define ROTRATE 45.0f
+#define YROTRATE 45.0f
+#define XROTRATE 15.0f
 
 using namespace std;
 using namespace raii_wrapper;
 
+class viewport_t
+{
+public:
+    GLfloat fovy;
+    GLfloat znear;
+    GLfloat zfar;
+    GLsizei w, h;
+
+    viewport_t() : fovy(45.0f), znear(0.1f), zfar(100.0f), w(0), h(0) {}
+
+    void reshape(GLsizei new_w, GLsizei new_h)
+    {
+        if (new_w == w && new_h == h)
+            return;
+
+        w = new_w;
+        h = new_h;
+
+        glViewport(0, 0, w, h);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+
+        GLfloat aspect = (GLfloat)w/(GLfloat)h;
+
+        gluPerspective(fovy, aspect, znear, zfar);   /* how object is mapped to window */
+
+        GLfloat xmin, xmax, ymin, ymax;
+        ymax = znear * tan(fovy * M_PI / 360.0);
+        ymin = -ymax;
+        xmin = ymin * aspect;
+        xmax = ymax * aspect;
+
+        printf("Viewport: (%f,%f)-(%f,%f), fovy %f, aspect %f\n", xmin,ymin, xmax,ymax, fovy, aspect);
+
+        glMatrixMode(GL_MODELVIEW);
+    }
+};
+
 static GLfloat LightPos[4]={-5.0f,5.0f,10.0f,0.0f};
 static GLfloat Ambient[4]={0.5f,0.5f,0.5f,1.0f};
 
+static viewport_t viewport;
 static mesh_t mesh;
 static texture_renderer_t texturizer;
 
@@ -42,7 +82,7 @@ static texture_renderer_t texturizer;
 static int startTime;
 static int prevTime;
 
-static GLfloat rot = 0.0f;
+static GLfloat xrot = 45.0f, xdir = -1.0f, yrot = 0.0f;
 
 // Calculate normal from vertices in counter-clockwise order.
 template <typename type_t>
@@ -80,8 +120,8 @@ static void render()        /* function called whenever redisplay needed */
 
     glLoadIdentity();
     glTranslatef(0.0f, 0.0f, -3.0f);
-    glRotatef(45.0f, 1.0f, 0.0f, 0.0f);
-    glRotatef(rot, 0.0f, 1.0f, 0.0f);
+    glRotatef(xrot, 1.0f, 0.0f, 0.0f);
+    glRotatef(yrot, 0.0f, 1.0f, 0.0f);
 
     glBegin(GL_TRIANGLES);
     // Draw all faces of the mesh
@@ -214,11 +254,23 @@ static void animate(int /*value*/)
 
     // Measure the elapsed time
     int currTime = glutGet(GLUT_ELAPSED_TIME);
-//     int timeSincePrevFrame = currTime - prevTime;
+    int timeSincePrevFrame = currTime - prevTime;
     int elapsedTime = currTime - startTime;
 
     // Rotate the model
-    rot = (ROTRATE / 1000) * elapsedTime;
+    yrot = (YROTRATE / 1000) * elapsedTime;
+    xrot += (XROTRATE / 1000) * timeSincePrevFrame * xdir;
+
+    if (xrot > 45.0f)
+    {
+        xrot = 45.0;
+        xdir = -1.0f;
+    }
+    if (xrot < -30.0f)
+    {
+        xrot = -30.0f;
+        xdir = 1.0f;
+    }
 
     // Force a redisplay to render the new image
     glutPostRedisplay();
@@ -229,27 +281,7 @@ static void animate(int /*value*/)
 // Respond to a window resize event
 static void reshape(GLsizei w, GLsizei h)
 {
-    GLfloat fovy = 45.0f;
-    GLfloat znear = 0.1f;
-    GLfloat zfar = 100.0f;
-
-    glViewport(0, 0, w, h);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-
-    GLfloat aspect = (GLfloat)w/(GLfloat)h;
-
-    gluPerspective(fovy, aspect, znear, zfar);   /* how object is mapped to window */
-
-    GLfloat xmin, xmax, ymin, ymax;
-    ymax = znear * tan(fovy * M_PI / 360.0);
-    ymin = -ymax;
-    xmin = ymin * aspect;
-    xmax = ymax * aspect;
-
-    printf("Viewport: (%f,%f)-(%f,%f)\n", xmin,ymin, xmax,ymax);
-
-    glMatrixMode(GL_MODELVIEW);
+    viewport.reshape(w, h);
 }
 
 static void init(GLsizei w, GLsizei h)
@@ -329,6 +361,5 @@ int main(int argc, char *argv[])
     glutMainLoop();           /* start processing events... */
 
     /* execution never reaches this point */
-
     return 0;
 }
