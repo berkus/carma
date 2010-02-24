@@ -188,13 +188,22 @@ static char* pathsubst(const char* fname, const char* newpath, const char* newex
 
 static bool load_textures(const char* fname, mesh_t& mesh)
 {
-    char* matfile = pathsubst(fname, BASE_DIR"MATERIAL/", ".MAT");
-    char* curdir = getcwd(NULL, 0);
+    // Load actor file.
+    char* actfile = pathsubst(fname, BASE_DIR"ACTORS/", ".ACT");
+    printf("Opening %s\n", actfile);
+    file act(actfile, ios::in|ios::binary);
+    free(actfile);
+    CHECK_READ(resource_file_t::read_file_header(act));
 
-    printf("Opening %s, from %s\n", matfile, curdir);
-    free(curdir);
+    model_t model;
+    if (!model.read(act))
+        return false;
+    model.dump();
+    act.close();
 
     // Load materials from MAT file.
+    char* matfile = pathsubst(fname, BASE_DIR"MATERIAL/", ".MAT");
+    printf("Opening %s\n", matfile);
     file f(matfile, ios::in|ios::binary);
     free(matfile);
     CHECK_READ(resource_file_t::read_file_header(f));
