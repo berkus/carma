@@ -107,7 +107,7 @@ public:
     uint8_t what1;
     uint16_t what2;
     uint32_t units, unit_bytes;
-    char* data;
+    uint8_t* data;
 
     bool read(raii_wrapper::file& f);
     void dump();

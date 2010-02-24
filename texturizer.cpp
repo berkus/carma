@@ -64,7 +64,7 @@ bool texture_renderer_t::set_texture(std::string name)
     glBindTexture(GL_TEXTURE_2D, tex->bound_id); // Set our texture handle as current
 
     // Create the texture
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE_3_3_2, tex->pixelmap.data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_COLOR_INDEX, GL_UNSIGNED_BYTE, tex->pixelmap.data);
 
     // Specify filtering and edge actions
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -104,7 +104,28 @@ bool texture_renderer_t::draw_texture(std::string name)
 // ARGB, 1 byte per component
 // 256 rows
 // Convert it into GL_PIXEL_MAP tables.
-bool texture_renderer_t::set_palette(pixelmap_t /*palette*/)
+bool texture_renderer_t::set_palette(pixelmap_t palette)
 {
+    GLfloat* alpha_tab = new GLfloat[palette.h];
+    GLfloat* r_tab     = new GLfloat[palette.h];
+    GLfloat* g_tab     = new GLfloat[palette.h];
+    GLfloat* b_tab     = new GLfloat[palette.h];
+
+    for (size_t i = 0; i < palette.h; ++i)
+    {
+        alpha_tab[i] = palette.data[i * palette.w + 0] / 255.0;
+        r_tab[i]     = palette.data[i * palette.w + 1] / 255.0;
+        g_tab[i]     = palette.data[i * palette.w + 2] / 255.0;
+        b_tab[i]     = palette.data[i * palette.w + 3] / 255.0;
+    }
+
+    glPixelMapfv(GL_PIXEL_MAP_I_TO_A, palette.h, alpha_tab);
+    glPixelMapfv(GL_PIXEL_MAP_I_TO_R, palette.h, r_tab);
+    glPixelMapfv(GL_PIXEL_MAP_I_TO_G, palette.h, g_tab);
+    glPixelMapfv(GL_PIXEL_MAP_I_TO_B, palette.h, b_tab);
+
+    glPixelTransferi(GL_INDEX_SHIFT, 0);
+    glPixelTransferi(GL_INDEX_OFFSET, 0);
+
     return true;
 }

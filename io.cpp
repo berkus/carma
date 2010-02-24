@@ -307,7 +307,7 @@ bool pixelmap_t::read(raii_wrapper::file& f)
     fio.read32be(unit_bytes);
     uint32_t payload_size = units * unit_bytes;
 
-    data = new char [payload_size];
+    data = new uint8_t [payload_size];
     if (!data)
         return false;
     if (f.read(data, payload_size) < payload_size)
