@@ -50,6 +50,12 @@ def configure(conf):
     conf.env.append_unique('CXXFLAGS', ['-O0', '-g'])
 
 def build(bld):
+    lib = bld.new_task_gen('cxx', 'staticlib')
+    lib.source = 'io.cpp dump.cpp texturizer.cpp pixelmap.cpp'
+    lib.includes = include_dirs
+    lib.env = bld.env_of_name('debug').copy()
+    lib.target = 'roadkill'
+
     dat = bld.new_task_gen('cc', 'program')
     dat.source = 'dat.c'
     dat.includes = include_dirs
@@ -57,20 +63,23 @@ def build(bld):
     dat.target = 'dat'
 
     mdl = bld.new_task_gen('cxx', 'program')
-    mdl.source = 'model.cpp io.cpp dump.cpp'
+    mdl.source = 'model.cpp'
     mdl.includes = include_dirs
     mdl.env = bld.env_of_name('debug').copy()
     mdl.target = 'model'
+    mdl.uselib_local = 'roadkill'
 
     glook = bld.new_task_gen('cxx', 'program')
-    glook.source = 'glook.cpp texturizer.cpp io.cpp dump.cpp'
+    glook.source = 'glook.cpp'
     glook.includes = include_dirs
     glook.env = bld.env_of_name('debug').copy()
     glook.target = 'glook'
     glook.uselib = 'gl glu glut'
+    glook.uselib_local = 'roadkill'
 
     pixdec = bld.new_task_gen('cxx', 'program')
-    pixdec.source = 'pixdec.cpp io.cpp dump.cpp'
+    pixdec.source = 'pixdec.cpp'
     pixdec.includes = include_dirs
     pixdec.env = bld.env_of_name('debug').copy()
     pixdec.target = 'pixdec'
+    pixdec.uselib_local = 'roadkill'

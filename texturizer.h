@@ -22,6 +22,14 @@ class texture_renderer_t
 {
 public:
     std::map<std::string, texture_t*> cache;
+    // Pixel map tables for GL.
+    GLfloat* alpha_tab;
+    GLfloat* r_tab;
+    GLfloat* g_tab;
+    GLfloat* b_tab;
+
+    texture_renderer_t() : alpha_tab(0), r_tab(0), g_tab(0), b_tab(0) {}
+    ~texture_renderer_t();
 
     bool read(raii_wrapper::file& f);
     bool set_texture(std::string name);
@@ -29,7 +37,5 @@ public:
     void dump_cache();
 
     /* Set palette for converting GL_COLOR_INDEX pixmaps to textures. */
-//     GL_COLOR_INDEX
-//     Each element is a single value, a color index. The GL converts it to fixed point (with an unspecified number of zero bits to the right of the binary point), shifted left or right depending on the value and sign of GL_INDEX_SHIFT, and added to GL_INDEX_OFFSET (see glPixelTransfer). The resulting index is converted to a set of color components using the GL_PIXEL_MAP_I_TO_R, GL_PIXEL_MAP_I_TO_G, GL_PIXEL_MAP_I_TO_B, and GL_PIXEL_MAP_I_TO_A tables, and clamped to the range [0,1].
     bool set_palette(pixelmap_t palette);
 };

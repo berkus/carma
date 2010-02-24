@@ -13,6 +13,17 @@
 
 using raii_wrapper::file;
 
+texture_renderer_t::~texture_renderer_t()
+{
+    for(std::map<std::string, texture_t*>::iterator it = cache.begin(); it != cache.end(); ++it)
+        delete (*it).second;
+    cache.clear();
+    delete alpha_tab;
+    delete r_tab;
+    delete g_tab;
+    delete b_tab;
+}
+
 // Read all textures from file f.
 bool texture_renderer_t::read(file& f)
 {
@@ -106,10 +117,14 @@ bool texture_renderer_t::draw_texture(std::string name)
 // Convert it into GL_PIXEL_MAP tables.
 bool texture_renderer_t::set_palette(pixelmap_t palette)
 {
-    GLfloat* alpha_tab = new GLfloat[palette.h];
-    GLfloat* r_tab     = new GLfloat[palette.h];
-    GLfloat* g_tab     = new GLfloat[palette.h];
-    GLfloat* b_tab     = new GLfloat[palette.h];
+    delete alpha_tab;
+    alpha_tab = new GLfloat[palette.h];
+    delete r_tab;
+    r_tab     = new GLfloat[palette.h];
+    delete g_tab;
+    g_tab     = new GLfloat[palette.h];
+    delete b_tab;
+    b_tab     = new GLfloat[palette.h];
 
     for (size_t i = 0; i < palette.h; ++i)
     {

@@ -109,6 +109,10 @@ public:
     uint32_t units, unit_bytes;
     uint8_t* data;
 
+    pixelmap_t() : w(0), h(0), use_w(0), use_h(0), data(0) {}
+    pixelmap_t(const pixelmap_t& other);
+    pixelmap_t& operator =(const pixelmap_t& other);
+    ~pixelmap_t() { delete data; }
     bool read(raii_wrapper::file& f);
     void dump();
 };
