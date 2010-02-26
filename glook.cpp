@@ -118,6 +118,11 @@ static void render_vertex(vector_t<float> vertex, vector_t<float> normal, uvcoor
 
 void mesh_t::render()
 {
+    if (material_names.size() > 0)
+        glEnable(GL_TEXTURE_2D);
+    else
+        texturizer.reset_texture();
+
     glBegin(GL_TRIANGLES);
     // Draw all faces of the mesh
     int previous_texture = -1;
@@ -151,7 +156,6 @@ void mesh_t::render()
 static void render()        /* function called whenever redisplay needed */
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     /* clear the display */
-    glEnable(GL_TEXTURE_2D);
 
     glLoadIdentity();
     glTranslatef(0.0f, 0.0f, -3.0f);
@@ -170,7 +174,6 @@ static void render()        /* function called whenever redisplay needed */
             glPopMatrix();
         }
     }
-    glDisable(GL_TEXTURE_2D);
 
     glutSwapBuffers();
     glFlush();
