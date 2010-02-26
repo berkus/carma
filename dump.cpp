@@ -16,6 +16,21 @@ void vector_t<float>::dump()
     printf("vector{%f,%f,%f}\n", x, y, z);
 }
 
+template <>
+void matrix_t<float>::dump()
+{
+    for(int col = 0; col < 4; ++col)
+    {
+        printf("[");
+        for(int row = 0; row < 4; ++row)
+        {
+            printf("%.3f ", x[col][row]);
+        }
+        printf("]\n");
+    }
+    printf("\n");
+}
+
 void mesh_t::dump()
 {
     printf("Name: %s\n", name.c_str());
@@ -58,10 +73,8 @@ void pixelmap_t::dump()
 void actor_t::dump()
 {
     printf("Actor: %s, visible %d, what2 %d, mesh %s, material %s\n", name.c_str(), visible, what2, mesh_name.c_str(), material_name.c_str());
-    x.dump();
-    y.dump();
-    z.dump();
-    w.dump();
+    scale.dump();
+    translate.dump();
     printf("\n");
 }
 

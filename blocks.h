@@ -12,8 +12,9 @@
 #include <vector>
 #include <map>
 #include "math/vector.h"
+#include "math/matrix.h"
 
-#define CHECK_READ(v)  if(!(v)) return false
+#define CHECK_READ(v)  if(!(v)) { printf("Load aborted at pos 0x%lx\n", f.read_pos()); return false; }
 
 class resource_file_t
 {
@@ -89,16 +90,17 @@ public:
     std::vector<uvcoord_t> uvcoords;
     std::vector<face_t> faces;
     std::vector<std::string> material_names;
-    std::map<std::string, material_t> materials;
 
     bool read(raii_wrapper::file& f);
     void calc_normals();
+    void render();
     void dump();
 };
 
 // Pixelmaps.
 // Pixmap consists of two chunks: name and data
 
+// TODO: use shared_data_t for pixmap contents to avoid copying.
 class pixelmap_t
 {
 public:
@@ -125,7 +127,8 @@ class actor_t
 public:
     uint8_t visible, what2;
     std::string name;
-    vector_t<float> x, y, z, w; /* x,y,z is scaling matrix; w is translation vector, -x is to the left, -z is to the front */
+    matrix_t<float> scale;
+    vector_t<float> translate; /* -x is to the left, -z is to the front */
     std::string material_name;
     std::string mesh_name;
 
@@ -136,6 +139,9 @@ class model_t
 {
 public:
     std::map<std::string, actor_t*> parts;
+    std::map<std::string, mesh_t*> meshes;
+    std::map<std::string, material_t> materials;
+
     bool read(raii_wrapper::file& f);
     void dump();
 };
