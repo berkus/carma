@@ -37,12 +37,9 @@ bool texture_renderer_t::read(file& f)
         if (!tex)
             return false;
         tex->pixelmap = pmap;
-        std::transform(tex->pixelmap.name.begin(), tex->pixelmap.name.end(), tex->pixelmap.name.begin(), toupper);
         if (!cache.insert(std::make_pair(tex->pixelmap.name, tex)).second)
             printf("Texture %s already present in cache, not adding.\n", tex->pixelmap.name.c_str());
     }
-
-    dump_cache();
 
     return true;
 }
@@ -53,17 +50,24 @@ void texture_renderer_t::dump_cache()
         printf("'%s'(%d) -> %p\n", (*it).first.c_str(), (*it).first.length(), (*it).second);
 }
 
+void texture_renderer_t::dump_cache_textures()
+{
+    for(std::map<std::string, texture_t*>::iterator it = cache.begin(); it != cache.end(); ++it)
+        (*it).second->dump();
+}
+
 bool texture_renderer_t::set_texture(std::string name)
 {
     if (cache.find(name) == cache.end())
     {
-//         printf("Texture %s(%d) not found in cache!\n", name.c_str(), name.length());
-//         dump_cache();
+        printf("Texture %s(%d) not found in cache!\n", name.c_str(), name.length());
+        dump_cache();
         return false;
     }
     texture_t* tex = cache[name];
     if (tex->bound_id)
     {
+        printf("Binding already created texture id %d.\n", tex->bound_id);
         glBindTexture(GL_TEXTURE_2D, tex->bound_id); // Set our texture handle as current
         return true;
     }
@@ -73,6 +77,8 @@ bool texture_renderer_t::set_texture(std::string name)
 
     glGenTextures(1, &(tex->bound_id));            // Allocate space for texture
     glBindTexture(GL_TEXTURE_2D, tex->bound_id); // Set our texture handle as current
+
+    printf("Creating new texture id %d for %s.\n", tex->bound_id, name.c_str());
 
     // Create the texture
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_COLOR_INDEX, GL_UNSIGNED_BYTE, tex->pixelmap.data);

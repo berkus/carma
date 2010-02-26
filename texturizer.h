@@ -16,6 +16,8 @@ public:
     pixelmap_t pixelmap;
 
     texture_t() : bound_id(0), pixelmap() {}
+
+    inline void dump() { pixelmap.dump(); }
 };
 
 class texture_renderer_t
@@ -35,6 +37,7 @@ public:
     bool set_texture(std::string name);
     bool draw_texture(std::string name);
     void dump_cache();
+    void dump_cache_textures();
 
     /* Set palette for converting GL_COLOR_INDEX pixmaps to textures. */
     bool set_palette(pixelmap_t palette);
