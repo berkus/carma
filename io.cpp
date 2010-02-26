@@ -76,7 +76,7 @@ bool resource_file_t::read_c_string(file& f, std::string& str)
     {
         CHECK_READ(fio.read8(datum));
         if (datum)
-            str.push_back(datum);
+            str.push_back(toupper(datum));
     }
 
     return true;
@@ -90,6 +90,7 @@ bool chunk_header_t::read(file& f)
     return true;
 }
 
+// TODO: get rid of this!
 bool chunk_t::read(file& f)
 {
     filebinio fio(f);
@@ -161,6 +162,7 @@ bool mesh_t::read(file& f)
     chunk_t header;
     chunk_header_t ch;
     uint32_t dummy;
+    uint32_t entries;
 
     printf("Reading filename entry...\n");
     CHECK_READ(header.read(f));
@@ -168,14 +170,7 @@ bool mesh_t::read(file& f)
     if (header.type != FILE_NAME)
         return false;
 
-    char* s = new char [header.size - 2];
-    if (f.read(s, header.size - 2) < header.size - 2)
-    {
-        delete s;
-        return false;
-    }
-    name = string(s);
-    delete s;
+    CHECK_READ(resource_file_t::read_c_string(f, name));
 
     printf("Reading vertex list...\n");
     CHECK_READ(header.read(f));
@@ -217,12 +212,20 @@ bool mesh_t::read(file& f)
     }
 
     printf("Reading material list...\n");
-    CHECK_READ(header.read(f));
+    CHECK_READ(ch.read(f));
 
-    if (header.type != MATERIAL_LIST)
+    if (ch.type == 0 && ch.size == 0) // Some sub-meshes end without defining materials.
+        return true;
+
+    if (ch.type != MATERIAL_LIST)
+    {
+        printf("Expected %x but got type %x (%d bytes) instead!\n", MATERIAL_LIST, ch.type, ch.size);
         return false;
+    }
 
-    for (size_t s = 0; s < header.entries; s++)
+    CHECK_READ(fio.read32be(entries));
+
+    for (size_t s = 0; s < entries; s++)
     {
         string str;
         CHECK_READ(resource_file_t::read_c_string(f, str));
@@ -244,7 +247,10 @@ bool mesh_t::read(file& f)
     // This is a NULL chunk_header_t marking end of one mesh!
     CHECK_READ(ch.read(f));
     if (!(ch.type == 0 && ch.size == 0))
+    {
+        printf("Expected terminating chunk but got type %x (%d bytes) instead!\n", ch.type, ch.size);
         return false;
+    }
 
     return true;
 }
@@ -265,19 +271,32 @@ bool material_t::read(raii_wrapper::file& f)
     CHECK_READ(resource_file_t::read_c_string(f, name));
 
     CHECK_READ(ch.read(f));
+
+    if (ch.type == 0 && ch.size == 0) // Some materials end without defining pixmaps.
+        return true;
+
     if (ch.type != PIXELMAP_REF)
+    {
+        printf("Expected %x but got type %x (%d bytes) instead!\n", PIXELMAP_REF, ch.type, ch.size);
         return false;
+    }
     CHECK_READ(resource_file_t::read_c_string(f, pixelmap_name));
 
     CHECK_READ(ch.read(f));
     if (ch.type != RENDERTAB_REF)
+    {
+        printf("Expected %x but got type %x (%d bytes) instead!\n", RENDERTAB_REF, ch.type, ch.size);
         return false;
+    }
     CHECK_READ(resource_file_t::read_c_string(f, rendertab_name));
 
     // This is a NULL chunk_header_t marking end of one material!
     CHECK_READ(ch.read(f));
     if (!(ch.type == 0 && ch.size == 0))
+    {
+        printf("Expected terminating chunk but got type %x (%d bytes) instead!\n", ch.type, ch.size);
         return false;
+    }
 
     return true;
 }
@@ -289,7 +308,10 @@ bool pixelmap_t::read(raii_wrapper::file& f)
 
     CHECK_READ(ch.read(f));
     if (ch.type != PIXELMAP_HEAD)
+    {
+        printf("Expected %x but got type %x (%d bytes) instead!\n", PIXELMAP_HEAD, ch.type, ch.size);
         return false;
+    }
     fio.read8(what1);
     fio.read16be(w);
     fio.read16be(use_w);
@@ -300,7 +322,10 @@ bool pixelmap_t::read(raii_wrapper::file& f)
 
     CHECK_READ(ch.read(f));
     if (ch.type != PIXELMAP_DATA)
+    {
+        printf("Expected %x but got type %x (%d bytes) instead!\n", PIXELMAP_DATA, ch.type, ch.size);
         return false;
+    }
 
     fio.read32be(units);
     fio.read32be(unit_bytes);
@@ -315,7 +340,10 @@ bool pixelmap_t::read(raii_wrapper::file& f)
     // This is a NULL chunk_header_t marking end of one pixmap!
     CHECK_READ(ch.read(f));
     if (!(ch.type == 0 && ch.size == 0))
+    {
+        printf("Expected terminating chunk but got type %x (%d bytes) instead!\n", ch.type, ch.size);
         return false;
+    }
 
     return true;
 }
@@ -324,6 +352,7 @@ bool model_t::read(raii_wrapper::file& f)
 {
     filebinio fio(f);
     chunk_header_t ch;
+    vector_t<float> v;
     actor_t* actor = 0;
 
     ch.type = 1;
@@ -342,10 +371,13 @@ bool model_t::read(raii_wrapper::file& f)
                 CHECK_READ(resource_file_t::read_c_string(f, actor->name));
                 break;
             case ACTOR_DATA:
-                CHECK_READ(actor->x.read(f));
-                CHECK_READ(actor->y.read(f));
-                CHECK_READ(actor->z.read(f));
-                CHECK_READ(actor->w.read(f));
+                CHECK_READ(v.read(f));
+                actor->scale.x[0][0] = v.x; actor->scale.x[1][0] = v.y; actor->scale.x[2][0] = v.z;
+                CHECK_READ(v.read(f));
+                actor->scale.x[0][1] = v.x; actor->scale.x[1][1] = v.y; actor->scale.x[2][1] = v.z;
+                CHECK_READ(v.read(f));
+                actor->scale.x[0][2] = v.x; actor->scale.x[1][2] = v.y; actor->scale.x[2][2] = v.z;
+                CHECK_READ(actor->translate.read(f));
                 break;
             case MATERIAL_REF:
                 CHECK_READ(resource_file_t::read_c_string(f, actor->material_name));
@@ -367,7 +399,10 @@ bool model_t::read(raii_wrapper::file& f)
     }
 
     if (!(ch.type == 0 && ch.size == 0))
+    {
+        printf("Expected terminating chunk but got type %x (%d bytes) instead!\n", ch.type, ch.size);
         return false;
+    }
 
     return true;
 }
