@@ -4,6 +4,7 @@
 /* This is inefficient but safe. Perform deep copy. */
 
 pixelmap_t::pixelmap_t(const pixelmap_t& other)
+    : data(0)
 {
     (*this).operator =(other);
 }
