@@ -35,6 +35,7 @@ public:
 
     bool read(raii_wrapper::file& f);
     bool set_texture(std::string name);
+    void reset_texture();
     bool draw_texture(std::string name);
     void dump_cache();
     void dump_cache_textures();

@@ -92,6 +92,12 @@ bool texture_renderer_t::set_texture(std::string name)
     return true;
 }
 
+void texture_renderer_t::reset_texture()
+{
+    glDisable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 // test draw a texture
 bool texture_renderer_t::draw_texture(std::string name)
 {
@@ -111,8 +117,7 @@ bool texture_renderer_t::draw_texture(std::string name)
     glVertex2f(-1.0, 1.0);
     glEnd();
 
-    glDisable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    reset_texture();
 
     return true;
 }
