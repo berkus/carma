@@ -16,7 +16,7 @@ template <typename type_t>
 class matrix_t
 {
 public:
-    type_t x[4][4];
+    type_t x[4][4]; // [cols][rows]
 
     matrix_t(type_t = 1.0); // Identity matrix by default
 
@@ -29,6 +29,8 @@ public:
     void identity();
     void invert();
     void transpose();
+
+    void dump();
 
     static matrix_t<type_t> translate(const vector_t<type_t>& loc);
     static matrix_t<type_t> inv_translate(const vector_t<type_t>& loc);
@@ -51,11 +53,9 @@ public:
 template <typename type_t>
 inline matrix_t<type_t>::matrix_t(type_t v)
 {
-    int i, j;
-
-    for(i = 0; i < 4; i++)
-        for(j = 0; j < 4; j++)
-            x[i][j] = (i == j) ? v : 0.0;
+    for(int col = 0; col < 4; ++col)
+        for(int row = 0; row < 4; ++row)
+            x[col][row] = (row == col) ? v : 0.0;
 
     x[3][3] = 1.0;
 }
@@ -63,9 +63,9 @@ inline matrix_t<type_t>::matrix_t(type_t v)
 template <typename type_t>
 inline void matrix_t<type_t>::identity()
 {
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++)
-            x[i][j] = (i == j) ? 1.0 : 0.0;
+    for(int col = 0; col < 4; ++col)
+        for(int row = 0; row < 4; ++row)
+            x[col][row] = (row == col) ? 1.0 : 0.0;
 }
 
 template <typename type_t>
@@ -73,30 +73,30 @@ void matrix_t<type_t>::invert()
 {
     matrix_t out(1);
 
-    for(int i = 0; i < 4; i++)
+    for(int diag = 0; diag < 4; ++diag)
     {
-        type_t d = x[i][i];
+        type_t d = x[diag][diag];
 
         if(d != 1.0)
         {
-            for(int j = 0; j < 4; j++)
+            for(int row = 0; row < 4; ++row)
             {
-                out.x[i][j] /= d;
-                x[i][j] /= d;
+                out.x[diag][row] /= d;
+                x[diag][row] /= d;
             }
         }
-        for(int j = 0; j < 4; j++)
+        for(int col = 0; col < 4; ++col)
         {
-            if(j != i)
+            if(col != diag)
             {
-                if(x[j][i] != 0.0)
+                if(x[col][diag] != 0.0)
                 {
-                    type_t mulby = x[j][i];
+                    type_t mulby = x[col][diag];
 
-                    for(int k = 0; k < 4; k++)
+                    for(int row = 0; row < 4; ++row)
                     {
-                        x[j][k]     -= mulby * x[i][k];
-                        out.x[j][k] -= mulby * out.x[i][k];
+                        x[col][row]     -= mulby * x[diag][row];
+                        out.x[col][row] -= mulby * out.x[diag][row];
                     }
                 }
             }
@@ -108,29 +108,27 @@ void matrix_t<type_t>::invert()
 template <typename type_t>
 void matrix_t<type_t>::transpose()
 {
-    for(int i = 0; i < 4; i++)
-        for(int j = i; j < 4; j++)
-            if(i != j)
-                std::swap(x[i][j], x[j][i]);
+    for(int col = 0; col < 4; ++col)
+        for(int row = 0; row < 4; ++row)
+            if(row != col)
+                std::swap(x[col][row], x[row][col]);
 }
 
 template <typename type_t>
 matrix_t<type_t>& matrix_t<type_t>::operator +=(const matrix_t<type_t>& a)
 {
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++)
-            x[i][j] += a.x[i][j];
-
+    for(int col = 0; col < 4; ++col)
+        for(int row = 0; row < 4; ++row)
+            x[col][row] += a.x[col][row];
     return *this;
 }
 
 template <typename type_t>
 matrix_t<type_t>& matrix_t<type_t>::operator -=(const matrix_t<type_t>& a)
 {
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++)
-            x[i][j] -= a.x[i][j];
-
+    for(int col = 0; col < 4; ++col)
+        for(int row = 0; row < 4; ++row)
+            x[col][row] -= a.x[col][row];
     return *this;
 }
 
@@ -138,10 +136,9 @@ matrix_t<type_t>& matrix_t<type_t>::operator -=(const matrix_t<type_t>& a)
 template <typename type_t>
 matrix_t<type_t>& matrix_t<type_t>::operator *=(type_t v)
 {
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++)
-            x[i][j] *= v;
-
+    for(int col = 0; col < 4; ++col)
+        for(int row = 0; row < 4; ++row)
+            x[col][row] *= v;
     return *this;
 }
 
@@ -151,15 +148,15 @@ matrix_t<type_t>& matrix_t<type_t>::operator *=(const matrix_t<type_t>& a)
 {
     matrix_t res = *this;
 
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++)
+    for(int col = 0; col < 4; ++col)
+        for(int row = 0; row < 4; ++row)
         {
             type_t sum = 0.0;
 
             for(int k = 0; k < 4; k++)
-                sum += res.x[i][k] * a.x[k][j];
+                sum += res.x[col][k] * a.x[k][row];
 
-            x[i][j] = sum;
+            x[col][row] = sum;
         }
 
     return *this;
@@ -171,55 +168,32 @@ matrix_t<type_t>& matrix_t<type_t>::operator *=(const matrix_t<type_t>& a)
 template <typename type_t>
 matrix_t<type_t> operator +(const matrix_t<type_t>& a, const matrix_t<type_t>& b)
 {
-    matrix_t<type_t> res;
-
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++)
-            res.x[i][j] = a.x[i][j] + b.x[i][j];
-
+    matrix_t<type_t> res = a;
+    res += b;
     return res;
 }
 
 template <typename type_t>
 matrix_t<type_t> operator -(const matrix_t<type_t>& a, const matrix_t<type_t>& b)
 {
-    matrix_t<type_t> res;
-
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++)
-            res.x[i][j] = a.x[i][j] - b.x[i][j];
-
+    matrix_t<type_t> res = a;
+    res -= b;
     return res;
 }
 
 template <typename type_t>
 matrix_t<type_t> operator *(const matrix_t<type_t>& a, const matrix_t<type_t>& b)
 {
-    matrix_t<type_t> res;
-
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++)
-        {
-            type_t sum = 0.0;
-
-            for(int k = 0; k < 4; k++)
-                sum += a.x[i][k] * b.x[k][j];
-
-            res.x[i][j] = sum;
-        }
-
+    matrix_t<type_t> res = a;
+    res *= b;
     return res;
 }
 
 template <typename type_t>
 matrix_t<type_t> operator *(const matrix_t<type_t>& a, type_t v)
 {
-    matrix_t<type_t> res;
-
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++)
-            res.x[i][j] = a.x[i][j] * v;
-
+    matrix_t<type_t> res = a;
+    res *= v;
     return res;
 }
 
