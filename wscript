@@ -51,7 +51,7 @@ def configure(conf):
 
 def build(bld):
     lib = bld.new_task_gen('cxx', 'staticlib')
-    lib.source = 'io.cpp dump.cpp texturizer.cpp pixelmap.cpp'
+    lib.source = 'io.cpp dump.cpp texturizer.cpp pixelmap.cpp viewport.cpp'
     lib.includes = include_dirs
     lib.env = bld.env_of_name('debug').copy()
     lib.target = 'roadkill'

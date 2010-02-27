@@ -12,14 +12,14 @@
 #include <climits>
 #include <cstdio>
 #include <sstream>
-#include <math.h>
-#include "blocks.h"
-#include "texturizer.h"
 #include <algorithm>
 #include <ctype.h>
-#include "math/matrix.h"
 #include <sys/stat.h>
 #include <errno.h>
+#include "math/matrix.h"
+#include "blocks.h"
+#include "texturizer.h"
+#include "viewport.h"
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -35,44 +35,6 @@
 
 using namespace std;
 using namespace raii_wrapper;
-
-class viewport_t
-{
-public:
-    GLfloat fovy;
-    GLfloat znear;
-    GLfloat zfar;
-    GLsizei w, h;
-
-    viewport_t() : fovy(45.0f), znear(0.1f), zfar(100.0f), w(0), h(0) {}
-
-    void reshape(GLsizei new_w, GLsizei new_h)
-    {
-        if (new_w == w && new_h == h)
-            return;
-
-        w = new_w;
-        h = new_h;
-
-        glViewport(0, 0, w, h);
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-
-        GLfloat aspect = (GLfloat)w/(GLfloat)h;
-
-        gluPerspective(fovy, aspect, znear, zfar);   /* how object is mapped to window */
-
-        GLfloat xmin, xmax, ymin, ymax;
-        ymax = znear * tan(fovy * M_PI / 360.0);
-        ymin = -ymax;
-        xmin = ymin * aspect;
-        xmax = ymax * aspect;
-
-        printf("Viewport: (%f,%f)-(%f,%f), fovy %f, aspect %f\n", xmin,ymin, xmax,ymax, fovy, aspect);
-
-        glMatrixMode(GL_MODELVIEW);
-    }
-};
 
 static GLfloat LightPos[4]={-5.0f,5.0f,10.0f,0.0f};
 static GLfloat Ambient[4]={0.5f,0.5f,0.5f,1.0f};
@@ -267,40 +229,32 @@ static bool load_actor(const char* fname)
     // Parse only material/mesh mumbo-jumbo for now.
     std::vector<std::string> txt_lines, load_meshes, load_pixmaps, load_materials;
     std::string line;
-//     bool parse_lines = false;
     while (txt.getline(line))
     {
         if (line.find(std::string(".PIX,G")) != line.npos)
         {
-//             printf("After %s starting parsing lines.\n", line.c_str());
-//             parse_lines = true;
-//         }
-//         if (parse_lines)
-//         {
             // 3x pixelmap
-            txt_lines = read_txt_lines(txt);
-//             load_pixmaps.insert(load_pixmaps.end(), txt_lines.begin(), txt_lines.end());
             txt_lines = read_txt_lines(txt);
             load_pixmaps.insert(load_pixmaps.end(), txt_lines.begin(), txt_lines.end());
             txt_lines = read_txt_lines(txt);
-//             load_pixmaps.insert(load_pixmaps.end(), txt_lines.begin(), txt_lines.end());
+            load_pixmaps.insert(load_pixmaps.end(), txt_lines.begin(), txt_lines.end());
+            txt_lines = read_txt_lines(txt);
+            load_pixmaps.insert(load_pixmaps.end(), txt_lines.begin(), txt_lines.end());
             // shadetable
             txt_lines = read_txt_lines(txt);
             // 3x material
             txt_lines = read_txt_lines(txt);
-//             load_materials.insert(load_materials.end(), txt_lines.begin(), txt_lines.end());
+            load_materials.insert(load_materials.end(), txt_lines.begin(), txt_lines.end());
             txt_lines = read_txt_lines(txt);
             load_materials.insert(load_materials.end(), txt_lines.begin(), txt_lines.end());
             txt_lines = read_txt_lines(txt);
-//             load_materials.insert(load_materials.end(), txt_lines.begin(), txt_lines.end());
+            load_materials.insert(load_materials.end(), txt_lines.begin(), txt_lines.end());
             // models
             txt_lines = read_txt_lines(txt);
             load_meshes.insert(load_meshes.end(), txt_lines.begin(), txt_lines.end());
             // actors
             txt_lines = read_txt_lines(txt);
-//             parse_lines = false;
         }
-//     "GROOVE" specifies actor placements and functions
     }
     txt.close();
 
@@ -405,7 +359,7 @@ static bool load_actor(const char* fname)
     }
 
     // Bind textures for materials in model.
-    texturizer.dump_cache_textures();
+//     texturizer.dump_cache_textures();
 
     for(std::map<std::string, mesh_t*>::iterator it = model.meshes.begin(); it != model.meshes.end(); ++it)
     {
@@ -445,14 +399,14 @@ static void animate(int /*value*/)
     yrot = (YROTRATE / 1000) * elapsedTime;
     xrot += (XROTRATE / 1000) * timeSincePrevFrame * xdir;
 
-    if (xrot > 45.0f)
+    if (xrot > 15.0f)
     {
-        xrot = 45.0;
+        xrot = 15.0;
         xdir = -1.0f;
     }
-    if (xrot < -30.0f)
+    if (xrot < -15.0f)
     {
-        xrot = -30.0f;
+        xrot = -15.0f;
         xdir = 1.0f;
     }
 
