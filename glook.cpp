@@ -8,23 +8,19 @@
 //
 #include <GL/glut.h>
 #include <cstdlib>
-#include <cstring>
 #include <climits>
 #include <cstdio>
-#include <sstream>
 #include <algorithm>
 #include <ctype.h>
-#include <sys/stat.h>
-#include <errno.h>
 #include "math/matrix.h"
 #include "blocks.h"
 #include "texturizer.h"
 #include "viewport.h"
+#include "animated_parameter.h"
+#include "loader.h"
 
 #define WIDTH 800
 #define HEIGHT 600
-
-#define BASE_DIR "DecodedData/DATA/"
 
 // The time in milliseconds between timer ticks
 #define TIMERMSECS 33
@@ -40,80 +36,17 @@ static GLfloat LightPos[4]={-5.0f,5.0f,10.0f,0.0f};
 static GLfloat Ambient[4]={0.5f,0.5f,0.5f,1.0f};
 
 static viewport_t viewport;
-static model_t model;
-static texture_renderer_t texturizer;
+// Pesky globals
+model_t model;
+texture_renderer_t texturizer;
 
 // Global variables for measuring time (in milli-seconds)
 static int startTime;
 static int prevTime;
 
-static GLfloat xrot = 45.0f, xdir = -1.0f, yrot = 0.0f;
-
-// Calculate normal from vertices in counter-clockwise order.
-template <typename type_t>
-static vector_t<type_t> calc_normal(vector_t<type_t> v1, vector_t<type_t> v2, vector_t<type_t> v3)
-{
-    return normalize((v1 - v2) & (v2 - v3));
-}
-
-void mesh_t::calc_normals()
-{
-    normals.clear();
-    for (size_t n = 0; n < vertices.size(); n++)
-    {
-        normals.push_back(vector_t<float>());
-    }
-
-    for (size_t n = 0; n < faces.size(); n++)
-    {
-        vector_t<float> normal = calc_normal(vertices[faces[n].v1], vertices[faces[n].v2], vertices[faces[n].v3]);
-        normals[faces[n].v1] = normals[faces[n].v2] = normals[faces[n].v3] = normal;
-    }
-}
-
-static void render_vertex(vector_t<float> vertex, vector_t<float> normal, uvcoord_t uv)
-{
-    glNormal3f(normal.x, normal.y, normal.z);
-    glTexCoord2f(uv.u, uv.v);
-    glVertex3f(vertex.x, vertex.y, vertex.z);
-}
-
-void mesh_t::render()
-{
-    if (material_names.size() > 0)
-        glEnable(GL_TEXTURE_2D);
-    else
-        texturizer.reset_texture();
-
-    glBegin(GL_TRIANGLES);
-    // Draw all faces of the mesh
-    int previous_texture = -1;
-    for (size_t n = 0; n < faces.size(); n++)
-    {
-        if (material_names.size() > 0) // what happens to the meshes without materials? are they drawn?
-        {
-            if (previous_texture != faces[n].material_id)
-            {
-                string matname = material_names[faces[n].material_id - 1];
-                string pixelmap = model.materials[matname].pixelmap_name; //FIXME: global model ref
-                printf("Setting face material %s, texture %s.\n", matname.c_str(), pixelmap.c_str());
-                glEnd();
-                if (!texturizer.set_texture(pixelmap))
-                {
-                    printf("Ooops!");
-                    return;
-                }
-                glBegin(GL_TRIANGLES);
-                previous_texture = faces[n].material_id;
-            }
-        }
-
-        render_vertex(vertices[faces[n].v1], normals[faces[n].v1], uvcoords[faces[n].v1]);
-        render_vertex(vertices[faces[n].v2], normals[faces[n].v2], uvcoords[faces[n].v2]);
-        render_vertex(vertices[faces[n].v3], normals[faces[n].v3], uvcoords[faces[n].v3]);
-    }
-    glEnd();
-}
+static animated_parameter_t<GLfloat>
+    xrot(15.0f, XROTRATE, -15.0f, 15.0f, animated_parameter_t<GLfloat>::PingPongLoop),
+    yrot(0.0, YROTRATE);
 
 static void render()        /* function called whenever redisplay needed */
 {
@@ -121,8 +54,8 @@ static void render()        /* function called whenever redisplay needed */
 
     glLoadIdentity();
     glTranslatef(0.0f, 0.0f, -3.0f);
-    glRotatef(xrot, 1.0f, 0.0f, 0.0f);
-    glRotatef(yrot, 0.0f, 1.0f, 0.0f);
+    glRotatef(xrot.value(), 1.0f, 0.0f, 0.0f);
+    glRotatef(yrot.value(), 0.0f, 1.0f, 0.0f);
 
     for(std::map<std::string, actor_t*>::iterator it = model.parts.begin(); it != model.parts.end(); ++it)
     {
@@ -149,242 +82,6 @@ static void key(unsigned char key, int /*x*/, int /*y*/) /* called on key press 
     glutPostRedisplay();
 }
 
-/*!
- * Creates a pathname to file fname at new location newpath and optionally changing extension to newext.
- * New pathname is created using strdup() and must be freed by client.
- */
-static char* pathsubst(const char* fname, const char* newpath, const char* newext)
-{
-    if (!fname || !newpath)
-        return 0;
-
-    char pathbuf[PATH_MAX];
-    strncpy(pathbuf, newpath, PATH_MAX);
-    if (strchr(fname, '/'))
-        strncat(pathbuf, strrchr(fname, '/') + 1, PATH_MAX - 1 - strlen(pathbuf));
-    else
-        strncat(pathbuf, fname, 256 - 1 - strlen(pathbuf));
-
-    // Strip stray newlines (they appear whilst reading TXT file).
-    int end = strlen(pathbuf) - 1;
-    while (end > 0 && (pathbuf[end] == '\r' || pathbuf[end] == '\n' || pathbuf[end] == '\t'))
-    {
-        pathbuf[end] = 0;
-        end--;
-    }
-
-    if (newext)
-    {
-        if (strchr(pathbuf, '.'))
-        {
-            int used = strrchr(pathbuf, '.') - pathbuf;
-            strncpy(strrchr(pathbuf, '.'), newext, PATH_MAX - 1 - used);
-        }
-        else
-            strncat(pathbuf, newext, PATH_MAX - 1 - strlen(pathbuf));
-    }
-
-    return strdup(pathbuf);
-}
-
-// from GameDev forum
-template<typename RT, typename T, typename Trait, typename Alloc>
-RT ss_atoi(const std::basic_string<T, Trait, Alloc>& the_string)
-{
-    std::basic_istringstream< T, Trait, Alloc> temp_ss(the_string);
-    RT num;
-    temp_ss >> num;
-    return num;
-}
-
-static std::vector<std::string> read_txt_lines(file& f)
-{
-    std::vector<std::string> out;
-
-    std::string count;
-    if (!f.getline(count))
-        return out;
-//     printf("Got count string: %s\n", count.c_str());
-
-    size_t num = ss_atoi<size_t>(count.substr(0, count.find_first_of(' ')));
-//     printf("%d entries to read.\n", num);
-    for (size_t i = 0; i < num; ++i)
-    {
-        if (!f.getline(count))
-            return out;
-//         printf("Got value string: %s\n", count.c_str());
-        out.push_back(count);
-    }
-//     printf("Returning complete vector.\n");
-    return out;
-}
-
-static bool load_actor(const char* fname)
-{
-    // Load description file.
-    char* txtfile = pathsubst(fname, BASE_DIR"CARS/", ".ENC");
-    printf("Opening car %s\n", txtfile);
-    file txt(txtfile, ios::in|ios::binary);
-    free(txtfile);
-    // Parse only material/mesh mumbo-jumbo for now.
-    std::vector<std::string> txt_lines, load_meshes, load_pixmaps, load_materials;
-    std::string line;
-    while (txt.getline(line))
-    {
-        if (line.find(std::string(".PIX,G")) != line.npos)
-        {
-            // 3x pixelmap
-            txt_lines = read_txt_lines(txt);
-            load_pixmaps.insert(load_pixmaps.end(), txt_lines.begin(), txt_lines.end());
-            txt_lines = read_txt_lines(txt);
-            load_pixmaps.insert(load_pixmaps.end(), txt_lines.begin(), txt_lines.end());
-            txt_lines = read_txt_lines(txt);
-            load_pixmaps.insert(load_pixmaps.end(), txt_lines.begin(), txt_lines.end());
-            // shadetable
-            txt_lines = read_txt_lines(txt);
-            // 3x material
-            txt_lines = read_txt_lines(txt);
-            load_materials.insert(load_materials.end(), txt_lines.begin(), txt_lines.end());
-            txt_lines = read_txt_lines(txt);
-            load_materials.insert(load_materials.end(), txt_lines.begin(), txt_lines.end());
-            txt_lines = read_txt_lines(txt);
-            load_materials.insert(load_materials.end(), txt_lines.begin(), txt_lines.end());
-            // models
-            txt_lines = read_txt_lines(txt);
-            load_meshes.insert(load_meshes.end(), txt_lines.begin(), txt_lines.end());
-            // actors
-            txt_lines = read_txt_lines(txt);
-        }
-    }
-    txt.close();
-
-    printf("%d meshes, %d pixmaps, %d materials to load.\n", load_meshes.size(), load_pixmaps.size(), load_materials.size());
-
-    // Load actor file.
-    char* actfile = pathsubst(fname, BASE_DIR"ACTORS/", ".ACT");
-    printf("Opening actor %s\n", actfile);
-    file act(actfile, ios::in|ios::binary);
-    free(actfile);
-    #define f act
-    CHECK_READ(resource_file_t::read_file_header(act));
-    #undef f
-
-    if (!model.read(act))
-        return false;
-    act.close();
-
-    // Now iterate all meshes and load them.
-//     for (std::vector<std::string>::iterator it = load_meshes.begin(); it != load_meshes.end(); ++it)
-//     {
-//         if (model.meshes.find((*it)) != model.meshes.end())
-//         {
-//             printf("Model %s already loaded, skipping.\n", (*it).c_str());
-//             continue;
-//         }
-
-        char* meshfile = pathsubst(fname/*(*it).c_str()*/, BASE_DIR"MODELS/", ".DAT");
-        printf("Opening model '%s'\n", meshfile);
-        file f(meshfile, ios::in|ios::binary);
-        free(meshfile);
-        CHECK_READ(resource_file_t::read_file_header(f));
-
-        while (1)
-        {
-            mesh_t* mesh = new mesh_t;
-            if (!mesh->read(f))
-            {
-                delete mesh;
-                break;
-            }
-            if (model.meshes.find(mesh->name) != model.meshes.end())
-            {
-                printf("Model %s already loaded, skipping.\n", mesh->name.c_str());
-                delete mesh;
-                continue;
-            }
-
-            mesh->calc_normals();
-            printf("Adding model %s to meshes.\n", mesh->name.c_str());
-            model.meshes[mesh->name] = mesh;
-        }
-        f.close();
-//     }
-
-    // Load materials from MAT files.
-    model.materials.clear();
-
-    for (std::vector<std::string>::iterator it = load_materials.begin(); it != load_materials.end(); ++it)
-    {
-        char* matfile = pathsubst((*it).c_str(), BASE_DIR"MATERIAL/", NULL);
-        printf("Opening material %s\n", matfile);
-        file f(matfile, ios::in|ios::binary);
-        free(matfile);
-        CHECK_READ(resource_file_t::read_file_header(f));
-
-        material_t mat;
-
-        while (mat.read(f))
-        {
-            printf("Adding material %s to the list.\n", mat.name.c_str());
-            model.materials[mat.name] = mat;
-        }
-        f.close();
-    }
-
-    // Load palette from PIX file.
-    pixelmap_t palette;
-    char* palfile = pathsubst("DRRENDER.PAL", BASE_DIR"REG/PALETTES/", NULL);
-    printf("Opening palette %s\n", palfile);
-    file pal(palfile, ios::in|ios::binary);
-    free(palfile);
-    #define f pal
-    CHECK_READ(resource_file_t::read_file_header(pal));
-    CHECK_READ(palette.read(pal));
-    #undef f
-    pal.close();
-
-    texturizer.set_palette(palette);
-
-    // Load textures from PIX files.
-    for (std::vector<std::string>::iterator it = load_pixmaps.begin(); it != load_pixmaps.end(); ++it)
-    {
-        char* pixfile = pathsubst((*it).c_str(), BASE_DIR"PIXELMAP/", NULL);
-        printf("Opening pixelmap %s\n", pixfile);
-        file pix(pixfile, ios::in|ios::binary);
-        free(pixfile);
-        #define f pix
-        CHECK_READ(texturizer.read(pix));
-        #undef f
-        pix.close();
-    }
-
-    // Bind textures for materials in model.
-//     texturizer.dump_cache_textures();
-
-    for(std::map<std::string, mesh_t*>::iterator it = model.meshes.begin(); it != model.meshes.end(); ++it)
-    {
-        mesh_t* mesh = (*it).second;
-        for (size_t i = 0; i < mesh->material_names.size(); ++i)
-        {
-            printf("Loading material %s...", mesh->material_names[i].c_str());
-            if (model.materials.find(mesh->material_names[i]) != model.materials.end())
-            {
-                std::string pixmap = model.materials[mesh->material_names[i]].pixelmap_name;
-                printf("FOUND, binding texture %s\n", pixmap.c_str());
-                if (!texturizer.set_texture(pixmap))
-                {
-                    printf("Couldn't generate OpenGL texture!\n");
-                    return false;
-                }
-            }
-            else
-                printf("NOT FOUND\n");
-        }
-    }
-
-    return true;
-}
-
 static void animate(int /*value*/)
 {
     // Set up the next timer tick (do this first)
@@ -393,22 +90,11 @@ static void animate(int /*value*/)
     // Measure the elapsed time
     int currTime = glutGet(GLUT_ELAPSED_TIME);
     int timeSincePrevFrame = currTime - prevTime;
-    int elapsedTime = currTime - startTime;
+//     int elapsedTime = currTime - startTime;
 
     // Rotate the model
-    yrot = (YROTRATE / 1000) * elapsedTime;
-    xrot += (XROTRATE / 1000) * timeSincePrevFrame * xdir;
-
-    if (xrot > 15.0f)
-    {
-        xrot = 15.0;
-        xdir = -1.0f;
-    }
-    if (xrot < -15.0f)
-    {
-        xrot = -15.0f;
-        xdir = 1.0f;
-    }
+    yrot.animate(timeSincePrevFrame);
+    xrot.animate(timeSincePrevFrame);
 
     // Force a redisplay to render the new image
     glutPostRedisplay();
@@ -425,7 +111,7 @@ static void reshape(GLsizei w, GLsizei h)
 static void init(GLsizei w, GLsizei h)
 {
     // Set up the OpenGL state
-    glClearColor(0.0, 0.0, 0.0, 0.0);    /* set background to black */
+    glClearColor(0.4, 0.4, 0.4, 0.0);    /* set background */
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
