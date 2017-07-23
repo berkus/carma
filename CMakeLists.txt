@@ -9,16 +9,18 @@
 cmake_minimum_required(VERSION 3.5.1 FATAL_ERROR)
 project(Carma VERSION 0.0.1)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH};${CMAKE_SOURCE_DIR}/cmake)
+
 find_package(OpenGL REQUIRED)
-find_package(glfw3 3.2 REQUIRED)
+find_package(GLFW 3.2 REQUIRED)
 
 include_directories(${CMAKE_SOURCE_DIR})
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wno-deprecated")
 
 add_library(roadkill STATIC
     io.cpp dump.cpp texturizer.cpp pixelmap.cpp viewport.cpp loader.cpp mesh.cpp)
-target_include_directories(roadkill PRIVATE ${OPENGL_INCLUDE_DIR} ${GLFW_INLUDE_DIRS})
+target_include_directories(roadkill PRIVATE ${OPENGL_INCLUDE_DIR})
 
 add_executable(dat dat.c)
 
@@ -26,8 +28,8 @@ add_executable(model model.cpp)
 target_link_libraries(model roadkill)
 
 add_executable(glook glook.cpp)
-target_link_libraries(glook roadkill OpenGL::GL)
-target_link_libraries(glook ${OPENGL_gl_LIBRARY})
+target_include_directories(glook PRIVATE ${GLFW_INCLUDE_DIR})
+target_link_libraries(glook roadkill OpenGL::GL OpenGL::GLU ${GLFW_LIBRARIES})
 
 add_executable(pixdec pixdec.cpp)
 target_link_libraries(pixdec roadkill)
