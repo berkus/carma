@@ -20,22 +20,28 @@ find_package(OpenGL REQUIRED)
 find_package(GLFW 3.2 REQUIRED)
 find_package(GLM REQUIRED)
 
-include_directories(${CMAKE_SOURCE_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wno-deprecated")
 
 add_library(roadkill STATIC
-    io.cpp dump.cpp texturizer.cpp pixelmap.cpp viewport.cpp loader.cpp mesh.cpp)
+    src/io.cpp
+    src/dump.cpp
+    src/texturizer.cpp
+    src/pixelmap.cpp
+    src/viewport.cpp
+    src/loader.cpp
+    src/mesh.cpp)
 target_include_directories(roadkill PRIVATE ${OPENGL_INCLUDE_DIR} ${GLM_INCLUDE_DIRS})
 
-add_executable(dat dat.c)
+add_executable(dat src/dat.c)
 
-add_executable(model model.cpp)
+add_executable(model src/model.cpp)
 target_link_libraries(model roadkill)
 
-add_executable(glook glook.cpp)
+add_executable(glook src/glook.cpp)
 target_include_directories(glook PRIVATE ${GLFW_INCLUDE_DIR})
 target_link_libraries(glook roadkill OpenGL::GL ${GLFW_LIBRARIES})
 
-add_executable(pixdec pixdec.cpp)
+add_executable(pixdec src/pixdec.cpp)
 target_link_libraries(pixdec roadkill)
