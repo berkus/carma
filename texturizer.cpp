@@ -15,8 +15,8 @@ using raii_wrapper::file;
 
 texture_renderer_t::~texture_renderer_t()
 {
-    for(std::map<std::string, texture_t*>::iterator it = cache.begin(); it != cache.end(); ++it)
-        delete (*it).second;
+    for(auto it : cache)
+        delete it.second;
     cache.clear();
     delete alpha_tab;
     delete r_tab;

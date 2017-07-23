@@ -26,12 +26,12 @@ class texture_renderer_t
 public:
     std::map<std::string, texture_t*> cache;
     // Pixel map tables for GL.
-    GLfloat* alpha_tab;
-    GLfloat* r_tab;
-    GLfloat* g_tab;
-    GLfloat* b_tab;
+    GLfloat* alpha_tab {nullptr};
+    GLfloat* r_tab {nullptr};
+    GLfloat* g_tab {nullptr};
+    GLfloat* b_tab {nullptr};
 
-    texture_renderer_t() : alpha_tab(0), r_tab(0), g_tab(0), b_tab(0) {}
+    texture_renderer_t() = default;
     ~texture_renderer_t();
 
     bool read(raii_wrapper::file& f);
