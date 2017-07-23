@@ -18,7 +18,7 @@ public:
     animated_parameter_t(type_t start_value, type_t speed = 1, type_t min = 0, type_t max = 0, LoopType loop = None, Direction start_dir = Forward);
 
     /* For elapsed time in milliseconds and speed, calculate value change, set value_ to new result and return it. */
-    type_t animate(int elapsedTimeMs);
+    type_t animate(double elapsedTimeMs);
     inline type_t value() { return value_; }
 };
 
@@ -34,7 +34,7 @@ animated_parameter_t<type_t>::animated_parameter_t(type_t start_value, type_t sp
 }
 
 template <typename type_t>
-type_t animated_parameter_t<type_t>::animate(int elapsedTimeMs)
+type_t animated_parameter_t<type_t>::animate(double elapsedTimeMs)
 {
     value_ += (speed / 1000) * elapsedTimeMs * (direction == Forward ? 1 : -1);
 

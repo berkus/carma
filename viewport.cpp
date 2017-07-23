@@ -1,4 +1,4 @@
-#include <GL/glut.h>
+#include <OpenGL/glu.h>
 #include <cmath>
 #include <cstdio>
 #include "viewport.h"

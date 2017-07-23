@@ -6,12 +6,13 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <GL/glut.h>
+#include <GLFW/glfw3.h>
 #include <cstdlib>
 #include <climits>
 #include <cstdio>
 #include <algorithm>
 #include <ctype.h>
+#include <thread>
 #include "math/matrix.h"
 #include "blocks.h"
 #include "texturizer.h"
@@ -41,63 +42,37 @@ model_t model;
 texture_renderer_t texturizer;
 
 // Global variables for measuring time (in milli-seconds)
-static int startTime;
-static int prevTime;
+static double startTime;
+static double prevTime;
 
 static animated_parameter_t<GLfloat>
     xrot(15.0f, XROTRATE, -15.0f, 15.0f, animated_parameter_t<GLfloat>::PingPongLoop),
     yrot(0.0, YROTRATE);
 
-static void render()        /* function called whenever redisplay needed */
+static void error_callback(int error, const char* description)
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     /* clear the display */
-
-    glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, -3.0f);
-    glRotatef(xrot.value(), 1.0f, 0.0f, 0.0f);
-    glRotatef(yrot.value(), 0.0f, 1.0f, 0.0f);
-
-    for(std::map<std::string, actor_t*>::iterator it = model.parts.begin(); it != model.parts.end(); ++it)
-    {
-        actor_t* actor = (*it).second;
-        if (actor->visible)
-        {
-            glPushMatrix();
-            glTranslatef(actor->translate.x, actor->translate.y, actor->translate.z);
-            printf("Rendering actor %s.\n", (*it).first.c_str());
-            model.meshes[actor->mesh_name]->render();
-            glPopMatrix();
-        }
-    }
-
-    glutSwapBuffers();
-    glFlush();
-}
-
-static void key(unsigned char key, int /*x*/, int /*y*/) /* called on key press */
-{
-    if (key == 'q') exit(0);
-    if (key == 27) exit(0);
-    // Force a redraw of the screen in order to update the display
-    glutPostRedisplay();
+    std::cerr << "Error " << error << ":" << description << std::endl;
 }
 
 static void animate(int /*value*/)
 {
+    std::this_thread::sleep_for(std::chrono::milliseconds(TIMERMSECS));
+
     // Set up the next timer tick (do this first)
-    glutTimerFunc(TIMERMSECS, animate, 0);
+    // glutTimerFunc(TIMERMSECS, animate, 0);
 
     // Measure the elapsed time
-    int currTime = glutGet(GLUT_ELAPSED_TIME);
-    int timeSincePrevFrame = currTime - prevTime;
-//     int elapsedTime = currTime - startTime;
+    double currTime = glfwGetTime();
+    double timeSincePrevFrame = currTime - prevTime;
+
+    std::cout << "Elapsed time " << (timeSincePrevFrame*1000) << std::endl;
 
     // Rotate the model
-    yrot.animate(timeSincePrevFrame);
-    xrot.animate(timeSincePrevFrame);
+    yrot.animate(timeSincePrevFrame*1000);
+    xrot.animate(timeSincePrevFrame*1000);
 
     // Force a redisplay to render the new image
-    glutPostRedisplay();
+    // glutPostRedisplay();
 
     prevTime = currTime;
 }
@@ -132,21 +107,36 @@ static void init(GLsizei w, GLsizei h)
 
 int main(int argc, char *argv[])
 {
-    int win;
-
     if (argc < 2)
     {
         printf("\n\n ERROR!!! File name required\n\n");
         return 1;
     }
 
-    glutInit(&argc, argv);        /* initialize GLUT system */
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutInitWindowSize(WIDTH, HEIGHT);
-    win = glutCreateWindow("Glook");   /* create window */
-    /* from this point on the current window is win */
+    glfwSetErrorCallback(error_callback);
 
-    init(WIDTH, HEIGHT);
+    if (!glfwInit())
+        return 1;
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Glook", NULL, NULL);
+    if (!window)
+    {
+        glfwTerminate();
+        return 1;
+    }
+
+    // glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+
+    glfwMakeContextCurrent(window);
+
+    int width, height;
+    glfwGetFramebufferSize(window, &width, &height);
+
+    init(width, height);
+    glfwSwapInterval(1);
 
     try {
         if (!load_actor(argv[1]))
@@ -163,20 +153,43 @@ int main(int argc, char *argv[])
 
     printf("Files loaded.\n");
 
-    glutDisplayFunc(render);
-    glutKeyboardFunc(key);
-    glutReshapeFunc(reshape);
-    glutPostRedisplay();
-
-    // Start the timer
-    glutTimerFunc(TIMERMSECS, animate, 0);
-
     // Initialize the time variables
-    startTime = glutGet(GLUT_ELAPSED_TIME);
+    startTime = glfwGetTime();
     prevTime = startTime;
 
-    glutMainLoop();           /* start processing events... */
+    while (!glfwWindowShouldClose(window))
+    {
+        /* Render here */
+        animate(0);
 
-    /* execution never reaches this point */
-    return 0;
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     /* clear the display */
+
+        glLoadIdentity();
+        glTranslatef(0.0f, 0.0f, -3.0f);
+        glRotatef(xrot.value(), 1.0f, 0.0f, 0.0f);
+        glRotatef(yrot.value(), 0.0f, 1.0f, 0.0f);
+
+        for(std::map<std::string, actor_t*>::iterator it = model.parts.begin(); it != model.parts.end(); ++it)
+        {
+            actor_t* actor = (*it).second;
+            if (actor->visible)
+            {
+                glPushMatrix();
+                glTranslatef(actor->translate.x, actor->translate.y, actor->translate.z);
+                printf("Rendering actor %s.\n", (*it).first.c_str());
+                model.meshes[actor->mesh_name]->render();
+                glPopMatrix();
+            }
+        }
+
+        /* Swap front and back buffers */
+        glfwSwapBuffers(window);
+
+        /* Poll for and process events */
+        glfwPollEvents();
+    }
+
+    glfwDestroyWindow(window);
+
+    glfwTerminate();
 }

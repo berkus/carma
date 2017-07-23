@@ -1,4 +1,4 @@
-#include <GL/gl.h>
+#include <OpenGL/gl.h>
 #include <string>
 #include "blocks.h"
 #include "texturizer.h"

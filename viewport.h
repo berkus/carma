@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GL/gl.h>
+#include <OpenGL/gl.h>
 
 class viewport_t
 {
