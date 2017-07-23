@@ -53,17 +53,17 @@ void mesh_t::render()
         {
             if (previous_texture != faces[n].material_id)
             {
+                glEnd();
                 string matname = material_names[faces[n].material_id - 1];
                 string pixelmap = model.materials[matname].pixelmap_name; //FIXME: global model ref
                 printf("Setting face material %s, texture %s.\n", matname.c_str(), pixelmap.c_str());
-                glEnd();
                 if (!texturizer.set_texture(pixelmap))
                 {
                     printf("Ooops!");
                     return;
                 }
-                glBegin(GL_TRIANGLES);
                 previous_texture = faces[n].material_id;
+                glBegin(GL_TRIANGLES);
             }
         }
 
