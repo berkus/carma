@@ -47,7 +47,7 @@ bool texture_renderer_t::read(file& f)
 void texture_renderer_t::dump_cache()
 {
     for(std::map<std::string, texture_t*>::iterator it = cache.begin(); it != cache.end(); ++it)
-        printf("'%s'(%d) -> %p\n", (*it).first.c_str(), (*it).first.length(), (*it).second);
+        printf("'%s'(%lu) -> %p\n", (*it).first.c_str(), (*it).first.length(), (*it).second);
 }
 
 void texture_renderer_t::dump_cache_textures()
@@ -60,7 +60,7 @@ bool texture_renderer_t::set_texture(std::string name)
 {
     if (cache.find(name) == cache.end())
     {
-        printf("Texture %s(%d) not found in cache!\n", name.c_str(), name.length());
+        printf("Texture %s(%lu) not found in cache!\n", name.c_str(), name.length());
         dump_cache();
         return false;
     }

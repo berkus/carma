@@ -123,7 +123,7 @@ bool load_actor(const char* fname)
     }
     txt.close();
 
-    printf("%d meshes, %d pixmaps, %d materials to load.\n", load_meshes.size(), load_pixmaps.size(), load_materials.size());
+    printf("%lu meshes, %lu pixmaps, %lu materials to load.\n", load_meshes.size(), load_pixmaps.size(), load_materials.size());
 
     // Load actor file.
     char* actfile = pathsubst(fname, BASE_DIR"ACTORS/", ".ACT");

@@ -118,7 +118,7 @@ int main(int argc,char *argv[])
     printf("File header Data: ");      //Print file header to the screen
     for(loop=0;loop<16;loop++)
     {
-        printf("%02hX ",(file_header[loop]));
+        printf("%02x ",(file_header[loop]));
     }
     puts("\nReading Chunks:");
 
@@ -142,8 +142,8 @@ int main(int argc,char *argv[])
         // Convert number of entries to little endian format
         number_entries=ntohl(chunk_header.entries);
 
-        printf("\nChunk #%d, Type: %02hXh [",chunk_count,chunk_header.type);
-        printf(name_chunk(chunk_header.type));
+        printf("\nChunk #%d, Type: %08x [",chunk_count,chunk_header.type);
+        printf("%s", name_chunk(chunk_header.type));
         printf("]\n");
 
         printf("Chunk size = %lu bytes, Number of entries = %lu\n",chunk_size,number_entries);
@@ -195,7 +195,7 @@ int main(int argc,char *argv[])
                     puts("\n\n\n ERROR!!!  Unexpected end of file!\n");
                     return(1);
                 }
-                printf("%02hX ",buffer);
+                printf("%02x ",buffer);
                 if(count%9==8) putchar('\n');
             }
         }
@@ -227,7 +227,7 @@ int main(int argc,char *argv[])
                 if (buffer)
                     putchar(buffer);
             }
-            else printf("%02hX ",buffer);
+            else printf("%02x ",buffer);
             if(count%12==11) putchar('\n');
         }
         putchar('\n');
