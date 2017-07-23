@@ -1,4 +1,4 @@
-#include <OpenGL/glu.h>
+#include <glm/gtc/matrix_transform.hpp>
 #include <cmath>
 #include <cstdio>
 #include "viewport.h"
@@ -34,7 +34,7 @@ void viewport_t::set_viewport()
 
     GLfloat aspect = (GLfloat)w/(GLfloat)h;
 
-    gluPerspective(fovy, aspect, znear, zfar);   /* how object is mapped to window */
+    glm::mat4 Projection = glm::perspective(glm::radians(fovy), aspect, znear, zfar);   /* how object is mapped to window */
 
     GLfloat xmin, xmax, ymin, ymax;
     ymax = znear * tan(fovy * M_PI / 360.0);
