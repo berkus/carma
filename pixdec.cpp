@@ -10,7 +10,7 @@
 #include <cstdio>
 
 using namespace std;
-using namespace raii_wrapper;
+using raii_wrapper::file;
 
 int main(int argc, char **argv)
 {

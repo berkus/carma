@@ -14,7 +14,7 @@
 #include "math/vector.h"
 #include "math/matrix.h"
 
-#define CHECK_READ(v)  if(!(v)) { printf("Load aborted at pos 0x%lx\n", f.read_pos()); return false; }
+#define CHECK_READ(v)  if(!(v)) { printf("Load aborted in %s:%d at pos 0x%lx\n", __FILE__, __LINE__, f.read_pos()); return false; }
 
 class resource_file_t
 {

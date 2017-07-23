@@ -1,9 +1,7 @@
 //
 // RAII file wrapper.
 //
-// Part of Metta OS. Check http://metta.exquance.com for latest version.
-//
-// Copyright 2007 - 2010, Stanislav Karchebnyy <berkus@exquance.com>
+// Copyright 2007 - 2010, Stanislav Karchebnyy <berkus@madfire.net>
 //
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,8 +16,6 @@
 
 namespace raii_wrapper {
 
-using std::fstream;
-
 class file_error
 {
 public:
@@ -31,22 +27,27 @@ private:
 
 class file
 {
+    std::fstream file_;
+
 public:
     file() {}
 
-    file(const char* fname, fstream::openmode mode)
+    file(const char* fname, std::fstream::openmode mode)
     {
         open(fname, mode);
     }
 
-    file(const std::string& fname, fstream::openmode mode)
+    file(const std::string& fname, std::fstream::openmode mode)
     {
         open(fname.c_str(), mode);
     }
 
+    file(file const&) = delete;
+    file& operator= (file const&) = delete;
+
     ~file() { close(); }
 
-    void open(const char* fname, fstream::openmode mode)
+    void open(const char* fname, std::fstream::openmode mode)
     {
         file_.open(fname, mode);
         if (!file_.good())
@@ -90,35 +91,30 @@ public:
         return !file_.fail();
     }
 
-    long size()
+    ssize_t size()
     {
-        long old = read_pos();
-        file_.seekg(0, fstream::end);
-        long sz = read_pos();
+        ssize_t old = read_pos();
+        file_.seekg(0, std::fstream::end);
+        ssize_t sz = read_pos();
         read_seek(old);
         return sz;
     }
 
     bool getline(std::string& str, char delim)
     {
-        return std::getline(file_, str, delim);
+        return !!std::getline(file_, str, delim);
     }
 
     bool getline(std::string& str)
     {
-        return std::getline(file_, str);
+        return !!std::getline(file_, str);
     }
-
-private:
-    fstream file_;
-
-    // prevent copying and assignment; only declarations
-    file(const file&);
-    file& operator= (const file&);
 };
 
 class filebinio
 {
+    file& file_;
+
 public:
     filebinio(file& f) : file_(f) {}
 
@@ -139,9 +135,6 @@ public:
     inline bool read16be(uint16_t& datum) { bool res = file_.read(&datum, sizeof(uint16_t)) == sizeof(uint16_t); datum = ntohs(datum); return res; }
     inline bool read32be(int32_t& datum)  { bool res = file_.read(&datum, sizeof(int32_t)) == sizeof(int32_t); datum = ntohl(datum); return res; }
     inline bool read32be(uint32_t& datum) { bool res = file_.read(&datum, sizeof(uint32_t)) == sizeof(uint32_t); datum = ntohl(datum); return res; }
-
-private:
-    file& file_;
 };
 
 // Example of using filebinio:
@@ -151,7 +144,4 @@ private:
 //     return io;
 // }
 
-}
-
-// kate: indent-width 4; replace-tabs on;
-// vim: set et sw=4 ts=4 sts=4 cino=(4 :
+} // raii_wrapper namespace
