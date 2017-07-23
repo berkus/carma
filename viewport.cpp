@@ -1,4 +1,5 @@
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <cmath>
 #include <cstdio>
 #include "viewport.h"
@@ -30,11 +31,11 @@ void viewport_t::set_viewport()
 {
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
 
     GLfloat aspect = (GLfloat)w/(GLfloat)h;
 
     glm::mat4 Projection = glm::perspective(glm::radians(fovy), aspect, znear, zfar);   /* how object is mapped to window */
+    glLoadMatrixf(glm::value_ptr(Projection));
 
     GLfloat xmin, xmax, ymin, ymax;
     ymax = znear * tan(fovy * M_PI / 360.0);
