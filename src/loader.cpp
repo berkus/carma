@@ -84,6 +84,26 @@ static std::vector<std::string> read_txt_lines(file& f)
     return out;
 }
 
+vector_t<float> parse_vector(std::string line)
+{
+    vector_t<float> v;
+
+    std::stringstream ss(line);
+    std::string str;
+
+    getline(ss, str, ',');
+    std::cerr << "got " << str << std::endl;
+    v.x = std::stof(str);
+    getline(ss, str, ',');
+    std::cerr << "got " << str << std::endl;
+    v.y = std::stof(str);
+    getline(ss, str, '/');
+    std::cerr << "got " << str << std::endl;
+    v.z = std::stof(str);
+
+    return v;
+}
+
 bool load_actor(const char* fname)
 {
     // Load description file.
@@ -93,7 +113,10 @@ bool load_actor(const char* fname)
     free(txtfile);
     // Parse only material/mesh mumbo-jumbo for now.
     std::vector<std::string> txt_lines, load_meshes, load_pixmaps, load_materials;
+    vector_t<float> leftRearWheelPos, rightRearWheelPos, leftFrontWheelPos, rightFrontWheelPos;
     std::string line;
+    bool mechanics = false;
+    size_t mechanicsCount = 0;
     while (txt.getline(line))
     {
         if (line.find(std::string(".PIX,G")) != line.npos)
@@ -120,10 +143,47 @@ bool load_actor(const char* fname)
             // actors
             txt_lines = read_txt_lines(txt);
         }
+
+        if (line.find("START OF MECHANICS STUFF version") != line.npos) {
+            mechanics = true;
+            mechanicsCount = 0;
+        }
+
+        if (line.find("END OF MECHANICS STUFF") != line.npos) {
+            mechanics = false;
+        }
+
+        // 1. need to find wheel indices
+        // 2. need to get wheel positions from mechanics stuff and assign to wheels
+
+        if (mechanics) {
+            if (mechanicsCount == 1) { // left rear wheel pos `x,y,z ///`
+                leftRearWheelPos = parse_vector(line);
+            }
+            if (mechanicsCount == 2) { // right rear wheel pos `x,y,z ///`
+                rightRearWheelPos = parse_vector(line);
+            }
+            if (mechanicsCount == 3) { // left front wheel pos `x,y,z ///`
+                leftRearWheelPos = parse_vector(line);
+            }
+            if (mechanicsCount == 4) { // right front wheel pos `x,y,z ///`
+                rightRearWheelPos = parse_vector(line);
+            }
+
+            ++mechanicsCount;
+        }
     }
     txt.close();
 
-    printf("%lu meshes, %lu pixmaps, %lu materials to load.\n", load_meshes.size(), load_pixmaps.size(), load_materials.size());
+    std::cout << load_meshes.size() << " meshes, "
+              << load_pixmaps.size() << " pixmaps, "
+              << load_materials.size() << " materials to load." << std::endl;
+
+    std::cout << "Car wheel positions: LF " << leftFrontWheelPos
+              << " ,RF " << rightFrontWheelPos
+              << " ,LR " << leftRearWheelPos
+              << " ,RR " << rightRearWheelPos
+              << std::endl;
 
     // Load actor file.
     char* actfile = pathsubst(fname, BASE_DIR"ACTORS/", ".ACT");
