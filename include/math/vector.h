@@ -11,6 +11,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <algorithm>
+#include <iostream>
 #include "raiifile.h"
 
 template <typename type_t>
@@ -55,7 +56,6 @@ public:
     static vector_t<type_t> random();
 
     bool read(raii_wrapper::file& f);
-    void dump();
 };
 
 /*inline int vector_t::operator < (const vector_t& v)
@@ -193,4 +193,11 @@ inline vector_t<type_t> clamp(vector_t<type_t> v)
     v.y = std::max(0.0, std::min(v.x, 1.0));
     v.z = std::max(0.0, std::min(v.x, 1.0));
     return v;
+}
+
+template <typename type_t>
+inline std::ostream& operator <<(std::ostream& os, vector_t<type_t> v)
+{
+    os << "vector{"<<v.x<<","<<v.y<<","<<v.z<<"}";
+    return os;
 }

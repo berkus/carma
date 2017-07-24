@@ -11,12 +11,6 @@
 #include <cstring>
 
 template <>
-void vector_t<float>::dump()
-{
-    printf("vector{%f,%f,%f}\n", x, y, z);
-}
-
-template <>
 void matrix_t<float>::dump()
 {
     for(int col = 0; col < 4; ++col)
@@ -37,7 +31,7 @@ void mesh_t::dump()
     // Print vertices.
     for (size_t i = 0; i < vertices.size(); i++)
     {
-        vertices[i].dump();
+        std::cout << vertices[i] << std::endl;
     }
     for (size_t i = 0; i < faces.size(); i++)
     {
@@ -74,7 +68,7 @@ void actor_t::dump()
 {
     printf("Actor: %s, visible %d, what2 %d, mesh %s, material %s\n", name.c_str(), visible, what2, mesh_name.c_str(), material_name.c_str());
     scale.dump();
-    translate.dump();
+    std::cout << translate << std::endl;
     printf("\n");
 }
 
