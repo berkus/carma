@@ -47,7 +47,8 @@ static double prevTime;
 
 static animated_parameter_t<GLfloat>
     xrot(15.0f, XROTRATE, -15.0f, 15.0f, animated_parameter_t<GLfloat>::PingPongLoop),
-    yrot(0.0, YROTRATE);
+    yrot(0.0, YROTRATE),
+    fov(45.0f, 30.0f, 45.f, 90.f, animated_parameter_t<GLfloat>::PingPongLoop);
 
 static void error_callback(int error, const char* description)
 {
@@ -70,6 +71,7 @@ static void animate(int /*value*/)
     // Rotate the model
     yrot.animate(timeSincePrevFrame*1000);
     xrot.animate(timeSincePrevFrame*1000);
+    fov.animate(timeSincePrevFrame*1000);
 
     // Force a redisplay to render the new image
     // glutPostRedisplay();
@@ -161,6 +163,8 @@ int main(int argc, char *argv[])
     {
         /* Render here */
         animate(0);
+
+        viewport.set_fov(fov.value());
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     /* clear the display */
 
