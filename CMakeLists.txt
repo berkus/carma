@@ -34,8 +34,6 @@ add_library(roadkill STATIC
     src/mesh.cpp)
 target_include_directories(roadkill PRIVATE ${OPENGL_INCLUDE_DIR} ${GLM_INCLUDE_DIRS})
 
-add_executable(dat src/dat.c)
-
 add_executable(model src/model.cpp)
 target_link_libraries(model roadkill)
 
