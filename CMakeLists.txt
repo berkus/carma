@@ -18,28 +18,38 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH};${CMAKE_SOURCE_DIR}/cmake)
 
 find_package(OpenGL REQUIRED)
 find_package(GLFW 3.2 REQUIRED)
+find_package(GLEW REQUIRED)
 find_package(GLM REQUIRED)
+
+find_package(Boost REQUIRED COMPONENTS filesystem)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wno-deprecated")
 
-add_library(roadkill STATIC
-    src/io.cpp
-    src/dump.cpp
-    src/texturizer.cpp
-    src/pixelmap.cpp
-    src/viewport.cpp
-    src/loader.cpp
-    src/mesh.cpp)
-target_include_directories(roadkill PRIVATE ${OPENGL_INCLUDE_DIR} ${GLM_INCLUDE_DIRS})
+# add_library(roadkill STATIC
+#     src/io.cpp
+#     src/dump.cpp
+#     src/texturizer.cpp
+#     src/pixelmap.cpp
+#     src/viewport.cpp
+#     src/loader.cpp
+#     src/mesh.cpp)
+# target_include_directories(roadkill PRIVATE ${OPENGL_INCLUDE_DIR} ${GLM_INCLUDE_DIRS})
 
-add_executable(model src/model.cpp)
-target_link_libraries(model roadkill)
+# add_executable(model src/model.cpp)
+# target_link_libraries(model roadkill)
 
-add_executable(glook src/glook.cpp)
-target_include_directories(glook PRIVATE ${GLFW_INCLUDE_DIR})
-target_link_libraries(glook roadkill OpenGL::GL ${GLFW_LIBRARIES})
+# add_executable(glook src/glook.cpp)
+# target_include_directories(glook PRIVATE ${GLFW_INCLUDE_DIR})
+# target_link_libraries(glook roadkill OpenGL::GL ${GLFW_LIBRARIES})
 
-add_executable(pixdec src/pixdec.cpp)
-target_link_libraries(pixdec roadkill)
+# add_executable(pixdec src/pixdec.cpp)
+# target_link_libraries(pixdec roadkill)
+
+add_executable(ogltest src/ogltest.cpp src/shader.cpp)
+target_include_directories(ogltest PRIVATE ${Boost_INCLUDE_DIR} ${GLEW_INCLUDE_DIR})
+target_include_directories(ogltest PRIVATE ${OPENGL_INCLUDE_DIR} ${GLFW_INCLUDE_DIR} ${GLM_INCLUDE_DIRS})
+target_link_libraries(ogltest Boost::filesystem OpenGL::GL ${GLFW_LIBRARIES} ${GLEW_LIBRARY})
+
+# kaitai-struct-compiler -t cpp_stl --outdir _build_/kaitai/ kaitai/carma.ksy
