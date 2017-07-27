@@ -27,7 +27,8 @@ fn main()
     let window = glutin::WindowBuilder::new()
         .with_title("oglTest")
         .with_dimensions(800, 600);
-    let context = glutin::ContextBuilder::new();
+    let context = glutin::ContextBuilder::new()
+        .with_depth_buffer(24);
 
     let display = glium::Display::new(window, context, &events_loop).unwrap();
 
@@ -119,9 +120,19 @@ fn main()
         };
 
         let mut target = display.draw();
-        target.clear_color(0.0, 0.0, 1.0, 1.0);
+        target.clear_color_and_depth((0.0, 0.0, 1.0, 1.0), 1.0);
+
+        let params = glium::DrawParameters {
+            depth: glium::Depth {
+                test: glium::draw_parameters::DepthTest::IfLess,
+                write: true,
+                .. Default::default()
+            },
+            .. Default::default()
+        };
+
         target.draw((&positions, &normals), &indices, &program, &uniforms,
-            &Default::default()).unwrap();
+            &params).unwrap();
         target.finish().unwrap();
 
         // listing the events produced by application and waiting to be received
