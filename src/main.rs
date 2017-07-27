@@ -55,10 +55,11 @@ fn main()
         out vec3 v_normal;
 
         uniform mat4 matrix;
+        uniform mat4 perspective;
 
         void main() {
             v_normal = transpose(inverse(mat3(matrix))) * normal;
-            gl_Position = matrix * vec4(position, 1.0);
+            gl_Position = perspective * matrix * vec4(position, 1.0);
         }
     "#;
 
@@ -102,6 +103,27 @@ fn main()
             t = -0.5;
         }
 
+        let mut target = display.draw();
+        target.clear_color_and_depth((0.0, 0.0, 1.0, 1.0), 1.0);
+
+        let perspective = {
+            let (width, height) = target.get_dimensions();
+            let aspect_ratio = height as f32 / width as f32;
+
+            let fov: f32 = 3.141592 / 3.0;
+            let zfar = 1024.0;
+            let znear = 0.1;
+
+            let f = 1.0 / (fov / 2.0).tan();
+
+            [
+                [f *   aspect_ratio   ,    0.0,              0.0              ,   0.0],
+                [         0.0         ,     f ,              0.0              ,   0.0],
+                [         0.0         ,    0.0,  (zfar+znear)/(zfar-znear)    ,   1.0],
+                [         0.0         ,    0.0, -(2.0*zfar*znear)/(zfar-znear),   0.0],
+            ]
+        };
+
         let uniforms = uniform! {
             // matrix: [
             //     [ t.cos()*0.01, t.sin(), 0.0, 0.0],
@@ -114,13 +136,11 @@ fn main()
                 [0.01, 0.0, 0.0, 0.0],
                 [0.0, 0.01, 0.0, 0.0],
                 [0.0, 0.0, 0.01, 0.0],
-                [0.0, 0.0, 0.0, 1.0f32]
+                [0.0, 0.0, 2.0, 1.0f32]
             ],
             u_light: light,
+            perspective: perspective,
         };
-
-        let mut target = display.draw();
-        target.clear_color_and_depth((0.0, 0.0, 1.0, 1.0), 1.0);
 
         let params = glium::DrawParameters {
             depth: glium::Depth {
