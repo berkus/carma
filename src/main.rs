@@ -5,13 +5,14 @@ extern crate carma;
 
 use carma::teapot;
 
-// #[derive(Copy, Clone)]
-// pub struct Vertex {
-//     position: [f32; 3],
-//     tex_coords: [f32; 2],
-// }
+#[derive(Copy, Clone)]
+pub struct Vertex {
+    position: [f32; 3],
+    normal: [f32; 3],
+    tex_coords: [f32; 2],
+}
 
-// implement_vertex!(Vertex, position, tex_coords);
+implement_vertex!(Vertex, position, normal, tex_coords);
 
 fn view_matrix(position: &[f32; 3], direction: &[f32; 3], up: &[f32; 3]) -> [[f32; 4]; 4] {
     let f = {
@@ -52,8 +53,13 @@ fn main()
     use glium::{glutin, Surface};
 
     use std::io::Cursor;
-    let image = image::load(Cursor::new(&include_bytes!("in-the-name-of.png")[..]),
-                            image::PNG).unwrap().to_rgba();
+    // let image = image::load(Cursor::new(&include_bytes!("in-the-name-of.png")[..]),
+    //                         image::PNG).unwrap().to_rgba();
+    // let image_dimensions = image.dimensions();
+    // let image = glium::texture::RawImage2d::from_raw_rgba_reversed(&image.into_raw(), image_dimensions);
+
+    let image = image::load(Cursor::new(&include_bytes!("tuto-14-diffuse.jpg")[..]),
+                            image::JPEG).unwrap().to_rgba();
     let image_dimensions = image.dimensions();
     let image = glium::texture::RawImage2d::from_raw_rgba_reversed(&image.into_raw(), image_dimensions);
 
@@ -74,20 +80,19 @@ fn main()
     // let vertex_buffer = glium::VertexBuffer::new(&display, &shape).unwrap();
     // let indices = glium::index::NoIndices(glium::index::PrimitiveType::TrianglesList);
 
-    let texture = glium::texture::Texture2d::new(&display, image).unwrap();
-
-        // in vec2 tex_coords;
-        // out vec2 v_tex_coords;
-        //     v_tex_coords = tex_coords;
+    // let texture = glium::texture::Texture2d::new(&display, image).unwrap();
+    let diffuse_texture = glium::texture::SrgbTexture2d::new(&display, image).unwrap();
 
     let vertex_shader_src = r#"
         #version 150
 
         in vec3 position;
         in vec3 normal;
+        in vec2 tex_coords;
 
         out vec3 v_normal;
         out vec3 v_position;
+        out vec2 v_tex_coords;
 
         uniform mat4 perspective;
         uniform mat4 view;
@@ -96,30 +101,30 @@ fn main()
         void main() {
             mat4 modelview = view * model;
             v_normal = transpose(inverse(mat3(modelview))) * normal;
+            v_tex_coords = tex_coords;
             gl_Position = perspective * modelview * vec4(position, 1.0);
             v_position = gl_Position.xyz / gl_Position.w;
         }
     "#;
-
-        // in vec2 v_tex_coords;
-        // uniform sampler2D tex;
-        //     color = texture(tex, v_tex_coords);
 
     let fragment_shader_src = r#"
         #version 140
 
         in vec3 v_normal;
         in vec3 v_position;
+        in vec2 v_tex_coords;
 
         out vec4 color;
 
         uniform vec3 u_light;
+        uniform sampler2D diffuse_tex;
 
-        const vec3 ambient_color = vec3(0.2, 0.0, 0.0);
-        const vec3 diffuse_color = vec3(0.6, 0.0, 0.0);
         const vec3 specular_color = vec3(1.0, 1.0, 1.0);
 
         void main() {
+            vec3 diffuse_color = texture(diffuse_tex, v_tex_coords).rgb;
+            vec3 ambient_color = diffuse_color * 0.2;
+
             float diffuse = max(dot(normalize(v_normal), normalize(u_light)), 0.0);
 
             vec3 camera_dir = normalize(-v_position);
@@ -140,6 +145,13 @@ fn main()
     // the direction of the light
     let light = [-1.0, 0.4, 0.9f32];
 
+    let wall = glium::vertex::VertexBuffer::new(&display, &[
+        Vertex { position: [-1.0,  1.0, 0.0], normal: [0.0, 0.0, -1.0], tex_coords: [-1.0,  1.0] },
+        Vertex { position: [ 1.0,  1.0, 0.0], normal: [0.0, 0.0, -1.0], tex_coords: [ 1.0,  1.0] },
+        Vertex { position: [-1.0, -1.0, 0.0], normal: [0.0, 0.0, -1.0], tex_coords: [-1.0, -1.0] },
+        Vertex { position: [ 1.0, -1.0, 0.0], normal: [0.0, 0.0, -1.0], tex_coords: [ 1.0, -1.0] },
+    ]).unwrap();
+
     let mut t: f32 = -0.5;
 
     let mut closed = false;
@@ -158,7 +170,7 @@ fn main()
 
             let fov: f32 = 3.141592 / 3.0;
             let zfar = 1024.0;
-            let znear = 0.1;
+            let znear = 0.01;
 
             let f = 1.0 / (fov / 2.0).tan();
 
@@ -170,25 +182,25 @@ fn main()
             ]
         };
 
-        let view = view_matrix(&[2.0, -1.0, 1.0], &[-2.0, 1.0, 1.0], &[0.0, 1.0, 0.0]);
+        // let view = view_matrix(&[2.0, -1.0, 1.0], &[-2.0, 1.0, 1.0], &[0.0, 1.0, 0.0]);
+        let view = [
+            [1.0, 0.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0, 0.0],
+            [0.0, 0.0, 1.0, 0.0],
+            [0.0, 0.0, 0.0, 1.0f32]
+        ];
 
         let uniforms = uniform! {
-            // matrix: [
-            //     [ t.cos()*0.01, t.sin(), 0.0, 0.0],
-            //     [-t.sin(), t.cos()*0.01, 0.0, 0.0],
-            //     [0.0, 0.0, 0.001, 0.0],
-            //     [0.0, 0.0, 0.0, 1.0f32],
-            // ],
-            // tex: &texture,
             model: [
                 [0.01, 0.0, 0.0, 0.0],
                 [0.0, 0.01, 0.0, 0.0],
-                [0.0, 0.0, 0.01, 0.0],
-                [0.0, 0.0, 2.0, 1.0f32]
+                [0.0, 0.0, 0.001, 0.0],
+                [0.0, 0.0, 0.03, 1.0f32]
             ],
             view: view,
             perspective: perspective,
             u_light: light,
+            diffuse_tex: &diffuse_texture,
         };
 
         let params = glium::DrawParameters {
@@ -197,12 +209,14 @@ fn main()
                 write: true,
                 .. Default::default()
             },
-            backface_culling: glium::draw_parameters::BackfaceCullingMode::CullClockwise,
+            // backface_culling: glium::draw_parameters::BackfaceCullingMode::CullClockwise,
             .. Default::default()
         };
 
-        target.draw((&positions, &normals), &indices, &program, &uniforms,
-            &params).unwrap();
+        // target.draw((&positions, &normals), &indices, &program, &uniforms,
+            // &params).unwrap();
+        target.draw(&wall, glium::index::NoIndices(glium::index::PrimitiveType::TriangleStrip),
+            &program, &uniforms, &params).unwrap();
         target.finish().unwrap();
 
         // listing the events produced by application and waiting to be received
