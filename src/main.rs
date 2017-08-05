@@ -3,7 +3,6 @@ extern crate glium;
 extern crate image;
 extern crate carma;
 
-use carma::teapot;
 
 #[derive(Copy, Clone)]
 pub struct Vertex {
@@ -148,11 +147,6 @@ fn main()
     "#;
 
     let program = glium::Program::from_source(&display, vertex_shader_src, fragment_shader_src, None).unwrap();
-
-    let positions = glium::VertexBuffer::new(&display, &teapot::VERTICES).unwrap();
-    let normals = glium::VertexBuffer::new(&display, &teapot::NORMALS).unwrap();
-    let indices = glium::IndexBuffer::new(&display, glium::index::PrimitiveType::TrianglesList,
-                                          &teapot::INDICES).unwrap();
 
     // the direction of the light
     let light = [-1.0, 0.4, 0.9f32];
