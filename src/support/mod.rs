@@ -8,6 +8,8 @@ use std::time::{Duration, Instant};
 // use glium::{self, Display};
 // use glium::vertex::VertexBufferAny;
 
+pub mod camera;
+
 pub enum Action {
     Stop,
     Continue,

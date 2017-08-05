@@ -15,40 +15,6 @@ pub struct Vertex {
 
 implement_vertex!(Vertex, position, normal, tex_coords);
 
-fn view_matrix(position: &[f32; 3], direction: &[f32; 3], up: &[f32; 3]) -> [[f32; 4]; 4] {
-    let f = {
-        let f = direction;
-        let len = f[0] * f[0] + f[1] * f[1] + f[2] * f[2];
-        let len = len.sqrt();
-        [f[0] / len, f[1] / len, f[2] / len]
-    };
-
-    let s = [up[1] * f[2] - up[2] * f[1],
-             up[2] * f[0] - up[0] * f[2],
-             up[0] * f[1] - up[1] * f[0]];
-
-    let s_norm = {
-        let len = s[0] * s[0] + s[1] * s[1] + s[2] * s[2];
-        let len = len.sqrt();
-        [s[0] / len, s[1] / len, s[2] / len]
-    };
-
-    let u = [f[1] * s_norm[2] - f[2] * s_norm[1],
-             f[2] * s_norm[0] - f[0] * s_norm[2],
-             f[0] * s_norm[1] - f[1] * s_norm[0]];
-
-    let p = [-position[0] * s_norm[0] - position[1] * s_norm[1] - position[2] * s_norm[2],
-             -position[0] * u[0] - position[1] * u[1] - position[2] * u[2],
-             -position[0] * f[0] - position[1] * f[1] - position[2] * f[2]];
-
-    [
-        [s[0], u[0], f[0], 0.0],
-        [s[1], u[1], f[1], 0.0],
-        [s[2], u[2], f[2], 0.0],
-        [p[0], p[1], p[2], 1.0],
-    ]
-}
-
 fn main()
 {
     use glium::{glutin, Surface};
@@ -141,10 +107,11 @@ fn main()
 
             vec3 normal_map = texture(normal_tex, v_tex_coords).rgb;
 
+            // Tangent Binormal Normal
             mat3 tbn = cotangent_frame(v_normal, v_position, v_tex_coords);
             vec3 real_normal = normalize(tbn * -(normal_map * 2.0 - 1.0));
 
-            float diffuse = max(dot(normalize(real_normal), normalize(u_light)), 0.0);
+            float diffuse = max(dot(real_normal, normalize(u_light)), 0.0);
 
             vec3 camera_dir = normalize(-v_position);
             vec3 half_direction = normalize(normalize(u_light) + camera_dir);
@@ -157,7 +124,7 @@ fn main()
     // shader program
     let program = glium::Program::from_source(&display, vertex_shader_src, fragment_shader_src, None).unwrap();
 
-    // the direction of the light
+    // the direction of the light - @todo more light sources?
     let light = [-1.0, 0.4, 0.9f32];
 
     let wall = glium::vertex::VertexBuffer::new(&display, &[
@@ -167,37 +134,21 @@ fn main()
         Vertex { position: [ 1.0, -1.0, 0.0], normal: [0.0, 0.0, -1.0], tex_coords: [ 1.0, -1.0] },
     ]).unwrap();
 
+    let mut camera = camera::CameraState::new();
+    // camera.set_position((2.0, -1.0, 1.0));
+    // camera.set_direction((-2.0, 1.0, 1.0));
+    // camera.set_position((0.0, 0.0, 1.0));
+    // camera.set_direction((0.0, 0.0, 0.0));
 
     support::start_loop(|| {
+        camera.update();
 
         let mut target = display.draw();
         target.clear_color_and_depth((0.0, 0.0, 1.0, 1.0), 1.0);
 
-        let perspective = {
-            let (width, height) = target.get_dimensions();
-            let aspect_ratio = height as f32 / width as f32;
-
-            let fov: f32 = 3.141592 / 3.0;
-            let zfar = 1024.0;
-            let znear = 0.01;
-
-            let f = 1.0 / (fov / 2.0).tan();
-
-            [
-                [f *   aspect_ratio   ,    0.0,              0.0              ,   0.0],
-                [         0.0         ,     f ,              0.0              ,   0.0],
-                [         0.0         ,    0.0,  (zfar+znear)/(zfar-znear)    ,   1.0],
-                [         0.0         ,    0.0, -(2.0*zfar*znear)/(zfar-znear),   0.0],
-            ]
-        };
-
-        // let view = view_matrix(&[2.0, -1.0, 1.0], &[-2.0, 1.0, 1.0], &[0.0, 1.0, 0.0]);
-        let view = [
-            [1.0, 0.0, 0.0, 0.0],
-            [0.0, 1.0, 0.0, 0.0],
-            [0.0, 0.0, 1.0, 0.0],
-            [0.0, 0.0, 0.0, 1.0f32]
-        ];
+        let (width, height) = target.get_dimensions();
+        let aspect_ratio = height as f32 / width as f32;
+        camera.set_aspect_ratio(aspect_ratio);
 
         let uniforms = uniform! {
             model: [
@@ -206,8 +157,8 @@ fn main()
                 [0.0, 0.0, 0.001, 0.0],
                 [0.0, 0.0, 0.03, 1.0f32]
             ],
-            view: view,
-            perspective: perspective,
+            view: camera.get_view(),
+            perspective: camera.get_perspective(),
             u_light: light,
             diffuse_tex: &diffuse_texture,
             normal_tex: &normal_map,
@@ -236,7 +187,7 @@ fn main()
             match ev {
                 glutin::Event::WindowEvent { event, .. } => match event {
                     glutin::WindowEvent::Closed => action = support::Action::Stop,
-                    _ => (),
+                    _ => camera.process_input(&event),
                 },
                 _ => (),
             }
