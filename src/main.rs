@@ -3,6 +3,8 @@ extern crate glium;
 extern crate image;
 extern crate carma;
 
+use carma::support;
+use carma::support::camera;
 
 #[derive(Copy, Clone)]
 pub struct Vertex {
@@ -61,6 +63,9 @@ fn main()
 
     let display = glium::Display::new(window, context, &events_loop).unwrap();
 
+    //
+    // texture loading
+    //
     let image = image::load(Cursor::new(&include_bytes!("tuto-14-diffuse.jpg")[..]),
                             image::JPEG).unwrap().to_rgba();
     let image_dimensions = image.dimensions();
@@ -73,6 +78,9 @@ fn main()
     let image = glium::texture::RawImage2d::from_raw_rgba_reversed(&image.into_raw(), image_dimensions);
     let normal_map = glium::texture::Texture2d::new(&display, image).unwrap();
 
+    //
+    // shaders
+    //
     let vertex_shader_src = r#"
         #version 150
 
@@ -146,6 +154,7 @@ fn main()
         }
     "#;
 
+    // shader program
     let program = glium::Program::from_source(&display, vertex_shader_src, fragment_shader_src, None).unwrap();
 
     // the direction of the light
@@ -158,14 +167,8 @@ fn main()
         Vertex { position: [ 1.0, -1.0, 0.0], normal: [0.0, 0.0, -1.0], tex_coords: [ 1.0, -1.0] },
     ]).unwrap();
 
-    let mut t: f32 = -0.5;
 
-    let mut closed = false;
-    while !closed {
-        t += 0.0002;
-        if t > 0.5 {
-            t = -0.5;
-        }
+    support::start_loop(|| {
 
         let mut target = display.draw();
         target.clear_color_and_depth((0.0, 0.0, 1.0, 1.0), 1.0);
@@ -207,6 +210,7 @@ fn main()
             perspective: perspective,
             u_light: light,
             diffuse_tex: &diffuse_texture,
+            normal_tex: &normal_map,
         };
 
         let params = glium::DrawParameters {
@@ -225,15 +229,19 @@ fn main()
             &program, &uniforms, &params).unwrap();
         target.finish().unwrap();
 
-        // listing the events produced by application and waiting to be received
+        let mut action = support::Action::Continue;
+
+        // polling and handling the events received by the window
         events_loop.poll_events(|ev| {
             match ev {
                 glutin::Event::WindowEvent { event, .. } => match event {
-                    glutin::WindowEvent::Closed => closed = true,
+                    glutin::WindowEvent::Closed => action = support::Action::Stop,
                     _ => (),
                 },
                 _ => (),
             }
         });
-    }
+
+        action
+    });
 }
