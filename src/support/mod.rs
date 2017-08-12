@@ -6,6 +6,7 @@
 use std;
 use std::thread;
 use std::time::{Duration, Instant};
+use std::io::{Read, BufRead, BufReader};
 use std::convert::From;
 // use glium::{self, Display};
 // use glium::vertex::VertexBufferAny;
@@ -72,6 +73,15 @@ pub fn start_loop<F>(mut callback: F) where F: FnMut() -> Action {
     }
 }
 
+// Load a C-style 0-terminated string from the file and return it
+pub fn read_c_string<R: BufRead>(reader: &mut R) -> Result<String, Error> {
+    let mut buf = vec![];
+    /*let num_bytes =*/ reader.read_until(0, &mut buf)?;
+    buf.pop();
+    let s = String::from_utf8(buf)?;
+    Ok(s)
+}
+
 // Returns a vertex buffer that should be rendered as `TrianglesList`.
 // pub fn load_wavefront(display: &Display, data: &[u8]) -> VertexBufferAny {
 //     #[derive(Copy, Clone)]
@@ -114,3 +124,31 @@ pub fn start_loop<F>(mut callback: F) where F: FnMut() -> Action {
 
 //     glium::vertex::VertexBuffer::new(display, &vertex_data).unwrap().into_vertex_buffer_any()
 // }
+
+#[cfg(test)]
+mod tests {
+
+use std::io::Cursor;
+use byteorder::ReadBytesExt;
+use super::*;
+
+#[test]
+fn test_read_c_string()
+{
+    let data = Cursor::new(b"hello world\0abc");
+    let mut reader = BufReader::new(data);
+
+    let s = read_c_string(&mut reader).unwrap();
+    let t = reader.read_u8().unwrap();
+    println!("{:?}", t);
+    let u = reader.read_u8().unwrap();
+    println!("{:?}", u);
+    let v = reader.read_u8().unwrap();
+    println!("{:?}", v);
+    assert_eq!("hello world", s);
+    assert_eq!(b"a"[0], t);
+    assert_eq!(b"b"[0], u);
+    assert_eq!(b"c"[0], v);
+}
+
+}
