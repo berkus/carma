@@ -3,8 +3,10 @@
 // extern crate genmesh;
 // extern crate obj;
 
+use std;
 use std::thread;
 use std::time::{Duration, Instant};
+use std::convert::From;
 // use glium::{self, Display};
 // use glium::vertex::VertexBufferAny;
 
@@ -14,6 +16,31 @@ pub mod mesh;
 pub mod model;
 pub mod texture;
 pub mod resource;
+
+#[derive(Debug)]
+pub enum Error {
+    IO(std::io::Error),
+    Utf8(std::str::Utf8Error),
+    FromUtf8(std::string::FromUtf8Error),
+}
+
+impl From<std::io::Error> for Error {
+    fn from(error: std::io::Error) -> Self {
+        Error::IO(error)
+    }
+}
+
+impl From<std::str::Utf8Error> for Error {
+    fn from(error: std::str::Utf8Error) -> Self {
+        Error::Utf8(error)
+    }
+}
+
+impl From<std::string::FromUtf8Error> for Error {
+    fn from(error: std::string::FromUtf8Error) -> Self {
+        Error::FromUtf8(error)
+    }
+}
 
 pub enum Action {
     Stop,
