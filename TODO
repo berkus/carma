@@ -1,3 +1,9 @@
- ☐ Switch to shader pipeline
+ ✔ Switch to shader pipeline @done (17-08-08 22:44)
  ☐ Load models using Kaitai Struct
  ☐ Fix model composition assembly (wheels in wrong places etc)
+
+ ☐ Asset Manager
+   ☐ Load models
+   ☐ Load meshes
+   ☐ Load materials
+   ☐ Load textures
