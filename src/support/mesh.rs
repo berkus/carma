@@ -81,9 +81,9 @@ fn load_face()
 #[test]
 fn load_mesh()
 {
-    let mut data = Cursor::new(vec![0xde, 0xad, 0xbe, 0xef, 0xca, 0xfe, 0xba, 0xbe, 0, 2, 5]);
-    let m = Mesh::load(&mut data);
-    // assert_eq!(0xdead, m.v1);
+    let mut data = Cursor::new(vec![b'h', b'e', b'l', b'l', b'o', 0, 0xba, 0xbe, 0, 2, 5]);
+    let m = Mesh::load(&mut data).unwrap();
+    assert_eq!("hello", m.name);
     // assert_eq!(0xbeef, m.v2);
     // assert_eq!(0xcafe, m.v3);
     // assert_eq!(0xbabe, m.flags);

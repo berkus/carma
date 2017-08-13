@@ -6,7 +6,7 @@
 use std;
 use std::thread;
 use std::time::{Duration, Instant};
-use std::io::{Read, BufRead, BufReader};
+use std::io::BufRead;
 use std::convert::From;
 // use glium::{self, Display};
 // use glium::vertex::VertexBufferAny;
@@ -128,7 +128,7 @@ pub fn read_c_string<R: BufRead>(reader: &mut R) -> Result<String, Error> {
 #[cfg(test)]
 mod tests {
 
-use std::io::Cursor;
+use std::io::{Cursor, BufReader};
 use byteorder::ReadBytesExt;
 use super::*;
 
