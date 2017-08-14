@@ -1,34 +1,17 @@
 use byteorder::{BigEndian, ReadBytesExt};
-use support::Error;
+use std::io::BufRead;
+use support::{read_c_string, Vertex, Error};
+use support::mesh::{Face, UvCoord};
+use support;
 
 // A binary resource file consisting of chunks with specific size.
 // Reading from such file yields chunk results, some of these chunks are service,
 // some are useful to the client.
 #[derive(Default)]
-pub struct ChunkedBinaryResource
+struct ChunkHeader
 {
-
-}
-
-impl ChunkedBinaryResource {
-    // Read chunks
-    // Certain chunks initialize certain properties
-    // match (ReadChunk) {
-    //     FILE_NAME_CHUNK: name = name,
-    //     VERTEX_LIST: vertices = list,
-    //     UVMAP_LIST: tex_coords = list,
-    //     FACE_LIST: faces = list,
-    //     MATERIAL_LIST: materials = list,
-    //     FACE_MAT_LIST: faces.materials = list,
-    //     NULL_CHUNK: done,
-    // }
-}
-
-#[derive(Default)]
-pub struct ChunkHeader
-{
-    pub chunk_type: u32,
-    pub size: u32, // size of chunk -4
+    chunk_type: u32,
+    size: u32, // size of chunk -4
 }
 
 impl ChunkHeader {
@@ -37,6 +20,87 @@ impl ChunkHeader {
         h.chunk_type = rdr.read_u32::<BigEndian>()?;
         h.size = rdr.read_u32::<BigEndian>()?;
         Ok(h)
+    }
+}
+
+pub enum Chunk {
+    FileName(String),
+    VertexList(Vec<Vertex>),
+    UvMapList(Vec<UvCoord>),
+    FaceList(Vec<Face>),
+    MaterialList(Vec<String>),
+    FaceMatList(Vec<u16>),
+    Null(),
+    MoarChunks(),
+}
+
+impl Chunk {
+    pub fn load<R: ReadBytesExt + BufRead>(rdr: &mut R) -> Result<Chunk, Error> {
+        let header = ChunkHeader::load(rdr)?;
+        match header.chunk_type {
+            support::FILE_NAME_CHUNK => {
+                println!("Reading filename entry...");
+                let s = read_c_string(rdr)?;
+                Ok(Chunk::FileName(s))
+            },
+            support::VERTEX_LIST_CHUNK => {
+                println!("Reading vertex list...");
+                let n = rdr.read_u32::<BigEndian>()?;
+                let mut r = Vec::<Vertex>::with_capacity(n as usize);
+                for _ in 0 .. n {
+                    let v = Vertex::load(rdr)?;
+                    r.push(v);
+                }
+                Ok(Chunk::VertexList(r))
+            },
+            support::UVMAP_LIST_CHUNK => {
+                println!("Reading uvmap list...");
+                let n = rdr.read_u32::<BigEndian>()?;
+                let mut r = Vec::<UvCoord>::with_capacity(n as usize);
+                for _ in 0 .. n {
+                    let v = UvCoord::load(rdr)?;
+                    r.push(v);
+                }
+                Ok(Chunk::UvMapList(r))
+            },
+            support::FACE_LIST_CHUNK => {
+                println!("Reading face list...");
+                let n = rdr.read_u32::<BigEndian>()?;
+                let mut r = Vec::<Face>::with_capacity(n as usize);
+                for _ in 0 .. n {
+                    let v = Face::load(rdr)?;
+                    r.push(v);
+                }
+                Ok(Chunk::FaceList(r))
+            },
+            support::MATERIAL_LIST_CHUNK => {
+                println!("Reading material list...");
+                let n = rdr.read_u32::<BigEndian>()?;
+                let mut r = Vec::<String>::with_capacity(n as usize);
+                for _ in 0 .. n {
+                    let v = read_c_string(rdr)?;
+                    r.push(v);
+                }
+                Ok(Chunk::MaterialList(r))
+            },
+            support::FACE_MAT_LIST_CHUNK => { // faces.materials = list,
+                println!("Reading face material list...");
+                let n = rdr.read_u32::<BigEndian>()?;
+
+                /*let dummy =*/ rdr.read_u32::<BigEndian>()?;
+
+                let mut r = Vec::<u16>::with_capacity(n as usize);
+                for _ in 0 .. n {
+                    let v = rdr.read_u16::<BigEndian>()?;
+                    r.push(v);
+                }
+                Ok(Chunk::FaceMatList(r))
+            },
+            support::NULL_CHUNK => {
+                Ok(Chunk::Null())
+            },
+            _ => unimplemented!(), // should not appear here, but in general chunk reader is possible
+        }
     }
 }
 
