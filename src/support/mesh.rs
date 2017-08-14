@@ -1,5 +1,5 @@
 use byteorder::{BigEndian, ReadBytesExt};
-use support::{read_c_string, Error};
+use support::{read_c_string, Error, Vertex};
 use std::io::BufRead;
 
 #[derive(Default)]
@@ -41,8 +41,8 @@ impl Face {
 #[derive(Default)]
 pub struct Mesh {
     name: String,
-    // vertices: Vec<Vertex>,
-    // normals: Vec<Vertex>, // calculated normals for each vertex
+    vertices: Vec<Vertex>,
+    normals: Vec<Vertex>, // calculated normals for each vertex
     uvcoords: Vec<UvCoord>,
     faces: Vec<Face>,
     material_names: Vec<String>,

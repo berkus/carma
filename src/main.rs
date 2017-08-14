@@ -5,15 +5,7 @@ extern crate carma;
 
 use carma::support;
 use carma::support::camera;
-
-#[derive(Copy, Clone)]
-pub struct Vertex {
-    position: [f32; 3],
-    normal: [f32; 3],
-    tex_coords: [f32; 2],
-}
-
-implement_vertex!(Vertex, position, normal, tex_coords);
+use carma::support::Vertex;
 
 fn main()
 {
