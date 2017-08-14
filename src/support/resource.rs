@@ -25,10 +25,10 @@ impl ChunkedBinaryResource {
 }
 
 #[derive(Default)]
-struct ChunkHeader
+pub struct ChunkHeader
 {
-    chunk_type: u32,
-    size: u32, // size of chunk -4
+    pub chunk_type: u32,
+    pub size: u32, // size of chunk -4
 }
 
 impl ChunkHeader {
