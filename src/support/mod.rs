@@ -145,6 +145,35 @@ pub fn read_c_string<R: BufRead>(reader: &mut R) -> Result<String, Error> {
 //     glium::vertex::VertexBuffer::new(display, &vertex_data).unwrap().into_vertex_buffer_any()
 // }
 
+pub const NULL_CHUNK: u32 = 0x0;
+pub const PIXELMAP_HEADER_CHUNK: u32 = 0x3;
+pub const MATERIAL_DESC_CHUNK: u32 = 0x4;
+pub const FILE_HEADER_CHUNK: u32 = 0x12;
+pub const MATERIAL_LIST_CHUNK: u32 = 0x16;
+pub const VERTEX_LIST_CHUNK: u32 = 0x17;
+pub const UVMAP_LIST_CHUNK: u32 = 0x18;
+pub const FACE_MAT_LIST_CHUNK: u32 = 0x1a;
+pub const PIXELMAP_REF_CHUNK: u32 = 0x1c;
+pub const RENDERTAB_REF_CHUNK: u32 = 0x1f;
+pub const PIXELMAP_DATA_CHUNK: u32 = 0x21;
+pub const ACTOR_NAME_CHUNK: u32 = 0x23;
+pub const UNKNOWN_25_CHUNK: u32 = 0x25;
+pub const MESHFILE_REF_CHUNK: u32 = 0x24;
+pub const MATERIAL_REF_CHUNK: u32 = 0x26;
+pub const UNKNOWN_29_CHUNK: u32 = 0x29;
+pub const UNKNOWN_2A_CHUNK: u32 = 0x2a;
+pub const ACTOR_TRANSFORM_CHUNK: u32 = 0x2b;
+pub const MAP_BOUNDINGBOX_CHUNK: u32 = 0x32;
+pub const FACE_LIST_CHUNK: u32 = 0x35;
+pub const FILE_NAME_CHUNK: u32 = 0x36;
+
+pub const ACTOR_FILE_TYPE: u32 = 0x1;
+pub const PIXELMAP_FILE_TYPE: u32 = 0x2;
+pub const MATERIAL_FILE_TYPE: u32 = 0x5;
+pub const MESH_FILE_TYPE: u32 = 0xface;
+
+pub const MODEL_FILE_SUBTYPE: u32 = 0x3;
+
 #[cfg(test)]
 mod tests {
 
