@@ -40,19 +40,19 @@ impl ChunkHeader {
     }
 }
 
-#[derive(Default)]
-struct Chunk
-{
-    header: ChunkHeader,
-    num_entries: u32, // number of entires -- only in DAT, not part of chunk header actually (different for other types)
-}
+// #[derive(Default)]
+// struct Chunk
+// {
+//     header: ChunkHeader,
+//     num_entries: u32, // number of entires -- only in DAT, not part of chunk header actually (different for other types)
+// }
 
-impl Chunk {
-    pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Chunk {
-        let mut h = Chunk::default();
-        h.header = ChunkHeader::load(rdr);
-        h.num_entries = rdr.read_u32::<BigEndian>().unwrap();
-        h
-    }
-}
+// impl Chunk {
+//     pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Chunk {
+//         let mut h = Chunk::default();
+//         h.header = ChunkHeader::load(rdr);
+//         h.num_entries = rdr.read_u32::<BigEndian>().unwrap();
+//         h
+//     }
+// }
 
