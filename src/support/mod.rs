@@ -8,6 +8,7 @@ use std::thread;
 use std::time::{Duration, Instant};
 use std::io::BufRead;
 use std::convert::From;
+use byteorder::{BigEndian, ReadBytesExt};
 // use glium::{self, Display};
 // use glium::vertex::VertexBufferAny;
 
@@ -19,6 +20,16 @@ pub struct Vertex {
 }
 
 implement_vertex!(Vertex, position, normal, tex_coords);
+
+impl Vertex {
+    pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Result<Vertex, Error> {
+        let mut vtx = Vertex::default();
+        vtx.position[0] = rdr.read_f32::<BigEndian>()?;
+        vtx.position[1] = rdr.read_f32::<BigEndian>()?;
+        vtx.position[2] = rdr.read_f32::<BigEndian>()?;
+        Ok(vtx)
+    }
+}
 
 pub mod camera;
 pub mod material;
