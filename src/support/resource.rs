@@ -1,4 +1,5 @@
 use byteorder::{BigEndian, ReadBytesExt};
+use support::Error;
 
 // A binary resource file consisting of chunks with specific size.
 // Reading from such file yields chunk results, some of these chunks are service,
@@ -31,11 +32,11 @@ struct ChunkHeader
 }
 
 impl ChunkHeader {
-    pub fn load<R: ReadBytesExt>(rdr: &mut R) -> ChunkHeader {
+    pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Result<ChunkHeader, Error> {
         let mut h = ChunkHeader::default();
-        h.chunk_type = rdr.read_u32::<BigEndian>().unwrap();
-        h.size = rdr.read_u32::<BigEndian>().unwrap();
-        h
+        h.chunk_type = rdr.read_u32::<BigEndian>()?;
+        h.size = rdr.read_u32::<BigEndian>()?;
+        Ok(h)
     }
 }
 

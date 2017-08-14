@@ -9,11 +9,11 @@ pub struct UvCoord {
 }
 
 impl UvCoord {
-    pub fn load<R: ReadBytesExt>(rdr: &mut R) -> UvCoord {
+    pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Result<UvCoord, Error> {
         let mut uv = UvCoord::default();
-        uv.u = rdr.read_f32::<BigEndian>().unwrap();
-        uv.v = rdr.read_f32::<BigEndian>().unwrap();
-        uv
+        uv.u = rdr.read_f32::<BigEndian>()?;
+        uv.v = rdr.read_f32::<BigEndian>()?;
+        Ok(uv)
     }
 }
 
@@ -29,11 +29,11 @@ pub struct Face {
 impl Face {
     pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Result<Face, Error> {
         let mut s = Face::default();
-        s.v1 = rdr.read_u16::<BigEndian>().unwrap();
-        s.v2 = rdr.read_u16::<BigEndian>().unwrap();
-        s.v3 = rdr.read_u16::<BigEndian>().unwrap();
-        s.flags = rdr.read_u16::<BigEndian>().unwrap();
-        rdr.read_i8().unwrap(); // something, no idea yet, might be related to flags
+        s.v1 = rdr.read_u16::<BigEndian>()?;
+        s.v2 = rdr.read_u16::<BigEndian>()?;
+        s.v3 = rdr.read_u16::<BigEndian>()?;
+        s.flags = rdr.read_u16::<BigEndian>()?;
+        rdr.read_i8()?; // something, no idea yet, might be related to flags
         Ok(s)
     }
 }
