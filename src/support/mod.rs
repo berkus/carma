@@ -17,6 +17,7 @@ use std::time::{Duration, Instant};
 use std::io::BufRead;
 use std::convert::From;
 use byteorder::{BigEndian, ReadBytesExt};
+use std::path::{Path, PathBuf};
 // use glium::{self, Display};
 // use glium::vertex::VertexBufferAny;
 
@@ -108,6 +109,23 @@ pub fn read_c_string<R: BufRead>(reader: &mut R) -> Result<String, Error> {
     buf.pop();
     let s = String::from_utf8(buf)?;
     Ok(s)
+}
+
+/*
+ * Creates a pathname to filepath with the last directory replaced to newdir
+ * and optionally changing extension to newext.
+ */
+pub fn path_subst(filepath: &Path, newdir: &Path, newext: Option<String>) -> PathBuf {
+    let fname = filepath.file_name().unwrap();
+    let mut dir = PathBuf::from(filepath);
+    dir.pop(); // remove file name
+    dir.pop(); // remove parent dir
+    dir.push(newdir); // replace parent dir
+    dir.push(fname); // add back file name
+    if let Some(ext) = newext {
+        dir.set_extension(ext);
+    }
+    return dir;
 }
 
 // Returns a vertex buffer that should be rendered as `TrianglesList`.
@@ -206,6 +224,15 @@ fn test_read_c_string()
     assert_eq!(b"a"[0], t);
     assert_eq!(b"b"[0], u);
     assert_eq!(b"c"[0], v);
+}
+
+#[test]
+fn test_path_subst()
+{
+    assert_eq!(PathBuf::from("/path/file.ext2"),
+        path_subst(&Path::new("/old/file.ext"), &Path::new("path"), Some(String::from("ext2"))));
+    assert_eq!(PathBuf::from("/path/file.ext"),
+        path_subst(&Path::new("/old/file.ext"), &Path::new("path"), None));
 }
 
 }

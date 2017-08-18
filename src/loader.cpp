@@ -14,44 +14,6 @@ using raii_wrapper::file;
 extern model_t model;
 extern texture_renderer_t texturizer;
 
-/*!
- * Creates a pathname to file fname at new location newpath and optionally changing extension to newext.
- * New pathname is created using strdup() and must be freed by client.
- */
-static char* pathsubst(const char* fname, const char* newpath, const char* newext)
-{
-    if (!fname || !newpath)
-        return 0;
-
-    char pathbuf[PATH_MAX];
-    strncpy(pathbuf, newpath, PATH_MAX);
-    if (strchr(fname, '/'))
-        strncat(pathbuf, strrchr(fname, '/') + 1, PATH_MAX - 1 - strlen(pathbuf));
-    else
-        strncat(pathbuf, fname, 256 - 1 - strlen(pathbuf));
-
-    // Strip stray newlines (they appear whilst reading TXT file).
-    int end = strlen(pathbuf) - 1;
-    while (end > 0 && (pathbuf[end] == '\r' || pathbuf[end] == '\n' || pathbuf[end] == '\t'))
-    {
-        pathbuf[end] = 0;
-        end--;
-    }
-
-    if (newext)
-    {
-        if (strchr(pathbuf, '.'))
-        {
-            int used = strrchr(pathbuf, '.') - pathbuf;
-            strncpy(strrchr(pathbuf, '.'), newext, PATH_MAX - 1 - used);
-        }
-        else
-            strncat(pathbuf, newext, PATH_MAX - 1 - strlen(pathbuf));
-    }
-
-    return strdup(pathbuf);
-}
-
 // from GameDev forum
 template<typename RT, typename T, typename Trait, typename Alloc>
 static RT ss_atoi(const std::basic_string<T, Trait, Alloc>& the_string)
