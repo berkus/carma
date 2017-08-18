@@ -1,6 +1,21 @@
-#version 330 core
+#version 150
 
-void main(void)
-{
-    gl_Position = vec4(0.0, 0.0, 0.5, 1.0);
+in vec3 position;
+in vec3 normal;
+in vec2 tex_coords;
+
+out vec3 v_normal;
+out vec3 v_position;
+out vec2 v_tex_coords;
+
+uniform mat4 perspective;
+uniform mat4 view;
+uniform mat4 model;
+
+void main() {
+    mat4 modelview = view * model;
+    v_normal = transpose(inverse(mat3(modelview))) * normal;
+    v_tex_coords = tex_coords;
+    gl_Position = perspective * modelview * vec4(position, 1.0);
+    v_position = gl_Position.xyz / gl_Position.w;
 }
