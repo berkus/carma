@@ -7,12 +7,12 @@ none,none,PRATBDRT.PIX,PRATBDHZ.PIX		// Pratcam border names (left, top, right, 
 END OF DRIVABLE STUFF
 5300,5301,5302							// Engine noise (normal, enclosed space, underwater)
 stealworthy								// Can be stolen
-//k}cûXû~fs)U+nöbkMmÉôêw.n~;I
+
 1										// Number of clauses
 always
 1									// Systems count
 driver,1.5						// Damage										// Number of clauses
-//Y^?b|(_+aõv$ôdúKYx1{i W+aò`*ZvÄ
+
 5										// Number of clauses
 always
 1									// Systems count
@@ -35,7 +35,7 @@ z>0.75&x>0.75						// Condition
 2									// Systems count
 rr_wheel,0.5					// Damage 
 rr_brake,0.5					// Damage 
-//~K|"[lmUy%_mS_ñh~cx)N+aò`*ZvÄ
+
 3										// Number of clauses
 z>0.25&z<0.75
 1									// Systems count
@@ -49,7 +49,7 @@ z>0.75								// Condition
 2									// Systems count
 lr_wheel,0.5					// Damage 
 lr_brake,0.5					// Damage 
-//UT*Tcî\Ys0iro\dzUb"^jáôêw.n~;I
+
 3										// Number of clauses
 z>0.25&z<0.75
 1									// Systems count
@@ -63,7 +63,7 @@ z>0.75								// Condition
 2									// Systems count
 rr_wheel,0.5					// Damage 
 rr_brake,0.5					// Damage 
-//UT*Tcî\Ys0iro\dzUv9Vláôêw.n~;I
+
 3										// Number of clauses
 always								// Condition
 2									// Systems count
@@ -79,7 +79,7 @@ x>0.75								// Condition
 rf_wheel,0.5					// Damage 
 rf_brake,0.5					// Damage 
 steering,0.5					// Damage 
-//~K|"[lmUy%_mS_ñh~}x.H+aò`*ZvÄ
+
 3										// Number of clauses
 always								// Condition
 1									// Systems count
@@ -216,7 +216,7 @@ controlled
 0,0,0
 x
 END OF GROOVE
-//=åh^[=0èxV2
+
 0.700000
 0.050000,0.300000
 0.050000
@@ -224,7 +224,7 @@ END OF GROOVE
 0.000000
 0.000000
 0
-//=åh^[=0èxV2
+
 0.700000
 0.150000,0.400000
 0.050000
@@ -7172,7 +7172,7 @@ END OF GROOVE
 179
 1
 234
-//=åh^[=0èxV2
+
 0.700000
 0.050000,0.300000
 0.050000
@@ -8922,10 +8922,10 @@ START OF MECHANICS STUFF version 4
 200										// speed at red line in highest gear v.1
 4										// acceleration in highest gear m/s^2 (i.e. engine strength) v.1
 END OF MECHANICS STUFF
-//(8q?\pöXïi~ir=öx`áq;Wg	
+
 1				// number of materials
 M15.MAT
-//y.Wjoê0=\páPö-/{&Hn(Ö"WvÄ
+
 58			// engine point
 86			// transmission
 158			// driver
