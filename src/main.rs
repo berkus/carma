@@ -11,13 +11,19 @@ extern crate glium;
 extern crate image;
 extern crate carma;
 
+use std::env;
 use std::str;
 use carma::support;
 use carma::support::camera;
 use carma::support::Vertex;
+use carma::support::car::Car;
 
 fn main()
 {
+    if let Some(arg1) = env::args().nth(1) {
+        let car = Car::load_from(arg1);
+    }
+
     use glium::{glutin, Surface};
     use std::io::Cursor;
 

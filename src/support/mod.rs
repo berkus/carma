@@ -46,6 +46,7 @@ pub mod mesh;
 pub mod model;
 pub mod texture;
 pub mod resource;
+pub mod car;
 
 #[derive(Debug)]
 pub enum Error {
