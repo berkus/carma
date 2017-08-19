@@ -100,7 +100,7 @@ use std::io::Cursor;
 use super::*;
 
 #[test]
-fn load_face()
+fn test_load_face()
 {
     let mut data = Cursor::new(vec![0xde, 0xad, 0xbe, 0xef, 0xca, 0xfe, 0xba, 0xbe, 0]);
     let f = Face::load(&mut data).unwrap();
@@ -111,7 +111,7 @@ fn load_face()
 }
 
 #[test]
-fn load_mesh()
+fn test_load_mesh()
 {
     let mut data = Cursor::new(vec![
         0x0, 0x0, 0x0, 0x36, // Chunk type - FILE_NAME_CHUNK
