@@ -87,7 +87,8 @@ impl Chunk {
                 Ok(Chunk::FileHeader { file_type })
             },
             support::FILE_NAME_CHUNK => {
-                println!("Reading filename entry...");
+                let some = rdr.read_u16::<BigEndian>()?;
+                println!("Reading filename entry... (tag {})", some);
                 let s = read_c_string(rdr)?;
                 Ok(Chunk::FileName(s))
             },
@@ -174,9 +175,7 @@ impl Chunk {
 
                 let mut data = vec![0u8; payload_size];
 
-                if rdr.read(&mut data)? < payload_size {
-                    // return Err(ShortRead)
-                }
+                rdr.read_exact(&mut data)?;
 
                 Ok(Chunk::PixelmapData { units, unit_bytes, data })
             },
