@@ -8,12 +8,15 @@
 //
 use std::io::{BufRead, BufReader};
 use std::fs::File;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::iter::Iterator;
 use std::collections::HashSet;
 // use byteorder::ReadBytesExt;
 use support::{Error, path_subst};
 use support::model::Model;
+use support::mesh::Mesh;
+use support::material::Material;
+use support::texture::PixelMap;
 // use support::resource::Chunk;
 
 // Car assembles the gameplay object (a car in this case) from various model and texture files.
@@ -117,6 +120,7 @@ fn read_mechanics_block_v1_1<Iter: Iterator<Item=String>>(input: &mut Iter) {
     let max_bb = input.next().unwrap();
     println!("Bounding box: [{}]-[{}]", min_bb, max_bb);
 }
+
 fn read_mechanics_block_v1_2<Iter: Iterator<Item=String>>(input: &mut Iter) {
 // 0.5                                     // min turning circle radius
     input.next();
@@ -135,6 +139,7 @@ fn read_mechanics_block_v1_2<Iter: Iterator<Item=String>>(input: &mut Iter) {
 // 0.4,    0.2,    0.816                   // width, height, length(0.816, 1.216) for angular momentum calculation
     input.next();
 }
+
 fn read_mechanics_block_v1_3<Iter: Iterator<Item=String>>(input: &mut Iter) {
 // 0.05, 0.05                              // rolling resistance front and back
     input.next();
@@ -145,6 +150,7 @@ fn read_mechanics_block_v1_3<Iter: Iterator<Item=String>>(input: &mut Iter) {
 // 4                                       // acceleration in highest gear m/s^2 (i.e. engine strength)
     input.next();
 }
+
 fn read_mechanics_block_v2<Iter: Iterator<Item=String>>(input: &mut Iter) {
 // 2.0                                     // traction fractional multiplier v. 2
     input.next();
@@ -155,6 +161,7 @@ fn read_mechanics_block_v2<Iter: Iterator<Item=String>>(input: &mut Iter) {
 // 1.0                                     // increase in brakes per second 1 = normal v. 2
     input.next();
 }
+
 fn read_mechanics_block_v3<Iter: Iterator<Item=String>>(input: &mut Iter) {
 // 3
 // 0,-0.18,-0.52                               // extra point 1            v. 3
@@ -322,8 +329,32 @@ impl Car {
         // Load actor file.
         let actor_file_name = path_subst(&Path::new(fname.as_str()), &Path::new("ACTORS"), Some(String::from("ACT")));
         println!("### Opening actor {:?}", actor_file_name);
-
         let model = Model::load_from(actor_file_name.into_os_string().into_string().unwrap())?;
+
+        // Now iterate all meshes and load them.
+        for mesh in load_models {
+            let mut mesh_file_name = PathBuf::from(&fname);
+            mesh_file_name.set_file_name(mesh);
+            let mesh_file_name = path_subst(&mesh_file_name, &Path::new("MODELS"), Some(String::from("DAT")));
+            println!("### Opening mesh {:?}", mesh_file_name);
+            let mesh = Mesh::load_from(mesh_file_name.into_os_string().into_string().unwrap())?;
+        }
+
+        for material in load_materials {
+            let mut mat_file_name = PathBuf::from(&fname);
+            mat_file_name.set_file_name(material);
+            let mat_file_name = path_subst(&mat_file_name, &Path::new("MATERIAL"), None);
+            println!("### Opening material {:?}", mat_file_name);
+            let mat = Material::load_from(mat_file_name.into_os_string().into_string().unwrap())?;
+        }
+
+        for pixmap in load_pixmaps {
+            let mut pix_file_name = PathBuf::from(&fname);
+            pix_file_name.set_file_name(pixmap);
+            let pix_file_name = path_subst(&pix_file_name, &Path::new("PIXELMAP"), None);
+            println!("### Opening pixelmap {:?}", pix_file_name);
+            let pix = PixelMap::load_from(pix_file_name.into_os_string().into_string().unwrap())?;
+        }
 
         Ok(car)
     }

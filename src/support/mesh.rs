@@ -9,7 +9,9 @@
 use byteorder::{BigEndian, ReadBytesExt};
 use support::{Error, Vertex};
 use support::resource::Chunk;
-use std::io::BufRead;
+use std::io::{BufRead, BufReader};
+use std::fs::File;
+use support;
 
 #[derive(Default)]
 pub struct UvCoord {
@@ -74,6 +76,11 @@ impl Mesh {
                 Chunk::MaterialList(r) => { m.material_names = r; },
                 Chunk::FaceMatList(r) => { fmlist = r; },
                 Chunk::Null() => break,
+                Chunk::FileHeader { file_type } => {
+                    if file_type != support::MESH_FILE_TYPE {
+                        panic!("Invalid mesh file type {}", file_type);
+                    }
+                },
                 _ => unimplemented!(), // unexpected type here
             }
         }
@@ -86,6 +93,12 @@ impl Mesh {
 
         m.calc_normals();
         Ok(m)
+    }
+
+    pub fn load_from(fname: String) -> Result<Mesh, Error> {
+        let file = File::open(fname)?;
+        let mut file = BufReader::new(file);
+        Mesh::load(&mut file)
     }
 
     pub fn calc_normals(&mut self) {

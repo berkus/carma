@@ -7,9 +7,11 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use support::Error;
-use std::io::BufRead;
+use std::io::{BufRead, BufReader};
 use byteorder::ReadBytesExt;
 use support::resource::Chunk;
+use std::fs::File;
+use support;
 
 // Pixmap consists of two chunks: name and data
 // TODO: use shared_data_t for pixmap contents to avoid copying.
@@ -28,7 +30,7 @@ pub struct PixelMap
 
 #[derive(Default)]
 pub struct Texture {
-
+    // A pixelmap binding for opengl
 }
 
 impl PixelMap {
@@ -53,11 +55,22 @@ impl PixelMap {
                     pm.data = data;
                 },
                 Chunk::Null() => break,
+                Chunk::FileHeader { file_type } => {
+                    if file_type != support::PIXELMAP_FILE_TYPE {
+                        panic!("Invalid pixelmap file type {}", file_type);
+                    }
+                },
                 _ => unimplemented!(), // unexpected type here
             }
         }
 
         Ok(pm)
+    }
+
+    pub fn load_from(fname: String) -> Result<PixelMap, Error> {
+        let file = File::open(fname)?;
+        let mut file = BufReader::new(file);
+        PixelMap::load(&mut file)
     }
 }
 

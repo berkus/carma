@@ -7,9 +7,11 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use support::Error;
-use std::io::BufRead;
+use std::io::{BufRead, BufReader};
 use byteorder::ReadBytesExt;
 use support::resource::Chunk;
+use std::fs::File;
+use support;
 
 // MAT file is an index of: material internal name, PIX file name and TAB file name.
 #[derive(Default)]
@@ -41,10 +43,21 @@ impl Material {
                     mat.rendertab_name = name;
                 },
                 Chunk::Null() => break,
+                Chunk::FileHeader { file_type } => {
+                    if file_type != support::MATERIAL_FILE_TYPE {
+                        panic!("Invalid material file type {}", file_type);
+                    }
+                },
                 _ => unimplemented!(), // unexpected type here
             }
         }
 
         Ok(mat)
+    }
+
+    pub fn load_from(fname: String) -> Result<Material, Error> {
+        let file = File::open(fname)?;
+        let mut file = BufReader::new(file);
+        Material::load(&mut file)
     }
 }
