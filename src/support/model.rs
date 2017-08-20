@@ -7,14 +7,18 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use support::Error;
-use std::io::BufRead;
+use std::io::{BufRead, BufReader};
+use std::fs::File;
 use byteorder::ReadBytesExt;
 use support::resource::Chunk;
+use support;
 
 #[derive(Default)]
-pub struct Model {
+pub struct Model { // NB: actor_t in cpp
     name: String,
     visible: bool,
+    // First 3x3 is scale? or maybe SQT?
+    // Last 3 is translate, -x is to the left, -z is to the front
     transform: [f32; 12],
     material_file: String,
     mesh_file: String,
@@ -30,6 +34,7 @@ impl Model {
             let c = Chunk::load(rdr)?;
             match c {
                 Chunk::ActorName { name, visible } => {
+                    println!("Actor {} visible {}", name, visible);
                     m.name = name;
                     m.visible = visible;
                 },
@@ -45,10 +50,21 @@ impl Model {
                 Chunk::Unknown25() => {},
                 Chunk::Unknown2A() => {},
                 Chunk::Null() => break,
+                Chunk::FileHeader { file_type } => {
+                    if file_type != support::ACTOR_FILE_TYPE {
+                        panic!("Invalid model file type {}", file_type);
+                    }
+                },
                 _ => unimplemented!(), // unexpected type here
             }
         }
 
         Ok(m)
+    }
+
+    pub fn load_from(fname: String) -> Result<Model, Error> {
+        let file = File::open(fname)?;
+        let mut file = BufReader::new(file);
+        Model::load(&mut file)
     }
 }
