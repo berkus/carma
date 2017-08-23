@@ -18,6 +18,9 @@ use std::io::BufRead;
 use std::convert::From;
 use byteorder::{BigEndian, ReadBytesExt};
 use std::path::{Path, PathBuf};
+use std::ops::Sub;
+use cgmath::Vector3;
+// use cgmath::prelude::*;
 // use glium::{self, Display};
 // use glium::vertex::VertexBufferAny;
 
@@ -37,6 +40,20 @@ impl Vertex {
         vtx.position[1] = rdr.read_f32::<BigEndian>()?;
         vtx.position[2] = rdr.read_f32::<BigEndian>()?;
         Ok(vtx)
+    }
+}
+
+// This is used only for vector math, using positions
+// Not a general implementation - todo: replace with sub fun
+impl Sub for Vertex {
+    type Output = Vector3<f32>;
+
+    fn sub(self, other: Vertex) -> Vector3<f32> {
+        Vector3 {
+            x: self.position[0] - other.position[0],
+            y: self.position[1] - other.position[1],
+            z: self.position[2] - other.position[2],
+        }
     }
 }
 

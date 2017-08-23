@@ -12,8 +12,9 @@ use support::resource::Chunk;
 use std::io::{BufRead, BufReader};
 use std::fs::File;
 use support;
+use cgmath::{Vector3, InnerSpace, Zero};
 
-#[derive(Default)]
+#[derive(Copy, Clone, Default)]
 pub struct UvCoord {
     u: f32,
     v: f32,
@@ -53,7 +54,7 @@ impl Face {
 pub struct Mesh {
     name: String,
     vertices: Vec<Vertex>,
-    normals: Vec<Vertex>, // calculated normals for each vertex
+    normals: Vec<(f32, f32, f32)>, // calculated normals for each vertex
     uvcoords: Vec<UvCoord>,
     faces: Vec<Face>,
     material_names: Vec<String>,
@@ -101,8 +102,21 @@ impl Mesh {
         Mesh::load(&mut file)
     }
 
+    // Calculate normal from vertices in counter-clockwise order.
+    pub fn calc_normal(v1: Vector3<f32>, v2: Vector3<f32>, v3: Vector3<f32>) -> Vector3<f32> {
+        (v1 - v2).cross(v2 - v3).normalize()
+    }
+
     pub fn calc_normals(&mut self) {
-        // fill self.normals from face and vertex data
+        self.normals.resize(self.vertices.len(), (0f32, 0f32, 0f32)); // resize_default() in nightly
+        for n in 0..self.faces.len() {
+            let normal = Mesh::calc_normal(Vector3::<f32>::from(self.vertices[self.faces[n].v1 as usize].position),
+                                           Vector3::<f32>::from(self.vertices[self.faces[n].v2 as usize].position),
+                                           Vector3::<f32>::from(self.vertices[self.faces[n].v3 as usize].position));
+            self.normals[self.faces[n].v1 as usize] = normal.into();
+            self.normals[self.faces[n].v2 as usize] = normal.into();
+            self.normals[self.faces[n].v3 as usize] = normal.into();
+        }
     }
 }
 
@@ -138,6 +152,14 @@ fn test_load_mesh()
     // assert_eq!(0xbeef, m.v2);
     // assert_eq!(0xcafe, m.v3);
     // assert_eq!(0xbabe, m.flags);
+}
+
+// test that normals to unit vectors will be the third unit vector
+#[test]
+fn test_calc_normal()
+{
+    assert_eq!(Mesh::calc_normal(Vector3::unit_y(), Vector3::zero(), Vector3::unit_x()), Vector3::unit_z());
+    assert_eq!(Mesh::calc_normal(Vector3::unit_x(), Vector3::zero(), Vector3::unit_y()), -Vector3::unit_z());
 }
 
 } // tests mod

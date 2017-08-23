@@ -8,3 +8,4 @@ glium = "*"
 image = "*"
 # then move on to vulkano = "0.5.4"
 byteorder = "1.1.0" # library for reading/writing big/little endian numbers
+cgmath = "0.15.0" # Vector3
