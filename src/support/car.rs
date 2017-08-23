@@ -356,6 +356,14 @@ impl Car {
             let pix = PixelMap::load_from(pix_file_name.into_os_string().into_string().unwrap())?;
         }
 
+        // Load palette from PIX file.
+        let mut pal_file_name = PathBuf::from(&fname);
+        pal_file_name.set_file_name("DRRENDER.PAL");
+        let pal_file_name = path_subst(&pal_file_name, &Path::new("REG/PALETTES"), None);
+        println!("### Opening palette {:?}", pal_file_name);
+        let palette = PixelMap::load_from(pal_file_name.into_os_string().into_string().unwrap())?;
+        // texturizer.set_palette(palette);
+
         Ok(car)
     }
 }
