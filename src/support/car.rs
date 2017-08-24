@@ -22,6 +22,10 @@ use support::texture::PixelMap;
 // Car assembles the gameplay object (a car in this case) from various model and texture files.
 #[derive(Default)]
 pub struct Car {
+    pub name: String,
+    pub meshes: Vec<Mesh>,
+    pub materials: Vec<Material>,
+    pub textures: Vec<PixelMap>,
 }
 
 fn expect_match<Iter: Iterator<Item=String>>(input: &mut Iter, text: &str) {
@@ -206,8 +210,8 @@ impl Car {
             .filter(|line| !line.is_empty()) // Skip empty lines
             .map(|line| line.split("//").next().unwrap().trim().to_owned()); // Separate in-line comments from data
 
-        let car_name = input_lines.next().unwrap();
-        println!("Car name {}", car_name);
+        car.name = input_lines.next().unwrap();
+        println!("Car name {}", car.name);
 
         expect_match(&mut input_lines, "START OF DRIVABLE STUFF");
 
@@ -338,6 +342,7 @@ impl Car {
             let mesh_file_name = path_subst(&mesh_file_name, &Path::new("MODELS"), Some(String::from("DAT")));
             println!("### Opening mesh {:?}", mesh_file_name);
             let mesh = Mesh::load_from(mesh_file_name.into_os_string().into_string().unwrap())?;
+            car.meshes.push(mesh);
         }
 
         for material in load_materials {
@@ -346,14 +351,7 @@ impl Car {
             let mat_file_name = path_subst(&mat_file_name, &Path::new("MATERIAL"), None);
             println!("### Opening material {:?}", mat_file_name);
             let mat = Material::load_from(mat_file_name.into_os_string().into_string().unwrap())?;
-        }
-
-        for pixmap in load_pixmaps {
-            let mut pix_file_name = PathBuf::from(&fname);
-            pix_file_name.set_file_name(pixmap);
-            let pix_file_name = path_subst(&pix_file_name, &Path::new("PIXELMAP"), None);
-            println!("### Opening pixelmap {:?}", pix_file_name);
-            let pix = PixelMap::load_from(pix_file_name.into_os_string().into_string().unwrap())?;
+            car.materials.push(mat);
         }
 
         // Load palette from PIX file.
@@ -362,7 +360,16 @@ impl Car {
         let pal_file_name = path_subst(&pal_file_name, &Path::new("REG/PALETTES"), None);
         println!("### Opening palette {:?}", pal_file_name);
         let palette = PixelMap::load_from(pal_file_name.into_os_string().into_string().unwrap())?;
-        // texturizer.set_palette(palette);
+
+        for pixmap in load_pixmaps {
+            let mut pix_file_name = PathBuf::from(&fname);
+            pix_file_name.set_file_name(pixmap);
+            let pix_file_name = path_subst(&pix_file_name, &Path::new("PIXELMAP"), None);
+            println!("### Opening pixelmap {:?}", pix_file_name);
+            let pix = PixelMap::load_from(pix_file_name.into_os_string().into_string().unwrap())?;
+            let pix = pix.remap_via(&palette)?;
+            car.textures.push(pix);
+        }
 
         Ok(car)
     }

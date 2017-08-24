@@ -15,7 +15,7 @@ use support;
 
 // Pixmap consists of two chunks: name and data
 // TODO: use shared_data_t for pixmap contents to avoid copying.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PixelMap
 {
     name: String,
@@ -34,6 +34,22 @@ pub struct Texture {
 }
 
 impl PixelMap {
+    /// Convert indexed-color image to RGBA using provided palette.
+    pub fn remap_via(&self, palette: &PixelMap) -> Result<PixelMap, Error> {
+        let mut pm = self.clone();
+        pm.data = Vec::<u8>::with_capacity(self.data.len()*4);
+        pm.unit_bytes = 4;
+
+        for i in 0..pm.units {
+            pm.data.push(palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 1) as usize]); // R
+            pm.data.push(palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 2) as usize]); // G
+            pm.data.push(palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 3) as usize]); // B
+            pm.data.push(palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 0) as usize]); // A
+        }
+
+        Ok(pm)
+    }
+
     pub fn load<R: ReadBytesExt + BufRead>(rdr: &mut R) -> Result<PixelMap, Error> {
         let mut pm = PixelMap::default();
 
