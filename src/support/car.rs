@@ -17,15 +17,17 @@ use support::model::Model;
 use support::mesh::Mesh;
 use support::material::Material;
 use support::texture::PixelMap;
+use std::collections::HashMap;
 // use support::resource::Chunk;
 
 // Car assembles the gameplay object (a car in this case) from various model and texture files.
 #[derive(Default)]
 pub struct Car {
     pub name: String,
-    pub meshes: Vec<Mesh>,
-    pub materials: Vec<Material>,
-    pub textures: Vec<PixelMap>,
+    pub actor: Model,
+    pub meshes: HashMap<String, Mesh>,
+    pub materials: HashMap<String, Material>,
+    pub textures: HashMap<String, PixelMap>,
 }
 
 fn expect_match<Iter: Iterator<Item=String>>(input: &mut Iter, text: &str) {
@@ -333,7 +335,7 @@ impl Car {
         // Load actor file.
         let actor_file_name = path_subst(&Path::new(fname.as_str()), &Path::new("ACTORS"), Some(String::from("ACT")));
         println!("### Opening actor {:?}", actor_file_name);
-        let model = Model::load_from(actor_file_name.into_os_string().into_string().unwrap())?;
+        car.actor = Model::load_from(actor_file_name.into_os_string().into_string().unwrap())?;
 
         // Now iterate all meshes and load them.
         for mesh in load_models {
@@ -341,8 +343,9 @@ impl Car {
             mesh_file_name.set_file_name(mesh);
             let mesh_file_name = path_subst(&mesh_file_name, &Path::new("MODELS"), Some(String::from("DAT")));
             println!("### Opening mesh {:?}", mesh_file_name);
-            let mesh = Mesh::load_from(mesh_file_name.into_os_string().into_string().unwrap())?;
-            car.meshes.push(mesh);
+            let mesh = Mesh::load_from(mesh_file_name.clone().into_os_string().into_string().unwrap())?;
+            let stem = String::from(mesh_file_name.file_stem().unwrap().to_string_lossy());
+            car.meshes.insert(stem, mesh);
         }
 
         for material in load_materials {
@@ -350,8 +353,9 @@ impl Car {
             mat_file_name.set_file_name(material);
             let mat_file_name = path_subst(&mat_file_name, &Path::new("MATERIAL"), None);
             println!("### Opening material {:?}", mat_file_name);
-            let mat = Material::load_from(mat_file_name.into_os_string().into_string().unwrap())?;
-            car.materials.push(mat);
+            let mat = Material::load_from(mat_file_name.clone().into_os_string().into_string().unwrap())?;
+            let stem = String::from(mat_file_name.file_stem().unwrap().to_string_lossy());
+            car.materials.insert(stem, mat);
         }
 
         // Load palette from PIX file.
@@ -366,9 +370,10 @@ impl Car {
             pix_file_name.set_file_name(pixmap);
             let pix_file_name = path_subst(&pix_file_name, &Path::new("PIXELMAP"), None);
             println!("### Opening pixelmap {:?}", pix_file_name);
-            let pix = PixelMap::load_from(pix_file_name.into_os_string().into_string().unwrap())?;
+            let pix = PixelMap::load_from(pix_file_name.clone().into_os_string().into_string().unwrap())?;
             let pix = pix.remap_via(&palette)?;
-            car.textures.push(pix);
+            let stem = String::from(pix_file_name.file_stem().unwrap().to_string_lossy());
+            car.textures.insert(stem, pix);
         }
 
         Ok(car)
