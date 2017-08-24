@@ -54,11 +54,11 @@ impl Face {
 #[derive(Default)]
 pub struct Mesh {
     name: String,
-    vertices: Vec<Vertex>,
+    pub vertices: Vec<Vertex>,
     normals: Vec<(f32, f32, f32)>, // calculated normals for each vertex
     uvcoords: Vec<UvCoord>,
     faces: Vec<Face>,
-    material_names: Vec<String>,
+    pub material_names: Vec<String>,
 }
 
 impl Mesh {

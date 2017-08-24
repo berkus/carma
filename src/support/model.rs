@@ -15,13 +15,13 @@ use support;
 
 #[derive(Default)]
 pub struct Model { // NB: actor_t in cpp
-    name: String,
+    pub name: String,
     visible: bool,
     // First 3x3 is scale? or maybe SQT?
     // Last 3 is translate, -x is to the left, -z is to the front
     transform: [f32; 12],
-    material_file: String,
-    mesh_file: String,
+    pub material_file: String,
+    pub mesh_file: String,
 }
 
 impl Model {
