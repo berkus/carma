@@ -39,7 +39,7 @@ fn expect_match<Iter: Iterator<Item=String>>(input: &mut Iter, text: &str) {
 // Read systems in a single damage spec clause
 fn read_systems<Iter: Iterator<Item=String>>(input: &mut Iter) {
     // read condition flag for this clause
-    let condition = input.next().unwrap();
+    /*let condition =*/ input.next().unwrap();
     // read systems count, read this many systems
     let systems_count = input.next().unwrap().parse().unwrap();
     for _ in 0..systems_count {
