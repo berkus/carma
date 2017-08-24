@@ -24,7 +24,7 @@ use std::collections::HashMap;
 #[derive(Default)]
 pub struct Car {
     pub name: String,
-    pub actor: Model,
+    pub actors: Vec<Model>,
     pub meshes: HashMap<String, Mesh>,
     pub materials: HashMap<String, Material>,
     pub textures: HashMap<String, PixelMap>,
@@ -333,7 +333,7 @@ impl Car {
         // Load actor file.
         let actor_file_name = path_subst(&Path::new(fname.as_str()), &Path::new("ACTORS"), Some(String::from("ACT")));
         println!("### Opening actor {:?}", actor_file_name);
-        car.actor = Model::load_from(actor_file_name.into_os_string().into_string().unwrap())?;
+        car.actors = Model::load_from(actor_file_name.into_os_string().into_string().unwrap())?;
 
         // Now iterate all meshes and load them.
         for mesh in load_models {

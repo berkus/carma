@@ -62,9 +62,17 @@ impl Model {
         Ok(m)
     }
 
-    pub fn load_from(fname: String) -> Result<Model, Error> {
+    pub fn load_from(fname: String) -> Result<Vec<Model>, Error> {
         let file = File::open(fname)?;
         let mut file = BufReader::new(file);
-        Model::load(&mut file)
+        let mut models = Vec::<Model>::new();
+        loop {
+            let m = Model::load(&mut file);
+            match m {
+                Err(_) => break, // fixme: allow only Eof here
+                Ok(m) => models.push(m),
+            }
+        }
+        Ok(models)
     }
 }
