@@ -21,6 +21,7 @@ use carma::support::car::Car;
 fn main()
 {
     let car = Car::load_from(env::args().nth(1).unwrap()).unwrap();
+    car.dump();
 
     use glium::{glutin, Surface};
     use std::io::Cursor;

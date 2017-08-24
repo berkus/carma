@@ -196,6 +196,24 @@ fn read_mechanics_v4<Iter: Iterator<Item=String>>(input: &mut Iter) {
 }
 
 impl Car {
+    pub fn dump(&self) {
+        for act in &self.actors {
+            println!("Actor {}: material {}, mesh {}", act.name, act.material_file, act.mesh_file);
+        }
+        for tex in &self.textures {
+            println!("Texture {}:", tex.0);
+        }
+        for mesh in &self.meshes {
+            println!("Mesh {}:", mesh.0);
+            for mat in &mesh.1.material_names {
+                println!("... Material {}", mat);
+            }
+        }
+        for mat in &self.materials {
+            println!("Material {}:", mat.0);
+        }
+    }
+
     pub fn load_from(fname: String) -> Result<Car, Error> {
         let mut car = Car::default();
 
