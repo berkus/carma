@@ -64,11 +64,13 @@ impl PixelMap {
                     pm.h = h;
                     pm.use_w = use_w;
                     pm.use_h = use_h;
+                    println!("Pixelmap {}x{} use {}x{}", w, h, use_w, use_h);
                 },
                 Chunk::PixelmapData { units, unit_bytes, data } => {
                     pm.units = units;
                     pm.unit_bytes = unit_bytes;
                     pm.data = data;
+                    println!("Pixelmap data {} units, {} bytes each", units, unit_bytes);
                 },
                 Chunk::Null() => break,
                 Chunk::FileHeader { file_type } => {
