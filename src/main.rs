@@ -20,9 +20,7 @@ use carma::support::car::Car;
 
 fn main()
 {
-    if let Some(arg1) = env::args().nth(1) {
-        let car = Car::load_from(arg1);
-    }
+    let car = Car::load_from(env::args().nth(1).unwrap()).unwrap();
 
     use glium::{glutin, Surface};
     use std::io::Cursor;
@@ -39,10 +37,8 @@ fn main()
     //
     // texture loading
     //
-    let image = image::load(Cursor::new(&include_bytes!("tuto-14-diffuse.jpg")[..]),
-                            image::JPEG).unwrap().to_rgba();
-    let image_dimensions = image.dimensions();
-    let image = glium::texture::RawImage2d::from_raw_rgba_reversed(&image.into_raw(), image_dimensions);
+    let tex = &car.textures[0];
+    let image = glium::texture::RawImage2d::from_raw_rgba_reversed(&tex.data, (tex.w as u32, tex.h as u32));
     let diffuse_texture = glium::texture::SrgbTexture2d::new(&display, image).unwrap();
 
     let image = image::load(Cursor::new(&include_bytes!("tuto-14-normal.png")[..]),

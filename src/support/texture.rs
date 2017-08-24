@@ -19,13 +19,13 @@ use support;
 pub struct PixelMap
 {
     name: String,
-    w: u16, // Actual texture w & h
-    h: u16,
+    pub w: u16, // Actual texture w & h
+    pub h: u16,
     use_w: u16, // and how much of that is used for useful data
     use_h: u16,
     units: u32,
     unit_bytes: u32,
-    data: Vec<u8>,
+    pub data: Vec<u8>, // temp pub
 }
 
 #[derive(Default)]
