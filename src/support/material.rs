@@ -17,10 +17,9 @@ use support;
 #[derive(Default)]
 pub struct Material {
     params: [f32; 12],
-    name: String,
+    pub name: String,
     pixelmap_name: String,
     rendertab_name: String,
-
 }
 
 impl Material {
@@ -55,9 +54,17 @@ impl Material {
         Ok(mat)
     }
 
-    pub fn load_from(fname: String) -> Result<Material, Error> {
+    pub fn load_from(fname: String) -> Result<Vec<Material>, Error> {
         let file = File::open(fname)?;
         let mut file = BufReader::new(file);
-        Material::load(&mut file)
+        let mut materials = Vec::<Material>::new();
+        loop {
+            let mat = Material::load(&mut file);
+            match mat {
+                Err(_) => break, // fixme: allow only Eof here
+                Ok(mat) => materials.push(mat),
+            }
+        }
+        Ok(materials)
     }
 }

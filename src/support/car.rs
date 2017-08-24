@@ -261,9 +261,6 @@ impl Car {
         load_materials.append(&mut read_vector(&mut input_lines));
         load_materials.append(&mut read_vector(&mut input_lines));
 
-        let load_materials: HashSet<_> = load_materials.iter().collect();
-        println!("Materials to load: {:?}", load_materials);
-
         let load_models = read_vector(&mut input_lines);
         println!("Models to load: {:?}", load_models);
 
@@ -327,8 +324,9 @@ impl Car {
 
         expect_match(&mut input_lines, "END OF MECHANICS STUFF");
 
-        let some_materials = read_vector(&mut input_lines);
+        let mut some_materials = read_vector(&mut input_lines);
         println!("Some other materials to use: {:?}", some_materials);
+        load_materials.append(&mut some_materials);
 
         // @todo More post-mechanics stuff
 
@@ -348,14 +346,18 @@ impl Car {
             car.meshes.insert(stem, mesh);
         }
 
+        let load_materials: HashSet<_> = load_materials.iter().collect();
+        println!("Materials to load: {:?}", load_materials);
+
         for material in load_materials {
             let mut mat_file_name = PathBuf::from(&fname);
             mat_file_name.set_file_name(material);
             let mat_file_name = path_subst(&mat_file_name, &Path::new("MATERIAL"), None);
             println!("### Opening material {:?}", mat_file_name);
             let mat = Material::load_from(mat_file_name.clone().into_os_string().into_string().unwrap())?;
-            let stem = String::from(mat_file_name.file_stem().unwrap().to_string_lossy());
-            car.materials.insert(stem, mat);
+            for x in mat {
+                car.materials.insert(x.name.clone(), x);
+            }
         }
 
         // Load palette from PIX file.
