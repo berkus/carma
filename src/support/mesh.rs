@@ -12,6 +12,7 @@ use support::resource::Chunk;
 use std::io::{BufRead, BufReader};
 use std::fs::File;
 use support;
+#[allow(unused_imports)]
 use cgmath::{Vector3, InnerSpace, Zero};
 
 #[derive(Copy, Clone, Default)]
