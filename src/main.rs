@@ -15,7 +15,7 @@ use std::env;
 use std::str;
 use carma::support;
 use carma::support::camera;
-use carma::support::Vertex;
+// use carma::support::Vertex;
 use carma::support::car::Car;
 
 fn main()
@@ -38,8 +38,13 @@ fn main()
     //
     // texture loading
     //
-    let tex = &car.textures[0];
-    let image = glium::texture::RawImage2d::from_raw_rgba_reversed(&tex.data, (tex.w as u32, tex.h as u32));
+    // let tex = &car.textures["SCRBON8"];
+    // let image = glium::texture::RawImage2d::from_raw_rgba_reversed(&tex.data,
+    //     (tex.w as u32, tex.h as u32));
+    let image = image::load(Cursor::new(&include_bytes!("tuto-14-diffuse.jpg")[..]),
+                            image::JPEG).unwrap().to_rgba();
+    let image_dimensions = image.dimensions();
+    let image = glium::texture::RawImage2d::from_raw_rgba_reversed(&image.into_raw(), image_dimensions);
     let diffuse_texture = glium::texture::SrgbTexture2d::new(&display, image).unwrap();
 
     let image = image::load(Cursor::new(&include_bytes!("tuto-14-normal.png")[..]),
@@ -60,12 +65,7 @@ fn main()
     // the direction of the light - @todo more light sources?
     let light = [-1.0, 0.4, 0.9f32];
 
-    let wall = glium::vertex::VertexBuffer::new(&display, &[
-        Vertex { position: [-1.0,  1.0, 0.0], normal: [0.0, 0.0, -1.0], tex_coords: [-1.0,  1.0] },
-        Vertex { position: [ 1.0,  1.0, 0.0], normal: [0.0, 0.0, -1.0], tex_coords: [ 1.0,  1.0] },
-        Vertex { position: [-1.0, -1.0, 0.0], normal: [0.0, 0.0, -1.0], tex_coords: [-1.0, -1.0] },
-        Vertex { position: [ 1.0, -1.0, 0.0], normal: [0.0, 0.0, -1.0], tex_coords: [ 1.0, -1.0] },
-    ]).unwrap();
+    let vbo = glium::vertex::VertexBuffer::new(&display, &car.meshes["SCREWIE"].vertices).unwrap();
 
     let mut camera = camera::CameraState::new();
     // camera.set_position((2.0, -1.0, 1.0));
@@ -110,7 +110,7 @@ fn main()
 
         // target.draw((&positions, &normals), &indices, &program, &uniforms,
             // &params).unwrap();
-        target.draw(&wall, glium::index::NoIndices(glium::index::PrimitiveType::TriangleStrip),
+        target.draw(&vbo, glium::index::NoIndices(glium::index::PrimitiveType::TriangleStrip),
             &program, &uniforms, &params).unwrap();
         target.finish().unwrap();
 
