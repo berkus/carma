@@ -18,6 +18,7 @@ use support::mesh::Mesh;
 use support::material::Material;
 use support::texture::PixelMap;
 use std::collections::HashMap;
+use cgmath::Vector3;
 // use support::resource::Chunk;
 
 // Car assembles the gameplay object (a car in this case) from various model and texture files.
@@ -38,7 +39,13 @@ fn expect_match<Iter: Iterator<Item=String>>(input: &mut Iter, text: &str) {
     panic!("Expected {:?} but got empty line", text);
 }
 
-// Read systems in a single damage spec clause
+/// Parse a three-component vector from a comma-separated string.
+fn parse_vector(line: &String) -> Vector3<f32> {
+    let line: Vec<f32> = line.split(',').map(|i| { i.trim().parse().unwrap() }).collect();
+    Vector3::from((line[0], line[1], line[2]))
+}
+
+/// Read systems in a single damage spec clause.
 fn read_systems<Iter: Iterator<Item=String>>(input: &mut Iter) {
     // read condition flag for this clause
     /*let condition =*/ input.next().unwrap();
@@ -112,19 +119,19 @@ fn read_some_metadata<Iter: Iterator<Item=String>>(input: &mut Iter) {
 }
 
 fn read_mechanics_block_v1_1<Iter: Iterator<Item=String>>(input: &mut Iter) {
-    let lrwheel_pos = input.next().unwrap();
-    println!("Left rear wheel position: {}", lrwheel_pos);
-    let rrwheel_pos = input.next().unwrap();
-    println!("Right rear wheel position: {}", rrwheel_pos);
-    let lfwheel_pos = input.next().unwrap();
-    println!("Left front wheel position: {}", lfwheel_pos);
-    let rfwheel_pos = input.next().unwrap();
-    println!("Right front wheel position: {}", rfwheel_pos);
-    let centre_of_mass_pos = input.next().unwrap();
-    println!("Centre of mass position: {}", centre_of_mass_pos);
-    let min_bb = input.next().unwrap();
-    let max_bb = input.next().unwrap();
-    println!("Bounding box: [{}]-[{}]", min_bb, max_bb);
+    let lrwheel_pos = parse_vector(&input.next().unwrap());
+    println!("Left rear wheel position: {:?}", lrwheel_pos);
+    let rrwheel_pos = parse_vector(&input.next().unwrap());
+    println!("Right rear wheel position: {:?}", rrwheel_pos);
+    let lfwheel_pos = parse_vector(&input.next().unwrap());
+    println!("Left front wheel position: {:?}", lfwheel_pos);
+    let rfwheel_pos = parse_vector(&input.next().unwrap());
+    println!("Right front wheel position: {:?}", rfwheel_pos);
+    let centre_of_mass_pos = parse_vector(&input.next().unwrap());
+    println!("Centre of mass position: {:?}", centre_of_mass_pos);
+    let min_bb = parse_vector(&input.next().unwrap());
+    let max_bb = parse_vector(&input.next().unwrap());
+    println!("Bounding box: ({:?} - {:?})", min_bb, max_bb);
 }
 
 fn read_mechanics_block_v1_2<Iter: Iterator<Item=String>>(input: &mut Iter) {
@@ -235,8 +242,8 @@ impl Car {
 
         expect_match(&mut input_lines, "START OF DRIVABLE STUFF");
 
-        let driver_head_3d_offset = input_lines.next().unwrap();
-        println!("Offset of driver's head in 3D space {}", driver_head_3d_offset);
+        let driver_head_3d_offset = parse_vector(&input_lines.next().unwrap());
+        println!("Offset of driver's head in 3D space {:?}", driver_head_3d_offset);
 
         let head_turn_angles = input_lines.next().unwrap();
         println!("Angles to turn to make head go left and right {}", head_turn_angles);
