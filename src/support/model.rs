@@ -47,8 +47,8 @@ impl Model {
                 Chunk::MeshFileRef(name) => {
                     m.mesh_file = name;
                 },
-                Chunk::Unknown25() => {},
-                Chunk::Unknown2A() => {},
+                Chunk::ActorNodeDown() => {},
+                Chunk::ActorNodeUp() => {},
                 Chunk::Null() => break,
                 Chunk::FileHeader { file_type } => {
                     if file_type != support::ACTOR_FILE_TYPE {

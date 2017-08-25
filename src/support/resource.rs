@@ -67,9 +67,9 @@ pub enum Chunk {
     },
     ActorTransform([f32; 12]),
     MapBoundingBox(),
-    Unknown25(),
+    ActorNodeDown(),
     Unknown29(),
-    Unknown2A(),
+    ActorNodeUp(),
 }
 
 impl Chunk {
@@ -196,17 +196,17 @@ impl Chunk {
                 let name = read_c_string(rdr)?;
                 Ok(Chunk::ActorName { name, visible })
             },
-            support::UNKNOWN_25_CHUNK => {
-                println!("Reading unknown 25...");
-                Ok(Chunk::Unknown25())
+            support::ACTOR_NODE_DOWN_CHUNK => {
+                println!("Reading actor node down...");
+                Ok(Chunk::ActorNodeDown())
             },
             support::UNKNOWN_29_CHUNK => {
                 println!("Reading unknown 29...");
                 Ok(Chunk::Unknown29())
             },
-            support::UNKNOWN_2A_CHUNK => {
-                println!("Reading unknown 2A...");
-                Ok(Chunk::Unknown2A())
+            support::ACTOR_NODE_UP_CHUNK => {
+                println!("Reading actor node up...");
+                Ok(Chunk::ActorNodeUp())
             },
             support::MESHFILE_REF_CHUNK => {
                 println!("Reading meshfile ref...");
