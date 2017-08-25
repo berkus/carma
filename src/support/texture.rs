@@ -18,7 +18,7 @@ use support;
 #[derive(Default, Clone)]
 pub struct PixelMap
 {
-    name: String,
+    pub name: String,
     pub w: u16, // Actual texture w & h
     pub h: u16,
     use_w: u16, // and how much of that is used for useful data
@@ -85,10 +85,18 @@ impl PixelMap {
         Ok(pm)
     }
 
-    pub fn load_from(fname: String) -> Result<PixelMap, Error> {
+    pub fn load_from(fname: String) -> Result<Vec<PixelMap>, Error> {
         let file = File::open(fname)?;
         let mut file = BufReader::new(file);
-        PixelMap::load(&mut file)
+        let mut pmaps = Vec::<PixelMap>::new();
+        loop {
+            let pmap = PixelMap::load(&mut file);
+            match pmap {
+                Err(_) => break, // fixme: allow only Eof here
+                Ok(pmap) => pmaps.push(pmap),
+            }
+        }
+        Ok(pmaps)
     }
 }
 

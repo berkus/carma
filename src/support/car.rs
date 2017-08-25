@@ -269,9 +269,6 @@ impl Car {
         load_pixmaps.append(&mut read_vector(&mut input_lines));
         load_pixmaps.append(&mut read_vector(&mut input_lines));
 
-        let load_pixmaps: HashSet<_> = load_pixmaps.iter().collect();
-        println!("Pixmaps to load: {:?}", load_pixmaps);
-
         let load_shadetable = read_vector(&mut input_lines);
         println!("Shadetable to load: {:?}", load_shadetable);
 
@@ -383,7 +380,10 @@ impl Car {
         pal_file_name.set_file_name("DRRENDER.PAL");
         let pal_file_name = path_subst(&pal_file_name, &Path::new("REG/PALETTES"), None);
         println!("### Opening palette {:?}", pal_file_name);
-        let palette = PixelMap::load_from(pal_file_name.into_os_string().into_string().unwrap())?;
+        let palette = &PixelMap::load_from(pal_file_name.into_os_string().into_string().unwrap())?[0];
+
+        let load_pixmaps: HashSet<_> = load_pixmaps.iter().collect();
+        println!("Pixmaps to load: {:?}", load_pixmaps);
 
         for pixmap in load_pixmaps {
             let mut pix_file_name = PathBuf::from(&fname);
@@ -391,9 +391,10 @@ impl Car {
             let pix_file_name = path_subst(&pix_file_name, &Path::new("PIXELMAP"), None);
             println!("### Opening pixelmap {:?}", pix_file_name);
             let pix = PixelMap::load_from(pix_file_name.clone().into_os_string().into_string().unwrap())?;
-            let pix = pix.remap_via(&palette)?;
-            let stem = String::from(pix_file_name.file_stem().unwrap().to_string_lossy());
-            car.textures.insert(stem, pix);
+            for pmap in pix {
+                let pmap = pmap.remap_via(&palette)?;
+                car.textures.insert(pmap.name.clone(), pmap);
+            }
         }
 
         Ok(car)
