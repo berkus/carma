@@ -28,7 +28,7 @@ fn main()
 
     let mut events_loop = glutin::EventsLoop::new();
     let window = glutin::WindowBuilder::new()
-        .with_title("oglTest")
+        .with_title("carma")
         .with_dimensions(800, 600);
     let context = glutin::ContextBuilder::new()
         .with_depth_buffer(24);
