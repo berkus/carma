@@ -90,6 +90,7 @@ impl Chunk {
                 let some = rdr.read_u16::<BigEndian>()?;
                 println!("Reading filename entry... (tag {})", some);
                 let s = read_c_string(rdr)?;
+                println!("... {}", s);
                 Ok(Chunk::FileName(s))
             },
             support::VERTEX_LIST_CHUNK => {
@@ -128,6 +129,7 @@ impl Chunk {
                 let mut r = Vec::<String>::with_capacity(n as usize);
                 for _ in 0 .. n {
                     let v = read_c_string(rdr)?;
+                    println!("... {}", v);
                     r.push(v);
                 }
                 Ok(Chunk::MaterialList(r))
@@ -139,6 +141,7 @@ impl Chunk {
                     params[i] = rdr.read_f32::<BigEndian>()?;
                 }
                 let name = read_c_string(rdr)?;
+                println!("... {}", name);
                 Ok(Chunk::MaterialDesc { params, name })
             },
             support::FACE_MAT_LIST_CHUNK => {
@@ -163,6 +166,7 @@ impl Chunk {
                 let use_h = rdr.read_u16::<BigEndian>()?;
                 rdr.read_u16::<BigEndian>()?; // what2
                 let name = read_c_string(rdr)?;
+                println!("... {}", name);
                 Ok(Chunk::PixelmapHeader { name, w, h, use_w, use_h })
             },
             support::PIXELMAP_DATA_CHUNK => {
@@ -182,11 +186,13 @@ impl Chunk {
             support::PIXELMAP_REF_CHUNK => {
                 println!("Reading pixelmap ref...");
                 let pixelmap_name = read_c_string(rdr)?;
+                println!("... {}", pixelmap_name);
                 Ok(Chunk::PixelmapRef(pixelmap_name))
             },
             support::RENDERTAB_REF_CHUNK => {
                 println!("Reading rendertab ref...");
                 let rendertab_name = read_c_string(rdr)?;
+                println!("... {}", rendertab_name);
                 Ok(Chunk::RenderTabRef(rendertab_name))
             },
             support::ACTOR_NAME_CHUNK => {
@@ -194,6 +200,7 @@ impl Chunk {
                 let visible = rdr.read_u8()? == 0x1;
                 rdr.read_u8()?; // what2
                 let name = read_c_string(rdr)?;
+                println!("... {}", name);
                 Ok(Chunk::ActorName { name, visible })
             },
             support::ACTOR_NODE_DOWN_CHUNK => {
@@ -211,20 +218,24 @@ impl Chunk {
             support::MESHFILE_REF_CHUNK => {
                 println!("Reading meshfile ref...");
                 let mesh_name = read_c_string(rdr)?;
+                println!("... {}", mesh_name);
                 Ok(Chunk::MeshFileRef(mesh_name))
             },
             support::MATERIAL_REF_CHUNK => {
                 println!("Reading material ref...");
                 let material_name = read_c_string(rdr)?;
+                println!("... {}", material_name);
                 Ok(Chunk::MaterialRef(material_name))
             },
             support::ACTOR_TRANSFORM_CHUNK => {
-                println!("Reading actor transform (or?)...");
+                println!("Reading actor transform...");
                 let mut params = [0f32; 12];
                 for i in 0 .. 12 {
                     params[i] = rdr.read_f32::<BigEndian>()?;
                 }
-            // case ACTOR_DATA:
+                for row in 0..4 {
+                    println!("[{} {} {}]", params[row*3+0], params[row*3+1], params[row*3+2]);
+                }
                 // CHECK_READ(v.read(f));
                 // actor->scale.x[0][0] = v.x; actor->scale.x[1][0] = v.y; actor->scale.x[2][0] = v.z;
                 // CHECK_READ(v.read(f));
