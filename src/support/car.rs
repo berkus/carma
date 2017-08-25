@@ -31,6 +31,7 @@ pub struct Car {
     pub textures: HashMap<String, PixelMap>,
 }
 
+/// Expect next line to match provided text exactly.
 fn expect_match<Iter: Iterator<Item=String>>(input: &mut Iter, text: &str) {
     if let Some(line) = input.next() {
         if line == text { return; }
@@ -56,7 +57,7 @@ fn read_systems<Iter: Iterator<Item=String>>(input: &mut Iter) {
     }
 }
 
-// Read all damage spec clauses
+/// Read all damage spec clauses.
 fn read_clauses<Iter: Iterator<Item=String>>(input: &mut Iter) {
     // read clause count, read this many systems
     let clause_count = input.next().unwrap().parse().unwrap();
@@ -65,7 +66,7 @@ fn read_clauses<Iter: Iterator<Item=String>>(input: &mut Iter) {
     }
 }
 
-// Read a vector of strings
+/// Read a vector of strings.
 fn read_vector<Iter: Iterator<Item=String>>(input: &mut Iter) -> Vec<String> {
     // read vector size, read this many strings
     let size = input.next().unwrap().parse().unwrap();
@@ -95,7 +96,7 @@ fn read_grooves<Iter: Iterator<Item=String>>(input: &mut Iter) /*-> Vec<Groove>*
     }
 }
 
-// A bunch of some matrices and mappings or vertex-pairs, ignore for now.
+/// A bunch of some matrices and mappings or vertex-pairs, ignore for now.
 fn read_some_metadata<Iter: Iterator<Item=String>>(input: &mut Iter) {
     input.next();// 0.700000
     input.next();// 0.050000,0.300000
