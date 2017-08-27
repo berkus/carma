@@ -86,55 +86,55 @@ impl Actor {
                 .build());
 
         {
-        let mut current_actor = actor.root_id.clone();
-        let mut last_actor = current_actor.clone();
+            let mut current_actor = actor.root_id.clone();
+            let mut last_actor = current_actor.clone();
 
-        // Read chunks until last chunk is encountered.
-        // Certain chunks initialize certain properties.
-        loop {
-            let c = Chunk::load(rdr)?;
-            match c {
-                Chunk::ActorName { name, visible } => {
-                    println!("Actor {} visible {}", name, visible);
-                    let child_id: NodeId = actor.tree.insert(
-                        Node::new(ActorNode::Actor { name, visible }),
-                        UnderNode(&current_actor)).unwrap();
-                    last_actor = child_id.clone();
-                },
-                Chunk::ActorTransform(transform) => {
-                    actor.tree.insert(
-                        Node::new(ActorNode::Transform(transform)),
-                        // Transform is unconditionally attached to the last loaded actor
-                        UnderNode(&last_actor)).unwrap();
-                },
-                Chunk::MaterialRef(name) => {
-                    actor.tree.insert(
-                        Node::new(ActorNode::MaterialRef(name)),
-                        UnderNode(&current_actor)).unwrap();
-                },
-                Chunk::MeshFileRef(name) => {
-                    actor.tree.insert(
-                        Node::new(ActorNode::MeshfileRef(name)),
-                        UnderNode(&current_actor)).unwrap();
-                },
-                Chunk::ActorNodeDown() => {
-                    current_actor = last_actor.clone();
-                },
-                Chunk::ActorNodeUp() => {
-                    let node = actor.tree.get(&current_actor).unwrap();
-                    if let Some(parent) = node.parent() {
-                        current_actor = parent.clone();
-                    }
-                },
-                Chunk::Null() => break,
-                Chunk::FileHeader { file_type } => {
-                    if file_type != support::ACTOR_FILE_TYPE {
-                        panic!("Invalid model file type {}", file_type);
-                    }
-                },
-                _ => unimplemented!(), // unexpected type here
+            // Read chunks until last chunk is encountered.
+            // Certain chunks initialize certain properties.
+            loop {
+                let c = Chunk::load(rdr)?;
+                match c {
+                    Chunk::ActorName { name, visible } => {
+                        println!("Actor {} visible {}", name, visible);
+                        let child_id: NodeId = actor.tree.insert(
+                            Node::new(ActorNode::Actor { name, visible }),
+                            UnderNode(&current_actor)).unwrap();
+                        last_actor = child_id.clone();
+                    },
+                    Chunk::ActorTransform(transform) => {
+                        actor.tree.insert(
+                            Node::new(ActorNode::Transform(transform)),
+                            // Transform is unconditionally attached to the last loaded actor
+                            UnderNode(&last_actor)).unwrap();
+                    },
+                    Chunk::MaterialRef(name) => {
+                        actor.tree.insert(
+                            Node::new(ActorNode::MaterialRef(name)),
+                            UnderNode(&current_actor)).unwrap();
+                    },
+                    Chunk::MeshFileRef(name) => {
+                        actor.tree.insert(
+                            Node::new(ActorNode::MeshfileRef(name)),
+                            UnderNode(&current_actor)).unwrap();
+                    },
+                    Chunk::ActorNodeDown() => {
+                        current_actor = last_actor.clone();
+                    },
+                    Chunk::ActorNodeUp() => {
+                        let node = actor.tree.get(&current_actor).unwrap();
+                        if let Some(parent) = node.parent() {
+                            current_actor = parent.clone();
+                        }
+                    },
+                    Chunk::Null() => break,
+                    Chunk::FileHeader { file_type } => {
+                        if file_type != support::ACTOR_FILE_TYPE {
+                            panic!("Invalid model file type {}", file_type);
+                        }
+                    },
+                    _ => unimplemented!(), // unexpected type here
+                }
             }
-        }
         }
 
         Ok(actor)
