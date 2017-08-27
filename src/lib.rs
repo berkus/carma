@@ -10,5 +10,6 @@
 extern crate glium;
 extern crate byteorder;
 extern crate cgmath;
+extern crate id_tree;
 
 pub mod support;

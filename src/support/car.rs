@@ -13,7 +13,7 @@ use std::iter::Iterator;
 use std::collections::HashSet;
 // use byteorder::ReadBytesExt;
 use support::{Error, path_subst};
-use support::model::Model;
+use support::model::Actor;
 use support::mesh::Mesh;
 use support::material::Material;
 use support::texture::PixelMap;
@@ -25,7 +25,7 @@ use cgmath::Vector3;
 #[derive(Default)]
 pub struct Car {
     pub name: String,
-    pub actors: Vec<Model>,
+    pub actors: Vec<Actor>,
     pub meshes: HashMap<String, Mesh>,
     pub materials: HashMap<String, Material>,
     pub textures: HashMap<String, PixelMap>,
@@ -206,7 +206,7 @@ fn read_mechanics_v4<Iter: Iterator<Item=String>>(input: &mut Iter) {
 impl Car {
     pub fn dump(&self) {
         for act in &self.actors {
-            println!("Actor {}: material {}, mesh {}", act.name, act.material_file, act.mesh_file);
+            act.dump();
         }
         for tex in &self.textures {
             println!("Texture {}:", tex.0);
@@ -356,7 +356,7 @@ impl Car {
         // Load actor file.
         let actor_file_name = path_subst(&Path::new(fname.as_str()), &Path::new("ACTORS"), Some(String::from("ACT")));
         println!("### Opening actor {:?}", actor_file_name);
-        car.actors = Model::load_from(actor_file_name.into_os_string().into_string().unwrap())?;
+        car.actors = Actor::load_from(actor_file_name.into_os_string().into_string().unwrap())?;
 
         // Now iterate all meshes and load them.
         for mesh in load_models {

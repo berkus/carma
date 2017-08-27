@@ -12,21 +12,65 @@ use std::fs::File;
 use byteorder::ReadBytesExt;
 use support::resource::Chunk;
 use support;
+use id_tree::*;
 
-#[derive(Default)]
-pub struct Model { // NB: actor_t in cpp
-    pub name: String,
-    visible: bool,
+// Typical actor tree:
+// Root
+// +--Actor(NAME.ACT)
+//    +--Transform()
+//    +--MeshfileRef
+//    +--Actor(SUBACT.ACT)
+//       +--Transform()
+//       +--MeshfileRef
+//
+#[derive(Debug)]
+pub enum ActorNode {
+    Root,
+    Actor { name: String, visible: bool },
     // First 3x3 is scale? or maybe SQT?
     // Last 3 is translate, -x is to the left, -z is to the front
-    transform: [f32; 12],
-    pub material_file: String,
-    pub mesh_file: String,
+    Transform([f32; 12]),
+    MeshfileRef(String),
+    MaterialRef(String),
 }
 
-impl Model {
-    pub fn load<R: ReadBytesExt + BufRead>(rdr: &mut R) -> Result<Model, Error> {
-        let mut m = Model::default();
+pub struct Actor {
+    pub tree: Tree<ActorNode>,
+    pub root_id: NodeId,
+}
+
+impl Actor {
+    pub fn new(tree: Tree<ActorNode>) -> Self {
+        let mut tree = tree;
+        let root_id = tree.insert(Node::new(ActorNode::Root), InsertBehavior::AsRoot).unwrap();
+        Self {
+            tree: tree,
+            root_id: root_id,
+        }
+    }
+
+    pub fn dump(&self) {
+        for node in self.tree.traverse_pre_order(&self.root_id).unwrap() {
+            if let Some(parent) = node.parent() {
+                print!("  ");
+                for _ in self.tree.ancestors(parent).unwrap() {
+                    print!("  ");
+                }
+            }
+            println!("{:?}", node.data());
+        }
+    }
+
+    pub fn load<R: ReadBytesExt + BufRead>(rdr: &mut R) -> Result<Actor, Error> {
+        use id_tree::InsertBehavior::*;
+
+        let mut actor = Actor::new(TreeBuilder::new()
+                .with_node_capacity(5)
+                .build());
+
+        {
+        let mut current_actor = actor.root_id.clone();
+        let mut last_actor = current_actor.clone();
 
         // Read chunks until last chunk is encountered.
         // Certain chunks initialize certain properties.
@@ -35,20 +79,36 @@ impl Model {
             match c {
                 Chunk::ActorName { name, visible } => {
                     println!("Actor {} visible {}", name, visible);
-                    m.name = name;
-                    m.visible = visible;
+                    let child_id: NodeId = actor.tree.insert(
+                        Node::new(ActorNode::Actor { name, visible }),
+                        UnderNode(&current_actor)).unwrap();
+                    last_actor = child_id.clone();
                 },
                 Chunk::ActorTransform(transform) => {
-                    m.transform = transform;
+                    actor.tree.insert(
+                        Node::new(ActorNode::Transform(transform)),
+                        // Transform is unconditionally attached to the last loaded actor
+                        UnderNode(&last_actor)).unwrap();
                 },
                 Chunk::MaterialRef(name) => {
-                    m.material_file = name;
+                    actor.tree.insert(
+                        Node::new(ActorNode::MaterialRef(name)),
+                        UnderNode(&current_actor)).unwrap();
                 },
                 Chunk::MeshFileRef(name) => {
-                    m.mesh_file = name;
+                    actor.tree.insert(
+                        Node::new(ActorNode::MeshfileRef(name)),
+                        UnderNode(&current_actor)).unwrap();
                 },
-                Chunk::ActorNodeDown() => {},
-                Chunk::ActorNodeUp() => {},
+                Chunk::ActorNodeDown() => {
+                    current_actor = last_actor.clone();
+                },
+                Chunk::ActorNodeUp() => {
+                    let node = actor.tree.get(&current_actor).unwrap();
+                    if let Some(parent) = node.parent() {
+                        current_actor = parent.clone();
+                    }
+                },
                 Chunk::Null() => break,
                 Chunk::FileHeader { file_type } => {
                     if file_type != support::ACTOR_FILE_TYPE {
@@ -58,16 +118,17 @@ impl Model {
                 _ => unimplemented!(), // unexpected type here
             }
         }
+        }
 
-        Ok(m)
+        Ok(actor)
     }
 
-    pub fn load_from(fname: String) -> Result<Vec<Model>, Error> {
+    pub fn load_from(fname: String) -> Result<Vec<Actor>, Error> {
         let file = File::open(fname)?;
         let mut file = BufReader::new(file);
-        let mut models = Vec::<Model>::new();
+        let mut models = Vec::<Actor>::new();
         loop {
-            let m = Model::load(&mut file);
+            let m = Actor::load(&mut file);
             match m {
                 Err(_) => break, // fixme: allow only Eof here
                 Ok(m) => models.push(m),
