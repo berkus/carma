@@ -207,6 +207,7 @@ impl Car {
     pub fn dump(&self) {
         for act in &self.actors {
             act.dump();
+            act.dump_actor_points();
         }
         for tex in &self.textures {
             println!("Texture {}:", tex.0);

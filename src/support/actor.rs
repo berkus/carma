@@ -61,6 +61,23 @@ impl Actor {
         }
     }
 
+    pub fn dump_actor_points(&self) {
+        for node in self.tree.traverse_pre_order(&self.root_id).unwrap() {
+            if let &ActorNode::Root = node.data() {
+                println!("{:?}", node.data());
+            }
+            if let &ActorNode::Actor { name: _, visible: _ } = node.data() {
+                if let Some(parent) = node.parent() {
+                    print!("  ");
+                    for _ in self.tree.ancestors(parent).unwrap() {
+                        print!("  ");
+                    }
+                }
+                println!("{:?}", node.data());
+            }
+        }
+    }
+
     pub fn load<R: ReadBytesExt + BufRead>(rdr: &mut R) -> Result<Actor, Error> {
         use id_tree::InsertBehavior::*;
 
