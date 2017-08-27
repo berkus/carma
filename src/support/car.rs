@@ -13,7 +13,7 @@ use std::iter::Iterator;
 use std::collections::HashSet;
 // use byteorder::ReadBytesExt;
 use support::{Error, path_subst};
-use support::model::Actor;
+use support::actor::Actor;
 use support::mesh::Mesh;
 use support::material::Material;
 use support::texture::PixelMap;

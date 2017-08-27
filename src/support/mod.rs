@@ -60,7 +60,7 @@ impl Sub for Vertex {
 pub mod camera;
 pub mod material;
 pub mod mesh;
-pub mod model;
+pub mod actor;
 pub mod texture;
 pub mod resource;
 pub mod car;
