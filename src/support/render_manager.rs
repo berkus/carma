@@ -145,7 +145,7 @@ impl RenderManager {
                 u_light: light,
                 u_specular_color: [1.0, 1.0, 1.0f32],
                 diffuse_tex: &self.bound_textures[mat],
-                normal_tex: &self.bound_textures[mat],
+                // normal_tex: &self.bound_textures[mat],
             };
 
             target
