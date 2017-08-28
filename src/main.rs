@@ -16,6 +16,7 @@ use std::str;
 use carma::support;
 use carma::support::camera;
 // use carma::support::Vertex;
+use glium::index::*;
 use carma::support::car::Car;
 
 fn main()
@@ -106,10 +107,7 @@ fn main()
             .. Default::default()
         };
 
-        // target.draw((&positions, &normals), &indices, &program, &uniforms,
-            // &params).unwrap();
-        target.draw(&vbo, glium::index::NoIndices(glium::index::PrimitiveType::TriangleStrip),
-            &program, &uniforms, &params).unwrap();
+        target.draw(&vbo, &indices, &program, &uniforms, &params).unwrap();
         target.finish().unwrap();
 
         let mut action = support::Action::Continue;

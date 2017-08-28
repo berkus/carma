@@ -32,9 +32,9 @@ impl UvCoord {
 
 #[derive(Default)]
 pub struct Face {
-    v1: u16, // vertex indices (works with glDrawElements() e.g.)
-    v2: u16,
-    v3: u16,
+    pub v1: u16, // vertex indices (works with glDrawElements() e.g.)
+    pub v2: u16,
+    pub v3: u16,
     flags: u16, // looks like flags, always only one bit set -- not always, see CITYA81.DAT!!
     material_id: u16, // comes from FACE_MAT_LIST chunk
 }
@@ -57,7 +57,7 @@ pub struct Mesh {
     pub vertices: Vec<Vertex>,
     normals: Vec<(f32, f32, f32)>, // calculated normals for each vertex
     uvcoords: Vec<UvCoord>,
-    faces: Vec<Face>,
+    pub faces: Vec<Face>,
     pub material_names: Vec<String>,
 }
 
