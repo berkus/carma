@@ -15,7 +15,6 @@ use std::env;
 use std::str;
 use carma::support;
 use carma::support::camera;
-// use carma::support::Vertex;
 use glium::index::*;
 use carma::support::car::Car;
 
@@ -45,13 +44,15 @@ fn main()
     let image = image::load(Cursor::new(&include_bytes!("tuto-14-diffuse.jpg")[..]),
                             image::JPEG).unwrap().to_rgba();
     let image_dimensions = image.dimensions();
-    let image = glium::texture::RawImage2d::from_raw_rgba_reversed(&image.into_raw(), image_dimensions);
+    let image = glium::texture::RawImage2d::from_raw_rgba_reversed(
+        &image.into_raw(), image_dimensions);
     let diffuse_texture = glium::texture::SrgbTexture2d::new(&display, image).unwrap();
 
     let image = image::load(Cursor::new(&include_bytes!("tuto-14-normal.png")[..]),
                             image::PNG).unwrap().to_rgba();
     let image_dimensions = image.dimensions();
-    let image = glium::texture::RawImage2d::from_raw_rgba_reversed(&image.into_raw(), image_dimensions);
+    let image = glium::texture::RawImage2d::from_raw_rgba_reversed(
+        &image.into_raw(), image_dimensions);
     let normal_map = glium::texture::Texture2d::new(&display, image).unwrap();
 
     //
@@ -61,7 +62,8 @@ fn main()
     let fragment_shader_src = str::from_utf8(include_bytes!("../shaders/first.frag")).unwrap();
 
     // shader program
-    let program = glium::Program::from_source(&display, vertex_shader_src, fragment_shader_src, None).unwrap();
+    let program = glium::Program::from_source(
+        &display, vertex_shader_src, fragment_shader_src, None).unwrap();
 
     // the direction of the light - @todo more light sources?
     let light = [-1.0, 0.4, 0.9f32];
