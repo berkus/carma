@@ -78,7 +78,7 @@ fn main()
         camera.update();
 
         let mut target = display.draw();
-        target.clear_color_and_depth((0.0, 0.0, 1.0, 1.0), 1.0);
+        target.clear_color_and_depth((0.4, 0.4, 0.4, 0.0), 1.0);
 
         let (width, height) = target.get_dimensions();
         let aspect_ratio = height as f32 / width as f32;
