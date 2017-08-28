@@ -20,9 +20,6 @@ use byteorder::{BigEndian, ReadBytesExt};
 use std::path::{Path, PathBuf};
 use std::ops::Sub;
 use cgmath::Vector3;
-// use cgmath::prelude::*;
-// use glium::{self, Display};
-// use glium::vertex::VertexBufferAny;
 
 pub mod camera;
 pub mod material;
@@ -32,6 +29,7 @@ pub mod texture;
 pub mod render_manager;
 pub mod resource;
 pub mod car;
+// pub mod animated_parameter;
 
 #[derive(Copy, Clone, Default)]
 pub struct Vertex {
