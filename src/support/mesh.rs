@@ -55,8 +55,6 @@ impl Face {
 pub struct Mesh {
     name: String,
     pub vertices: Vec<Vertex>,
-    normals: Vec<(f32, f32, f32)>, // calculated normals for each vertex
-    uvcoords: Vec<UvCoord>,
     pub faces: Vec<Face>,
     pub material_names: Vec<String>,
 }
@@ -65,6 +63,7 @@ impl Mesh {
     pub fn load<R: ReadBytesExt + BufRead>(rdr: &mut R) -> Result<Mesh, Error> {
         let mut m = Mesh::default();
         let mut fmlist = Vec::<u16>::new();
+        let mut uvcoords = Vec::<UvCoord>::new();
 
         // Read chunks until last chunk is encountered.
         // Certain chunks initialize certain properties.
@@ -78,7 +77,7 @@ impl Mesh {
                     m.vertices = r;
                 }
                 Chunk::UvMapList(r) => {
-                    m.uvcoords = r;
+                    uvcoords = r;
                 }
                 Chunk::FaceList(r) => {
                     m.faces = r;
@@ -103,6 +102,10 @@ impl Mesh {
             }
         }
 
+        for n in 0..uvcoords.len() {
+            m.vertices[n].tex_coords = [uvcoords[n].u, uvcoords[n].v];
+        }
+
         m.calc_normals();
         Ok(m)
     }
@@ -119,16 +122,15 @@ impl Mesh {
     }
 
     pub fn calc_normals(&mut self) {
-        self.normals.resize(self.vertices.len(), (0f32, 0f32, 0f32)); // resize_default() in nightly
         for n in 0..self.faces.len() {
             let normal = Mesh::calc_normal(
                 Vector3::<f32>::from(self.vertices[self.faces[n].v1 as usize].position),
                 Vector3::<f32>::from(self.vertices[self.faces[n].v2 as usize].position),
                 Vector3::<f32>::from(self.vertices[self.faces[n].v3 as usize].position),
             );
-            self.normals[self.faces[n].v1 as usize] = normal.into();
-            self.normals[self.faces[n].v2 as usize] = normal.into();
-            self.normals[self.faces[n].v3 as usize] = normal.into();
+            self.vertices[self.faces[n].v1 as usize].normal = normal.into();
+            self.vertices[self.faces[n].v2 as usize].normal = normal.into();
+            self.vertices[self.faces[n].v3 as usize].normal = normal.into();
         }
     }
 }
