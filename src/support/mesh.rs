@@ -149,6 +149,7 @@ mod tests {
         assert_eq!(0xbabe, f.flags);
     }
 
+    #[cfg_attr(rustfmt, rustfmt_skip)]
     #[test]
     fn test_load_mesh() {
         let mut data = Cursor::new(vec![

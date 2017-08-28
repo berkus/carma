@@ -49,6 +49,7 @@ impl CameraState {
         self.aspect_ratio = aspect;
     }
 
+    #[cfg_attr(rustfmt, rustfmt_skip)]
     pub fn get_perspective(&self) -> [[f32; 4]; 4] {
         // viewport_t() : fovy(45.0f), znear(0.1f), zfar(100.0f), w(0), h(0) {}
 
