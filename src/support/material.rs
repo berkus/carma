@@ -11,15 +11,28 @@ use std::io::{BufRead, BufReader};
 use byteorder::ReadBytesExt;
 use support::resource::Chunk;
 use std::fs::File;
+use std::fmt;
 use support;
 
 // MAT file is an index of: material internal name, PIX file name and TAB file name.
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct Material {
     params: [f32; 12],
     pub name: String,
-    pixelmap_name: String,
-    rendertab_name: String,
+    pub pixelmap_name: String,
+    rendertab_name: String, // Palette file used to convert u8 indexed color to RGBA
+}
+
+impl fmt::Display for Material {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "{} pixelmap {} rendertab {}",
+            self.name,
+            self.pixelmap_name,
+            self.rendertab_name,
+        )
+    }
 }
 
 impl Material {
