@@ -18,6 +18,7 @@ use carma::support;
 use carma::support::camera;
 use glium::index::*;
 use carma::support::car::Car;
+use carma::support::render_manager::RenderManager;
 
 fn main() {
     let car = Car::load_from(env::args().nth(1).unwrap()).unwrap();
@@ -71,6 +72,9 @@ fn main() {
         glium::Program::from_source(&display, vertex_shader_src, fragment_shader_src, None)
             .unwrap();
 
+    let mut render_manager = RenderManager::new();
+    render_manager.prepare_car(&car, &display);
+
     // the direction of the light - @todo more light sources?
     let light = [-5.0, 5.0, 10.0f32];
     // Ambient lighting: 0.5, 0.5, 0.5, 1.0
@@ -116,7 +120,9 @@ fn main() {
             ..Default::default()
         };
 
-        target.draw(&vbo, &indices, &program, &uniforms, &params).unwrap();
+        // target
+        //     .draw(&vbo, &indices, &program, &uniforms, &params)
+        //     .unwrap();
         target.finish().unwrap();
 
         let mut action = support::Action::Continue;

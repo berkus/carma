@@ -36,7 +36,7 @@ pub struct Face {
     pub v2: u16,
     pub v3: u16,
     flags: u16, // looks like flags, always only one bit set -- not always, see CITYA81.DAT!!
-    material_id: u16, // comes from FACE_MAT_LIST chunk
+    pub material_id: u16, // comes from FACE_MAT_LIST chunk
 }
 
 impl Face {
