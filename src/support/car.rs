@@ -210,7 +210,7 @@ impl Car {
             act.dump_actor_points();
         }
         for tex in &self.textures {
-            println!("Texture {}:", tex.0);
+            println!("Texture {}: {}", tex.0, tex.1);
         }
         for mesh in &self.meshes {
             println!("Mesh {}:", mesh.0);

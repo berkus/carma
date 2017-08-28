@@ -11,13 +11,13 @@ use std::io::{BufRead, BufReader};
 use byteorder::ReadBytesExt;
 use support::resource::Chunk;
 use std::fs::File;
+use std::fmt;
 use support;
 
 // Pixmap consists of two chunks: name and data
 // TODO: use shared_data_t for pixmap contents to avoid copying.
 #[derive(Default, Clone)]
-pub struct PixelMap
-{
+pub struct PixelMap {
     pub name: String,
     pub w: u16, // Actual texture w & h
     pub h: u16,
@@ -26,6 +26,22 @@ pub struct PixelMap
     units: u32,
     unit_bytes: u32,
     pub data: Vec<u8>, // temp pub
+}
+
+impl fmt::Display for PixelMap {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "{} ({}x{}, use {}x{}) {} units {} bytes each",
+            self.name,
+            self.w,
+            self.h,
+            self.use_w,
+            self.use_h,
+            self.units,
+            self.unit_bytes
+        )
+    }
 }
 
 #[derive(Default)]
