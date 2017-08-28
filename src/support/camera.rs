@@ -164,6 +164,8 @@ impl CameraState {
             self.position.1 -= f.1 * 0.001;
             self.position.2 -= f.2 * 0.001;
         }
+
+        // println!("Camera pos {:?} dir {:?}", self.position, self.direction);
     }
 
     pub fn process_input(&mut self, event: &glutin::WindowEvent) {
