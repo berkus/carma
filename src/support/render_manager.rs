@@ -18,7 +18,7 @@ use support::Vertex;
 use support::camera::CameraState;
 use support::actor::ActorNode;
 use cgmath::prelude::*;
-use cgmath::*;
+use cgmath::{Vector3, Matrix4};
 
 /// Provide storage for in-memory level-data - models, meshes, textures etc.
 pub struct RenderManager {
@@ -161,19 +161,38 @@ impl RenderManager {
         self.bind_textures(name, car, display);
     }
 
+    /// Draw all visible actors
     pub fn draw_car<T>(&self, car: &Car, target: &mut T, camera: &CameraState)
     where
         T: Surface,
     {
-        // Draw all visible actors
         let mut v = false;
+        let mut transform_stack = Vec::<Matrix4<f32>>::new();
+        let mut model = Matrix4::<f32>::identity();
+        let mut last_depth = 0;
 
         for actor in car.actors.traverse() {
             match actor.data() {
                 &ActorNode::Actor { name: _, visible } => v = visible,
                 &ActorNode::MeshfileRef(ref name) => if v {
-                    println!("Drawing actor {}", name);
-                    self.draw_actor(name, target, camera);
+                    // println!("Drawing actor {}", name);
+                    self.draw_actor(name, &model, target, camera);
+                },
+                &ActorNode::Transform(t) => {
+                    let transform = Matrix4::from_nonuniform_scale(t[0], t[4], t[8]);
+                    let transform = Matrix4::from_translation(
+                        Vector3 { x: t[9], y: t[10], z: t[11] }) * transform;
+ 
+                    let depth = car.actors.get_node_depth(actor.parent().unwrap());
+                    if depth > last_depth {
+                        transform_stack.push(model);
+                        model = transform * model;
+                    } else if depth < last_depth {
+                        model = transform_stack.pop().unwrap();
+                    } else {
+                        model = transform * transform_stack.last().unwrap();
+                    }
+                    last_depth = depth;
                 }
                 _ => (),
             }
@@ -190,6 +209,8 @@ impl RenderManager {
     ) where
         T: Surface,
     {
+        println!("Rendering {} with model {:?}", mesh_name, model);
+
         // the direction of the light - @todo more light sources?
         let light = [-5.0, 5.0, 10.0f32];
         // Ambient lighting: 0.5, 0.5, 0.5, 1.0
@@ -204,9 +225,7 @@ impl RenderManager {
             ..Default::default()
         };
 
-        // @todo Load calculated skeletal transforms
-        let model: [[f32; 4]; 4] = Matrix4::identity().into();
-        //(Matrix4::from_angle_y(Deg(90.0+45.0)) * Matrix4::identity()).into();
+        let model: [[f32; 4]; 4] = model.clone().into();
 
         for (mat, indices) in &self.indices[mesh_name] {
             let uniforms = uniform! {
