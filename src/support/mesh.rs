@@ -70,8 +70,9 @@ impl Mesh {
         loop {
             let c = Chunk::load(rdr)?;
             match c {
-                Chunk::FileName(s) => {
-                    m.name = s;
+                Chunk::FileName { name, subtype } => {
+                    m.name = name;
+                    assert!(subtype == support::MODEL_FILE_SUBTYPE);
                 }
                 Chunk::VertexList(r) => {
                     m.vertices = r;

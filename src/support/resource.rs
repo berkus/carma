@@ -34,7 +34,7 @@ impl ChunkHeader {
 pub enum Chunk {
     Null(),
     FileHeader { file_type: u32 },
-    FileName(String),
+    FileName { name: String, subtype: u16 },
     VertexList(Vec<Vertex>),
     UvMapList(Vec<UvCoord>),
     FaceList(Vec<Face>),
@@ -81,11 +81,11 @@ impl Chunk {
                 Ok(Chunk::FileHeader { file_type })
             }
             support::FILE_NAME_CHUNK => {
-                let some = rdr.read_u16::<BigEndian>()?;
-                println!("Reading filename entry... (tag {})", some);
-                let s = read_c_string(rdr)?;
-                println!("... {}", s);
-                Ok(Chunk::FileName(s))
+                let subtype = rdr.read_u16::<BigEndian>()?;
+                println!("Reading filename entry... (subtype {})", subtype);
+                let name = read_c_string(rdr)?;
+                println!("... {}", name);
+                Ok(Chunk::FileName { name, subtype })
             }
             support::VERTEX_LIST_CHUNK => {
                 println!("Reading vertex list...");

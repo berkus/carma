@@ -219,7 +219,7 @@ pub const PIXELMAP_FILE_TYPE: u32 = 0x2;
 pub const MATERIAL_FILE_TYPE: u32 = 0x5;
 pub const MESH_FILE_TYPE: u32 = 0xface;
 
-pub const MODEL_FILE_SUBTYPE: u32 = 0x3;
+pub const MODEL_FILE_SUBTYPE: u16 = 0x3;
 
 #[cfg(test)]
 mod tests {
