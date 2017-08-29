@@ -50,6 +50,10 @@ impl Actor {
         }
     }
 
+    pub fn traverse(&self) -> PreOrderTraversal<ActorNode> {
+        self.tree.traverse_pre_order(&self.root_id).unwrap()
+    }
+
     pub fn dump(&self) {
         for node in self.tree.traverse_pre_order(&self.root_id).unwrap() {
             if let Some(parent) = node.parent() {
