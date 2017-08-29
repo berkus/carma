@@ -13,7 +13,7 @@ use std::iter::Iterator;
 use std::collections::HashSet;
 // use byteorder::ReadBytesExt;
 use support::{path_subst, Error};
-use support::actor::Actor;
+use support::actor::{Actor, ActorNode};
 use support::mesh::Mesh;
 use support::material::Material;
 use support::texture::PixelMap;
@@ -205,6 +205,36 @@ fn read_mechanics_v4<Iter: Iterator<Item = String>>(input: &mut Iter) {
     read_mechanics_v3(input);
 }
 
+fn read_meshes(fname: &String, load_models: &Vec<String>, car_meshes: &mut HashMap<String, Mesh>) -> Result<(), Error> {
+    let mut load_models = load_models.clone();
+    load_models.sort();
+    load_models.dedup();
+    println!("Models to load: {:?}", load_models);
+
+    // Now iterate all meshes and load them.
+    for mesh in load_models {
+        let mut mesh_file_name = PathBuf::from(&fname);
+        mesh_file_name.set_file_name(mesh);
+        let mesh_file_name = path_subst(
+            &mesh_file_name,
+            &Path::new("MODELS"),
+            Some(String::from("DAT")),
+        );
+        println!("### Opening meshes {:?}", mesh_file_name);
+        let meshes = Mesh::load_from(
+            mesh_file_name
+                .clone()
+                .into_os_string()
+                .into_string()
+                .unwrap(),
+        )?;
+        for mesh in meshes {
+            car_meshes.insert(mesh.name.clone(), mesh);
+        }
+    }
+    Ok(())
+}
+
 impl Car {
     pub fn dump(&self) {
         self.actors.dump();
@@ -307,8 +337,7 @@ impl Car {
         load_materials.append(&mut read_vector(&mut input_lines));
         load_materials.append(&mut read_vector(&mut input_lines));
 
-        let load_models = read_vector(&mut input_lines);
-        println!("Models to load: {:?}", load_models);
+        let mut load_models = read_vector(&mut input_lines);
 
         let load_alt_actors = read_vector(&mut input_lines);
         println!("Alternative actors to load: {:?}", load_alt_actors);
@@ -397,6 +426,11 @@ impl Car {
 
         // @todo More post-mechanics stuff
 
+        let mut car_meshes = HashMap::<String, Mesh>::new();
+
+        // Read meshes referenced from text description
+        read_meshes(&fname, &load_models, &mut car_meshes)?;
+
         // Load actor file.
         let actor_file_name = path_subst(
             &Path::new(fname.as_str()),
@@ -406,28 +440,18 @@ impl Car {
         println!("### Opening actor {:?}", actor_file_name);
         let car_actors = Actor::load_from(actor_file_name.into_os_string().into_string().unwrap())?;
 
-        // Now iterate all meshes and load them.
-        let mut car_meshes = HashMap::<String, Mesh>::new();
-        for mesh in load_models {
-            let mut mesh_file_name = PathBuf::from(&fname);
-            mesh_file_name.set_file_name(mesh);
-            let mesh_file_name = path_subst(
-                &mesh_file_name,
-                &Path::new("MODELS"),
-                Some(String::from("DAT")),
-            );
-            println!("### Opening meshes {:?}", mesh_file_name);
-            let meshes = Mesh::load_from(
-                mesh_file_name
-                    .clone()
-                    .into_os_string()
-                    .into_string()
-                    .unwrap(),
-            )?;
-            for mesh in meshes {
-                car_meshes.insert(mesh.name.clone(), mesh);
+        // Read meshes referenced from actor file
+        load_models.clear();
+        for actor in car_actors.traverse() {
+            match actor.data() {
+                &ActorNode::MeshfileRef(ref name) => if !car_meshes.contains_key(name) {
+                    load_models.push(name.clone())
+                },
+                _ => (),
             }
         }
+
+        read_meshes(&fname, &load_models, &mut car_meshes)?;
 
         let load_materials: HashSet<_> = load_materials.iter().collect();
         println!("Materials to load: {:?}", load_materials);
