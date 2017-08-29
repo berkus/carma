@@ -212,14 +212,18 @@ impl Car {
         for tex in &self.textures {
             println!("Texture {}: {}", tex.0, tex.1);
         }
+        self.debug_meshes();
+        for mat in &self.materials {
+            println!("Material {}:", mat.0);
+        }
+    }
+
+    pub fn debug_meshes(&self) {
         for mesh in &self.meshes {
             println!("Mesh {}:", mesh.0);
             for mat in &mesh.1.material_names {
                 println!("... Material {}", mat);
             }
-        }
-        for mat in &self.materials {
-            println!("Material {}:", mat.0);
         }
     }
 
