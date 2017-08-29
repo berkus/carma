@@ -71,7 +71,9 @@ impl RenderManager {
     // In theory, whole of the game could fit in 4096x4096 megatex.
     fn bind_textures(&mut self, actor_name: &String, car: &Car, display: &Display) {
         for (&mat, _) in &self.indices[actor_name] {
-            let textures = self.bound_textures.entry(actor_name.clone()).or_insert(HashMap::new());
+            let textures = self.bound_textures
+                .entry(actor_name.clone())
+                .or_insert(HashMap::new());
             if mat == 0 {
                 RenderManager::bind_default_texture(textures, mat, display);
             } else {
@@ -124,7 +126,9 @@ impl RenderManager {
         let mut partitioned_by_material = HashMap::<u16, Vec<u16>>::new();
 
         for face in faces {
-            let indices = partitioned_by_material.entry(face.material_id).or_insert(Vec::new());
+            let indices = partitioned_by_material
+                .entry(face.material_id)
+                .or_insert(Vec::new());
             indices.push(face.v1);
             indices.push(face.v2);
             indices.push(face.v3);
@@ -176,9 +180,14 @@ impl RenderManager {
         }
     }
 
-    // Uses single mesh, but specific indices to draw with each material.
-    fn draw_actor<T>(&self, mesh_name: &String, target: &mut T, camera: &CameraState)
-    where
+    /// Uses single mesh, but specific indices to draw with each material.
+    fn draw_actor<T>(
+        &self,
+        mesh_name: &String,
+        model: &Matrix4<f32>,
+        target: &mut T,
+        camera: &CameraState,
+    ) where
         T: Surface,
     {
         // the direction of the light - @todo more light sources?
