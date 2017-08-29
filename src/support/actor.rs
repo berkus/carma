@@ -35,8 +35,8 @@ pub enum ActorNode {
 }
 
 pub struct Actor {
-    pub tree: Tree<ActorNode>,
-    pub root_id: NodeId,
+    tree: Tree<ActorNode>,
+    root_id: NodeId,
 }
 
 impl Actor {
