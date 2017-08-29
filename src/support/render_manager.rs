@@ -16,14 +16,15 @@ use glium::texture::{RawImage2d, SrgbTexture2d};
 use support::car::Car;
 use support::Vertex;
 use support::camera::CameraState;
+use support::actor::ActorNode;
 use cgmath::prelude::*;
 use cgmath::*;
 
 /// Provide storage for in-memory level-data - models, meshes, textures etc.
 pub struct RenderManager {
-    vertices: Vec<VertexBuffer<Vertex>>,
-    indices: HashMap<u16, IndexBuffer<u16>>, // MaterialId -> index buffer
-    bound_textures: HashMap<u16, SrgbTexture2d>, // MaterialId -> texture
+    vertices: HashMap<String, VertexBuffer<Vertex>>,
+    indices: HashMap<String, HashMap<u16, IndexBuffer<u16>>>, // MaterialId -> index buffer
+    bound_textures: HashMap<String, HashMap<u16, SrgbTexture2d>>, // MaterialId -> texture
     program: Program,
 }
 
@@ -37,7 +38,7 @@ impl RenderManager {
             str::from_utf8(include_bytes!("../../shaders/first.frag")).unwrap();
 
         Self {
-            vertices: Vec::new(),
+            vertices: HashMap::new(),
             indices: HashMap::new(),
             bound_textures: HashMap::new(),
             program: Program::from_source(display, vertex_shader_src, fragment_shader_src, None)
@@ -45,47 +46,85 @@ impl RenderManager {
         }
     }
 
-    fn bind_textures(&mut self, car: &Car, display: &Display) {
-        for (&mat, _) in &self.indices {
-            let material = &car.meshes["SCREWIE"].material_names[(mat - 1) as usize];
-            // println!("Referred material {} index {}", material, mat);
-            if let Some(m) = car.materials.get(material) {
-                // println!("Found material {}", m);
-                let mut name = m.pixelmap_name.clone();
-                if name.is_empty() {
-                    // @fixme hack
-                    name = material.replace(".MAT", ".pix").to_lowercase();
-                }
-                if let Some(tex) = car.textures.get(&name) {
-                    // println!("Found texture {}", tex);
-                    let image =
-                        RawImage2d::from_raw_rgba_reversed(&tex.data, (tex.w as u32, tex.h as u32));
-                    let bound_texture = SrgbTexture2d::new(display, image).unwrap();
-                    self.bound_textures.insert(mat, bound_texture);
-                } else {
-                    let black_data = [0; 32 * 32 * 4];
-                    let black_image = RawImage2d::from_raw_rgba_reversed(&black_data, (32, 32));
-                    let black_texture = SrgbTexture2d::new(display, black_image).unwrap();
-                    self.bound_textures.insert(mat, black_texture);
+    fn debug_indices(&self) {
+        for (name, _indices) in &self.indices {
+            println!("Indices for {}:", name);
+            // for () in &indices {
+            //     println!("  ", )
+            // }
+        }
+    }
+
+    fn bind_default_texture(
+        textures: &mut HashMap<u16, SrgbTexture2d>,
+        mat: u16,
+        display: &Display,
+    ) {
+        let black_data = [0; 32 * 32 * 4];
+        let black_image = RawImage2d::from_raw_rgba_reversed(&black_data, (32, 32));
+        let black_texture = SrgbTexture2d::new(display, black_image).unwrap();
+        textures.insert(mat, black_texture);
+    }
+
+    // @todo Prepare megatexture from all these small textures and keep a map
+    // of texture ID to the rect region, scale u,v appropriately in vertices.
+    // In theory, whole of the game could fit in 4096x4096 megatex.
+    fn bind_textures(&mut self, actor_name: &String, car: &Car, display: &Display) {
+        for (&mat, _) in &self.indices[actor_name] {
+            let textures = self.bound_textures.entry(actor_name.clone()).or_insert(HashMap::new());
+            if mat == 0 {
+                RenderManager::bind_default_texture(textures, mat, display);
+            } else {
+                let material = &car.meshes[actor_name].material_names[(mat - 1) as usize];
+                // println!("Referred material {} index {}", material, mat);
+                if let Some(m) = car.materials.get(material) {
+                    // println!("Found material {}", m);
+                    let mut name = m.pixelmap_name.clone();
+                    if name.is_empty() {
+                        // @fixme hack
+                        name = material.replace(".MAT", ".pix").to_lowercase();
+                    }
+                    if let Some(tex) = car.textures.get(&name) {
+                        // println!("Found texture {}", tex);
+                        let image = RawImage2d::from_raw_rgba_reversed(
+                            &tex.data,
+                            (tex.w as u32, tex.h as u32),
+                        );
+                        let bound_texture = SrgbTexture2d::new(display, image).unwrap();
+                        textures.insert(mat, bound_texture);
+                    } else {
+                        RenderManager::bind_default_texture(textures, mat, display);
+                    }
                 }
             }
         }
     }
 
-    // @todo Extend this to run for multiple actors, currently only SCREWIE is done
     pub fn prepare_car(&mut self, car: &Car, display: &Display) {
-        let vbo = VertexBuffer::<Vertex>::new(display, &car.meshes["SCREWIE"].vertices).unwrap();
-        self.vertices.push(vbo);
+        for actor in car.actors.traverse() {
+            match actor.data() {
+                &ActorNode::MeshfileRef(ref name) => {
+                    println!("Actor meshfile {}", name);
+                    self.prepare_car_actor(name, car, display);
+                }
+                _ => (),
+            }
+        }
+    }
 
-        let faces = &car.meshes["SCREWIE"].faces;
+    pub fn prepare_car_actor(&mut self, name: &String, car: &Car, display: &Display) {
+        println!("prepare_car_actor({}): loading vertices", name);
+        let vbo = VertexBuffer::<Vertex>::new(display, &car.meshes[name].vertices).unwrap();
+        self.vertices.insert(name.clone(), vbo);
+
+        println!("prepare_car_actor({}): partitioning faces", name);
+
+        let faces = &car.meshes[name].faces;
 
         let mut partitioned_by_material = HashMap::<u16, Vec<u16>>::new();
 
         for face in faces {
-            if let None = partitioned_by_material.get(&face.material_id) {
-                partitioned_by_material.insert(face.material_id, Vec::new());
-            } //@todo .entry(..).or_insert(..) here?
-            let indices = partitioned_by_material.get_mut(&face.material_id).unwrap();
+            let indices = partitioned_by_material.entry(face.material_id).or_insert(Vec::new());
             indices.push(face.v1);
             indices.push(face.v2);
             indices.push(face.v3);
@@ -100,27 +139,48 @@ impl RenderManager {
             );
         }
 
-        self.indices = partitioned_by_material
-            .iter()
-            .map(|(key, item)| {
-                (
-                    *key,
-                    IndexBuffer::new(display, PrimitiveType::TrianglesList, &item).unwrap(),
-                )
-            })
-            .collect();
+        self.indices.insert(
+            name.clone(),
+            partitioned_by_material
+                .iter()
+                .map(|(key, item)| {
+                    (
+                        *key,
+                        IndexBuffer::new(display, PrimitiveType::TrianglesList, &item).unwrap(),
+                    )
+                })
+                .collect(),
+        );
 
         // each material from partitioned_by_material - load and bind it in bound_textures
         // then remap to a set of HashMap from String material name to Vec<u16> indices
-        self.bind_textures(car, display);
+        self.bind_textures(name, car, display);
     }
 
-    pub fn draw_car<T>(&self, _car: &Car, target: &mut T, camera: &CameraState)
+    pub fn draw_car<T>(&self, car: &Car, target: &mut T, camera: &CameraState)
     where
         T: Surface,
     {
-        // Single mesh, but specific indices to draw with each material.
+        // Draw all visible actors
+        let mut v = false;
 
+        for actor in car.actors.traverse() {
+            match actor.data() {
+                &ActorNode::Actor { name: _, visible } => v = visible,
+                &ActorNode::MeshfileRef(ref name) => if v {
+                    println!("Drawing actor {}", name);
+                    self.draw_actor(name, target, camera);
+                }
+                _ => (),
+            }
+        }
+    }
+
+    // Uses single mesh, but specific indices to draw with each material.
+    fn draw_actor<T>(&self, mesh_name: &String, target: &mut T, camera: &CameraState)
+    where
+        T: Surface,
+    {
         // the direction of the light - @todo more light sources?
         let light = [-5.0, 5.0, 10.0f32];
         // Ambient lighting: 0.5, 0.5, 0.5, 1.0
@@ -135,22 +195,24 @@ impl RenderManager {
             ..Default::default()
         };
 
-        let model: [[f32; 4]; 4] = (Matrix4::from_angle_y(Deg(45.0)) * Matrix4::identity()).into();
+        // @todo Load calculated skeletal transforms
+        let model: [[f32; 4]; 4] = Matrix4::identity().into();
+        //(Matrix4::from_angle_y(Deg(90.0+45.0)) * Matrix4::identity()).into();
 
-        for (mat, indices) in &self.indices {
+        for (mat, indices) in &self.indices[mesh_name] {
             let uniforms = uniform! {
                 model: model,
                 view: camera.get_view(),
                 perspective: camera.get_perspective(),
                 u_light: light,
                 u_specular_color: [1.0, 1.0, 1.0f32],
-                diffuse_tex: &self.bound_textures[mat],
+                diffuse_tex: &self.bound_textures[mesh_name][mat],
                 // normal_tex: &self.bound_textures[mat],
             };
 
             target
                 .draw(
-                    &self.vertices[0],
+                    &self.vertices[mesh_name],
                     indices,
                     &self.program,
                     &uniforms,
