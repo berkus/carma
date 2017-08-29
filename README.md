@@ -6,4 +6,4 @@ To load a model:
 
     $ cargo run DecodedData/DATA/CARS/SCREWIE.ENC
 
-![Progress](https://dl.dropboxusercontent.com/s/058r17m8qwggtrg/2017-08-29%20at%2002.43.png)
+![Progress](https://dl.dropboxusercontent.com/s/4ic8aw48rszfqqw/2017-08-30%20at%2002.10.png)
