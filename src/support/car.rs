@@ -367,8 +367,18 @@ impl Car {
 
         let mut load_models = read_vector(&mut input_lines);
 
-        let load_alt_actors = read_vector(&mut input_lines);
-        println!("Alternative actors to load: {:?}", load_alt_actors);
+        let load_actors = read_vector(&mut input_lines);
+        let load_actors: HashMap<isize, String> = load_actors
+            .iter()
+            .map(|act| act.split(","))
+            .map(|mut split| {
+                (
+                    split.next().unwrap().parse().unwrap(),
+                    String::from(split.next().unwrap()),
+                )
+            })
+            .collect();
+        println!("Actors to load: {:?}", load_actors);
 
         let reflective_material = input_lines.next().unwrap();
         println!(
@@ -464,8 +474,11 @@ impl Car {
         read_meshes(&fname, &load_models, &mut car_meshes)?;
 
         // Load actor file.
+        let mut actor_file_name = PathBuf::from(&fname);
+        let idx: isize = 0;
+        actor_file_name.set_file_name(&load_actors[&idx]); // Read mipmap 0 actor
         let actor_file_name = path_subst(
-            &Path::new(fname.as_str()),
+            &actor_file_name,
             &Path::new("ACTORS"),
             Some(String::from("ACT")),
         );
