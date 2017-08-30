@@ -107,9 +107,11 @@ impl PixelMap {
                     println!("Pixelmap data {} units, {} bytes each", units, unit_bytes);
                 }
                 Chunk::Null() => break,
-                Chunk::FileHeader { file_type } => if file_type != support::PIXELMAP_FILE_TYPE {
-                    panic!("Invalid pixelmap file type {}", file_type);
-                },
+                Chunk::FileHeader { file_type } => {
+                    if file_type != support::PIXELMAP_FILE_TYPE {
+                        panic!("Invalid pixelmap file type {}", file_type);
+                    }
+                }
                 _ => unimplemented!(), // unexpected type here
             }
         }

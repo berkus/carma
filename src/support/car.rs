@@ -205,7 +205,11 @@ fn read_mechanics_v4<Iter: Iterator<Item = String>>(input: &mut Iter) {
     read_mechanics_v3(input);
 }
 
-fn read_meshes(fname: &String, load_models: &Vec<String>, car_meshes: &mut HashMap<String, Mesh>) -> Result<(), Error> {
+fn read_meshes(
+    fname: &String,
+    load_models: &Vec<String>,
+    car_meshes: &mut HashMap<String, Mesh>,
+) -> Result<(), Error> {
     let mut load_models = load_models.clone();
     load_models.sort();
     load_models.dedup();
@@ -472,9 +476,11 @@ impl Car {
         load_models.clear();
         for actor in car_actors.traverse() {
             match actor.data() {
-                &ActorNode::MeshfileRef(ref name) => if !car_meshes.contains_key(name) {
-                    load_models.push(name.clone())
-                },
+                &ActorNode::MeshfileRef(ref name) => {
+                    if !car_meshes.contains_key(name) {
+                        load_models.push(name.clone())
+                    }
+                }
                 _ => (),
             }
         }
@@ -485,7 +491,8 @@ impl Car {
         //
         // Materials
         //
-        let mut load_materials: HashSet<String> = load_materials.iter().map(|s| s.clone()).collect();
+        let mut load_materials: HashSet<String> =
+            load_materials.iter().map(|s| s.clone()).collect();
         println!("Materials to load: {:?}", load_materials);
 
         let mut car_materials = HashMap::<String, Material>::new();
@@ -507,8 +514,8 @@ impl Car {
         pal_file_name.set_file_name("DRRENDER.PAL");
         let pal_file_name = path_subst(&pal_file_name, &Path::new("REG/PALETTES"), None);
         println!("### Opening palette {:?}", pal_file_name);
-        let palette =
-            &PixelMap::load_from(pal_file_name.into_os_string().into_string().unwrap())?[0];
+        let palette = &PixelMap::load_from(pal_file_name.into_os_string().into_string().unwrap())?
+            [0];
 
         let load_pixmaps: HashSet<_> = load_pixmaps.iter().collect();
         println!("Pixmaps to load: {:?}", load_pixmaps);

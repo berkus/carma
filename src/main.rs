@@ -52,10 +52,12 @@ fn main() {
 
         // polling and handling the events received by the window
         events_loop.poll_events(|ev| match ev {
-            glutin::Event::WindowEvent { event, .. } => match event {
-                glutin::WindowEvent::Closed => action = support::Action::Stop,
-                _ => camera.process_input(&event),
-            },
+            glutin::Event::WindowEvent { event, .. } => {
+                match event {
+                    glutin::WindowEvent::Closed => action = support::Action::Stop,
+                    _ => camera.process_input(&event),
+                }
+            }
             _ => (),
         });
 

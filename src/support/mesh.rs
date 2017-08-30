@@ -90,9 +90,11 @@ impl Mesh {
                     fmlist = r;
                 }
                 Chunk::Null() => break,
-                Chunk::FileHeader { file_type } => if file_type != support::MESH_FILE_TYPE {
-                    panic!("Invalid mesh file type {}", file_type);
-                },
+                Chunk::FileHeader { file_type } => {
+                    if file_type != support::MESH_FILE_TYPE {
+                        panic!("Invalid mesh file type {}", file_type);
+                    }
+                }
                 _ => unimplemented!(), // unexpected type here
             }
         }

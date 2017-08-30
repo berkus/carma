@@ -158,9 +158,11 @@ impl Actor {
                         }
                     }
                     Chunk::Null() => break,
-                    Chunk::FileHeader { file_type } => if file_type != support::ACTOR_FILE_TYPE {
-                        panic!("Invalid model file type {}", file_type);
-                    },
+                    Chunk::FileHeader { file_type } => {
+                        if file_type != support::ACTOR_FILE_TYPE {
+                            panic!("Invalid model file type {}", file_type);
+                        }
+                    }
                     _ => unimplemented!(), // unexpected type here
                 }
             }

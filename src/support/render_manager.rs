@@ -19,7 +19,7 @@ use support::Vertex;
 use support::camera::CameraState;
 use support::actor::ActorNode;
 use cgmath::prelude::*;
-use cgmath::{Vector3, Matrix4};
+use cgmath::{Matrix4, Vector3};
 
 /// Provide storage for in-memory level-data - models, meshes, textures etc.
 pub struct RenderManager {
@@ -35,8 +35,8 @@ pub struct RenderManager {
 impl RenderManager {
     pub fn new(display: &Display) -> Self {
         let vertex_shader_src = str::from_utf8(include_bytes!("../../shaders/first.vert")).unwrap();
-        let fragment_shader_src =
-            str::from_utf8(include_bytes!("../../shaders/first.frag")).unwrap();
+        let fragment_shader_src = str::from_utf8(include_bytes!("../../shaders/first.frag"))
+            .unwrap();
 
         Self {
             vertices: HashMap::new(),
@@ -72,9 +72,9 @@ impl RenderManager {
     // In theory, whole of the game could fit in 4096x4096 megatex.
     fn bind_textures(&mut self, actor_name: &String, car: &Car, display: &Display) {
         for (&mat, _) in &self.indices[actor_name] {
-            let textures = self.bound_textures
-                .entry(actor_name.clone())
-                .or_insert(HashMap::new());
+            let textures = self.bound_textures.entry(actor_name.clone()).or_insert(
+                HashMap::new(),
+            );
             if mat == 0 {
                 RenderManager::bind_default_texture(textures, mat, display);
             } else {
@@ -127,9 +127,9 @@ impl RenderManager {
         let mut partitioned_by_material = HashMap::<u16, Vec<u16>>::new();
 
         for face in faces {
-            let indices = partitioned_by_material
-                .entry(face.material_id)
-                .or_insert(Vec::new());
+            let indices = partitioned_by_material.entry(face.material_id).or_insert(
+                Vec::new(),
+            );
             indices.push(face.v1);
             indices.push(face.v2);
             indices.push(face.v3);
@@ -175,15 +175,20 @@ impl RenderManager {
         for actor in car.actors.traverse() {
             match actor.data() {
                 &ActorNode::Actor { name: _, visible } => v = visible,
-                &ActorNode::MeshfileRef(ref name) => if v {
-                    // println!("Drawing actor {}", name);
-                    self.draw_actor(name, &model, target, camera);
-                },
+                &ActorNode::MeshfileRef(ref name) => {
+                    if v {
+                        // println!("Drawing actor {}", name);
+                        self.draw_actor(name, &model, target, camera);
+                    }
+                }
                 &ActorNode::Transform(t) => {
                     let transform = Matrix4::from_nonuniform_scale(t[0], t[4], t[8]);
-                    let transform = Matrix4::from_translation(
-                        Vector3 { x: t[9], y: t[10], z: t[11] }) * transform;
- 
+                    let transform = Matrix4::from_translation(Vector3 {
+                        x: t[9],
+                        y: t[10],
+                        z: t[11],
+                    }) * transform;
+
                     let depth = car.actors.get_node_depth(actor.parent().unwrap());
                     if depth > last_depth {
                         transform_stack.push(model);
@@ -229,7 +234,8 @@ impl RenderManager {
         let model: [[f32; 4]; 4] = model.clone().into();
 
         for (mat, indices) in &self.indices[mesh_name] {
-            let uniforms = uniform! {
+            let uniforms =
+                uniform! {
                 model: model,
                 view: camera.get_view(),
                 perspective: camera.get_perspective(),
