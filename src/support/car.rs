@@ -235,6 +235,30 @@ fn read_meshes(fname: &String, load_models: &Vec<String>, car_meshes: &mut HashM
     Ok(())
 }
 
+fn read_materials(
+    fname: &String,
+    load_materials: &HashSet<String>,
+    car_materials: &mut HashMap<String, Material>,
+) -> Result<(), Error> {
+    for material in load_materials {
+        let mut mat_file_name = PathBuf::from(&fname);
+        mat_file_name.set_file_name(material);
+        let mat_file_name = path_subst(&mat_file_name, &Path::new("MATERIAL"), None);
+        println!("### Opening material {:?}", mat_file_name);
+        let materials = Material::load_from(
+            mat_file_name
+                .clone()
+                .into_os_string()
+                .into_string()
+                .unwrap(),
+        )?;
+        for mat in materials {
+            car_materials.insert(mat.name.clone(), mat);
+        }
+    }
+    Ok(())
+}
+
 impl Car {
     pub fn dump(&self) {
         self.actors.dump();
@@ -420,13 +444,17 @@ impl Car {
 
         expect_match(&mut input_lines, "END OF MECHANICS STUFF");
 
-        let mut some_materials = read_vector(&mut input_lines);
+        let some_materials = read_vector(&mut input_lines);
         println!("Some other materials to use: {:?}", some_materials);
-        load_materials.append(&mut some_materials);
 
         // @todo More post-mechanics stuff
 
+        //
+        // Meshes
+        //
         let mut car_meshes = HashMap::<String, Mesh>::new();
+
+        println!("Meshes to load: {:?}", load_models);
 
         // Read meshes referenced from text description
         read_meshes(&fname, &load_models, &mut car_meshes)?;
@@ -451,28 +479,28 @@ impl Car {
             }
         }
 
+        println!("Extra meshes to load: {:?}", load_models);
         read_meshes(&fname, &load_models, &mut car_meshes)?;
 
-        let load_materials: HashSet<_> = load_materials.iter().collect();
+        //
+        // Materials
+        //
+        let mut load_materials: HashSet<String> = load_materials.iter().map(|s| s.clone()).collect();
         println!("Materials to load: {:?}", load_materials);
 
         let mut car_materials = HashMap::<String, Material>::new();
-        for material in load_materials {
-            let mut mat_file_name = PathBuf::from(&fname);
-            mat_file_name.set_file_name(material);
-            let mat_file_name = path_subst(&mat_file_name, &Path::new("MATERIAL"), None);
-            println!("### Opening material {:?}", mat_file_name);
-            let mat = Material::load_from(
-                mat_file_name
-                    .clone()
-                    .into_os_string()
-                    .into_string()
-                    .unwrap(),
-            )?;
-            for x in mat {
-                car_materials.insert(x.name.clone(), x);
+
+        read_materials(&fname, &load_materials, &mut car_materials)?;
+
+        load_materials.clear();
+        for mat in some_materials {
+            if !car_materials.contains_key(&mat) {
+                load_materials.insert(mat.clone());
             }
         }
+
+        println!("Extra materials to load: {:?}", load_materials);
+        read_materials(&fname, &load_materials, &mut car_materials)?;
 
         // Load palette from PIX file.
         let mut pal_file_name = PathBuf::from(&fname);
