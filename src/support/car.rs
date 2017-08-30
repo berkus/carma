@@ -78,6 +78,20 @@ fn read_vector<Iter: Iterator<Item = String>>(input: &mut Iter) -> Vec<String> {
     vec
 }
 
+fn read_funk<Iter: Iterator<Item = String>>(input: &mut Iter) {
+    expect_match(input, "START OF FUNK");
+    // for now just ignore everything here, read until END OF FUNK
+    loop {
+        // @todo read funk loop with NEXT FUNK as trigger
+        // read_funk();
+        // NEXT FUNK
+        let line = input.next().unwrap();
+        if line == "END OF FUNK" {
+            return;
+        }
+    }
+}
+
 struct Groove {}
 
 // Read a single groove
@@ -425,9 +439,7 @@ impl Car {
         let nondriven_wheels_diameter = input_lines.next().unwrap();
         println!("Non-driven wheels diameter: {}", nondriven_wheels_diameter);
 
-        expect_match(&mut input_lines, "START OF FUNK");
-        expect_match(&mut input_lines, "END OF FUNK");
-
+        read_funk(&mut input_lines);
         read_grooves(&mut input_lines);
 
         read_some_metadata(&mut input_lines);
