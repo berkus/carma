@@ -12,6 +12,7 @@ use std::vec::Vec;
 use glium;
 use glium::{Display, IndexBuffer, Program, Surface, VertexBuffer};
 use glium::index::*;
+use glium::uniforms::*;
 use glium::texture::{RawImage2d, SrgbTexture2d};
 use support::car::Car;
 use support::Vertex;
@@ -234,7 +235,10 @@ impl RenderManager {
                 perspective: camera.get_perspective(),
                 u_light: light,
                 u_specular_color: [1.0, 1.0, 1.0f32],
-                diffuse_tex: &self.bound_textures[mesh_name][mat],
+                diffuse_tex: Sampler::new(&self.bound_textures[mesh_name][mat])
+                    .minify_filter(MinifySamplerFilter::Linear)
+                    .magnify_filter(MagnifySamplerFilter::Linear)
+                    .wrap_function(SamplerWrapFunction::Repeat),
                 // normal_tex: &self.bound_textures[mat],
             };
 
