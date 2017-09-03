@@ -169,7 +169,7 @@ mod tests {
         let mut data = Cursor::new(vec![
             0x0, 0x0, 0x0, 0x36, // Chunk type - FILE_NAME_CHUNK
             0x0, 0x0, 0x0, 0x8, // Chunk size
-            0x0, 0x0, // dummy u16
+            0x0, 0x3, // subtype u16
             b'h', b'e', b'l', b'l', b'o', 0, // Chunk contents
             0x0, 0x0, 0x0, 0x0, // Chunk type - NULL_CHUNK
             0x0, 0x0, 0x0, 0x0, // Chunk size
