@@ -13,7 +13,7 @@ use std::io::{BufRead, BufReader};
 use std::fs::File;
 use support;
 #[allow(unused_imports)]
-use cgmath::{Vector3, InnerSpace, Zero};
+use cgmath::{InnerSpace, Vector3, Zero};
 
 #[derive(Copy, Clone, Default)]
 pub struct UvCoord {
@@ -71,24 +71,34 @@ impl Mesh {
         loop {
             let c = Chunk::load(rdr)?;
             match c {
-                Chunk::FileName(s) => { m.name = s; },
-                Chunk::VertexList(r) => { m.vertices = r; },
-                Chunk::UvMapList(r) => { m.uvcoords = r; },
-                Chunk::FaceList(r) => { m.faces = r; },
-                Chunk::MaterialList(r) => { m.material_names = r; },
-                Chunk::FaceMatList(r) => { fmlist = r; },
+                Chunk::FileName(s) => {
+                    m.name = s;
+                }
+                Chunk::VertexList(r) => {
+                    m.vertices = r;
+                }
+                Chunk::UvMapList(r) => {
+                    m.uvcoords = r;
+                }
+                Chunk::FaceList(r) => {
+                    m.faces = r;
+                }
+                Chunk::MaterialList(r) => {
+                    m.material_names = r;
+                }
+                Chunk::FaceMatList(r) => {
+                    fmlist = r;
+                }
                 Chunk::Null() => break,
-                Chunk::FileHeader { file_type } => {
-                    if file_type != support::MESH_FILE_TYPE {
-                        panic!("Invalid mesh file type {}", file_type);
-                    }
+                Chunk::FileHeader { file_type } => if file_type != support::MESH_FILE_TYPE {
+                    panic!("Invalid mesh file type {}", file_type);
                 },
                 _ => unimplemented!(), // unexpected type here
             }
         }
 
         if fmlist.len() > 0 && m.faces.len() == fmlist.len() {
-            for i in 0 .. m.faces.len() {
+            for i in 0..m.faces.len() {
                 m.faces[i].material_id = fmlist[i];
             }
         }
@@ -111,9 +121,11 @@ impl Mesh {
     pub fn calc_normals(&mut self) {
         self.normals.resize(self.vertices.len(), (0f32, 0f32, 0f32)); // resize_default() in nightly
         for n in 0..self.faces.len() {
-            let normal = Mesh::calc_normal(Vector3::<f32>::from(self.vertices[self.faces[n].v1 as usize].position),
-                                           Vector3::<f32>::from(self.vertices[self.faces[n].v2 as usize].position),
-                                           Vector3::<f32>::from(self.vertices[self.faces[n].v3 as usize].position));
+            let normal = Mesh::calc_normal(
+                Vector3::<f32>::from(self.vertices[self.faces[n].v1 as usize].position),
+                Vector3::<f32>::from(self.vertices[self.faces[n].v2 as usize].position),
+                Vector3::<f32>::from(self.vertices[self.faces[n].v3 as usize].position),
+            );
             self.normals[self.faces[n].v1 as usize] = normal.into();
             self.normals[self.faces[n].v2 as usize] = normal.into();
             self.normals[self.faces[n].v3 as usize] = normal.into();
@@ -124,44 +136,47 @@ impl Mesh {
 #[cfg(test)]
 mod tests {
 
-use std::io::Cursor;
-use super::*;
+    use std::io::Cursor;
+    use super::*;
 
-#[test]
-fn test_load_face()
-{
-    let mut data = Cursor::new(vec![0xde, 0xad, 0xbe, 0xef, 0xca, 0xfe, 0xba, 0xbe, 0]);
-    let f = Face::load(&mut data).unwrap();
-    assert_eq!(0xdead, f.v1);
-    assert_eq!(0xbeef, f.v2);
-    assert_eq!(0xcafe, f.v3);
-    assert_eq!(0xbabe, f.flags);
-}
+    #[test]
+    fn test_load_face() {
+        let mut data = Cursor::new(vec![0xde, 0xad, 0xbe, 0xef, 0xca, 0xfe, 0xba, 0xbe, 0]);
+        let f = Face::load(&mut data).unwrap();
+        assert_eq!(0xdead, f.v1);
+        assert_eq!(0xbeef, f.v2);
+        assert_eq!(0xcafe, f.v3);
+        assert_eq!(0xbabe, f.flags);
+    }
 
-#[test]
-fn test_load_mesh()
-{
-    let mut data = Cursor::new(vec![
-        0x0, 0x0, 0x0, 0x36, // Chunk type - FILE_NAME_CHUNK
-        0x0, 0x0, 0x0, 0x8, // Chunk size
-        0x0, 0x0, // dummy u16
-        b'h', b'e', b'l', b'l', b'o', 0, // Chunk contents
-        0x0, 0x0, 0x0, 0x0, // Chunk type - NULL_CHUNK
-        0x0, 0x0, 0x0, 0x0, // Chunk size
-    ]);
-    let m = Mesh::load(&mut data).unwrap();
-    assert_eq!("hello", m.name);
-    // assert_eq!(0xbeef, m.v2);
-    // assert_eq!(0xcafe, m.v3);
-    // assert_eq!(0xbabe, m.flags);
-}
+    #[test]
+    fn test_load_mesh() {
+        let mut data = Cursor::new(vec![
+            0x0, 0x0, 0x0, 0x36, // Chunk type - FILE_NAME_CHUNK
+            0x0, 0x0, 0x0, 0x8, // Chunk size
+            0x0, 0x0, // dummy u16
+            b'h', b'e', b'l', b'l', b'o', 0, // Chunk contents
+            0x0, 0x0, 0x0, 0x0, // Chunk type - NULL_CHUNK
+            0x0, 0x0, 0x0, 0x0, // Chunk size
+        ]);
+        let m = Mesh::load(&mut data).unwrap();
+        assert_eq!("hello", m.name);
+        // assert_eq!(0xbeef, m.v2);
+        // assert_eq!(0xcafe, m.v3);
+        // assert_eq!(0xbabe, m.flags);
+    }
 
-// test that normals to unit vectors will be the third unit vector
-#[test]
-fn test_calc_normal()
-{
-    assert_eq!(Mesh::calc_normal(Vector3::unit_y(), Vector3::zero(), Vector3::unit_x()), Vector3::unit_z());
-    assert_eq!(Mesh::calc_normal(Vector3::unit_x(), Vector3::zero(), Vector3::unit_y()), -Vector3::unit_z());
-}
+    // test that normals to unit vectors will be the third unit vector
+    #[test]
+    fn test_calc_normal() {
+        assert_eq!(
+            Mesh::calc_normal(Vector3::unit_y(), Vector3::zero(), Vector3::unit_x()),
+            Vector3::unit_z()
+        );
+        assert_eq!(
+            Mesh::calc_normal(Vector3::unit_x(), Vector3::zero(), Vector3::unit_y()),
+            -Vector3::unit_z()
+        );
+    }
 
 } // tests mod

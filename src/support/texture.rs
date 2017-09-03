@@ -53,14 +53,22 @@ impl PixelMap {
     /// Convert indexed-color image to RGBA using provided palette.
     pub fn remap_via(&self, palette: &PixelMap) -> Result<PixelMap, Error> {
         let mut pm = self.clone();
-        pm.data = Vec::<u8>::with_capacity(self.data.len()*4);
+        pm.data = Vec::<u8>::with_capacity(self.data.len() * 4);
         pm.unit_bytes = 4;
 
         for i in 0..pm.units {
-            pm.data.push(palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 1) as usize]); // R
-            pm.data.push(palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 2) as usize]); // G
-            pm.data.push(palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 3) as usize]); // B
-            pm.data.push(palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 0) as usize]); // A
+            pm.data.push(
+                palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 1) as usize],
+            ); // R
+            pm.data.push(
+                palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 2) as usize],
+            ); // G
+            pm.data.push(
+                palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 3) as usize],
+            ); // B
+            pm.data.push(
+                palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 0) as usize],
+            ); // A
         }
 
         Ok(pm)
@@ -74,25 +82,33 @@ impl PixelMap {
         loop {
             let c = Chunk::load(rdr)?;
             match c {
-                Chunk::PixelmapHeader { name, w, h, use_w, use_h } => {
+                Chunk::PixelmapHeader {
+                    name,
+                    w,
+                    h,
+                    use_w,
+                    use_h,
+                } => {
                     pm.name = name;
                     pm.w = w;
                     pm.h = h;
                     pm.use_w = use_w;
                     pm.use_h = use_h;
                     println!("Pixelmap {}x{} use {}x{}", w, h, use_w, use_h);
-                },
-                Chunk::PixelmapData { units, unit_bytes, data } => {
+                }
+                Chunk::PixelmapData {
+                    units,
+                    unit_bytes,
+                    data,
+                } => {
                     pm.units = units;
                     pm.unit_bytes = unit_bytes;
                     pm.data = data;
                     println!("Pixelmap data {} units, {} bytes each", units, unit_bytes);
-                },
+                }
                 Chunk::Null() => break,
-                Chunk::FileHeader { file_type } => {
-                    if file_type != support::PIXELMAP_FILE_TYPE {
-                        panic!("Invalid pixelmap file type {}", file_type);
-                    }
+                Chunk::FileHeader { file_type } => if file_type != support::PIXELMAP_FILE_TYPE {
+                    panic!("Invalid pixelmap file type {}", file_type);
                 },
                 _ => unimplemented!(), // unexpected type here
             }

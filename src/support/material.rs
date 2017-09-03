@@ -34,18 +34,16 @@ impl Material {
                 Chunk::MaterialDesc { name, params } => {
                     mat.params = params;
                     mat.name = name;
-                },
+                }
                 Chunk::PixelmapRef(name) => {
                     mat.pixelmap_name = name;
-                },
+                }
                 Chunk::RenderTabRef(name) => {
                     mat.rendertab_name = name;
-                },
+                }
                 Chunk::Null() => break,
-                Chunk::FileHeader { file_type } => {
-                    if file_type != support::MATERIAL_FILE_TYPE {
-                        panic!("Invalid material file type {}", file_type);
-                    }
+                Chunk::FileHeader { file_type } => if file_type != support::MATERIAL_FILE_TYPE {
+                    panic!("Invalid material file type {}", file_type);
                 },
                 _ => unimplemented!(), // unexpected type here
             }

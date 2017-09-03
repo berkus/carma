@@ -6,10 +6,11 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
+
+extern crate carma;
 #[macro_use]
 extern crate glium;
 extern crate image;
-extern crate carma;
 
 use std::env;
 use std::str;
@@ -18,8 +19,7 @@ use carma::support::camera;
 use glium::index::*;
 use carma::support::car::Car;
 
-fn main()
-{
+fn main() {
     let car = Car::load_from(env::args().nth(1).unwrap()).unwrap();
     car.dump();
 
@@ -30,8 +30,7 @@ fn main()
     let window = glutin::WindowBuilder::new()
         .with_title("carma")
         .with_dimensions(800, 600);
-    let context = glutin::ContextBuilder::new()
-        .with_depth_buffer(24);
+    let context = glutin::ContextBuilder::new().with_depth_buffer(24);
 
     let display = glium::Display::new(window, context, &events_loop).unwrap();
 
@@ -41,18 +40,24 @@ fn main()
     // let tex = &car.textures["SCRBON8"];
     // let image = glium::texture::RawImage2d::from_raw_rgba_reversed(&tex.data,
     //     (tex.w as u32, tex.h as u32));
-    let image = image::load(Cursor::new(&include_bytes!("tuto-14-diffuse.jpg")[..]),
-                            image::JPEG).unwrap().to_rgba();
+    let image = image::load(
+        Cursor::new(&include_bytes!("tuto-14-diffuse.jpg")[..]),
+        image::JPEG,
+    ).unwrap()
+        .to_rgba();
     let image_dimensions = image.dimensions();
-    let image = glium::texture::RawImage2d::from_raw_rgba_reversed(
-        &image.into_raw(), image_dimensions);
+    let image =
+        glium::texture::RawImage2d::from_raw_rgba_reversed(&image.into_raw(), image_dimensions);
     let diffuse_texture = glium::texture::SrgbTexture2d::new(&display, image).unwrap();
 
-    let image = image::load(Cursor::new(&include_bytes!("tuto-14-normal.png")[..]),
-                            image::PNG).unwrap().to_rgba();
+    let image = image::load(
+        Cursor::new(&include_bytes!("tuto-14-normal.png")[..]),
+        image::PNG,
+    ).unwrap()
+        .to_rgba();
     let image_dimensions = image.dimensions();
-    let image = glium::texture::RawImage2d::from_raw_rgba_reversed(
-        &image.into_raw(), image_dimensions);
+    let image =
+        glium::texture::RawImage2d::from_raw_rgba_reversed(&image.into_raw(), image_dimensions);
     let normal_map = glium::texture::Texture2d::new(&display, image).unwrap();
 
     //
@@ -62,8 +67,9 @@ fn main()
     let fragment_shader_src = str::from_utf8(include_bytes!("../shaders/first.frag")).unwrap();
 
     // shader program
-    let program = glium::Program::from_source(
-        &display, vertex_shader_src, fragment_shader_src, None).unwrap();
+    let program =
+        glium::Program::from_source(&display, vertex_shader_src, fragment_shader_src, None)
+            .unwrap();
 
     // the direction of the light - @todo more light sources?
     let light = [-5.0, 5.0, 10.0f32];
@@ -104,10 +110,10 @@ fn main()
             depth: glium::Depth {
                 test: glium::draw_parameters::DepthTest::IfLess,
                 write: true,
-                .. Default::default()
+                ..Default::default()
             },
             backface_culling: glium::draw_parameters::BackfaceCullingMode::CullClockwise,
-            .. Default::default()
+            ..Default::default()
         };
 
         target.draw(&vbo, &indices, &program, &uniforms, &params).unwrap();
@@ -116,14 +122,12 @@ fn main()
         let mut action = support::Action::Continue;
 
         // polling and handling the events received by the window
-        events_loop.poll_events(|ev| {
-            match ev {
-                glutin::Event::WindowEvent { event, .. } => match event {
-                    glutin::WindowEvent::Closed => action = support::Action::Stop,
-                    _ => camera.process_input(&event),
-                },
-                _ => (),
-            }
+        events_loop.poll_events(|ev| match ev {
+            glutin::Event::WindowEvent { event, .. } => match event {
+                glutin::WindowEvent::Closed => action = support::Action::Stop,
+                _ => camera.process_input(&event),
+            },
+            _ => (),
         });
 
         action

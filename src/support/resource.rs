@@ -8,7 +8,7 @@
 //
 use byteorder::{BigEndian, ReadBytesExt};
 use std::io::BufRead;
-use support::{read_c_string, Vertex, Error};
+use support::{read_c_string, Error, Vertex};
 use support::mesh::{Face, UvCoord};
 use support;
 
@@ -16,8 +16,7 @@ use support;
 // Reading from such file yields chunk results, some of these chunks are service,
 // some are useful to the client.
 #[derive(Default)]
-struct ChunkHeader
-{
+struct ChunkHeader {
     chunk_type: u32,
     size: u32, // size of chunk -4
 }
@@ -34,7 +33,7 @@ impl ChunkHeader {
 
 pub enum Chunk {
     Null(),
-    FileHeader {file_type: u32},
+    FileHeader { file_type: u32 },
     FileName(String),
     VertexList(Vec<Vertex>),
     UvMapList(Vec<UvCoord>),
@@ -61,10 +60,7 @@ pub enum Chunk {
     RenderTabRef(String),
     MeshFileRef(String),
     MaterialRef(String),
-    ActorName {
-        name: String,
-        visible: bool,
-    },
+    ActorName { name: String, visible: bool },
     ActorTransform([f32; 12]),
     MapBoundingBox(),
     ActorNodeDown(),
@@ -76,87 +72,86 @@ impl Chunk {
     pub fn load<R: ReadBytesExt + BufRead>(rdr: &mut R) -> Result<Chunk, Error> {
         let header = ChunkHeader::load(rdr)?;
         match header.chunk_type {
-            support::NULL_CHUNK => {
-                Ok(Chunk::Null())
-            },
+            support::NULL_CHUNK => Ok(Chunk::Null()),
             support::FILE_HEADER_CHUNK => {
                 println!("Reading file header...");
                 assert_eq!(header.size, 8);
                 let file_type = rdr.read_u32::<BigEndian>()?;
                 rdr.read_u32::<BigEndian>()?; // dummy?
                 Ok(Chunk::FileHeader { file_type })
-            },
+            }
             support::FILE_NAME_CHUNK => {
                 let some = rdr.read_u16::<BigEndian>()?;
                 println!("Reading filename entry... (tag {})", some);
                 let s = read_c_string(rdr)?;
                 println!("... {}", s);
                 Ok(Chunk::FileName(s))
-            },
+            }
             support::VERTEX_LIST_CHUNK => {
                 println!("Reading vertex list...");
                 let n = rdr.read_u32::<BigEndian>()?;
                 let mut r = Vec::<Vertex>::with_capacity(n as usize);
-                for _ in 0 .. n {
+                for _ in 0..n {
                     let v = Vertex::load(rdr)?;
                     r.push(v);
                 }
                 Ok(Chunk::VertexList(r))
-            },
+            }
             support::UVMAP_LIST_CHUNK => {
                 println!("Reading uvmap list...");
                 let n = rdr.read_u32::<BigEndian>()?;
                 let mut r = Vec::<UvCoord>::with_capacity(n as usize);
-                for _ in 0 .. n {
+                for _ in 0..n {
                     let v = UvCoord::load(rdr)?;
                     r.push(v);
                 }
                 Ok(Chunk::UvMapList(r))
-            },
+            }
             support::FACE_LIST_CHUNK => {
                 println!("Reading face list...");
                 let n = rdr.read_u32::<BigEndian>()?;
                 let mut r = Vec::<Face>::with_capacity(n as usize);
-                for _ in 0 .. n {
+                for _ in 0..n {
                     let v = Face::load(rdr)?;
                     r.push(v);
                 }
                 Ok(Chunk::FaceList(r))
-            },
+            }
             support::MATERIAL_LIST_CHUNK => {
                 println!("Reading material list...");
                 let n = rdr.read_u32::<BigEndian>()?;
                 let mut r = Vec::<String>::with_capacity(n as usize);
-                for _ in 0 .. n {
+                for _ in 0..n {
                     let v = read_c_string(rdr)?;
                     println!("... {}", v);
                     r.push(v);
                 }
                 Ok(Chunk::MaterialList(r))
-            },
+            }
             support::MATERIAL_DESC_CHUNK => {
                 println!("Reading material descriptor...");
                 let mut params = [0f32; 12];
-                for i in 0 .. 12 {
+                for i in 0..12 {
                     params[i] = rdr.read_f32::<BigEndian>()?;
                 }
                 let name = read_c_string(rdr)?;
                 println!("... {}", name);
                 Ok(Chunk::MaterialDesc { params, name })
-            },
+            }
             support::FACE_MAT_LIST_CHUNK => {
                 println!("Reading face material list...");
                 let n = rdr.read_u32::<BigEndian>()?;
 
-                /*let dummy =*/ rdr.read_u32::<BigEndian>()?;
+                /*let dummy =*/
+                rdr.read_u32::<BigEndian>()?;
 
                 let mut r = Vec::<u16>::with_capacity(n as usize);
-                for _ in 0 .. n {
+                for _ in 0..n {
                     let v = rdr.read_u16::<BigEndian>()?;
                     r.push(v);
                 }
                 Ok(Chunk::FaceMatList(r))
-            },
+            }
             support::PIXELMAP_HEADER_CHUNK => {
                 println!("Reading pixelmap header...");
                 rdr.read_u8()?; // what1
@@ -167,8 +162,14 @@ impl Chunk {
                 rdr.read_u16::<BigEndian>()?; // what2
                 let name = read_c_string(rdr)?;
                 println!("... {}", name);
-                Ok(Chunk::PixelmapHeader { name, w, h, use_w, use_h })
-            },
+                Ok(Chunk::PixelmapHeader {
+                    name,
+                    w,
+                    h,
+                    use_w,
+                    use_h,
+                })
+            }
             support::PIXELMAP_DATA_CHUNK => {
                 println!("Reading pixelmap data...");
 
@@ -181,20 +182,24 @@ impl Chunk {
 
                 rdr.read_exact(&mut data)?;
 
-                Ok(Chunk::PixelmapData { units, unit_bytes, data })
-            },
+                Ok(Chunk::PixelmapData {
+                    units,
+                    unit_bytes,
+                    data,
+                })
+            }
             support::PIXELMAP_REF_CHUNK => {
                 println!("Reading pixelmap ref...");
                 let pixelmap_name = read_c_string(rdr)?;
                 println!("... {}", pixelmap_name);
                 Ok(Chunk::PixelmapRef(pixelmap_name))
-            },
+            }
             support::RENDERTAB_REF_CHUNK => {
                 println!("Reading rendertab ref...");
                 let rendertab_name = read_c_string(rdr)?;
                 println!("... {}", rendertab_name);
                 Ok(Chunk::RenderTabRef(rendertab_name))
-            },
+            }
             support::ACTOR_NAME_CHUNK => {
                 println!("Reading actor name...");
                 let visible = rdr.read_u8()? == 0x1;
@@ -202,54 +207,65 @@ impl Chunk {
                 let name = read_c_string(rdr)?;
                 println!("... {}", name);
                 Ok(Chunk::ActorName { name, visible })
-            },
+            }
             support::ACTOR_NODE_DOWN_CHUNK => {
                 println!("Reading actor node down...");
                 Ok(Chunk::ActorNodeDown())
-            },
+            }
             support::UNKNOWN_29_CHUNK => {
                 println!("Reading unknown 29...");
                 Ok(Chunk::Unknown29())
-            },
+            }
             support::ACTOR_NODE_UP_CHUNK => {
                 println!("Reading actor node up...");
                 Ok(Chunk::ActorNodeUp())
-            },
+            }
             support::MESHFILE_REF_CHUNK => {
                 println!("Reading meshfile ref...");
                 let mesh_name = read_c_string(rdr)?;
                 println!("... {}", mesh_name);
                 Ok(Chunk::MeshFileRef(mesh_name))
-            },
+            }
             support::MATERIAL_REF_CHUNK => {
                 println!("Reading material ref...");
                 let material_name = read_c_string(rdr)?;
                 println!("... {}", material_name);
                 Ok(Chunk::MaterialRef(material_name))
-            },
+            }
             support::ACTOR_TRANSFORM_CHUNK => {
                 println!("Reading actor transform...");
                 let mut params = [0f32; 12];
-                for i in 0 .. 12 {
+                for i in 0..12 {
                     params[i] = rdr.read_f32::<BigEndian>()?;
                 }
                 for row in 0..4 {
-                    println!("[{} {} {}]", params[row*3+0], params[row*3+1], params[row*3+2]);
+                    println!(
+                        "[{} {} {}]",
+                        params[row * 3 + 0],
+                        params[row * 3 + 1],
+                        params[row * 3 + 2]
+                    );
                 }
                 // CHECK_READ(v.read(f));
-                // actor->scale.x[0][0] = v.x; actor->scale.x[1][0] = v.y; actor->scale.x[2][0] = v.z;
+                // actor->scale.x[0][0] = v.x;
+                // actor->scale.x[1][0] = v.y;
+                // actor->scale.x[2][0] = v.z;
                 // CHECK_READ(v.read(f));
-                // actor->scale.x[0][1] = v.x; actor->scale.x[1][1] = v.y; actor->scale.x[2][1] = v.z;
+                // actor->scale.x[0][1] = v.x;
+                // actor->scale.x[1][1] = v.y;
+                // actor->scale.x[2][1] = v.z;
                 // CHECK_READ(v.read(f));
-                // actor->scale.x[0][2] = v.x; actor->scale.x[1][2] = v.y; actor->scale.x[2][2] = v.z;
+                // actor->scale.x[0][2] = v.x;
+                // actor->scale.x[1][2] = v.y;
+                // actor->scale.x[2][2] = v.z;
                 // CHECK_READ(actor->translate.read(f));
                 Ok(Chunk::ActorTransform(params))
-            },
+            }
             support::MAP_BOUNDINGBOX_CHUNK => {
                 println!("Reading map bounding box (or?)...");
                 Ok(Chunk::MapBoundingBox())
-            },
-            _ => unimplemented!(), // should not appear here, but in general chunk reader is possible
+            }
+            _ => unimplemented!(), // should not appear here, in general chunk reader is possible
         }
     }
 }

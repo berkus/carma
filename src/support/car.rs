@@ -12,7 +12,7 @@ use std::path::{Path, PathBuf};
 use std::iter::Iterator;
 use std::collections::HashSet;
 // use byteorder::ReadBytesExt;
-use support::{Error, path_subst};
+use support::{path_subst, Error};
 use support::actor::Actor;
 use support::mesh::Mesh;
 use support::material::Material;
@@ -32,9 +32,11 @@ pub struct Car {
 }
 
 /// Expect next line to match provided text exactly.
-fn expect_match<Iter: Iterator<Item=String>>(input: &mut Iter, text: &str) {
+fn expect_match<Iter: Iterator<Item = String>>(input: &mut Iter, text: &str) {
     if let Some(line) = input.next() {
-        if line == text { return; }
+        if line == text {
+            return;
+        }
         panic!("Expected {:?} but got {:?}", text, line);
     }
     panic!("Expected {:?} but got empty line", text);
@@ -42,14 +44,14 @@ fn expect_match<Iter: Iterator<Item=String>>(input: &mut Iter, text: &str) {
 
 /// Parse a three-component vector from a comma-separated string.
 fn parse_vector(line: &String) -> Vector3<f32> {
-    let line: Vec<f32> = line.split(',').map(|i| { i.trim().parse().unwrap() }).collect();
+    let line: Vec<f32> = line.split(',').map(|i| i.trim().parse().unwrap()).collect();
     Vector3::from((line[0], line[1], line[2]))
 }
 
 /// Read systems in a single damage spec clause.
-fn read_systems<Iter: Iterator<Item=String>>(input: &mut Iter) {
+fn read_systems<Iter: Iterator<Item = String>>(input: &mut Iter) {
     // read condition flag for this clause
-    /*let condition =*/ input.next().unwrap();
+    /*let condition =*/    input.next().unwrap();
     // read systems count, read this many systems
     let systems_count = input.next().unwrap().parse().unwrap();
     for _ in 0..systems_count {
@@ -58,7 +60,7 @@ fn read_systems<Iter: Iterator<Item=String>>(input: &mut Iter) {
 }
 
 /// Read all damage spec clauses.
-fn read_clauses<Iter: Iterator<Item=String>>(input: &mut Iter) {
+fn read_clauses<Iter: Iterator<Item = String>>(input: &mut Iter) {
     // read clause count, read this many systems
     let clause_count = input.next().unwrap().parse().unwrap();
     for _ in 0..clause_count {
@@ -67,7 +69,7 @@ fn read_clauses<Iter: Iterator<Item=String>>(input: &mut Iter) {
 }
 
 /// Read a vector of strings.
-fn read_vector<Iter: Iterator<Item=String>>(input: &mut Iter) -> Vec<String> {
+fn read_vector<Iter: Iterator<Item = String>>(input: &mut Iter) -> Vec<String> {
     // read vector size, read this many strings
     let size = input.next().unwrap().parse().unwrap();
     let mut vec = Vec::<String>::with_capacity(size);
@@ -77,14 +79,13 @@ fn read_vector<Iter: Iterator<Item=String>>(input: &mut Iter) -> Vec<String> {
     vec
 }
 
-struct Groove {
-}
+struct Groove {}
 
 // Read a single groove
 // fn read_groove<Iter: Iterator<Item=String>>(input: &mut Iter) -> Groove {
 // }
 
-fn read_grooves<Iter: Iterator<Item=String>>(input: &mut Iter) /*-> Vec<Groove>*/ {
+fn read_grooves<Iter: Iterator<Item = String>>(input: &mut Iter) {
     expect_match(input, "START OF GROOVE");
     // for now just ignore everything here, read until END OF GROOVE
     loop {
@@ -92,25 +93,27 @@ fn read_grooves<Iter: Iterator<Item=String>>(input: &mut Iter) /*-> Vec<Groove>*
         // read_groove();
         // NEXT GROOVE
         let line = input.next().unwrap();
-        if line == "END OF GROOVE" { return; }
+        if line == "END OF GROOVE" {
+            return;
+        }
     }
 }
 
 /// A bunch of some matrices and mappings or vertex-pairs, ignore for now.
-fn read_some_metadata<Iter: Iterator<Item=String>>(input: &mut Iter) {
-    input.next();// 0.700000
-    input.next();// 0.050000,0.300000
-    input.next();// 0.050000
-    input.next();// 0.050000
-    input.next();// 0.000000
-    input.next();// 0.000000
+fn read_some_metadata<Iter: Iterator<Item = String>>(input: &mut Iter) {
+    input.next(); // 0.700000
+    input.next(); // 0.050000,0.300000
+    input.next(); // 0.050000
+    input.next(); // 0.050000
+    input.next(); // 0.000000
+    input.next(); // 0.000000
     let size = input.next().unwrap().parse().unwrap();
     for _ in 0..size {
-        input.next();// 11
-        input.next();// -0.107444, -0.080211, 0.106640
-        input.next();// -0.057444, 0.054463, 0.206640
-        input.next();// 0.038245, 0.352418, 0.220975
-        input.next();// 0.111755, 0.051602, 0.079025
+        input.next(); // 11
+        input.next(); // -0.107444, -0.080211, 0.106640
+        input.next(); // -0.057444, 0.054463, 0.206640
+        input.next(); // 0.038245, 0.352418, 0.220975
+        input.next(); // 0.111755, 0.051602, 0.079025
         let pair_count = input.next().unwrap().parse().unwrap();
         for _ in 0..pair_count {
             input.next();
@@ -119,7 +122,7 @@ fn read_some_metadata<Iter: Iterator<Item=String>>(input: &mut Iter) {
     }
 }
 
-fn read_mechanics_block_v1_1<Iter: Iterator<Item=String>>(input: &mut Iter) {
+fn read_mechanics_block_v1_1<Iter: Iterator<Item = String>>(input: &mut Iter) {
     let lrwheel_pos = parse_vector(&input.next().unwrap());
     println!("Left rear wheel position: {:?}", lrwheel_pos);
     let rrwheel_pos = parse_vector(&input.next().unwrap());
@@ -135,63 +138,63 @@ fn read_mechanics_block_v1_1<Iter: Iterator<Item=String>>(input: &mut Iter) {
     println!("Bounding box: ({:?} - {:?})", min_bb, max_bb);
 }
 
-fn read_mechanics_block_v1_2<Iter: Iterator<Item=String>>(input: &mut Iter) {
-// 0.5                                     // min turning circle radius
+fn read_mechanics_block_v1_2<Iter: Iterator<Item = String>>(input: &mut Iter) {
+    // 0.5                                     // min turning circle radius
     input.next();
-// 0.025,  0.025                           // suspension give (forward, back)
+    // 0.025,  0.025                           // suspension give (forward, back)
     input.next();
-// 0.090                                   // ride height (must be more than miny in bounding box )
+    // 0.090                  // ride height (must be more than miny in bounding box )
     input.next();
-// 0.5                                     // damping factor
+    // 0.5                                     // damping factor
     input.next();
-// 1.5                                     // mass in tonnes
+    // 1.5                                     // mass in tonnes
     input.next();
-// 1                                       // fractional reduction in friction when slipping
+    // 1                                       // fractional reduction in friction when slipping
     input.next();
-// 79, 80                                  // friction angle ( front and rear )
+    // 79, 80                                  // friction angle ( front and rear )
     input.next();
-// 0.4,    0.2,    0.816                   // width, height, length(0.816, 1.216) for angular momentum calculation
-    input.next();
-}
-
-fn read_mechanics_block_v1_3<Iter: Iterator<Item=String>>(input: &mut Iter) {
-// 0.05, 0.05                              // rolling resistance front and back
-    input.next();
-// 6                                       // number of gears
-    input.next();
-// 200                                     // speed at red line in highest gear
-    input.next();
-// 4                                       // acceleration in highest gear m/s^2 (i.e. engine strength)
+    // 0.4,    0.2,    0.816 // width, height, length(0.816, 1.216) for angular momentum calculation
     input.next();
 }
 
-fn read_mechanics_block_v2<Iter: Iterator<Item=String>>(input: &mut Iter) {
-// 2.0                                     // traction fractional multiplier v. 2
+fn read_mechanics_block_v1_3<Iter: Iterator<Item = String>>(input: &mut Iter) {
+    // 0.05, 0.05                              // rolling resistance front and back
     input.next();
-// 50                                      // speed at which down force = weight v. 2
+    // 6                                       // number of gears
     input.next();
-// 1.0                                     // brake multiplier, 1 = nomral brakes v. 2
+    // 200                                     // speed at red line in highest gear
     input.next();
-// 1.0                                     // increase in brakes per second 1 = normal v. 2
+    // 4                           // acceleration in highest gear m/s^2 (i.e. engine strength)
     input.next();
 }
 
-fn read_mechanics_block_v3<Iter: Iterator<Item=String>>(input: &mut Iter) {
-// 3
-// 0,-0.18,-0.52                               // extra point 1            v. 3
-// -0.07,0.07,0.18                         // extra point 2            v. 3
-// 0.07,0.07,0.18                          // extra point 3            v. 3
+fn read_mechanics_block_v2<Iter: Iterator<Item = String>>(input: &mut Iter) {
+    // 2.0                                     // traction fractional multiplier v. 2
+    input.next();
+    // 50                                      // speed at which down force = weight v. 2
+    input.next();
+    // 1.0                                     // brake multiplier, 1 = nomral brakes v. 2
+    input.next();
+    // 1.0                                     // increase in brakes per second 1 = normal v. 2
+    input.next();
+}
+
+fn read_mechanics_block_v3<Iter: Iterator<Item = String>>(input: &mut Iter) {
+    // 3
+    // 0,-0.18,-0.52                               // extra point 1            v. 3
+    // -0.07,0.07,0.18                         // extra point 2            v. 3
+    // 0.07,0.07,0.18                          // extra point 3            v. 3
     read_vector(input);
 }
 
-fn read_mechanics_v2<Iter: Iterator<Item=String>>(input: &mut Iter) {
+fn read_mechanics_v2<Iter: Iterator<Item = String>>(input: &mut Iter) {
     read_mechanics_block_v1_1(input);
     read_mechanics_block_v1_2(input);
     read_mechanics_block_v2(input);
     read_mechanics_block_v1_3(input);
 }
 
-fn read_mechanics_v3<Iter: Iterator<Item=String>>(input: &mut Iter) {
+fn read_mechanics_v3<Iter: Iterator<Item = String>>(input: &mut Iter) {
     read_mechanics_block_v1_1(input);
     read_mechanics_block_v3(input);
     read_mechanics_block_v1_2(input);
@@ -199,7 +202,7 @@ fn read_mechanics_v3<Iter: Iterator<Item=String>>(input: &mut Iter) {
     read_mechanics_block_v1_3(input);
 }
 
-fn read_mechanics_v4<Iter: Iterator<Item=String>>(input: &mut Iter) {
+fn read_mechanics_v4<Iter: Iterator<Item = String>>(input: &mut Iter) {
     read_mechanics_v3(input);
 }
 
@@ -227,7 +230,11 @@ impl Car {
         let mut car = Car::default();
 
         // Load description file.
-        let description_file_name = path_subst(&Path::new(fname.as_str()), &Path::new("CARS"), Some(String::from("ENC")));
+        let description_file_name = path_subst(
+            &Path::new(fname.as_str()),
+            &Path::new("CARS"),
+            Some(String::from("ENC")),
+        );
         println!("### Opening car {:?}", description_file_name);
 
         let description_file = File::open(description_file_name)?;
@@ -237,7 +244,8 @@ impl Car {
             .map(|line| line.unwrap())
             .filter(|line| !line.starts_with("//")) // Skip whole-line comments
             .filter(|line| !line.is_empty()) // Skip empty lines
-            .map(|line| line.split("//").next().unwrap().trim().to_owned()); // Separate in-line comments from data
+            // Separate in-line comments from data
+            .map(|line| line.split("//").next().unwrap().trim().to_owned());
 
         car.name = input_lines.next().unwrap();
         println!("Car name {}", car.name);
@@ -245,21 +253,36 @@ impl Car {
         expect_match(&mut input_lines, "START OF DRIVABLE STUFF");
 
         let driver_head_3d_offset = parse_vector(&input_lines.next().unwrap());
-        println!("Offset of driver's head in 3D space {:?}", driver_head_3d_offset);
+        println!(
+            "Offset of driver's head in 3D space {:?}",
+            driver_head_3d_offset
+        );
 
         let head_turn_angles = input_lines.next().unwrap();
-        println!("Angles to turn to make head go left and right {}", head_turn_angles);
+        println!(
+            "Angles to turn to make head go left and right {}",
+            head_turn_angles
+        );
 
         let mirror_3d_offset_and_fov = input_lines.next().unwrap();
-        println!("Offset of 'mirror camera' in 3D space, viewing angle of mirror {}", mirror_3d_offset_and_fov);
+        println!(
+            "Offset of 'mirror camera' in 3D space, viewing angle of mirror {}",
+            mirror_3d_offset_and_fov
+        );
 
         let pratcam_borders = input_lines.next().unwrap();
-        println!("Pratcam border names (left, top, right, bottom) {}", pratcam_borders);
+        println!(
+            "Pratcam border names (left, top, right, bottom) {}",
+            pratcam_borders
+        );
 
         expect_match(&mut input_lines, "END OF DRIVABLE STUFF");
 
         let engine_noise = input_lines.next().unwrap();
-        println!("Engine noise (normal, enclosed space, underwater) {}", engine_noise);
+        println!(
+            "Engine noise (normal, enclosed space, underwater) {}",
+            engine_noise
+        );
 
         let stealworthy = input_lines.next().unwrap();
         println!("Cannot be stolen (without cheat): {}", stealworthy);
@@ -292,7 +315,10 @@ impl Car {
         println!("Alternative actors to load: {:?}", load_alt_actors);
 
         let reflective_material = input_lines.next().unwrap();
-        println!("Name of reflective screen material (or none if non-reflective): {}", reflective_material);
+        println!(
+            "Name of reflective screen material (or none if non-reflective): {}",
+            reflective_material
+        );
 
         // Number of steerable wheels
         // GroovyFunkRef of 1st steerable wheel -- this is index in the GROOVE array below
@@ -304,7 +330,10 @@ impl Car {
         println!("Left-front suspension parts GroovyFunkRef: {}", lfsus_gfref);
 
         let rfsus_gfref = input_lines.next().unwrap();
-        println!("Right-front suspension parts GroovyFunkRef: {}", rfsus_gfref);
+        println!(
+            "Right-front suspension parts GroovyFunkRef: {}",
+            rfsus_gfref
+        );
 
         let lrsus_gfref = input_lines.next().unwrap();
         println!("Left-rear suspension parts GroovyFunkRef: {}", lrsus_gfref);
@@ -313,10 +342,16 @@ impl Car {
         println!("Right-rear suspension parts GroovyFunkRef: {}", rrsus_gfref);
 
         let driven_wheels_gfref = input_lines.next().unwrap();
-        println!("Driven wheels GroovyFunkRefs (for spinning) - MUST BE 4 ITEMS: {}", driven_wheels_gfref);
+        println!(
+            "Driven wheels GroovyFunkRefs (for spinning) - MUST BE 4 ITEMS: {}",
+            driven_wheels_gfref
+        );
 
         let nondriven_wheels_gfref = input_lines.next().unwrap();
-        println!("Non-driven wheels GroovyFunkRefs (for spinning) - MUST BE 4 ITEMS: {}", nondriven_wheels_gfref);
+        println!(
+            "Non-driven wheels GroovyFunkRefs (for spinning) - MUST BE 4 ITEMS: {}",
+            nondriven_wheels_gfref
+        );
 
         let driven_wheels_diameter = input_lines.next().unwrap();
         println!("Driven wheels diameter: {}", driven_wheels_diameter);
@@ -335,9 +370,18 @@ impl Car {
 
         let mechanics = input_lines.next().unwrap();
         if !mechanics.starts_with("START OF MECHANICS STUFF") {
-            panic!("Expected START OF MECHANICS STUFF, got {:?} instead", mechanics);
+            panic!(
+                "Expected START OF MECHANICS STUFF, got {:?} instead",
+                mechanics
+            );
         }
-        let version = mechanics.split(" version ").skip(1).next().unwrap().parse().unwrap();
+        let version = mechanics
+            .split(" version ")
+            .skip(1)
+            .next()
+            .unwrap()
+            .parse()
+            .unwrap();
 
         match version {
             2 => read_mechanics_v2(&mut input_lines),
@@ -355,7 +399,11 @@ impl Car {
         // @todo More post-mechanics stuff
 
         // Load actor file.
-        let actor_file_name = path_subst(&Path::new(fname.as_str()), &Path::new("ACTORS"), Some(String::from("ACT")));
+        let actor_file_name = path_subst(
+            &Path::new(fname.as_str()),
+            &Path::new("ACTORS"),
+            Some(String::from("ACT")),
+        );
         println!("### Opening actor {:?}", actor_file_name);
         car.actors = Actor::load_from(actor_file_name.into_os_string().into_string().unwrap())?;
 
@@ -363,9 +411,19 @@ impl Car {
         for mesh in load_models {
             let mut mesh_file_name = PathBuf::from(&fname);
             mesh_file_name.set_file_name(mesh);
-            let mesh_file_name = path_subst(&mesh_file_name, &Path::new("MODELS"), Some(String::from("DAT")));
+            let mesh_file_name = path_subst(
+                &mesh_file_name,
+                &Path::new("MODELS"),
+                Some(String::from("DAT")),
+            );
             println!("### Opening mesh {:?}", mesh_file_name);
-            let mesh = Mesh::load_from(mesh_file_name.clone().into_os_string().into_string().unwrap())?;
+            let mesh = Mesh::load_from(
+                mesh_file_name
+                    .clone()
+                    .into_os_string()
+                    .into_string()
+                    .unwrap(),
+            )?;
             let stem = String::from(mesh_file_name.file_stem().unwrap().to_string_lossy());
             car.meshes.insert(stem, mesh);
         }
@@ -378,7 +436,13 @@ impl Car {
             mat_file_name.set_file_name(material);
             let mat_file_name = path_subst(&mat_file_name, &Path::new("MATERIAL"), None);
             println!("### Opening material {:?}", mat_file_name);
-            let mat = Material::load_from(mat_file_name.clone().into_os_string().into_string().unwrap())?;
+            let mat = Material::load_from(
+                mat_file_name
+                    .clone()
+                    .into_os_string()
+                    .into_string()
+                    .unwrap(),
+            )?;
             for x in mat {
                 car.materials.insert(x.name.clone(), x);
             }
@@ -389,7 +453,8 @@ impl Car {
         pal_file_name.set_file_name("DRRENDER.PAL");
         let pal_file_name = path_subst(&pal_file_name, &Path::new("REG/PALETTES"), None);
         println!("### Opening palette {:?}", pal_file_name);
-        let palette = &PixelMap::load_from(pal_file_name.into_os_string().into_string().unwrap())?[0];
+        let palette =
+            &PixelMap::load_from(pal_file_name.into_os_string().into_string().unwrap())?[0];
 
         let load_pixmaps: HashSet<_> = load_pixmaps.iter().collect();
         println!("Pixmaps to load: {:?}", load_pixmaps);
@@ -399,7 +464,13 @@ impl Car {
             pix_file_name.set_file_name(pixmap);
             let pix_file_name = path_subst(&pix_file_name, &Path::new("PIXELMAP"), None);
             println!("### Opening pixelmap {:?}", pix_file_name);
-            let pix = PixelMap::load_from(pix_file_name.clone().into_os_string().into_string().unwrap())?;
+            let pix = PixelMap::load_from(
+                pix_file_name
+                    .clone()
+                    .into_os_string()
+                    .into_string()
+                    .unwrap(),
+            )?;
             for pmap in pix {
                 let pmap = pmap.remap_via(&palette)?;
                 car.textures.insert(pmap.name.clone(), pmap);
