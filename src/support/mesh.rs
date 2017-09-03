@@ -53,7 +53,7 @@ impl Face {
 
 #[derive(Default)]
 pub struct Mesh {
-    name: String,
+    pub name: String,
     pub vertices: Vec<Vertex>,
     pub faces: Vec<Face>,
     pub material_names: Vec<String>,
@@ -111,10 +111,19 @@ impl Mesh {
         Ok(m)
     }
 
-    pub fn load_from(fname: String) -> Result<Mesh, Error> {
+    // Single mesh file may contain multiple meshes
+    pub fn load_from(fname: String) -> Result<Vec<Mesh>, Error> {
         let file = File::open(fname)?;
         let mut file = BufReader::new(file);
-        Mesh::load(&mut file)
+        let mut meshes = Vec::<Mesh>::new();
+        loop {
+            let m = Mesh::load(&mut file);
+            match m {
+                Err(_) => break, // fixme: allow only Eof here
+                Ok(m) => meshes.push(m),
+            }
+        }
+        Ok(meshes)
     }
 
     // Calculate normal from vertices in counter-clockwise order.

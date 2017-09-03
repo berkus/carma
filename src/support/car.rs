@@ -22,10 +22,9 @@ use cgmath::Vector3;
 // use support::resource::Chunk;
 
 // Car assembles the gameplay object (a car in this case) from various model and texture files.
-#[derive(Default)]
 pub struct Car {
     pub name: String,
-    pub actors: Vec<Actor>,
+    pub actors: Actor,
     pub meshes: HashMap<String, Mesh>,
     pub materials: HashMap<String, Material>,
     pub textures: HashMap<String, PixelMap>,
@@ -208,10 +207,8 @@ fn read_mechanics_v4<Iter: Iterator<Item = String>>(input: &mut Iter) {
 
 impl Car {
     pub fn dump(&self) {
-        for act in &self.actors {
-            act.dump();
-            act.dump_actor_points();
-        }
+        self.actors.dump();
+        self.actors.dump_actor_points();
         for tex in &self.textures {
             println!("Texture {}: {}", tex.0, tex.1);
         }
@@ -227,8 +224,6 @@ impl Car {
     }
 
     pub fn load_from(fname: String) -> Result<Car, Error> {
-        let mut car = Car::default();
-
         // Load description file.
         let description_file_name = path_subst(
             &Path::new(fname.as_str()),
@@ -247,8 +242,8 @@ impl Car {
             // Separate in-line comments from data
             .map(|line| line.split("//").next().unwrap().trim().to_owned());
 
-        car.name = input_lines.next().unwrap();
-        println!("Car name {}", car.name);
+        let car_name = input_lines.next().unwrap();
+        println!("Car name {}", car_name);
 
         expect_match(&mut input_lines, "START OF DRIVABLE STUFF");
 
@@ -405,9 +400,10 @@ impl Car {
             Some(String::from("ACT")),
         );
         println!("### Opening actor {:?}", actor_file_name);
-        car.actors = Actor::load_from(actor_file_name.into_os_string().into_string().unwrap())?;
+        let car_actors = Actor::load_from(actor_file_name.into_os_string().into_string().unwrap())?;
 
         // Now iterate all meshes and load them.
+        let mut car_meshes = HashMap::<String, Mesh>::new();
         for mesh in load_models {
             let mut mesh_file_name = PathBuf::from(&fname);
             mesh_file_name.set_file_name(mesh);
@@ -416,21 +412,23 @@ impl Car {
                 &Path::new("MODELS"),
                 Some(String::from("DAT")),
             );
-            println!("### Opening mesh {:?}", mesh_file_name);
-            let mesh = Mesh::load_from(
+            println!("### Opening meshes {:?}", mesh_file_name);
+            let meshes = Mesh::load_from(
                 mesh_file_name
                     .clone()
                     .into_os_string()
                     .into_string()
                     .unwrap(),
             )?;
-            let stem = String::from(mesh_file_name.file_stem().unwrap().to_string_lossy());
-            car.meshes.insert(stem, mesh);
+            for mesh in meshes {
+                car_meshes.insert(mesh.name.clone(), mesh);
+            }
         }
 
         let load_materials: HashSet<_> = load_materials.iter().collect();
         println!("Materials to load: {:?}", load_materials);
 
+        let mut car_materials = HashMap::<String, Material>::new();
         for material in load_materials {
             let mut mat_file_name = PathBuf::from(&fname);
             mat_file_name.set_file_name(material);
@@ -444,7 +442,7 @@ impl Car {
                     .unwrap(),
             )?;
             for x in mat {
-                car.materials.insert(x.name.clone(), x);
+                car_materials.insert(x.name.clone(), x);
             }
         }
 
@@ -459,6 +457,7 @@ impl Car {
         let load_pixmaps: HashSet<_> = load_pixmaps.iter().collect();
         println!("Pixmaps to load: {:?}", load_pixmaps);
 
+        let mut car_textures = HashMap::<String, PixelMap>::new();
         for pixmap in load_pixmaps {
             let mut pix_file_name = PathBuf::from(&fname);
             pix_file_name.set_file_name(pixmap);
@@ -473,10 +472,16 @@ impl Car {
             )?;
             for pmap in pix {
                 let pmap = pmap.remap_via(&palette)?;
-                car.textures.insert(pmap.name.clone(), pmap);
+                car_textures.insert(pmap.name.clone(), pmap);
             }
         }
 
-        Ok(car)
+        Ok(Car {
+            name: car_name,
+            actors: car_actors,
+            meshes: car_meshes,
+            materials: car_materials,
+            textures: car_textures,
+        })
     }
 }

@@ -157,17 +157,10 @@ impl Actor {
         Ok(actor)
     }
 
-    pub fn load_from(fname: String) -> Result<Vec<Actor>, Error> {
+    pub fn load_from(fname: String) -> Result<Actor, Error> {
         let file = File::open(fname)?;
         let mut file = BufReader::new(file);
-        let mut models = Vec::<Actor>::new();
-        loop {
-            let m = Actor::load(&mut file);
-            match m {
-                Err(_) => break, // fixme: allow only Eof here
-                Ok(m) => models.push(m),
-            }
-        }
-        Ok(models)
+        let m = Actor::load(&mut file)?;
+        Ok(m)
     }
 }
