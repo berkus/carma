@@ -11,6 +11,7 @@ use std::time::{Duration, Instant};
 pub mod camera;
 pub mod material;
 pub mod model;
+pub mod texture;
 
 pub enum Action {
     Stop,
