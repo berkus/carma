@@ -13,6 +13,7 @@ pub mod material;
 pub mod mesh;
 pub mod model;
 pub mod texture;
+pub mod resource;
 
 pub enum Action {
     Stop,
