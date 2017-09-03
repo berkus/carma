@@ -65,8 +65,6 @@ fn main()
     // the direction of the light - @todo more light sources?
     let light = [-1.0, 0.4, 0.9f32];
 
-    let vbo = glium::vertex::VertexBuffer::new(&display, &car.meshes["SCREWIE"].vertices).unwrap();
-
     let mut camera = camera::CameraState::new();
     // camera.set_position((2.0, -1.0, 1.0));
     // camera.set_direction((-2.0, 1.0, 1.0));

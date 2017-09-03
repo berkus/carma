@@ -24,6 +24,15 @@ use cgmath::Vector3;
 // use glium::{self, Display};
 // use glium::vertex::VertexBufferAny;
 
+pub mod camera;
+pub mod material;
+pub mod mesh;
+pub mod actor;
+pub mod texture;
+pub mod render_manager;
+pub mod resource;
+pub mod car;
+
 #[derive(Copy, Clone, Default)]
 pub struct Vertex {
     pub position: [f32; 3],
@@ -56,14 +65,6 @@ impl Sub for Vertex {
         }
     }
 }
-
-pub mod camera;
-pub mod material;
-pub mod mesh;
-pub mod actor;
-pub mod texture;
-pub mod resource;
-pub mod car;
 
 #[derive(Debug)]
 pub enum Error {
