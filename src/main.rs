@@ -66,7 +66,8 @@ fn main()
         &display, vertex_shader_src, fragment_shader_src, None).unwrap();
 
     // the direction of the light - @todo more light sources?
-    let light = [-1.0, 0.4, 0.9f32];
+    let light = [-5.0, 5.0, 10.0f32];
+    // Ambient lighting: 0.5, 0.5, 0.5, 1.0
 
     let mut camera = camera::CameraState::new();
     // camera.set_position((2.0, -1.0, 1.0));
