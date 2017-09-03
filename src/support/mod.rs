@@ -10,6 +10,7 @@ use std::time::{Duration, Instant};
 
 pub mod camera;
 pub mod material;
+pub mod model;
 
 pub enum Action {
     Stop,
