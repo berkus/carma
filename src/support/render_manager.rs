@@ -178,7 +178,6 @@ impl RenderManager {
         let mut transform_stack = Vec::<Matrix4<f32>>::new();
         transform_stack.push(Matrix4::<f32>::identity());
 
-        let mut last_depth = 0;
         let mut actor_name = String::new();
 
         for actor in car.actors.traverse() {
@@ -186,6 +185,17 @@ impl RenderManager {
                 &ActorNode::Actor { ref name, visible } => {
                     actor_name = name.clone();
                     v = visible;
+
+                    let depth = car.actors.get_node_depth(actor) - 1;
+                    trace!("Actor {} depth {}", name, depth);
+                    if depth < transform_stack.len() {
+                        let pop_count = transform_stack.len() - depth;
+                        trace!("Restoring transform - {} times", pop_count);
+                        for _ in 0..pop_count {
+                            transform_stack.pop().unwrap();
+                        }
+                    }
+
                     debug_tree(&String::from("Actor"), &actor_name, &transform_stack);
                 }
                 &ActorNode::MeshfileRef(ref name) => {
@@ -194,14 +204,8 @@ impl RenderManager {
                         trace!("Drawing actor {}", name);
                         self.draw_actor(name, &transform_stack.last().unwrap(), target, camera);
                     }
-                    transform_stack.pop().unwrap();
                 }
                 &ActorNode::Transform(t) => {
-                    debug_tree(
-                        &String::from("Transform(before)"),
-                        &actor_name,
-                        &transform_stack,
-                    );
                     let transform = Matrix4::from_translation(Vector3 {
                         x: t[9],
                         y: t[10],
@@ -209,20 +213,9 @@ impl RenderManager {
                     }) *
                         Matrix4::from_nonuniform_scale(t[0], t[4], t[8]);
 
-                    let depth = car.actors.get_node_depth(actor.parent().unwrap());
-                    if depth < last_depth {
-                        let pop_count = last_depth - depth;
-                        trace!("Restoring transform - {} times", pop_count);
-                        for _ in 0..pop_count {
-                            transform_stack.pop().unwrap();
-                        }
-                    }
-                    last_depth = depth;
-
                     let model = transform * transform_stack.last().unwrap();
                     transform_stack.push(model);
 
-                    trace!("..new model {:?}", model);
                     debug_tree(
                         &String::from("Transform(after)"),
                         &actor_name,
@@ -232,7 +225,6 @@ impl RenderManager {
                 _ => (),
             }
         }
-        assert_eq!(transform_stack.len(), 1); // only identity matrix should remain
     }
 
     /// Uses single mesh, but specific indices to draw with each material.
