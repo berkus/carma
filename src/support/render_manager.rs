@@ -29,6 +29,13 @@ pub struct RenderManager {
     program: Program,
 }
 
+fn debug_tree(name: &String, actor_name: &String, stack: &Vec<Matrix4<f32>>) {
+    debug!("{} for {}: stack depth {}", name, actor_name, stack.len());
+    for x in stack.iter().rev() {
+        debug!(".. {:?}", x);
+    }
+}
+
 // Load VertexBuffer
 // Load IndexBuffers for each material
 // Set up renderlist (VertexBuffer, IndexBuffer)
@@ -169,43 +176,63 @@ impl RenderManager {
     {
         let mut v = false;
         let mut transform_stack = Vec::<Matrix4<f32>>::new();
-        let mut model = Matrix4::<f32>::identity();
+        transform_stack.push(Matrix4::<f32>::identity());
+
         let mut last_depth = 0;
+        let mut actor_name = String::new();
 
         for actor in car.actors.traverse() {
             match actor.data() {
-                &ActorNode::Actor { name: _, visible } => v = visible,
+                &ActorNode::Actor { ref name, visible } => {
+                    actor_name = name.clone();
+                    v = visible;
+                    debug_tree(&String::from("Actor"), &actor_name, &transform_stack);
+                }
                 &ActorNode::MeshfileRef(ref name) => {
+                    debug_tree(&format!("Mesh {}", name), &actor_name, &transform_stack);
                     if v {
                         trace!("Drawing actor {}", name);
-                        self.draw_actor(name, &model, target, camera);
+                        self.draw_actor(name, &transform_stack.last().unwrap(), target, camera);
                     }
+                    transform_stack.pop().unwrap();
                 }
                 &ActorNode::Transform(t) => {
-                    let transform = Matrix4::from_nonuniform_scale(t[0], t[4], t[8]);
+                    debug_tree(
+                        &String::from("Transform(before)"),
+                        &actor_name,
+                        &transform_stack,
+                    );
                     let transform = Matrix4::from_translation(Vector3 {
                         x: t[9],
                         y: t[10],
                         z: t[11],
-                    }) * transform;
-
-                    trace!("Applying transform {:?}", transform);
+                    }) *
+                        Matrix4::from_nonuniform_scale(t[0], t[4], t[8]);
 
                     let depth = car.actors.get_node_depth(actor.parent().unwrap());
-                    if depth > last_depth {
-                        transform_stack.push(model);
-                        model = transform * model;
-                    } else if depth < last_depth {
-                        model = transform_stack.pop().unwrap();
-                    } else {
-                        model = transform * transform_stack.last().unwrap();
+                    if depth < last_depth {
+                        let pop_count = last_depth - depth;
+                        trace!("Restoring transform - {} times", pop_count);
+                        for _ in 0..pop_count {
+                            transform_stack.pop().unwrap();
+                        }
                     }
-                    trace!("..new model {:?}", model);
                     last_depth = depth;
+
+                    let model = transform * transform_stack.last().unwrap();
+                    transform_stack.push(model);
+
+                    trace!("..new model {:?}", model);
+                    debug_tree(
+                        &String::from("Transform(after)"),
+                        &actor_name,
+                        &transform_stack,
+                    );
                 }
                 _ => (),
             }
         }
+        assert_eq!(transform_stack.len(), 1); // only identity matrix should remain
     }
 
     /// Uses single mesh, but specific indices to draw with each material.
