@@ -54,12 +54,20 @@ impl Actor {
         self.tree.traverse_pre_order(&self.root_id).unwrap()
     }
 
-    pub fn get_node_depth(&self, node: &NodeId) -> usize {
+    pub fn get_node_id_depth(&self, node: &NodeId) -> usize {
         let mut depth = 1;
         for _ in self.tree.ancestors(node).unwrap() {
             depth += 1;
         }
         depth
+    }
+
+    pub fn get_node_depth(&self, node: &Node<ActorNode>) -> usize {
+        if let Some(parent_id) = node.parent() {
+            self.get_node_id_depth(parent_id) + 1
+        } else {
+            1
+        }
     }
 
     pub fn dump(&self) {
