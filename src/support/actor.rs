@@ -110,7 +110,7 @@ impl Actor {
                 let c = Chunk::load(rdr)?;
                 match c {
                     Chunk::ActorName { name, visible } => {
-                        println!("Actor {} visible {}", name, visible);
+                        trace!("Actor {} visible {}", name, visible);
                         let child_id: NodeId = actor
                             .tree
                             .insert(

@@ -15,6 +15,7 @@ extern crate derive_builder;
 #[macro_use]
 extern crate glium;
 extern crate id_tree;
-// extern crate num;
+#[macro_use]
+extern crate log;
 
 pub mod support;

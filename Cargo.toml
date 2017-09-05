@@ -12,3 +12,6 @@ byteorder = "1.1.0" # library for reading/writing big/little endian numbers
 cgmath = "0.15.0" # Vector3
 id_tree = "1.1.3"
 num = "0.1.40"
+log = "0.3.8"
+fern = "0.4.2"
+chrono = "0.4.0"

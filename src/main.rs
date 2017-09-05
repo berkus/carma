@@ -9,6 +9,9 @@
 
 extern crate carma;
 extern crate glium;
+extern crate chrono;
+extern crate log;
+extern crate fern;
 
 use std::env;
 use carma::support;
@@ -16,7 +19,33 @@ use carma::support::camera::CameraState;
 use carma::support::car::Car;
 use carma::support::render_manager::RenderManager;
 
+fn setup_logging() -> Result<(), fern::InitError> {
+    let base_config = fern::Dispatch::new().format(|out, message, record| {
+        out.finish(format_args!(
+            "{}[{}][{}] {}",
+            chrono::Local::now().format("[%Y-%m-%d][%H:%M:%S]"),
+            record.target(),
+            record.level(),
+            message
+        ))
+    });
+
+    let stdout_config = fern::Dispatch::new()
+        .level(log::LogLevelFilter::Info)
+        .chain(std::io::stdout());
+
+    let file_config = fern::Dispatch::new()
+        .level(log::LogLevelFilter::Trace)
+        .chain(fern::log_file("debug.log")?);
+
+    base_config.chain(stdout_config).chain(file_config).apply()?;
+
+    Ok(())
+}
+
 fn main() {
+    setup_logging().expect("failed to initialize logging");
+
     let car = Car::load_from(env::args().nth(1).unwrap()).unwrap();
     car.dump();
 

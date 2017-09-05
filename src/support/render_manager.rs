@@ -79,16 +79,16 @@ impl RenderManager {
                 RenderManager::bind_default_texture(textures, mat, display);
             } else {
                 let material = &car.meshes[actor_name].material_names[(mat - 1) as usize];
-                // println!("Referred material {} index {}", material, mat);
+                trace!("Referred material {} index {}", material, mat);
                 if let Some(m) = car.materials.get(material) {
-                    // println!("Found material {}", m);
+                    trace!("Found material {}", m);
                     let mut name = m.pixelmap_name.clone();
                     if name.is_empty() {
                         // @fixme hack
                         name = material.replace(".MAT", ".pix").to_lowercase();
                     }
                     if let Some(tex) = car.textures.get(&name) {
-                        // println!("Found texture {}", tex);
+                        trace!("Found texture {}", tex);
                         let image = RawImage2d::from_raw_rgba_reversed(
                             &tex.data,
                             (tex.w as u32, tex.h as u32),
@@ -107,7 +107,7 @@ impl RenderManager {
         for actor in car.actors.traverse() {
             match actor.data() {
                 &ActorNode::MeshfileRef(ref name) => {
-                    println!("Actor meshfile {}", name);
+                    debug!("Actor meshfile {}", name);
                     self.prepare_car_actor(name, car, display);
                 }
                 _ => (),
@@ -116,11 +116,11 @@ impl RenderManager {
     }
 
     pub fn prepare_car_actor(&mut self, name: &String, car: &Car, display: &Display) {
-        println!("prepare_car_actor({}): loading vertices", name);
+        debug!("prepare_car_actor({}): loading vertices", name);
         let vbo = VertexBuffer::<Vertex>::new(display, &car.meshes[name].vertices).unwrap();
         self.vertices.insert(name.clone(), vbo);
 
-        println!("prepare_car_actor({}): partitioning faces", name);
+        debug!("prepare_car_actor({}): partitioning faces", name);
 
         let faces = &car.meshes[name].faces;
 
@@ -136,7 +136,7 @@ impl RenderManager {
         }
 
         for (mat, list) in &partitioned_by_material {
-            println!(
+            debug!(
                 "Material {}: {} vertices, {} faces",
                 mat,
                 list.len(),
@@ -177,7 +177,7 @@ impl RenderManager {
                 &ActorNode::Actor { name: _, visible } => v = visible,
                 &ActorNode::MeshfileRef(ref name) => {
                     if v {
-                        // println!("Drawing actor {}", name);
+                        trace!("Drawing actor {}", name);
                         self.draw_actor(name, &model, target, camera);
                     }
                 }
@@ -189,6 +189,8 @@ impl RenderManager {
                         z: t[11],
                     }) * transform;
 
+                    trace!("Applying transform {:?}", transform);
+
                     let depth = car.actors.get_node_depth(actor.parent().unwrap());
                     if depth > last_depth {
                         transform_stack.push(model);
@@ -198,6 +200,7 @@ impl RenderManager {
                     } else {
                         model = transform * transform_stack.last().unwrap();
                     }
+                    trace!("..new model {:?}", model);
                     last_depth = depth;
                 }
                 _ => (),
@@ -215,7 +218,7 @@ impl RenderManager {
     ) where
         T: Surface,
     {
-        println!("Rendering {} with model {:?}", mesh_name, model);
+        trace!("Rendering {} with model {:?}", mesh_name, model);
 
         // the direction of the light - @todo more light sources?
         let light = [-5.0, 5.0, 10.0f32];

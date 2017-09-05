@@ -134,7 +134,7 @@ impl CameraState {
             self.direction = Quaternion::from_angle_y(Deg(-1.0)).rotate_vector(self.direction);
         }
 
-        // println!("Camera pos {:?} dir {:?}", self.position, self.direction);
+        // trace!("Camera pos {:?} dir {:?}", self.position, self.direction);
     }
 
     pub fn process_input(&mut self, event: &glutin::WindowEvent) {

@@ -235,11 +235,8 @@ mod tests {
 
         let s = read_c_string(&mut reader).unwrap();
         let t = reader.read_u8().unwrap();
-        println!("{:?}", t);
         let u = reader.read_u8().unwrap();
-        println!("{:?}", u);
         let v = reader.read_u8().unwrap();
-        println!("{:?}", v);
         assert_eq!("hello world", s);
         assert_eq!(b"a"[0], t);
         assert_eq!(b"b"[0], u);
