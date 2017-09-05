@@ -36,7 +36,12 @@ fn setup_logging() -> Result<(), fern::InitError> {
 
     let file_config = fern::Dispatch::new()
         .level(log::LogLevelFilter::Trace)
-        .chain(fern::log_file("debug.log")?);
+        .chain(std::fs::OpenOptions::new()
+            .write(true)
+            .create(true)
+            .truncate(true) // start log file anew each run
+            .create(true)
+            .open("debug.log")?);
 
     base_config.chain(stdout_config).chain(file_config).apply()?;
 
