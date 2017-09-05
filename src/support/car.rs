@@ -135,7 +135,18 @@ fn read_some_metadata<Iter: Iterator<Item = String>>(input: &mut Iter) {
     }
 }
 
-fn read_mechanics_block_v1_1<Iter: Iterator<Item = String>>(input: &mut Iter) {
+// @fixme used to patch actors now
+// @todo should support extra wheels
+pub struct Mechanics {
+    pub lrwheel_pos: Vector3<f32>,
+    pub rrwheel_pos: Vector3<f32>,
+    pub lfwheel_pos: Vector3<f32>,
+    pub rfwheel_pos: Vector3<f32>,
+}
+
+fn read_mechanics_block_v1_1<Iter: Iterator<Item = String>>(
+    input: &mut Iter,
+) -> Result<Mechanics, Error> {
     let lrwheel_pos = parse_vector(&input.next().unwrap());
     trace!("Left rear wheel position: {:?}", lrwheel_pos);
     let rrwheel_pos = parse_vector(&input.next().unwrap());
@@ -149,6 +160,12 @@ fn read_mechanics_block_v1_1<Iter: Iterator<Item = String>>(input: &mut Iter) {
     let min_bb = parse_vector(&input.next().unwrap());
     let max_bb = parse_vector(&input.next().unwrap());
     trace!("Bounding box: ({:?} - {:?})", min_bb, max_bb);
+    Ok(Mechanics {
+        lrwheel_pos,
+        rrwheel_pos,
+        lfwheel_pos,
+        rfwheel_pos,
+    })
 }
 
 fn read_mechanics_block_v1_2<Iter: Iterator<Item = String>>(input: &mut Iter) {
@@ -200,23 +217,25 @@ fn read_mechanics_block_v3<Iter: Iterator<Item = String>>(input: &mut Iter) {
     read_vector(input);
 }
 
-fn read_mechanics_v2<Iter: Iterator<Item = String>>(input: &mut Iter) {
-    read_mechanics_block_v1_1(input);
+fn read_mechanics_v2<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<Mechanics, Error> {
+    let mech = read_mechanics_block_v1_1(input)?;
     read_mechanics_block_v1_2(input);
     read_mechanics_block_v2(input);
     read_mechanics_block_v1_3(input);
+    Ok(mech)
 }
 
-fn read_mechanics_v3<Iter: Iterator<Item = String>>(input: &mut Iter) {
-    read_mechanics_block_v1_1(input);
+fn read_mechanics_v3<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<Mechanics, Error> {
+    let mech = read_mechanics_block_v1_1(input)?;
     read_mechanics_block_v3(input);
     read_mechanics_block_v1_2(input);
     read_mechanics_block_v2(input);
     read_mechanics_block_v1_3(input);
+    Ok(mech)
 }
 
-fn read_mechanics_v4<Iter: Iterator<Item = String>>(input: &mut Iter) {
-    read_mechanics_v3(input);
+fn read_mechanics_v4<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<Mechanics, Error> {
+    read_mechanics_v3(input)
 }
 
 fn read_meshes(
@@ -461,12 +480,12 @@ impl Car {
             .parse()
             .unwrap();
 
-        match version {
+        let _mech = match version {
             2 => read_mechanics_v2(&mut input_lines),
             3 => read_mechanics_v3(&mut input_lines),
             4 => read_mechanics_v4(&mut input_lines),
             x => panic!("Unsupported mechanics version {}", x),
-        }
+        }?;
 
         expect_match(&mut input_lines, "END OF MECHANICS STUFF");
 
