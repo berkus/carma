@@ -106,7 +106,8 @@ impl Mesh {
         }
 
         for n in 0..uvcoords.len() {
-            m.vertices[n].tex_coords = [uvcoords[n].u, uvcoords[n].v];
+            // Carma uses 0.0,0.0 for the top left corner, OpenGL for the bottom left.
+            m.vertices[n].tex_coords = [uvcoords[n].u, 1.0 - uvcoords[n].v];
         }
 
         m.calc_normals();
