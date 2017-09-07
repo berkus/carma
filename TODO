@@ -1,4 +1,6 @@
  ✔ Render all actors @done (17-09-03 17:42)
  ✔ Fix model composition assembly (wheels in wrong places etc) @done (17-09-05 23:05)
- ☐ Fix texturizer/shader issues
+ ✔ Fix texturizer/shader issues @done (17-09-07 21:45)
+ ☐ BGLSPIKE.PIX in DecodedData/DATA/PIXELMAP/EAGYELE.PIX - check transparency
+
  ☐ Load models using Kaitai Struct
