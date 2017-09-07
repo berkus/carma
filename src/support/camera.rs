@@ -30,7 +30,8 @@ pub struct CameraState {
 impl CameraState {
     pub fn new() -> CameraState {
         CameraState {
-            aspect_ratio: 1024.0 / 768.0,
+            // Keep ratio fixed at 4/3
+            aspect_ratio: 4.0 / 3.0,
             fov: 90.0,
             zfar: 100.0,
             znear: 0.1,
