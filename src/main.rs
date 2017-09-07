@@ -103,12 +103,19 @@ fn convert_pixmap(fname: String, palette: &PixelMap) -> Result<(), carma::suppor
 }
 
 /// Uses different palette for race-selection part
-fn convert_one_pixmap(fname: String) -> Result<(), carma::support::Error> {
+fn convert_menu_pixmap(fname: String) -> Result<(), carma::support::Error> {
     let palette = &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRACEFLC.PAL"))?
         [0];
     convert_pixmap(fname, palette)
 }
 
+fn convert_game_pixmap(fname: String) -> Result<(), carma::support::Error> {
+    let palette = &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRRENDER.PAL"))?
+        [0];
+    convert_pixmap(fname, palette)
+}
+
+/// Load palette once and then apply to a bunch of pixmap data
 fn convert_all_pixmaps() -> Result<(), carma::support::Error> {
     let palette = &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRRENDER.PAL"))?
         [0];
@@ -127,8 +134,8 @@ fn main() {
     setup_logging().expect("failed to initialize logging");
 
     // convert_all_pixmaps().expect("Listing failed");
-    // convert_one_pixmap(String::from("DecodedData/DATA/PIXELMAP/CARANNIE.PIX"))
-    // .expect("Conversion failed");
+    convert_game_pixmap(String::from("DecodedData/DATA/PIXELMAP/EAGYELE.PIX"))
+        .expect("Conversion failed");
 
     let car = Car::load_from(env::args().nth(1).unwrap()).unwrap();
     car.dump();

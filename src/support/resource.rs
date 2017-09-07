@@ -154,14 +154,23 @@ impl Chunk {
             }
             support::PIXELMAP_HEADER_CHUNK => {
                 trace!("Reading pixelmap header...");
-                rdr.read_u8()?; // what1 -- somethiing
-                rdr.read_u16::<BigEndian>()?; // what2 -- somethiing
+                let what1 = rdr.read_u8()?; // what1 -- somethiing
+                let what2 = rdr.read_u16::<BigEndian>()?; // what2 -- somethiing
                 let w = rdr.read_u16::<BigEndian>()?;
                 let h = rdr.read_u16::<BigEndian>()?;
                 let mipmap_w = rdr.read_u16::<BigEndian>()?;
                 let mipmap_h = rdr.read_u16::<BigEndian>()?;
                 let name = read_c_string(rdr)?;
-                trace!("... {}", name);
+                trace!(
+                    "... {}, {}x{}, {}x{}, what1 {}, what2 {}",
+                    name,
+                    w,
+                    h,
+                    mipmap_w,
+                    mipmap_h,
+                    what1,
+                    what2
+                );
                 Ok(Chunk::PixelmapHeader {
                     name,
                     w,
