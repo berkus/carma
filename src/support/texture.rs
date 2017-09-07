@@ -7,12 +7,14 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use support::Error;
-use std::io::{BufRead, BufReader};
+use std::io::{BufRead, Write, BufReader};
 use byteorder::ReadBytesExt;
 use support::resource::Chunk;
 use std::fs::File;
 use std::fmt;
 use support;
+use png;
+use png::HasParameters;
 
 // Pixmap consists of two chunks: name and data
 // TODO: use shared_data_t for pixmap contents to avoid copying.
@@ -74,6 +76,63 @@ impl PixelMap {
         Ok(pm)
     }
 
+    pub fn write_png_remapped_via<W: Write>(
+        &self,
+        palette: &PixelMap,
+        w: &mut W,
+    ) -> Result<(), Error> {
+        self.dump();
+
+        let mut encoder = png::Encoder::new(w, self.w as u32, self.h as u32);
+        encoder.set(png::ColorType::RGB).set(png::BitDepth::Eight);
+        let mut writer = encoder.write_header().unwrap();
+
+        let mut data = Vec::<u8>::with_capacity(self.data.len() * 4);
+
+        match self.unit_bytes {
+            1 => {
+                for i in 0..self.units {
+                    data.push(
+                        palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 1) as
+                                         usize],
+                    ); // R
+                    data.push(
+                        palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 2) as
+                                         usize],
+                    ); // G
+                    data.push(
+                        palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 3) as
+                                         usize],
+                    ); // B
+                    // data.push(
+                    // palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 0) as
+                    // usize],
+                    // ); // A
+                }
+            }
+            3 => {
+                for i in 0..self.units {
+                    data.push(self.data[(i * self.unit_bytes + 0) as usize]); // R
+                    data.push(self.data[(i * self.unit_bytes + 1) as usize]); // G
+                    data.push(self.data[(i * self.unit_bytes + 2) as usize]); // B
+                    // data.push(255); // A
+                }
+            }
+            4 => {
+                for i in 0..self.units {
+                    data.push(self.data[(i * self.unit_bytes + 0) as usize]); // R
+                    data.push(self.data[(i * self.unit_bytes + 1) as usize]); // G
+                    data.push(self.data[(i * self.unit_bytes + 2) as usize]); // B
+                    // data.push(self.data[(i * self.unit_bytes + 3) as usize]); // A
+                }
+            }
+            _ => unimplemented!(),
+        }
+
+        writer.write_image_data(&data).unwrap();
+        Ok(())
+    }
+
     pub fn load<R: ReadBytesExt + BufRead>(rdr: &mut R) -> Result<PixelMap, Error> {
         let mut pm = PixelMap::default();
 
@@ -131,6 +190,19 @@ impl PixelMap {
             }
         }
         Ok(pmaps)
+    }
+
+    fn dump(&self) {
+        info!(
+            "Pixelmap {}: {}x{}, mm {}x{}, {}x{} bytes",
+            self.name,
+            self.w,
+            self.h,
+            self.use_w,
+            self.use_h,
+            self.units,
+            self.unit_bytes
+        );
     }
 }
 

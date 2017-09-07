@@ -17,5 +17,6 @@ extern crate glium;
 extern crate id_tree;
 #[macro_use]
 extern crate log;
+extern crate png;
 
 pub mod support;
