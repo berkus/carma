@@ -25,8 +25,8 @@ pub struct PixelMap {
     pub h: u16,
     use_w: u16, // and how much of that is used for useful data
     use_h: u16,
-    units: u32,
-    unit_bytes: u32,
+    pub units: u32,
+    pub unit_bytes: u32,
     pub data: Vec<u8>, // temp pub
 }
 
@@ -59,18 +59,34 @@ impl PixelMap {
         pm.unit_bytes = 4;
 
         for i in 0..pm.units {
-            pm.data.push(
-                palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 1) as usize],
-            ); // R
-            pm.data.push(
-                palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 2) as usize],
-            ); // G
-            pm.data.push(
-                palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 3) as usize],
-            ); // B
-            pm.data.push(
-                palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 0) as usize],
-            ); // A
+            // temp use color index 0 as transparency
+            if self.data[i as usize] == 0 {
+                pm.data.push(0); // R
+                pm.data.push(0); // G
+                pm.data.push(0); // B
+                pm.data.push(255); // A = transparent
+            } else {
+                pm.data.push(
+                    palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 1) as
+                                     usize],
+                ); // R
+                pm.data.push(
+                    palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 2) as
+                                     usize],
+                ); // G
+                pm.data.push(
+                    palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 3) as
+                                     usize],
+                ); // B
+                pm.data.push(
+                    255 -
+                        palette.data[(self.data[i as usize] as u32 * palette.unit_bytes +
+                                         0) as usize],
+                ); // A
+                if self.name == "BGLSPIKE.PIX" {
+                    trace!("spike alpha {}", pm.data.last().unwrap());
+                }
+            }
         }
 
         Ok(pm)
@@ -105,7 +121,7 @@ impl PixelMap {
                                          usize],
                     ); // B
                     // data.push(
-                    // palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 0) as
+                    // 255-palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 0) as
                     // usize],
                     // ); // A
                 }

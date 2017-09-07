@@ -134,8 +134,8 @@ fn main() {
     setup_logging().expect("failed to initialize logging");
 
     // convert_all_pixmaps().expect("Listing failed");
-    convert_game_pixmap(String::from("DecodedData/DATA/PIXELMAP/EAGYELE.PIX"))
-        .expect("Conversion failed");
+    // convert_game_pixmap(String::from("DecodedData/DATA/PIXELMAP/EAGYELE.PIX"))
+    //     .expect("Conversion failed");
 
     let car = Car::load_from(env::args().nth(1).unwrap()).unwrap();
     car.dump();

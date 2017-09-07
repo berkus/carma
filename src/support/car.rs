@@ -561,6 +561,13 @@ impl Car {
         let palette = &PixelMap::load_from(pal_file_name.into_os_string().into_string().unwrap())?
             [0];
 
+        for x in 0..palette.units {
+            trace!(
+                "Palette alpha {}",
+                palette.data[(x * palette.unit_bytes + 0) as usize]
+            );
+        }
+
         let load_pixmaps: HashSet<_> = load_pixmaps.iter().collect();
         debug!("Pixmaps to load: {:?}", load_pixmaps);
 
