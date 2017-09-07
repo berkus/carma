@@ -48,8 +48,8 @@ pub enum Chunk {
         name: String,
         w: u16,
         h: u16,
-        use_w: u16,
-        use_h: u16,
+        mipmap_w: u16,
+        mipmap_h: u16,
     },
     PixelmapData {
         units: u32,
@@ -154,20 +154,20 @@ impl Chunk {
             }
             support::PIXELMAP_HEADER_CHUNK => {
                 trace!("Reading pixelmap header...");
-                rdr.read_u8()?; // what1
+                rdr.read_u8()?; // what1 -- somethiing
+                rdr.read_u16::<BigEndian>()?; // what2 -- somethiing
                 let w = rdr.read_u16::<BigEndian>()?;
-                let use_w = rdr.read_u16::<BigEndian>()?;
                 let h = rdr.read_u16::<BigEndian>()?;
-                let use_h = rdr.read_u16::<BigEndian>()?;
-                rdr.read_u16::<BigEndian>()?; // what2
+                let mipmap_w = rdr.read_u16::<BigEndian>()?;
+                let mipmap_h = rdr.read_u16::<BigEndian>()?;
                 let name = read_c_string(rdr)?;
                 trace!("... {}", name);
                 Ok(Chunk::PixelmapHeader {
                     name,
                     w,
                     h,
-                    use_w,
-                    use_h,
+                    mipmap_w,
+                    mipmap_h,
                 })
             }
             support::PIXELMAP_DATA_CHUNK => {

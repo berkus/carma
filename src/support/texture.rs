@@ -86,15 +86,15 @@ impl PixelMap {
                     name,
                     w,
                     h,
-                    use_w,
-                    use_h,
+                    mipmap_w,
+                    mipmap_h,
                 } => {
                     pm.name = name;
                     pm.w = w;
                     pm.h = h;
-                    pm.use_w = use_w;
-                    pm.use_h = use_h;
-                    debug!("Pixelmap {}x{} use {}x{}", w, h, use_w, use_h);
+                    pm.use_w = mipmap_w;
+                    pm.use_h = mipmap_h;
+                    debug!("Pixelmap {}x{} use {}x{}", w, h, mipmap_w, mipmap_h);
                 }
                 Chunk::PixelmapData {
                     units,
