@@ -157,15 +157,24 @@ fn read_mechanics_block_v1_1<Iter: Iterator<Item = String>>(
     trace!("Right front wheel position: {:?}", rfwheel_pos);
     let centre_of_mass_pos = parse_vector(&input.next().unwrap());
     trace!("Centre of mass position: {:?}", centre_of_mass_pos);
-    let min_bb = parse_vector(&input.next().unwrap());
-    let max_bb = parse_vector(&input.next().unwrap());
-    trace!("Bounding box: ({:?} - {:?})", min_bb, max_bb);
     Ok(Mechanics {
         lrwheel_pos,
         rrwheel_pos,
         lfwheel_pos,
         rfwheel_pos,
     })
+}
+
+fn read_mechanics_block_v1_1_v3<Iter: Iterator<Item = String>>(input: &mut Iter) {
+    let min_bb = parse_vector(&input.next().unwrap());
+    let max_bb = parse_vector(&input.next().unwrap());
+    trace!("Bounding box: ({:?} - {:?})", min_bb, max_bb);
+}
+
+// Version 2 contains count for bounding boxes (which is always 1, that's why it's removed in ver 3)
+fn read_mechanics_block_v1_1_v2<Iter: Iterator<Item = String>>(input: &mut Iter) {
+    expect_match(input, "1");
+    read_mechanics_block_v1_1_v3(input);
 }
 
 fn read_mechanics_block_v1_2<Iter: Iterator<Item = String>>(input: &mut Iter) {
@@ -219,6 +228,7 @@ fn read_mechanics_block_v3<Iter: Iterator<Item = String>>(input: &mut Iter) {
 
 fn read_mechanics_v2<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<Mechanics, Error> {
     let mech = read_mechanics_block_v1_1(input)?;
+    read_mechanics_block_v1_1_v2(input);
     read_mechanics_block_v1_2(input);
     read_mechanics_block_v2(input);
     read_mechanics_block_v1_3(input);
@@ -227,6 +237,7 @@ fn read_mechanics_v2<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<
 
 fn read_mechanics_v3<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<Mechanics, Error> {
     let mech = read_mechanics_block_v1_1(input)?;
+    read_mechanics_block_v1_1_v3(input);
     read_mechanics_block_v3(input);
     read_mechanics_block_v1_2(input);
     read_mechanics_block_v2(input);
