@@ -7,91 +7,91 @@ none,none,PRATBDRT.PIX,PRATBDHZ.PIX		// Pratcam border names (left, top, right, 
 END OF DRIVABLE STUFF
 5314,5301,5302							// Engine noise (normal, enclosed space, underwater)
 stealworthy								// Can be stolen
-//k}cûXû~fs)U+nöbkMmÉôêw.n~;I
+//
 1										// Number of clauses
 always
 1									// Systems count
 driver,1.5						// Damage										// Number of clauses
-//Y^?b|(_+aõv$ôdúKYx1{i W+aò`*ZvÄ
+//
 5										// Number of clauses
 always
 1									// Systems count
 transmission,1.0						// Damage
 z<0.25&x<0.25						// Condition
 3									// Systems count
-lf_wheel,0.5					// Damage 
-lf_brake,0.5					// Damage 
-steering,0.3					// Damage 
+lf_wheel,0.5					// Damage
+lf_brake,0.5					// Damage
+steering,0.3					// Damage
 z<0.25&x>0.75						// Condition
 3									// Systems count
-rf_wheel,0.5					// Damage 
-rf_brake,0.5					// Damage 
-steering,0.3					// Damage 
+rf_wheel,0.5					// Damage
+rf_brake,0.5					// Damage
+steering,0.3					// Damage
 z>0.75&x<0.25						// Condition
 2									// Systems count
-lr_wheel,0.5					// Damage 
-lr_brake,0.5					// Damage 
+lr_wheel,0.5					// Damage
+lr_brake,0.5					// Damage
 z>0.75&x>0.75						// Condition
 2									// Systems count
-rr_wheel,0.5					// Damage 
-rr_brake,0.5					// Damage 
-//~K|"[lmUy%_mS_ñh~cx)N+aò`*ZvÄ
+rr_wheel,0.5					// Damage
+rr_brake,0.5					// Damage
+//
 3										// Number of clauses
 z>0.25&z<0.75
 1									// Systems count
 driver,1.0						// Damage
 z<0.25								// Condition
 3									// Systems count
-lf_wheel,0.5					// Damage 
-lf_brake,0.5					// Damage 
-steering,0.3					// Damage 
+lf_wheel,0.5					// Damage
+lf_brake,0.5					// Damage
+steering,0.3					// Damage
 z>0.75								// Condition
 2									// Systems count
-lr_wheel,0.5					// Damage 
-lr_brake,0.5					// Damage 
-//UT*Tcî\Ys0iro\dzUb"^jáôêw.n~;I
+lr_wheel,0.5					// Damage
+lr_brake,0.5					// Damage
+//
 3										// Number of clauses
 z>0.25&z<0.75
 1									// Systems count
 driver,1.0						// Damage
 z<0.25								// Condition
 3									// Systems count
-rf_wheel,0.5					// Damage 
-rf_brake,0.5					// Damage 
-steering,0.3					// Damage 
+rf_wheel,0.5					// Damage
+rf_brake,0.5					// Damage
+steering,0.3					// Damage
 z>0.75								// Condition
 2									// Systems count
-rr_wheel,0.5					// Damage 
-rr_brake,0.5					// Damage 
-//UT*Tcî\Ys0iro\dzUv9Vláôêw.n~;I
+rr_wheel,0.5					// Damage
+rr_brake,0.5					// Damage
+//
 3										// Number of clauses
 always								// Condition
 2									// Systems count
-engine,1.0						// Damage 
-transmission,0.3				// Damage 
+engine,1.0						// Damage
+transmission,0.3				// Damage
 x<0.25								// Condition
 3									// Systems count
-lf_wheel,0.5					// Damage 
-lf_brake,0.5					// Damage 
-steering,0.5					// Damage 
+lf_wheel,0.5					// Damage
+lf_brake,0.5					// Damage
+steering,0.5					// Damage
 x>0.75								// Condition
 3									// Systems count
-rf_wheel,0.5					// Damage 
-rf_brake,0.5					// Damage 
-steering,0.5					// Damage 
-//~K|"[lmUy%_mS_ñh~}x.H+aò`*ZvÄ
+rf_wheel,0.5					// Damage
+rf_brake,0.5					// Damage
+steering,0.5					// Damage
+//
 3										// Number of clauses
 always								// Condition
 1									// Systems count
-transmission,0.5				// Damage 
+transmission,0.5				// Damage
 x<0.25								// Condition
 2									// Systems count
-lr_wheel,0.5					// Damage 
-lr_brake,0.5					// Damage 
+lr_wheel,0.5					// Damage
+lr_brake,0.5					// Damage
 x>0.75								// Condition
 2									// Systems count
-rr_wheel,0.5					// Damage 
-rr_brake,0.5					// Damage 
+rr_wheel,0.5					// Damage
+rr_brake,0.5					// Damage
 GPITBULL.PIX,GPITBULL.PIX,GPITBULL.PIX	// Grid image (opponent, frank, annie)
 2										// Number of pixelmap files for this car
 PITBULL8.PIX
@@ -224,7 +224,7 @@ harmonic
 x
 25
 END OF GROOVE
-//=åh^[=0èxV2
+//
 0.700000
 0.050000,0.300000
 0.050000
@@ -232,7 +232,7 @@ END OF GROOVE
 0.000000
 0.000000
 0
-//=åh^[=0èxV2
+//
 0.450000
 0.150000,0.400000
 0.050000
@@ -6798,7 +6798,7 @@ END OF GROOVE
 167
 10
 12
-//U?dôA!l*R~K\õ{
+//
 0.700000
 0.050000,0.300000
 0.050000
@@ -6813,7 +6813,7 @@ START OF MECHANICS STUFF version 3
 0.131,	0,	-0.278						// right front
 0,	0.06,	0.0							// centre of mass position
 -0.209,	-0.116,	-0.437					// min x, min y, min z
-0.209,	0.150,	0.395					// max x, max y, max z	
+0.209,	0.150,	0.395					// max x, max y, max z
 2
 -0.02,0.28,0.29							// extra point 1			v. 3
 0.02,0.28,0.29							// extra point 2			v. 3
@@ -6834,11 +6834,11 @@ START OF MECHANICS STUFF version 3
 150										// speed at red line in highest gear
 3										// acceleration in highest gear m/s^2 (i.e. engine strength)
 END OF MECHANICS STUFF
-//(8q?\pöXïi~ir=öx`áq;Wg	
+//
 2				// number of materials
 M02.MAT
 M13.MAT
-//y.Wjoê0=\páPö-/{&Hn(Ö"WvÄ
+//
 45			// engine point
 324			// transmission
 41			// driver
