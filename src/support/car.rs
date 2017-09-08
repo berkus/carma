@@ -28,6 +28,7 @@ pub struct Car {
     pub meshes: HashMap<String, Mesh>,
     pub materials: HashMap<String, Material>,
     pub textures: HashMap<String, PixelMap>,
+    pub base_translation: Vector3<f32>,
 }
 
 /// Expect next line to match provided text exactly.
@@ -607,6 +608,7 @@ impl Car {
             meshes: car_meshes,
             materials: car_materials,
             textures: car_textures,
+            base_translation: Vector3::from([0f32, 0f32, 0f32]),
         })
     }
 }

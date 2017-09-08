@@ -13,8 +13,9 @@ extern crate chrono;
 #[macro_use]
 extern crate log;
 extern crate fern;
+extern crate cgmath;
 
-use std::env;
+use cgmath::Vector3;
 use carma::support;
 use carma::support::camera::CameraState;
 use carma::support::car::Car;
@@ -56,7 +57,7 @@ use std::fs::{self, DirEntry};
 use std::path::{Path, PathBuf};
 
 // one possible implementation of walking a directory only visiting files
-fn visit_dirs(dir: &Path, cb: &Fn(&DirEntry)) -> Result<(), carma::support::Error> {
+fn visit_dirs(dir: &Path, cb: &mut FnMut(&DirEntry)) -> Result<(), carma::support::Error> {
     if dir.is_dir() {
         for entry in fs::read_dir(dir)? {
             let entry = entry?;
@@ -119,7 +120,7 @@ fn convert_game_pixmap(fname: String) -> Result<(), carma::support::Error> {
 fn convert_all_pixmaps() -> Result<(), carma::support::Error> {
     let palette = &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRRENDER.PAL"))?
         [0];
-    visit_dirs(&Path::new("DecodedData"), &|dir_entry| {
+    visit_dirs(&Path::new("DecodedData"), &mut |dir_entry| {
         if let Ok(file_type) = dir_entry.file_type() {
             let fname = String::from(dir_entry.path().to_str().unwrap());
             if file_type.is_file() && fname.ends_with(".PIX") {
@@ -137,8 +138,28 @@ fn main() {
     // convert_game_pixmap(String::from("DecodedData/DATA/PIXELMAP/EAGYELE.PIX"))
     //     .expect("Conversion failed");
 
-    let car = Car::load_from(env::args().nth(1).unwrap()).unwrap();
-    car.dump();
+    // Load all cars and arrange in a grid 6x7 (40 cars total)
+
+    let mut cars = Vec::new();
+    let mut counter = 0;
+    visit_dirs(&Path::new("DecodedData/DATA/CARS"), &mut |entry| {
+        if let Ok(file_type) = entry.file_type() {
+            let fname = String::from(entry.path().to_str().unwrap());
+            if file_type.is_file() && fname.ends_with(".ENC") {
+                let mut car = Car::load_from(fname).unwrap();
+
+                let z = 1.0f32 * (counter / 7) as f32;
+                let x = 1.0f32 * f32::from(counter % 7 as u16);
+                counter += 1;
+
+                info!("Moving car {} to {},0,{}", counter, x, -z);
+
+                car.base_translation = Vector3::from([x, 0f32, -z]);
+
+                cars.push(car);
+            }
+        }
+    });
 
     use glium::{glutin, Surface};
 
@@ -151,7 +172,9 @@ fn main() {
     let display = glium::Display::new(window, context, &events_loop).unwrap();
 
     let mut render_manager = RenderManager::new(&display);
-    render_manager.prepare_car(&car, &display);
+    for car in &cars {
+        render_manager.prepare_car(&car, &display);
+    }
 
     let mut camera = CameraState::new();
 
@@ -161,7 +184,9 @@ fn main() {
         let mut target = display.draw();
         target.clear_color_and_depth((0.4, 0.4, 0.4, 0.0), 1.0);
 
-        render_manager.draw_car(&car, &mut target, &camera);
+        for car in &cars {
+            render_manager.draw_car(&car, &mut target, &camera);
+        }
         target.finish().unwrap();
 
         let mut action = support::Action::Continue;

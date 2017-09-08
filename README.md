@@ -2,8 +2,8 @@
 
 This is a viewer for Carmageddon resource files and models.
 
-To load a model:
+To load all models:
 
-    $ cargo run DecodedData/DATA/CARS/SCREWIE.ENC
+    $ cargo run
 
-![Progress](https://dl.dropboxusercontent.com/s/4ic8aw48rszfqqw/2017-08-30%20at%2002.10.png)
+![Progress](https://dl.dropboxusercontent.com/s/8pgxmtmdl90090y/2017-09-08%20at%2019.06.png)

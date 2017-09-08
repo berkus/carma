@@ -176,7 +176,9 @@ impl RenderManager {
     {
         let mut v = false;
         let mut transform_stack = Vec::<Matrix4<f32>>::new();
-        transform_stack.push(Matrix4::<f32>::identity());
+        transform_stack.push(
+            Matrix4::from_translation(car.base_translation) * Matrix4::identity(),
+        );
 
         let mut actor_name = String::new();
 
