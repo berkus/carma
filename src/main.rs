@@ -43,7 +43,6 @@ fn setup_logging() -> Result<(), fern::InitError> {
             .write(true)
             .create(true)
             .truncate(true) // start log file anew each run
-            .create(true)
             .open("debug.log")?);
 
     base_config.chain(stdout_config).chain(file_config).apply()?;
@@ -94,9 +93,9 @@ fn convert_pixmap(fname: String, palette: &PixelMap) -> Result<(), carma::suppor
                 pngname
             ).as_ref(),
         );
-        let ref mut w = BufWriter::new(file);
+        let w = &mut BufWriter::new(file);
 
-        pix.write_png_remapped_via(&palette, w).expect(
+        pix.write_png_remapped_via(palette, w).expect(
             "Failed to write PNG",
         );
     }
@@ -120,11 +119,11 @@ fn convert_game_pixmap(fname: String) -> Result<(), carma::support::Error> {
 fn convert_all_pixmaps() -> Result<(), carma::support::Error> {
     let palette = &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRRENDER.PAL"))?
         [0];
-    visit_dirs(&Path::new("DecodedData"), &mut |dir_entry| {
+    visit_dirs(Path::new("DecodedData"), &mut |dir_entry| {
         if let Ok(file_type) = dir_entry.file_type() {
             let fname = String::from(dir_entry.path().to_str().unwrap());
             if file_type.is_file() && fname.ends_with(".PIX") {
-                convert_pixmap(fname, palette);
+                convert_pixmap(fname, palette).unwrap();
             }
         }
     })
@@ -142,13 +141,13 @@ fn main() {
 
     let mut cars = Vec::new();
     let mut counter = 0;
-    visit_dirs(&Path::new("DecodedData/DATA/CARS"), &mut |entry| {
+    visit_dirs(Path::new("DecodedData/DATA/CARS"), &mut |entry| {
         if let Ok(file_type) = entry.file_type() {
             let fname = String::from(entry.path().to_str().unwrap());
             if file_type.is_file() && fname.ends_with(".ENC") {
                 let mut car = Car::load_from(fname).unwrap();
 
-                let z = 1.0f32 * (counter / 7) as f32;
+                let z = 1.0f32 * f32::from(counter / 7);
                 let x = 1.0f32 * f32::from(counter % 7 as u16);
                 counter += 1;
 
@@ -159,7 +158,7 @@ fn main() {
                 cars.push(car);
             }
         }
-    });
+    }).unwrap();
 
     use glium::{glutin, Surface};
 
@@ -173,7 +172,7 @@ fn main() {
 
     let mut render_manager = RenderManager::new(&display);
     for car in &cars {
-        render_manager.prepare_car(&car, &display);
+        render_manager.prepare_car(car, &display);
     }
 
     let mut camera = CameraState::new();
@@ -185,21 +184,18 @@ fn main() {
         target.clear_color_and_depth((0.4, 0.4, 0.4, 0.0), 1.0);
 
         for car in &cars {
-            render_manager.draw_car(&car, &mut target, &camera);
+            render_manager.draw_car(car, &mut target, &camera);
         }
         target.finish().unwrap();
 
         let mut action = support::Action::Continue;
 
         // polling and handling the events received by the window
-        events_loop.poll_events(|ev| match ev {
-            glutin::Event::WindowEvent { event, .. } => {
-                match event {
-                    glutin::WindowEvent::Closed => action = support::Action::Stop,
-                    _ => camera.process_input(&event),
-                }
+        events_loop.poll_events(|ev| if let glutin::Event::WindowEvent { event, .. } = ev {
+            match event {
+                glutin::WindowEvent::Closed => action = support::Action::Stop,
+                _ => camera.process_input(&event),
             }
-            _ => (),
         });
 
         action
