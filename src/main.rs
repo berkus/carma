@@ -20,6 +20,7 @@ use carma::support;
 use carma::support::camera::CameraState;
 use carma::support::car::Car;
 use carma::support::render_manager::RenderManager;
+#[cfg(feature = "convert")]
 use carma::support::texture::PixelMap;
 
 fn setup_logging() -> Result<(), fern::InitError> {
@@ -50,10 +51,14 @@ fn setup_logging() -> Result<(), fern::InitError> {
     Ok(())
 }
 
+#[cfg(feature = "convert")]
 use std::fs::File;
+#[cfg(feature = "convert")]
 use std::io::BufWriter;
 use std::fs::{self, DirEntry};
-use std::path::{Path, PathBuf};
+use std::path::Path;
+#[cfg(feature = "convert")]
+use std::path::PathBuf;
 
 // one possible implementation of walking a directory only visiting files
 fn visit_dirs(dir: &Path, cb: &mut FnMut(&DirEntry)) -> Result<(), carma::support::Error> {
@@ -71,6 +76,7 @@ fn visit_dirs(dir: &Path, cb: &mut FnMut(&DirEntry)) -> Result<(), carma::suppor
     Ok(())
 }
 
+#[cfg(feature = "convert")]
 fn convert_pixmap(fname: String, palette: &PixelMap) -> Result<(), carma::support::Error> {
     let pmap = PixelMap::load_from(fname.clone()).expect(
         format!(
@@ -103,12 +109,14 @@ fn convert_pixmap(fname: String, palette: &PixelMap) -> Result<(), carma::suppor
 }
 
 /// Uses different palette for race-selection part
+#[cfg(feature = "convert")]
 fn convert_menu_pixmap(fname: String) -> Result<(), carma::support::Error> {
     let palette = &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRACEFLC.PAL"))?
         [0];
     convert_pixmap(fname, palette)
 }
 
+#[cfg(feature = "convert")]
 fn convert_game_pixmap(fname: String) -> Result<(), carma::support::Error> {
     let palette = &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRRENDER.PAL"))?
         [0];
@@ -116,6 +124,7 @@ fn convert_game_pixmap(fname: String) -> Result<(), carma::support::Error> {
 }
 
 /// Load palette once and then apply to a bunch of pixmap data
+#[cfg(feature = "convert")]
 fn convert_all_pixmaps() -> Result<(), carma::support::Error> {
     let palette = &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRRENDER.PAL"))?
         [0];
@@ -133,9 +142,12 @@ fn convert_all_pixmaps() -> Result<(), carma::support::Error> {
 fn main() {
     setup_logging().expect("failed to initialize logging");
 
-    // convert_all_pixmaps().expect("Listing failed");
-    // convert_game_pixmap(String::from("DecodedData/DATA/PIXELMAP/EAGYELE.PIX"))
-    //     .expect("Conversion failed");
+    #[cfg(feature = "convert")]
+    {
+        convert_all_pixmaps().expect("Listing failed");
+        convert_game_pixmap(String::from("DecodedData/DATA/PIXELMAP/EAGYELE.PIX"))
+            .expect("Conversion failed");
+    }
 
     // Load all cars and arrange in a grid 6x7 (40 cars total)
 
