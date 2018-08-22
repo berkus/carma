@@ -11,24 +11,27 @@
 // extern crate genmesh;
 // extern crate obj;
 
-use std;
-use std::thread;
-use std::time::{Duration, Instant};
-use std::io::BufRead;
-use std::convert::From;
 use byteorder::{BigEndian, ReadBytesExt};
-use std::path::{Path, PathBuf};
-use std::ops::Sub;
 use cgmath::Vector3;
+use glium::implement_vertex;
+use std::{
+    self,
+    convert::From,
+    io::BufRead,
+    ops::Sub,
+    path::{Path, PathBuf},
+    thread,
+    time::{Duration, Instant},
+};
 
+pub mod actor;
 pub mod camera;
+pub mod car;
 pub mod material;
 pub mod mesh;
-pub mod actor;
-pub mod texture;
 pub mod render_manager;
 pub mod resource;
-pub mod car;
+pub mod texture;
 // pub mod animated_parameter;
 
 #[derive(Copy, Clone, Default)]
@@ -42,11 +45,11 @@ implement_vertex!(Vertex, position, normal, tex_coords);
 
 impl Vertex {
     pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Result<Vertex, Error> {
-        let mut vtx = Vertex::default();
-        vtx.position[0] = rdr.read_f32::<BigEndian>()?;
-        vtx.position[1] = rdr.read_f32::<BigEndian>()?;
-        vtx.position[2] = rdr.read_f32::<BigEndian>()?;
-        Ok(vtx)
+        let mut vertex = Vertex::default();
+        vertex.position[0] = rdr.read_f32::<BigEndian>()?;
+        vertex.position[1] = rdr.read_f32::<BigEndian>()?;
+        vertex.position[2] = rdr.read_f32::<BigEndian>()?;
+        Ok(vertex)
     }
 }
 
@@ -64,6 +67,7 @@ impl Sub for Vertex {
     }
 }
 
+// @todo use failure
 #[derive(Debug)]
 pub enum Error {
     IO(std::io::Error),
@@ -111,7 +115,7 @@ where
         accumulator += now - previous_clock;
         previous_clock = now;
 
-        let fixed_time_stamp = Duration::new(0, 16666667);
+        let fixed_time_stamp = Duration::new(0, 16666667); // 16ms for 60 FPS
         while accumulator >= fixed_time_stamp {
             accumulator -= fixed_time_stamp;
 
@@ -128,7 +132,7 @@ pub fn read_c_string<R: BufRead>(reader: &mut R) -> Result<String, Error> {
     /*let num_bytes =*/
     reader.read_until(0, &mut buf)?;
     buf.pop();
-    let s = String::from_utf8(buf)?;
+    let s = String::from_utf8(buf)?; //@todo from_utf8_lossy
     Ok(s)
 }
 
@@ -224,9 +228,9 @@ pub const MODEL_FILE_SUBTYPE: u16 = 0x3;
 #[cfg(test)]
 mod tests {
 
-    use std::io::{BufReader, Cursor};
-    use byteorder::ReadBytesExt;
     use super::*;
+    use byteorder::ReadBytesExt;
+    use std::io::{BufReader, Cursor};
 
     #[test]
     fn test_read_c_string() {

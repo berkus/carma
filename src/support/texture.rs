@@ -6,15 +6,14 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use support::Error;
-use std::io::{BufRead, Write, BufReader};
 use byteorder::ReadBytesExt;
-use support::resource::Chunk;
-use std::fs::File;
-use std::fmt;
-use support;
-use png;
-use png::HasParameters;
+use crate::support::{self, resource::Chunk, Error};
+use log::*;
+use png::{self, HasParameters};
+use std::{
+    fs::File,
+    io::{BufRead, BufReader, Write},
+};
 
 // Pixmap consists of two chunks: name and data
 // TODO: use shared_data_t for pixmap contents to avoid copying.
@@ -30,25 +29,37 @@ pub struct PixelMap {
     pub data: Vec<u8>, // temp pub
 }
 
-impl fmt::Display for PixelMap {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+impl std::fmt::Display for PixelMap {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(
             f,
             "{} ({}x{}, use {}x{}) {} units {} bytes each",
-            self.name,
-            self.w,
-            self.h,
-            self.use_w,
-            self.use_h,
-            self.units,
-            self.unit_bytes
+            self.name, self.w, self.h, self.use_w, self.use_h, self.units, self.unit_bytes
         )
     }
 }
 
+/**
+ * Megatexture for storing all loaded textures.
+ * Usually 1024x1024 or 4096x4096 texture with multiple smaller textures inside.
+ */
 #[derive(Default)]
 pub struct Texture {
-    // A pixelmap binding for opengl
+    pub w: u16,
+    pub h: u16,
+    pub data: Vec<u8>,
+}
+
+/**
+ * Named reference into the megatexture.
+ */
+pub struct TextureReference {
+    pub id: i32,
+    pub x0: f32,
+    pub y0: f32,
+    pub x1: f32,
+    pub y1: f32,
+    pub name: String,
 }
 
 impl PixelMap {
@@ -67,21 +78,17 @@ impl PixelMap {
                 pm.data.push(255); // A = transparent
             } else {
                 pm.data.push(
-                    palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 1) as
-                                     usize],
+                    palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 1) as usize],
                 ); // R
                 pm.data.push(
-                    palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 2) as
-                                     usize],
+                    palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 2) as usize],
                 ); // G
                 pm.data.push(
-                    palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 3) as
-                                     usize],
+                    palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 3) as usize],
                 ); // B
                 pm.data.push(
-                    255 -
-                        palette.data[(self.data[i as usize] as u32 * palette.unit_bytes +
-                                         0) as usize],
+                    255 - palette.data
+                        [(self.data[i as usize] as u32 * palette.unit_bytes + 0) as usize],
                 ); // A
                 if self.name == "BGLSPIKE.PIX" {
                     trace!("spike alpha {}", pm.data.last().unwrap());
@@ -109,21 +116,21 @@ impl PixelMap {
             1 => {
                 for i in 0..self.units {
                     data.push(
-                        palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 1) as
-                                         usize],
+                        palette.data
+                            [(self.data[i as usize] as u32 * palette.unit_bytes + 1) as usize],
                     ); // R
                     data.push(
-                        palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 2) as
-                                         usize],
+                        palette.data
+                            [(self.data[i as usize] as u32 * palette.unit_bytes + 2) as usize],
                     ); // G
                     data.push(
-                        palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 3) as
-                                         usize],
+                        palette.data
+                            [(self.data[i as usize] as u32 * palette.unit_bytes + 3) as usize],
                     ); // B
-                    // data.push(
-                    // 255-palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 0) as
-                    // usize],
-                    // ); // A
+                       // data.push(
+                       // 255-palette.data[(self.data[i as usize] as u32 * palette.unit_bytes + 0) as
+                       // usize],
+                       // ); // A
                 }
             }
             3 => {
@@ -131,7 +138,7 @@ impl PixelMap {
                     data.push(self.data[(i * self.unit_bytes + 0) as usize]); // R
                     data.push(self.data[(i * self.unit_bytes + 1) as usize]); // G
                     data.push(self.data[(i * self.unit_bytes + 2) as usize]); // B
-                    // data.push(255); // A
+                                                                              // data.push(255); // A
                 }
             }
             4 => {
@@ -139,7 +146,7 @@ impl PixelMap {
                     data.push(self.data[(i * self.unit_bytes + 0) as usize]); // R
                     data.push(self.data[(i * self.unit_bytes + 1) as usize]); // G
                     data.push(self.data[(i * self.unit_bytes + 2) as usize]); // B
-                    // data.push(self.data[(i * self.unit_bytes + 3) as usize]); // A
+                                                                              // data.push(self.data[(i * self.unit_bytes + 3) as usize]); // A
                 }
             }
             _ => unimplemented!(),
@@ -211,19 +218,17 @@ impl PixelMap {
     fn dump(&self) {
         info!(
             "Pixelmap {}: {}x{}, mm {}x{}, {}x{} bytes",
-            self.name,
-            self.w,
-            self.h,
-            self.use_w,
-            self.use_h,
-            self.units,
-            self.unit_bytes
+            self.name, self.w, self.h, self.use_w, self.use_h, self.units, self.unit_bytes
         );
     }
 }
 
 impl Texture {
-    pub fn load() -> Texture {
-        Texture {}
+    pub fn new() -> Texture {
+        Texture {
+            w: 1024,
+            h: 1024,
+            data: Vec::new(),
+        }
     }
 }

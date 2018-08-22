@@ -6,20 +6,18 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use std::str;
-use std::collections::HashMap;
-use std::vec::Vec;
-use glium;
-use glium::{Display, IndexBuffer, Program, Surface, VertexBuffer};
-use glium::index::*;
-use glium::uniforms::*;
-use glium::texture::{RawImage2d, SrgbTexture2d};
-use support::car::Car;
-use support::Vertex;
-use support::camera::CameraState;
-use support::actor::ActorNode;
-use cgmath::prelude::*;
-use cgmath::{Matrix4, Vector3};
+use cgmath::{prelude::*, Matrix4, Vector3};
+use crate::support::{actor::ActorNode, camera::CameraState, car::Car, Vertex};
+use glium::{
+    self,
+    index::*,
+    texture::{RawImage2d, SrgbTexture2d},
+    uniform,
+    uniforms::*,
+    Display, IndexBuffer, Program, Surface, VertexBuffer,
+};
+use log::*;
+use std::{collections::HashMap, str, vec::Vec};
 
 /// Provide storage for in-memory level-data - models, meshes, textures etc.
 pub struct RenderManager {
@@ -42,8 +40,8 @@ fn debug_tree(name: &String, actor_name: &String, stack: &Vec<Matrix4<f32>>) {
 impl RenderManager {
     pub fn new(display: &Display) -> Self {
         let vertex_shader_src = str::from_utf8(include_bytes!("../../shaders/first.vert")).unwrap();
-        let fragment_shader_src = str::from_utf8(include_bytes!("../../shaders/first.frag"))
-            .unwrap();
+        let fragment_shader_src =
+            str::from_utf8(include_bytes!("../../shaders/first.frag")).unwrap();
 
         Self {
             vertices: HashMap::new(),
@@ -56,9 +54,9 @@ impl RenderManager {
 
     fn debug_indices(&self) {
         for (name, _indices) in &self.indices {
-            println!("Indices for {}:", name);
+            trace!("Indices for {}:", name);
             // for () in &indices {
-            //     println!("  ", )
+            //     trace!("  ", )
             // }
         }
     }
@@ -79,9 +77,10 @@ impl RenderManager {
     // In theory, whole of the game could fit in 4096x4096 megatex.
     fn bind_textures(&mut self, actor_name: &String, car: &Car, display: &Display) {
         for (&mat, _) in &self.indices[actor_name] {
-            let textures = self.bound_textures.entry(actor_name.clone()).or_insert(
-                HashMap::new(),
-            );
+            let textures = self
+                .bound_textures
+                .entry(actor_name.clone())
+                .or_insert(HashMap::new());
             if mat == 0 {
                 RenderManager::bind_default_texture(textures, mat, display);
             } else {
@@ -134,9 +133,9 @@ impl RenderManager {
         let mut partitioned_by_material = HashMap::<u16, Vec<u16>>::new();
 
         for face in faces {
-            let indices = partitioned_by_material.entry(face.material_id).or_insert(
-                Vec::new(),
-            );
+            let indices = partitioned_by_material
+                .entry(face.material_id)
+                .or_insert(Vec::new());
             indices.push(face.v1);
             indices.push(face.v2);
             indices.push(face.v3);
@@ -160,8 +159,7 @@ impl RenderManager {
                         *key,
                         IndexBuffer::new(display, PrimitiveType::TrianglesList, &item).unwrap(),
                     )
-                })
-                .collect(),
+                }).collect(),
         );
 
         // each material from partitioned_by_material - load and bind it in bound_textures
@@ -176,9 +174,7 @@ impl RenderManager {
     {
         let mut v = false;
         let mut transform_stack = Vec::<Matrix4<f32>>::new();
-        transform_stack.push(
-            Matrix4::from_translation(car.base_translation) * Matrix4::identity(),
-        );
+        transform_stack.push(Matrix4::from_translation(car.base_translation) * Matrix4::identity());
 
         let mut actor_name = String::new();
 
@@ -212,8 +208,7 @@ impl RenderManager {
                         x: t[9],
                         y: t[10],
                         z: t[11],
-                    }) *
-                        Matrix4::from_nonuniform_scale(t[0], t[4], t[8]);
+                    }) * Matrix4::from_nonuniform_scale(t[0], t[4], t[8]);
 
                     let model = transform * transform_stack.last().unwrap();
                     transform_stack.push(model);
@@ -258,8 +253,7 @@ impl RenderManager {
         let model: [[f32; 4]; 4] = model.clone().into();
 
         for (mat, indices) in &self.indices[mesh_name] {
-            let uniforms =
-                uniform! {
+            let uniforms = uniform! {
                 model: model,
                 view: camera.get_view(),
                 perspective: camera.get_perspective(),
@@ -279,8 +273,7 @@ impl RenderManager {
                     &self.program,
                     &uniforms,
                     &params,
-                )
-                .unwrap();
+                ).unwrap();
         }
     }
 }

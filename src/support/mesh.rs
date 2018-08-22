@@ -7,13 +7,13 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use byteorder::{BigEndian, ReadBytesExt};
-use support::{Error, Vertex};
-use support::resource::Chunk;
-use std::io::{BufRead, BufReader};
-use std::fs::File;
-use support;
 #[allow(unused_imports)]
 use cgmath::{InnerSpace, Vector3, Zero};
+use crate::support::{self, resource::Chunk, Error, Vertex};
+use std::{
+    fs::File,
+    io::{BufRead, BufReader},
+};
 
 #[derive(Copy, Clone, Default)]
 pub struct UvCoord {
@@ -151,8 +151,8 @@ impl Mesh {
 #[cfg(test)]
 mod tests {
 
-    use std::io::Cursor;
     use super::*;
+    use std::io::Cursor;
 
     #[test]
     fn test_load_face() {

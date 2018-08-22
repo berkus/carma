@@ -6,20 +6,23 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use std::io::{BufRead, BufReader};
-use std::fs::File;
-use std::path::{Path, PathBuf};
-use std::iter::Iterator;
-use std::collections::HashSet;
-// use byteorder::ReadBytesExt;
-use support::{path_subst, Error};
-use support::actor::{Actor, ActorNode};
-use support::mesh::Mesh;
-use support::material::Material;
-use support::texture::PixelMap;
-use std::collections::HashMap;
 use cgmath::Vector3;
-// use support::resource::Chunk;
+use crate::support::{
+    actor::{Actor, ActorNode},
+    material::Material,
+    mesh::Mesh,
+    path_subst,
+    texture::PixelMap,
+    Error,
+};
+use log::*;
+use std::{
+    collections::{HashMap, HashSet},
+    fs::File,
+    io::{BufRead, BufReader},
+    iter::Iterator,
+    path::{Path, PathBuf},
+};
 
 // Car assembles the gameplay object (a car in this case) from various model and texture files.
 pub struct Car {
@@ -150,14 +153,19 @@ fn read_mechanics_block_v1_1<Iter: Iterator<Item = String>>(
 ) -> Result<Mechanics, Error> {
     let lrwheel_pos = parse_vector(&input.next().unwrap());
     trace!("Left rear wheel position: {:?}", lrwheel_pos);
+
     let rrwheel_pos = parse_vector(&input.next().unwrap());
     trace!("Right rear wheel position: {:?}", rrwheel_pos);
+
     let lfwheel_pos = parse_vector(&input.next().unwrap());
     trace!("Left front wheel position: {:?}", lfwheel_pos);
+
     let rfwheel_pos = parse_vector(&input.next().unwrap());
     trace!("Right front wheel position: {:?}", rfwheel_pos);
+
     let centre_of_mass_pos = parse_vector(&input.next().unwrap());
     trace!("Centre of mass position: {:?}", centre_of_mass_pos);
+
     Ok(Mechanics {
         lrwheel_pos,
         rrwheel_pos,
@@ -269,7 +277,7 @@ fn read_meshes(
             &Path::new("MODELS"),
             Some(String::from("DAT")),
         );
-        info!("### Opening meshes {:?}", mesh_file_name);
+        info!("### Opening mesh file {:?}", mesh_file_name);
         let meshes = Mesh::load_from(
             mesh_file_name
                 .clone()
@@ -323,9 +331,9 @@ impl Car {
 
     pub fn debug_meshes(&self) {
         for mesh in &self.meshes {
-            println!("Mesh {}:", mesh.0);
+            debug!("Mesh {}:", mesh.0);
             for mat in &mesh.1.material_names {
-                println!("... Material {}", mat);
+                debug!("... Material {}", mat);
             }
         }
     }
@@ -421,8 +429,7 @@ impl Car {
                     split.next().unwrap().parse().unwrap(),
                     String::from(split.next().unwrap()),
                 )
-            })
-            .collect();
+            }).collect();
         debug!("Actors to load: {:?}", load_actors);
 
         let reflective_material = input_lines.next().unwrap();
@@ -570,8 +577,8 @@ impl Car {
         pal_file_name.set_file_name("DRRENDER.PAL");
         let pal_file_name = path_subst(&pal_file_name, &Path::new("REG/PALETTES"), None);
         info!("### Opening palette {:?}", pal_file_name);
-        let palette = &PixelMap::load_from(pal_file_name.into_os_string().into_string().unwrap())?
-            [0];
+        let palette =
+            &PixelMap::load_from(pal_file_name.into_os_string().into_string().unwrap())?[0];
 
         for x in 0..palette.units {
             trace!(

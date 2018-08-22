@@ -6,13 +6,14 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use support::Error;
-use std::io::{BufRead, BufReader};
-use std::fs::File;
 use byteorder::ReadBytesExt;
-use support::resource::Chunk;
-use support;
+use crate::support::{self, resource::Chunk, Error};
 use id_tree::*;
+use log::*;
+use std::{
+    fs::File,
+    io::{BufRead, BufReader},
+};
 
 // Typical actor tree:
 // Root
@@ -42,7 +43,8 @@ pub struct Actor {
 impl Actor {
     pub fn new(tree: Tree<ActorNode>) -> Self {
         let mut tree = tree;
-        let root_id = tree.insert(Node::new(ActorNode::Root), InsertBehavior::AsRoot)
+        let root_id = tree
+            .insert(Node::new(ActorNode::Root), InsertBehavior::AsRoot)
             .unwrap();
         Self {
             tree: tree,
@@ -124,8 +126,7 @@ impl Actor {
                             .insert(
                                 Node::new(ActorNode::Actor { name, visible }),
                                 UnderNode(&current_actor),
-                            )
-                            .unwrap();
+                            ).unwrap();
                         last_actor = child_id.clone();
                     }
                     Chunk::ActorTransform(transform) => {
@@ -135,8 +136,7 @@ impl Actor {
                                 Node::new(ActorNode::Transform(transform)),
                                 // Transform is unconditionally attached to the last loaded actor
                                 UnderNode(&last_actor),
-                            )
-                            .unwrap();
+                            ).unwrap();
                     }
                     Chunk::MaterialRef(name) => {
                         actor
@@ -144,8 +144,7 @@ impl Actor {
                             .insert(
                                 Node::new(ActorNode::MaterialRef(name)),
                                 UnderNode(&current_actor),
-                            )
-                            .unwrap();
+                            ).unwrap();
                     }
                     Chunk::MeshFileRef(name) => {
                         actor
@@ -153,8 +152,7 @@ impl Actor {
                             .insert(
                                 Node::new(ActorNode::MeshfileRef(name)),
                                 UnderNode(&current_actor),
-                            )
-                            .unwrap();
+                            ).unwrap();
                     }
                     Chunk::ActorNodeDown() => {
                         current_actor = last_actor.clone();
