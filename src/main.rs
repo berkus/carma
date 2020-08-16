@@ -8,11 +8,21 @@
 //
 pub mod support;
 
-use cgmath::Vector3;
 #[cfg(feature = "convert")]
 use crate::support::texture::PixelMap;
-use crate::support::{camera::CameraState, car::Car, render_manager::RenderManager};
-use log::*;
+
+use {
+    crate::support::{camera::CameraState, car::Car, render_manager::RenderManager},
+    cgmath::Vector3,
+    glium::{
+        glutin::{
+            event::{Event, WindowEvent},
+            event_loop::ControlFlow,
+        },
+        Surface,
+    },
+    log::info,
+};
 
 fn setup_logging() -> Result<(), fern::InitError> {
     let base_config = fern::Dispatch::new().format(|out, message, record| {
@@ -26,18 +36,16 @@ fn setup_logging() -> Result<(), fern::InitError> {
     });
 
     let stdout_config = fern::Dispatch::new()
-        .level(log::LogLevelFilter::Info)
+        .level(log::LevelFilter::Info)
         .chain(std::io::stdout());
 
-    let file_config = fern::Dispatch::new()
-        .level(log::LogLevelFilter::Trace)
-        .chain(
-            std::fs::OpenOptions::new()
+    let file_config = fern::Dispatch::new().level(log::LevelFilter::Trace).chain(
+        std::fs::OpenOptions::new()
             .write(true)
             .create(true)
             .truncate(true) // start log file anew each run
             .open("debug.log")?,
-        );
+    );
 
     base_config
         .chain(stdout_config)
@@ -53,7 +61,7 @@ use std::path::Path;
 use std::{fs::File, io::BufWriter, path::PathBuf};
 
 // one possible implementation of walking a directory only visiting files
-fn visit_dirs(dir: &Path, cb: &mut FnMut(&DirEntry)) -> Result<(), support::Error> {
+fn visit_dirs(dir: &Path, cb: &mut dyn for<'r> FnMut(&'r DirEntry)) -> Result<(), support::Error> {
     if dir.is_dir() {
         for entry in fs::read_dir(dir)? {
             let entry = entry?;
@@ -152,17 +160,18 @@ fn main() {
                 cars.push(car);
             }
         }
-    }).unwrap();
+    })
+    .unwrap();
 
-    use glium::{glutin, Surface};
+    // Prepare window
 
-    let mut events_loop = glutin::EventsLoop::new();
-    let window = glutin::WindowBuilder::new()
+    let mut events_loop = glium::glutin::event_loop::EventLoop::new();
+    let window = glium::glutin::window::WindowBuilder::new()
         .with_title("carma")
-        .with_dimensions(800, 600);
-    let context = glutin::ContextBuilder::new().with_depth_buffer(24);
+        .with_inner_size(glium::glutin::dpi::LogicalSize::new(800.0, 600.0));
+    let windowed_context = glium::glutin::ContextBuilder::new();
 
-    let display = glium::Display::new(window, context, &events_loop).unwrap();
+    let display = glium::Display::new(window, windowed_context, &events_loop).unwrap();
 
     let mut render_manager = RenderManager::new(&display);
     for car in &cars {
@@ -171,29 +180,31 @@ fn main() {
 
     let mut camera = CameraState::new();
 
-    support::start_loop(|| {
+    events_loop.run(move |event, _, control_flow| {
+        println!("{:?}", event);
+        *control_flow = ControlFlow::Wait;
+
         camera.update();
 
-        let mut target = display.draw();
-        target.clear_color_and_depth((0.4, 0.4, 0.4, 0.0), 1.0);
+        match event {
+            Event::LoopDestroyed => return,
+            Event::WindowEvent { event, .. } => match event {
+                WindowEvent::Resized(physical_size) => display.resize(physical_size),
+                WindowEvent::CloseRequested => *control_flow = ControlFlow::Exit,
+                _ => camera.process_input(&event),
+            },
+            Event::RedrawRequested(_) => {
+                let mut frame = display.draw();
+                frame.clear_color(0.4, 0.4, 0.4, 0.0);
+                frame.clear_depth(1.0);
 
-        for car in &cars {
-            render_manager.draw_car(car, &mut target, &camera);
-        }
-        target.finish().unwrap();
-
-        let mut action = support::Action::Continue;
-
-        // polling and handling the events received by the window
-        events_loop.poll_events(|ev| {
-            if let glutin::Event::WindowEvent { event, .. } = ev {
-                match event {
-                    glutin::WindowEvent::Closed => action = support::Action::Stop,
-                    _ => camera.process_input(&event),
+                for car in &cars {
+                    render_manager.draw_car(car, &mut frame, &camera);
                 }
+                frame.finish().unwrap();
+                // windowed_context.swap_buffers().unwrap();
             }
-        });
-
-        action
+            _ => (),
+        }
     });
 }
