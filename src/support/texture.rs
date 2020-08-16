@@ -9,7 +9,7 @@
 use byteorder::ReadBytesExt;
 use crate::support::{self, resource::Chunk, Error};
 use log::*;
-use png::{self, HasParameters};
+use png;
 use std::{
     fs::File,
     io::{BufRead, BufReader, Write},
@@ -107,7 +107,8 @@ impl PixelMap {
         self.dump();
 
         let mut encoder = png::Encoder::new(w, self.w as u32, self.h as u32);
-        encoder.set(png::ColorType::RGB).set(png::BitDepth::Eight);
+        encoder.set_color(png::ColorType::RGB);
+        encoder.set_depth(png::BitDepth::Eight);
         let mut writer = encoder.write_header().unwrap();
 
         let mut data = Vec::<u8>::with_capacity(self.data.len() * 4);
