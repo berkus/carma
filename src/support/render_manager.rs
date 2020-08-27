@@ -6,8 +6,8 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use cgmath::{prelude::*, Matrix4, Vector3};
 use crate::support::{actor::ActorNode, camera::CameraState, car::Car, Vertex};
+use cgmath::{prelude::*, Matrix4, Vector3};
 use glium::{
     self,
     index::*,
@@ -159,7 +159,8 @@ impl RenderManager {
                         *key,
                         IndexBuffer::new(display, PrimitiveType::TrianglesList, &item).unwrap(),
                     )
-                }).collect(),
+                })
+                .collect(),
         );
 
         // each material from partitioned_by_material - load and bind it in bound_textures
@@ -273,7 +274,8 @@ impl RenderManager {
                     &self.program,
                     &uniforms,
                     &params,
-                ).unwrap();
+                )
+                .unwrap();
         }
     }
 }
