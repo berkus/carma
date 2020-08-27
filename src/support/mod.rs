@@ -11,17 +11,21 @@
 // extern crate genmesh;
 // extern crate obj;
 
-use byteorder::{BigEndian, ReadBytesExt};
-use cgmath::Vector3;
-use glium::implement_vertex;
-use std::{
-    self,
-    convert::From,
-    io::BufRead,
-    ops::Sub,
-    path::{Path, PathBuf},
-    thread,
-    time::{Duration, Instant},
+use {
+    anyhow::{anyhow, Result},
+    byteorder::{BigEndian, ReadBytesExt},
+    cgmath::Vector3,
+    glium::implement_vertex,
+    std::{
+        self,
+        convert::From,
+        io::BufRead,
+        ops::Sub,
+        path::{Path, PathBuf},
+        thread,
+        time::{Duration, Instant},
+    },
+    thiserror::Error as ThisError,
 };
 
 pub mod actor;
@@ -67,30 +71,14 @@ impl Sub for Vertex {
     }
 }
 
-// @todo use failure
-#[derive(Debug)]
+#[derive(Debug, ThisError)]
 pub enum Error {
-    IO(std::io::Error),
-    Utf8(std::str::Utf8Error),
-    FromUtf8(std::string::FromUtf8Error),
-}
-
-impl From<std::io::Error> for Error {
-    fn from(error: std::io::Error) -> Self {
-        Error::IO(error)
-    }
-}
-
-impl From<std::str::Utf8Error> for Error {
-    fn from(error: std::str::Utf8Error) -> Self {
-        Error::Utf8(error)
-    }
-}
-
-impl From<std::string::FromUtf8Error> for Error {
-    fn from(error: std::string::FromUtf8Error) -> Self {
-        Error::FromUtf8(error)
-    }
+    #[error("i/o error {0:?}")]
+    IO(#[from] std::io::Error),
+    #[error("utf-8 conversion error {0:?}")]
+    Utf8(#[from] std::str::Utf8Error),
+    #[error("from utf-8 conversion error {0:?}")]
+    FromUtf8(#[from] std::string::FromUtf8Error),
 }
 
 pub enum Action {
@@ -137,11 +125,13 @@ pub fn read_c_string<R: BufRead>(reader: &mut R) -> Result<String, Error> {
 }
 
 /*
- * Creates a pathname to filepath with the last directory replaced to newdir
+ * Creates a pathname to filepath with the last directory replaced by newdir
  * and optionally changing extension to newext.
  */
-pub fn path_subst(filepath: &Path, newdir: &Path, newext: Option<String>) -> PathBuf {
-    let fname = filepath.file_name().unwrap();
+pub fn path_subst(filepath: &Path, newdir: &Path, newext: Option<String>) -> Result<PathBuf> {
+    let fname = filepath
+        .file_name()
+        .ok_or_else(|| anyhow!("Can't parse filename"))?;
     let mut dir = PathBuf::from(filepath);
     dir.pop(); // remove file name
     dir.pop(); // remove parent dir
@@ -150,7 +140,7 @@ pub fn path_subst(filepath: &Path, newdir: &Path, newext: Option<String>) -> Pat
     if let Some(ext) = newext {
         dir.set_extension(ext);
     }
-    return dir;
+    Ok(dir)
 }
 
 // Returns a vertex buffer that should be rendered as `TrianglesList`.
@@ -262,5 +252,4 @@ mod tests {
             path_subst(&Path::new("/old/file.ext"), &Path::new("path"), None)
         );
     }
-
 }
