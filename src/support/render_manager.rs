@@ -28,6 +28,8 @@ pub struct RenderManager {
     bound_textures: HashMap<String, HashMap<u16, SrgbTexture2d>>, // MaterialId -> texture
     program: Program,
 }
+// @todo these become resources
+// esp the shader program
 
 fn debug_tree(name: &String, actor_name: &String, stack: &Vec<Matrix4<f32>>) {
     debug!("{} for {}: stack depth {}", name, actor_name, stack.len());
