@@ -271,8 +271,8 @@ fn read_mechanics_v4<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<
     read_mechanics_v3(input)
 }
 
-fn read_meshes(
-    fname: &String,
+fn read_meshes<P: AsRef<Path>>(
+    fname: P,
     load_models: &Vec<String>,
     car_meshes: &mut HashMap<String, Mesh>,
 ) -> Result<()> {
@@ -283,15 +283,17 @@ fn read_meshes(
 
     // Now iterate all meshes and load them.
     for mesh in load_models {
-        let mut mesh_file_name = PathBuf::from(&fname);
+        let mut mesh_file_name = fname.as_ref().to_path_buf();
         mesh_file_name.set_file_name(mesh);
-        let mesh_file_name = path_subst(
-            &mesh_file_name,
-            &Path::new("MODELS"),
-            Some(String::from("DAT")),
-        )?;
+        let mesh_file_name = path_subst(mesh_file_name, "MODELS".into(), Some("DAT".into()))?;
         info!("### Opening mesh file {:?}", mesh_file_name);
-        let meshes = Mesh::load_from(mesh_file_name.clone().into_os_string().into_string()?)?;
+        let meshes = Mesh::load_from(
+            mesh_file_name
+                .clone()
+                .into_os_string()
+                .into_string()
+                .unwrap(),
+        )?;
         for mesh in meshes {
             car_meshes.insert(mesh.name.clone(), mesh);
         }
@@ -300,15 +302,15 @@ fn read_meshes(
 }
 
 // @todo this could be patched into the TextureBuilder
-fn read_materials(
-    fname: &String,
+fn read_materials<P: AsRef<Path>>(
+    fname: P,
     load_materials: &HashSet<String>,
     car_materials: &mut HashMap<String, Material>,
 ) -> Result<()> {
     for material in load_materials {
-        let mut mat_file_name = PathBuf::from(&fname);
+        let mut mat_file_name = fname.as_ref().to_path_buf();
         mat_file_name.set_file_name(material);
-        let mat_file_name = path_subst(&mat_file_name, &Path::new("MATERIAL"), None)?;
+        let mat_file_name = path_subst(mat_file_name, "MATERIAL".into(), None)?;
         info!("### Opening material {:?}", mat_file_name);
         let materials = Material::load_from(mat_file_name)?;
         for mat in materials {
@@ -340,16 +342,12 @@ impl Car {
         }
     }
 
-    pub fn load_from(fname: String) -> Result<Car> {
+    pub fn load_from<P: AsRef<Path> + std::fmt::Debug>(fname: P) -> Result<Car> {
         // Load description file.
-        let description_file_name = path_subst(
-            &Path::new(fname.as_str()),
-            &Path::new("CARS"),
-            Some("ENC".into()),
-        )?;
-        info!("### Opening car {:?}", description_file_name);
+        // let description_file_name = path_subst(fname, "CARS", Some("ENC".into()))?;
+        info!("### Opening car {:?}", fname);
 
-        let description_file = BufReader::new(File::open(description_file_name)?);
+        let description_file = BufReader::new(File::open(fname.as_ref())?);
 
         let mut input_lines = description_file
             .lines()
@@ -532,17 +530,13 @@ impl Car {
         debug!("Meshes to load: {:?}", load_models);
 
         // Read meshes referenced from text description
-        read_meshes(&fname, &load_models, &mut car_meshes)?;
+        read_meshes(fname.as_ref(), &load_models, &mut car_meshes)?;
 
         // Load actor file.
-        let mut actor_file_name = PathBuf::from(&fname);
+        let mut actor_file_name = fname.as_ref().to_path_buf();
         let idx: isize = 0;
         actor_file_name.set_file_name(&load_actors[&idx]); // Read mipmap 0 actor
-        let actor_file_name = path_subst(
-            &actor_file_name,
-            &Path::new("ACTORS"),
-            Some(String::from("ACT")),
-        )?;
+        let actor_file_name = path_subst(actor_file_name, "ACTORS".into(), Some("ACT".into()))?;
         info!("### Opening actor {:?}", actor_file_name);
         let car_actors = Actor::load_from(actor_file_name)?;
 
@@ -584,9 +578,9 @@ impl Car {
         read_materials(&fname, &load_materials, &mut car_materials)?;
 
         // Load palette from PIX file.
-        let mut pal_file_name = PathBuf::from(&fname);
+        let mut pal_file_name = fname.as_ref().to_path_buf();
         pal_file_name.set_file_name("DRRENDER.PAL");
-        let pal_file_name = path_subst(&pal_file_name, &Path::new("REG/PALETTES"), None)?;
+        let pal_file_name = path_subst(pal_file_name, "REG/PALETTES".into(), None)?;
         info!("### Opening palette {:?}", pal_file_name);
         let palette = &PixelMap::load_from(pal_file_name)?[0];
 
@@ -602,9 +596,9 @@ impl Car {
 
         let mut car_textures = HashMap::<String, PixelMap>::new();
         for pixmap in load_pixmaps {
-            let mut pix_file_name = PathBuf::from(&fname);
+            let mut pix_file_name = fname.as_ref().to_path_buf();
             pix_file_name.set_file_name(pixmap);
-            let pix_file_name = path_subst(&pix_file_name, &Path::new("PIXELMAP"), None)?;
+            let pix_file_name = path_subst(pix_file_name, "PIXELMAP".into(), None)?;
             info!("### Opening pixelmap {:?}", pix_file_name);
             let pix = PixelMap::load_from(pix_file_name)?;
             for pmap in pix {
