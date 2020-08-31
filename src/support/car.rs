@@ -14,7 +14,8 @@ use {
         path_subst,
         texture::PixelMap,
     },
-    anyhow::{anyhow, Result},
+    anyhow::{anyhow, Error as AnyError, Result},
+    bevy::asset::{/*AssetLoadRequestHandler,*/ AssetLoader, LoadRequest},
     cgmath::Vector3,
     log::*,
     std::{
@@ -24,6 +25,7 @@ use {
         iter::Iterator,
         path::{Path, PathBuf},
     },
+    thiserror::Error as ThisError,
 };
 
 // Car assembles the gameplay object (a car in this case) from various model and texture files.
@@ -34,6 +36,35 @@ pub struct Car {
     pub materials: HashMap<String, Material>,
     pub textures: HashMap<String, PixelMap>,
     pub base_translation: Vector3<f32>,
+}
+
+// pub struct CarLoadRequestHandler;
+//
+// impl AssetLoadRequestHandler for CarLoadRequestHandler {
+//     fn handle_request(&self, load_request: &LoadRequest) {
+//         // @todo what to do here?
+//         // let car = Car::load_from(load_request.path.clone()).unwrap();
+//         unimplemented!()
+//     }
+//
+//     fn extensions(&self) -> &[&str] {
+//         &["ENC"]
+//     }
+// }
+
+#[derive(Default)]
+pub struct CarLoader;
+
+impl AssetLoader<Car> for CarLoader {
+    fn from_bytes(&self, asset_path: &Path, _bytes: Vec<u8>) -> Result<Car> {
+        info!("### Loading car {:?} via AssetLoader", asset_path);
+        Car::load_from(asset_path)
+    }
+
+    fn extensions(&self) -> &[&str] {
+        static EXTENSIONS: &[&str] = &["ENC"];
+        EXTENSIONS
+    }
 }
 
 /// Expect next line to match provided text exactly.

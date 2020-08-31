@@ -1,4 +1,5 @@
 #![feature(try_trait)]
+#![allow(unused_imports)]
 
 //
 // Part of Roadkill Project.
@@ -8,9 +9,12 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use bevy::asset::{AssetLoadRequestHandler, LoadRequest};
 use {
-    crate::support::{camera::CameraState, car::Car, render_manager::RenderManager},
+    crate::support::{
+        camera::CameraState,
+        car::{Car, CarLoader},
+        render_manager::RenderManager,
+    },
     anyhow::{anyhow, Context, Error, Result},
     bevy::prelude::*,
     cgmath::Vector3,
@@ -77,20 +81,14 @@ fn visit_files(dir: &Path, cb: &mut dyn for<'r> FnMut(&'r DirEntry) -> Result<()
     }
 }
 
-struct CarHandler;
+// @todo these are all resource types under support, just implement AssetLoadRequestHandler for them?
+// ACT
+// DAT
+// MAT
+// PAL
+// PIX
 
-impl AssetLoadRequestHandler for CarHandler {
-    fn handle_request(&self, load_request: &LoadRequest) {
-        let mut car = Car::load_from(load_request.path.clone()).unwrap();
-        unimplemented!()
-    }
-
-    fn extensions(&self) -> &[&str] {
-        &["ENC"]
-    }
-}
-
-fn setup_textures(
+fn setup_cars(
     mut commands: Commands,
     mut asset_server: ResMut<AssetServer>,
     // mut textures: ResMut<Assets<Texture>>,
@@ -100,8 +98,14 @@ fn setup_textures(
     // bevy @todo: load all textures into the texture atlas
     // TextureAtlasBuilder
 
+    // I'd say use the bevy_gltf crate/plugin as a reference: https://github.com/bevyengine/bevy/tree/master/crates/bevy_gltf/src
+    // Specifically, you need to implement AssetLoader<MyAsset>  for MyAssetLoader and call:
+    // app.add_asset::<MyAsset>()
+    //     .add_asset_loader::<MyAsset, MyAssetLoader>();
+
     // add handler for ENC assets, then
-    asset_server.add_handler(CarHandler);
+    // asset_server.add_handler(crate::support::car::CarLoadRequestHandler);
+    // asset_server.add_loader(crate::support::car::CarLoader);
     asset_server
         .load_asset_folder("DecodedData/DATA/CARS")
         .unwrap();
@@ -181,7 +185,9 @@ fn main() {
 
     App::build()
         .add_default_plugins()
-        .add_startup_system(setup_textures.system())
+        .add_asset::<Car>()
+        .add_asset_loader::<Car, CarLoader>()
+        .add_startup_system(setup_cars.system())
         // .add_system(animate_camera.system())
         .run()
 
