@@ -6,9 +6,9 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use cgmath::*;
-use glium::glutin;
+use {cgmath::*, glium::glutin};
 
+// @todo this converts to an entity with some components and a system to process movement
 pub struct CameraState {
     aspect_ratio: f32,
     fov: f32,

@@ -8,6 +8,7 @@
 //
 use {
     crate::support::{self, resource::Chunk, Error},
+    anyhow::{anyhow, Result},
     byteorder::ReadBytesExt,
     id_tree::*,
     log::*,
@@ -107,7 +108,8 @@ impl Actor {
         }
     }
 
-    pub fn load<R: ReadBytesExt + BufRead>(rdr: &mut R) -> Result<Actor, Error> {
+    //#[throws]
+    pub fn load<R: ReadBytesExt + BufRead>(reader: &mut R) -> Result<Actor> {
         use id_tree::InsertBehavior::*;
 
         let mut actor = Actor::new(TreeBuilder::new().with_node_capacity(5).build());
@@ -119,8 +121,12 @@ impl Actor {
             // Read chunks until last chunk is encountered.
             // Certain chunks initialize certain properties.
             loop {
-                let c = Chunk::load(rdr)?;
-                match c {
+                match Chunk::load(reader)? {
+                    Chunk::FileHeader { file_type } => {
+                        if file_type != support::ACTOR_FILE_TYPE {
+                            return Err(anyhow!("Invalid model file type {}", file_type));
+                        }
+                    }
                     Chunk::ActorName { name, visible } => {
                         trace!("Actor {} visible {}", name, visible);
                         let child_id: NodeId = actor
@@ -170,11 +176,6 @@ impl Actor {
                         }
                     }
                     Chunk::Null() => break,
-                    Chunk::FileHeader { file_type } => {
-                        if file_type != support::ACTOR_FILE_TYPE {
-                            panic!("Invalid model file type {}", file_type);
-                        }
-                    }
                     _ => unimplemented!(), // unexpected type here
                 }
             }
@@ -183,10 +184,8 @@ impl Actor {
         Ok(actor)
     }
 
-    pub fn load_from<P: AsRef<std::path::Path>>(fname: P) -> Result<Actor, Error> {
-        let file = File::open(fname)?;
-        let mut file = BufReader::new(file);
-        let m = Actor::load(&mut file)?;
-        Ok(m)
+    pub fn load_from<P: AsRef<std::path::Path>>(filename: P) -> Result<Actor> {
+        let mut file = BufReader::new(File::open(filename)?);
+        Ok(Actor::load(&mut file)?)
     }
 }

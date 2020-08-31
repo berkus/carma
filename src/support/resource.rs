@@ -6,14 +6,17 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use byteorder::{BigEndian, ReadBytesExt};
-use crate::support::{
-    self,
-    mesh::{Face, UvCoord},
-    read_c_string, Error, Vertex,
+use {
+    crate::support::{
+        self,
+        mesh::{Face, UvCoord},
+        read_c_string, Error, Vertex,
+    },
+    anyhow::Result,
+    byteorder::{BigEndian, ReadBytesExt},
+    log::*,
+    std::io::BufRead,
 };
-use log::*;
-use std::io::BufRead;
 
 // A binary resource file consisting of chunks with specific size.
 // Reading from such file yields chunk results, some of these chunks are service,
@@ -25,7 +28,7 @@ struct ChunkHeader {
 }
 
 impl ChunkHeader {
-    pub fn load<R: ReadBytesExt>(source: &mut R) -> Result<ChunkHeader, Error> {
+    pub fn load<R: ReadBytesExt>(source: &mut R) -> Result<ChunkHeader> {
         let mut h = ChunkHeader::default();
         h.chunk_type = source.read_u32::<BigEndian>()?;
         h.size = source.read_u32::<BigEndian>()?;
@@ -80,7 +83,8 @@ pub enum Chunk {
 }
 
 impl Chunk {
-    pub fn load<R: ReadBytesExt + BufRead>(source: &mut R) -> Result<Chunk, Error> {
+    //#[throws]
+    pub fn load<R: ReadBytesExt + BufRead>(source: &mut R) -> Result<Chunk> {
         let header = ChunkHeader::load(source)?;
         match header.chunk_type {
             support::NULL_CHUNK => Ok(Chunk::Null()),
