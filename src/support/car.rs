@@ -39,7 +39,7 @@ pub struct Car {
 }
 
 /// Expect next line to match provided text exactly.
-fn expect_match<Iter: Iterator<Item = String>>(input: &mut Iter, text: &str) -> Result<()> {
+fn expect_match(input: &mut impl Iterator<Item = String>, text: &str) -> Result<()> {
     if let Some(line) = input.next() {
         if line == text {
             return Ok(());
@@ -55,12 +55,12 @@ fn parse_vector(line: &String) -> Result<Vector3<f32>> {
     Ok(Vector3::from((line[0], line[1], line[2])))
 }
 
-fn consume_line<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<String> {
+fn consume_line(input: &mut impl Iterator<Item = String>) -> Result<String> {
     input.next().ok_or(anyhow!("Bad input data"))
 }
 
 /// Read systems in a single damage spec clause.
-fn read_systems<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
+fn read_systems(input: &mut impl Iterator<Item = String>) -> Result<()> {
     // read condition flag for this clause
     /*let condition =*/
     consume_line(input)?;
@@ -73,7 +73,7 @@ fn read_systems<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
 }
 
 /// Read all damage spec clauses.
-fn read_clauses<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
+fn read_clauses(input: &mut impl Iterator<Item = String>) -> Result<()> {
     // read clause count, read this many systems
     let clause_count = consume_line(input)?.parse()?;
     for _ in 0..clause_count {
@@ -83,7 +83,7 @@ fn read_clauses<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
 }
 
 /// Read a vector of strings.
-fn read_vector<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<Vec<String>> {
+fn read_vector(input: &mut impl Iterator<Item = String>) -> Result<Vec<String>> {
     // read vector size, read this many strings
     let size = consume_line(input)?.parse()?;
     let mut vec = Vec::<String>::with_capacity(size);
@@ -93,7 +93,7 @@ fn read_vector<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<Vec<St
     Ok(vec)
 }
 
-fn read_funk<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
+fn read_funk(input: &mut impl Iterator<Item = String>) -> Result<()> {
     expect_match(input, "START OF FUNK")?;
     // for now just ignore everything here, read until END OF FUNK
     loop {
@@ -110,10 +110,10 @@ fn read_funk<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
 struct Groove {}
 
 // Read a single groove
-// fn read_groove<Iter: Iterator<Item=String>>(input: &mut Iter) -> Groove {
+// fn read_groove(input: &mut impl Iterator<Item = String>) -> Groove {
 // }
 
-fn read_grooves<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
+fn read_grooves(input: &mut impl Iterator<Item = String>) -> Result<()> {
     expect_match(input, "START OF GROOVE")?;
     // for now just ignore everything here, read until END OF GROOVE
     loop {
@@ -128,7 +128,7 @@ fn read_grooves<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
 }
 
 /// A bunch of some matrices and mappings or vertex-pairs, ignore for now.
-fn read_some_metadata<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
+fn read_some_metadata(input: &mut impl Iterator<Item = String>) -> Result<()> {
     consume_line(input)?; // 0.700000
     consume_line(input)?; // 0.050000,0.300000
     consume_line(input)?; // 0.050000
@@ -160,7 +160,7 @@ pub struct Mechanics {
     pub rfwheel_pos: Vector3<f32>,
 }
 
-fn read_mechanics_block_v1_1<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<Mechanics> {
+fn read_mechanics_block_v1_1(input: &mut impl Iterator<Item = String>) -> Result<Mechanics> {
     let lrwheel_pos = parse_vector(&consume_line(input)?)?;
     trace!("Left rear wheel position: {:?}", lrwheel_pos);
 
@@ -184,7 +184,7 @@ fn read_mechanics_block_v1_1<Iter: Iterator<Item = String>>(input: &mut Iter) ->
     })
 }
 
-fn read_mechanics_block_v1_1_v3<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
+fn read_mechanics_block_v1_1_v3(input: &mut impl Iterator<Item = String>) -> Result<()> {
     let min_bb = parse_vector(&consume_line(input)?);
     let max_bb = parse_vector(&consume_line(input)?);
     trace!("Bounding box: ({:?} - {:?})", min_bb, max_bb);
@@ -192,12 +192,12 @@ fn read_mechanics_block_v1_1_v3<Iter: Iterator<Item = String>>(input: &mut Iter)
 }
 
 // Version 2 contains count for bounding boxes (which is always 1, that's why it's removed in ver 3)
-fn read_mechanics_block_v1_1_v2<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
+fn read_mechanics_block_v1_1_v2(input: &mut impl Iterator<Item = String>) -> Result<()> {
     expect_match(input, "1")?;
     read_mechanics_block_v1_1_v3(input)
 }
 
-fn read_mechanics_block_v1_2<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
+fn read_mechanics_block_v1_2(input: &mut impl Iterator<Item = String>) -> Result<()> {
     // 0.5                                     // min turning circle radius
     consume_line(input)?;
     // 0.025,  0.025                           // suspension give (forward, back)
@@ -217,7 +217,7 @@ fn read_mechanics_block_v1_2<Iter: Iterator<Item = String>>(input: &mut Iter) ->
     Ok(())
 }
 
-fn read_mechanics_block_v1_3<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
+fn read_mechanics_block_v1_3(input: &mut impl Iterator<Item = String>) -> Result<()> {
     // 0.05, 0.05                              // rolling resistance front and back
     consume_line(input)?;
     // 6                                       // number of gears
@@ -229,7 +229,7 @@ fn read_mechanics_block_v1_3<Iter: Iterator<Item = String>>(input: &mut Iter) ->
     Ok(())
 }
 
-fn read_mechanics_block_v2<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
+fn read_mechanics_block_v2(input: &mut impl Iterator<Item = String>) -> Result<()> {
     // 2.0                                     // traction fractional multiplier v. 2
     consume_line(input)?;
     // 50                                      // speed at which down force = weight v. 2
@@ -241,7 +241,7 @@ fn read_mechanics_block_v2<Iter: Iterator<Item = String>>(input: &mut Iter) -> R
     Ok(())
 }
 
-fn read_mechanics_block_v3<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<()> {
+fn read_mechanics_block_v3(input: &mut impl Iterator<Item = String>) -> Result<()> {
     // 3
     // 0,-0.18,-0.52                               // extra point 1            v. 3
     // -0.07,0.07,0.18                         // extra point 2            v. 3
@@ -250,7 +250,7 @@ fn read_mechanics_block_v3<Iter: Iterator<Item = String>>(input: &mut Iter) -> R
     Ok(())
 }
 
-fn read_mechanics_v2<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<Mechanics> {
+fn read_mechanics_v2(input: &mut impl Iterator<Item = String>) -> Result<Mechanics> {
     let mech = read_mechanics_block_v1_1(input)?;
     read_mechanics_block_v1_1_v2(input)?;
     read_mechanics_block_v1_2(input)?;
@@ -259,7 +259,7 @@ fn read_mechanics_v2<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<
     Ok(mech)
 }
 
-fn read_mechanics_v3<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<Mechanics> {
+fn read_mechanics_v3(input: &mut impl Iterator<Item = String>) -> Result<Mechanics> {
     let mech = read_mechanics_block_v1_1(input)?;
     read_mechanics_block_v1_1_v3(input)?;
     read_mechanics_block_v3(input)?;
@@ -269,7 +269,7 @@ fn read_mechanics_v3<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<
     Ok(mech)
 }
 
-fn read_mechanics_v4<Iter: Iterator<Item = String>>(input: &mut Iter) -> Result<Mechanics> {
+fn read_mechanics_v4(input: &mut impl Iterator<Item = String>) -> Result<Mechanics> {
     read_mechanics_v3(input)
 }
 
