@@ -6,24 +6,23 @@ version = "0.0.3"
 resolver = "2"
 
 [dependencies]
+anyhow = "1.0"
+thiserror = "1.0"
+fehler = "1.0"
+bevy = "0.12"
+bevy_egui = "*"
+bevy_asset_loader = "0.19"
+byteorder = "1.3"
+log = "0.4"
 derive_builder = "0.13"
 glium = "0.32"
 image = "0.24"
 # then move on to vulkano = "0.19"
-
-bevy = "0.1"
-bevy_asset_loader = "0.14.1"
-
-byteorder = "1.3"
 cgmath = "0.18"
-id_tree = "1.8"
+id_tree = "1.7"
 num = "0.4"
-log = "0.4"
 fern = "0.6"
 chrono = "0.4"
-png = "0.17"
-# todo: use failure
 
-anyhow = "1.0"
-thiserror = "1.0"
-fehler = "1.0"
+[dev-dependencies]
+png = "0.17"
