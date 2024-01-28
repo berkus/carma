@@ -19,3 +19,6 @@ chrono = "0.4"
 png = "0.17"
 bevy = "0.1"
 # todo: use failure
+anyhow = "1.0"
+thiserror = "1.0"
+fehler = "1.0"

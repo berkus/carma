@@ -1,3 +1,5 @@
+#![feature(try_trait)]
+
 //
 // Part of Roadkill Project.
 //
@@ -8,8 +10,10 @@
 //
 use {
     crate::support::{camera::CameraState, car::Car, render_manager::RenderManager},
+    anyhow::{anyhow, Context, Error, Result},
     bevy::prelude::*,
     cgmath::Vector3,
+    fehler::throws,
     glium::{
         glutin::{
             event::{Event, WindowEvent},
@@ -26,7 +30,8 @@ use {
 
 pub mod support;
 
-fn setup_logging() -> Result<(), fern::InitError> {
+#[throws(fern::InitError)]
+fn setup_logging() {
     let base_config = fern::Dispatch::new().format(|out, message, record| {
         out.finish(format_args!(
             "{}[{}][{}] {}",
@@ -53,53 +58,55 @@ fn setup_logging() -> Result<(), fern::InitError> {
         .chain(stdout_config)
         .chain(file_config)
         .apply()?;
-
-    Ok(())
 }
 
 // one possible implementation of walking a directory only visiting files
-fn visit_dirs(dir: &Path, cb: &mut dyn for<'r> FnMut(&'r DirEntry)) -> Result<(), support::Error> {
+#[throws]
+fn visit_files(dir: &Path, cb: &mut dyn for<'r> FnMut(&'r DirEntry) -> Result<()>) {
     if dir.is_dir() {
         for entry in fs::read_dir(dir)? {
             let entry = entry?;
             let path = entry.path();
             if path.is_dir() {
-                visit_dirs(&path, cb)?;
+                visit_files(&path, cb)?;
             } else {
-                cb(&entry);
+                cb(&entry)?;
             }
         }
     }
-    Ok(())
 }
 
-fn setup_textures(
-    mut commands: Commands,
-    asset_server: Res<AssetServer>,
-    mut textures: ResMut<Assets<Texture>>,
-    mut texture_atlases: ResMut<Assets<TextureAtlas>>,
-) {
+fn setup_textures(// mut commands: Commands,
+    // asset_server: Res<AssetServer>,
+    // mut textures: ResMut<Assets<Texture>>,
+    // mut texture_atlases: ResMut<Assets<TextureAtlas>>,
+) -> Result<Vec<Car>> {
     // bevy @todo: load all textures into the texture atlas
+    // TextureAtlasBuilder
 
-    let texture_handle = asset_server
-        .load_sync(
-            &mut textures,
-            "assets/textures/rpg/chars/gabe/gabe-idle-run.png",
-        )
-        .unwrap();
-    let texture = textures.get(&texture_handle).unwrap();
-    let texture_atlas = TextureAtlas::from_grid(texture_handle, texture.size, 7, 1);
-    let texture_atlas_handle = texture_atlases.add(texture_atlas);
+    // let texture_handle = asset_server
+    //     .load_sync(
+    //         &mut textures,
+    //         "assets/textures/rpg/chars/gabe/gabe-idle-run.png",
+    //     )
+    //     .unwrap();
+    // let texture = textures.get(&texture_handle).unwrap();
+    // let texture_atlas = TextureAtlas::from_grid(texture_handle, texture.size, 7, 1);
+    // let texture_atlas_handle = texture_atlases.add(texture_atlas);
 
     // Load all cars and arrange in a grid 6x7 (40 cars total)
 
     let mut cars = Vec::new();
     let mut counter = 0;
-    visit_dirs(Path::new("DecodedData/DATA/CARS"), &mut |entry| {
+    visit_files(Path::new("DecodedData/DATA/CARS"), &mut |entry| {
         if let Ok(file_type) = entry.file_type() {
-            let fname = String::from(entry.path().to_str().unwrap());
+            let fname = entry
+                .path()
+                .to_str()
+                .map(String::from)
+                .ok_or_else(|| anyhow!("Failed to make filename"))?;
             if file_type.is_file() && fname.ends_with(".ENC") {
-                let mut car = Car::load_from(fname).unwrap();
+                let mut car = Car::load_from(fname)?;
 
                 let z = 1.0f32 * f32::from(counter / 7);
                 let x = 1.0f32 * f32::from(counter % 7 as u16);
@@ -112,28 +119,31 @@ fn setup_textures(
                 cars.push(car);
             }
         }
-    })
-    .unwrap();
+        Ok(())
+    })?;
 
-    commands
-        .spawn(Camera2dComponents::default())
-        .spawn(SpriteSheetComponents {
-            texture_atlas: texture_atlas_handle,
-            scale: Scale(6.0),
-            ..Default::default()
-        })
-        .with(Timer::from_seconds(0.1));
+    Ok(cars)
+
+    // commands
+    //     .spawn(Camera2dComponents::default())
+    //     .spawn(SpriteSheetComponents {
+    //         texture_atlas: texture_atlas_handle,
+    //         scale: Scale(6.0),
+    //         ..Default::default()
+    //     })
+    //     .with(Timer::from_seconds(0.1));
 }
 
-// @todo return result
-fn main() {
-    setup_logging().expect("failed to initialize logging");
+fn main() -> Result<()> {
+    setup_logging().context("failed to initialize logging")?;
 
-    App::build()
-        .add_default_plugins()
-        .add_startup_system(setup_textures.system())
-        .add_system(animate_camera.system())
-        .run();
+    // App::build()
+    //     .add_default_plugins()
+    //     .add_startup_system(setup_textures.system())
+    //     .add_system(animate_camera.system())
+    //     .run();
+
+    let cars = setup_textures()?;
 
     // Prepare window -- move to bevy init
 
@@ -143,7 +153,7 @@ fn main() {
         .with_inner_size(glium::glutin::dpi::LogicalSize::new(800.0, 600.0));
     let windowed_context = glium::glutin::ContextBuilder::new();
 
-    let display = glium::Display::new(window, windowed_context, &events_loop).unwrap();
+    let display = glium::Display::new(window, windowed_context, &events_loop)?;
 
     let mut render_manager = RenderManager::new(&display);
     for car in &cars {

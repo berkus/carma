@@ -1,7 +1,7 @@
 //
 // Part of Roadkill Project.
 //
-// Copyright 2010, 2017, Stanislav Karchebnyy <berkus@madfire.net>
+// Copyright 2010, 2017, 2020 Berkus Karchebnyy <berkus+cargo@metta.systems>
 //
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -10,7 +10,6 @@ use {
     crate::support::{self, resource::Chunk, Error},
     byteorder::ReadBytesExt,
     log::*,
-    png,
     std::{
         fs::File,
         io::{BufRead, BufReader, Write},
@@ -41,10 +40,14 @@ impl std::fmt::Display for PixelMap {
     }
 }
 
+// @todo impl From<PixelMap> for bevy::Texture {}
+
 /**
- * Megatexture for storing all loaded textures.
- * Usually 1024x1024 or 4096x4096 texture with multiple smaller textures inside.
- */
+* Megatexture for storing all loaded textures.
+* Usually 1024x1024 or 4096x4096 texture with multiple smaller textures inside.
+
+@todo drop local Texture and use bevy::TextureAtlas
+*/
 #[derive(Default)]
 pub struct Texture {
     pub w: u16,
@@ -53,8 +56,11 @@ pub struct Texture {
 }
 
 /**
- * Named reference into the megatexture.
- */
+* Named reference into the megatexture.
+
+@todo use bevy Handle<Texture> or sth like this to get the texture out of the atlas
+We need only u and v for the texture because it's all already part of the megatexture.
+*/
 pub struct TextureReference {
     pub id: i32,
     pub x0: f32,
@@ -66,7 +72,7 @@ pub struct TextureReference {
 
 impl PixelMap {
     /// Convert indexed-color image to RGBA using provided palette.
-    pub fn remap_via(&self, palette: &PixelMap) -> Result<PixelMap, Error> {
+    pub fn remap_via_palette(&self, palette: &PixelMap) -> Result<PixelMap, Error> {
         let mut pm = self.clone();
         pm.data = Vec::<u8>::with_capacity(self.data.len() * 4);
         pm.unit_bytes = 4;
@@ -101,6 +107,7 @@ impl PixelMap {
         Ok(pm)
     }
 
+    #[cfg(convert)]
     pub fn write_png_remapped_via<W: Write>(
         &self,
         palette: &PixelMap,
@@ -159,13 +166,13 @@ impl PixelMap {
         Ok(())
     }
 
-    pub fn load<R: ReadBytesExt + BufRead>(rdr: &mut R) -> Result<PixelMap, Error> {
+    pub fn load<R: ReadBytesExt + BufRead>(reader: &mut R) -> Result<PixelMap, Error> {
         let mut pm = PixelMap::default();
 
         // Read chunks until last chunk is encountered.
         // Certain chunks initialize certain properties.
         loop {
-            let c = Chunk::load(rdr)?;
+            let c = Chunk::load(reader)?;
             match c {
                 Chunk::PixelmapHeader {
                     name,
@@ -174,12 +181,15 @@ impl PixelMap {
                     mipmap_w,
                     mipmap_h,
                 } => {
-                    pm.name = name;
+                    pm.name = name.clone();
                     pm.w = w;
                     pm.h = h;
                     pm.use_w = mipmap_w;
                     pm.use_h = mipmap_h;
-                    debug!("Pixelmap {}x{} use {}x{}", w, h, mipmap_w, mipmap_h);
+                    debug!(
+                        "Pixelmap {} ({}x{} use {}x{})",
+                        name, w, h, mipmap_w, mipmap_h
+                    );
                 }
                 Chunk::PixelmapData {
                     units,
@@ -189,7 +199,10 @@ impl PixelMap {
                     pm.units = units;
                     pm.unit_bytes = unit_bytes;
                     pm.data = data;
-                    debug!("Pixelmap data {} units, {} bytes each", units, unit_bytes);
+                    debug!(
+                        "Pixelmap data in {} units, {} bytes each",
+                        units, unit_bytes
+                    );
                 }
                 Chunk::Null() => break,
                 Chunk::FileHeader { file_type } => {
@@ -204,7 +217,8 @@ impl PixelMap {
         Ok(pm)
     }
 
-    pub fn load_from(fname: String) -> Result<Vec<PixelMap>, Error> {
+    /// Load one or more named textures from a single file
+    pub fn load_from<P: AsRef<std::path::Path>>(fname: P) -> Result<Vec<PixelMap>, Error> {
         let file = File::open(fname)?;
         let mut file = BufReader::new(file);
         let mut pmaps = Vec::<PixelMap>::new();

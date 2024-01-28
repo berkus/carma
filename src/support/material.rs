@@ -66,7 +66,7 @@ impl Material {
     /**
      * Load multiple materials from a file.
      */
-    pub fn load_from(fname: String) -> Result<Vec<Material>, Error> {
+    pub fn load_from<P: AsRef<std::path::Path>>(fname: P) -> Result<Vec<Material>, Error> {
         let file = File::open(fname)?;
         let mut file = BufReader::new(file);
         let mut materials = Vec::<Material>::new();
