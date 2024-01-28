@@ -26,36 +26,6 @@ use {
 
 pub mod support;
 
-#[throws(fern::InitError)]
-fn setup_logging() {
-    let base_config = fern::Dispatch::new().format(|out, message, record| {
-        out.finish(format_args!(
-            "{}[{}][{}] {}",
-            chrono::Local::now().format("[%Y-%m-%d][%H:%M:%S]"),
-            record.target(),
-            record.level(),
-            message
-        ))
-    });
-
-    let stdout_config = fern::Dispatch::new()
-        .level(log::LevelFilter::Info)
-        .chain(std::io::stdout());
-
-    let file_config = fern::Dispatch::new().level(log::LevelFilter::Trace).chain(
-        std::fs::OpenOptions::new()
-            .write(true)
-            .create(true)
-            .truncate(true) // start log file anew each run
-            .open("debug.log")?,
-    );
-
-    base_config
-        .chain(stdout_config)
-        .chain(file_config)
-        .apply()?;
-}
-
 // @todo these are all resource types under support, just implement AssetLoadRequestHandler for them?
 // ACT
 // DAT
@@ -137,7 +107,7 @@ fn setup_cars(
 
 #[throws]
 fn main() {
-    setup_logging().context("failed to initialize logging")?;
+    support::logger::setup_logging().expect("failed to initialize logging");
     // ❌ Resource loading from files
     // ❌ Texture placement in atlas
     // ❌ Compose animatable models from disparate Car resources

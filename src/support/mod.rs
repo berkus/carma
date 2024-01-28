@@ -28,6 +28,7 @@ use {
 pub mod actor;
 pub mod camera;
 pub mod car;
+pub mod logger;
 pub mod material;
 pub mod mesh;
 pub mod render_manager;
