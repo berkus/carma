@@ -55,7 +55,7 @@ fn expect_match(input: &mut impl Iterator<Item = String>, text: &str) -> Result<
 
 /// Parse a three-component vector from a comma-separated string.
 #[throws]
-fn parse_vector(line: &String) -> Vector3<f32> {
+fn parse_vector(line: &str) -> Vector3<f32> {
     let line: Result<Vec<f32>, _> = line.split(',').map(|i| i.trim().parse::<f32>()).collect();
     let line = line?;
     Vector3::from((line[0], line[1], line[2]))
@@ -281,10 +281,10 @@ fn read_mechanics_v4(input: &mut impl Iterator<Item = String>) -> Result<Mechani
 
 fn read_meshes<P: AsRef<Path>>(
     fname: P,
-    load_models: &Vec<String>,
+    load_models: &[String],
     car_meshes: &mut HashMap<String, Mesh>,
 ) -> Result<()> {
-    let mut load_models = load_models.clone();
+    let mut load_models: Vec<String> = load_models.to_vec();
     load_models.sort();
     load_models.dedup();
     debug!("Models to load: {:?}", load_models);
@@ -359,7 +359,7 @@ impl Car {
 
         let mut input_lines = description_file
             .lines()
-            .filter_map(|line| line.ok())
+            .map_while(Result::ok)
             .filter(|line| !line.starts_with("//")) // Skip whole-line comments
             .filter(|line| !line.is_empty()) // Skip empty lines
             // Separate in-line comments from data
@@ -437,14 +437,11 @@ impl Car {
 
         let load_actors: HashMap<isize, String> = read_vector(&mut input_lines)?
             .iter()
-            .map(|act| act.split(","))
+            .map(|act| act.split(','))
             .map(|mut split| {
                 (
                     split.next().and_then(|id| id.parse().ok()).unwrap_or(0),
-                    split
-                        .next()
-                        .map(|x| String::from(x))
-                        .unwrap_or_else(|| "".into()),
+                    split.next().map(String::from).unwrap_or_else(|| "".into()),
                 )
             })
             .collect();
@@ -511,8 +508,7 @@ impl Car {
         }
         let version = mechanics
             .split(" version ")
-            .skip(1)
-            .next()
+            .nth(1)
             .map(|x| x.parse())
             .ok_or(anyhow!("Bad input data"))??;
 
@@ -551,13 +547,10 @@ impl Car {
         // Read meshes referenced from actor file
         load_models.clear();
         for actor in car_actors.traverse() {
-            match actor.data() {
-                &ActorNode::MeshfileRef(ref name) => {
-                    if !car_meshes.contains_key(name) {
-                        load_models.push(name.clone())
-                    }
+            if let ActorNode::MeshfileRef(name) = actor.data() {
+                if !car_meshes.contains_key(name) {
+                    load_models.push(name.clone())
                 }
-                _ => (),
             }
         }
 
@@ -567,8 +560,7 @@ impl Car {
         //
         // Materials
         //
-        let mut load_materials: HashSet<String> =
-            load_materials.iter().map(|s| s.clone()).collect();
+        let mut load_materials: HashSet<String> = load_materials.iter().cloned().collect();
         debug!("Materials to load: {:?}", load_materials);
 
         let mut car_materials = HashMap::<String, Material>::new();
@@ -595,7 +587,7 @@ impl Car {
         for x in 0..palette.units {
             trace!(
                 "Palette alpha {}",
-                palette.data[(x * palette.unit_bytes + 0) as usize]
+                palette.data[(x * palette.unit_bytes/*+ 0*/) as usize]
             );
         }
 
@@ -610,7 +602,7 @@ impl Car {
             info!("### Opening pixelmap {:?}", pix_file_name);
             let pix = PixelMap::load_from(pix_file_name)?;
             for pmap in pix {
-                let pmap = pmap.remap_via_palette(&palette)?;
+                let pmap = pmap.remap_via_palette(palette)?;
                 car_textures.insert(pmap.name.clone(), pmap);
             }
         }

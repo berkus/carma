@@ -27,10 +27,10 @@ pub struct UvCoord {
 
 impl UvCoord {
     pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Result<UvCoord> {
-        let mut uv = UvCoord::default();
-        uv.u = rdr.read_f32::<BigEndian>()?;
-        uv.v = rdr.read_f32::<BigEndian>()?;
-        Ok(uv)
+        Ok(UvCoord {
+            u: rdr.read_f32::<BigEndian>()?,
+            v: rdr.read_f32::<BigEndian>()?,
+        })
     }
 }
 
@@ -45,13 +45,15 @@ pub struct Face {
 
 impl Face {
     pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Result<Face> {
-        let mut s = Face::default();
-        s.v1 = rdr.read_u16::<BigEndian>()?;
-        s.v2 = rdr.read_u16::<BigEndian>()?;
-        s.v3 = rdr.read_u16::<BigEndian>()?;
-        s.flags = rdr.read_u16::<BigEndian>()?;
+        let f = Face {
+            v1: rdr.read_u16::<BigEndian>()?,
+            v2: rdr.read_u16::<BigEndian>()?,
+            v3: rdr.read_u16::<BigEndian>()?,
+            flags: rdr.read_u16::<BigEndian>()?,
+            material_id: 0,
+        };
         rdr.read_i8()?; // something, no idea yet, might be related to flags
-        Ok(s)
+        Ok(f)
     }
 }
 
@@ -106,15 +108,13 @@ impl Mesh {
             }
         }
 
-        if fmlist.len() > 0 && m.faces.len() == fmlist.len() {
-            for i in 0..m.faces.len() {
-                m.faces[i].material_id = fmlist[i];
-            }
+        for (i, fm) in fmlist.iter().enumerate().take(m.faces.len()) {
+            m.faces[i].material_id = *fm;
         }
 
-        for n in 0..uvcoords.len() {
+        for (n, uvcoord) in uvcoords.iter().enumerate() {
             // Carma uses 0.0,0.0 for the top left corner, OpenGL for the bottom left.
-            m.vertices[n].tex_coords = [uvcoords[n].u, 1.0 - uvcoords[n].v];
+            m.vertices[n].tex_coords = [uvcoord.u, 1.0 - uvcoord.v];
         }
 
         m.calc_normals();

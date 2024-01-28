@@ -135,7 +135,7 @@ pub fn path_subst<P: AsRef<Path>>(
     fn inner<P: AsRef<Path>>(filepath: P, newdir: P, newext: Option<String>) -> Result<PathBuf> {
         let fname = filepath.as_ref().file_name();
         let mut dir = filepath.as_ref().to_path_buf();
-        if let Some(_) = fname {
+        if fname.is_some() {
             dir.pop(); // remove file name
         }
         dir.pop(); // remove parent dir

@@ -8,7 +8,7 @@ use bevy::{
 // Use support/car to load car asset with mesh and textures...
 #[derive(Asset, TypePath)]
 pub struct CarAsset {
-    body: Handle<Mesh>,
+    _body: Handle<Mesh>,
     // #[asset(key = "combined_image")]
     // combined_image: Handle<Image>,
     // #[asset(key = "tree_standard_material")]

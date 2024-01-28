@@ -29,9 +29,10 @@ struct ChunkHeader {
 
 impl ChunkHeader {
     pub fn load<R: ReadBytesExt>(source: &mut R) -> Result<ChunkHeader> {
-        let mut h = ChunkHeader::default();
-        h.chunk_type = source.read_u32::<BigEndian>()?;
-        h.size = source.read_u32::<BigEndian>()?;
+        let h = ChunkHeader {
+            chunk_type: source.read_u32::<BigEndian>()?,
+            size: source.read_u32::<BigEndian>()?,
+        };
         debug!("Loaded chunk type {} size {}", h.chunk_type, h.size);
         Ok(h)
     }
@@ -146,8 +147,8 @@ impl Chunk {
             support::MATERIAL_DESC_CHUNK => {
                 trace!("Reading material descriptor...");
                 let mut params = [0f32; 12];
-                for i in 0..12 {
-                    params[i] = source.read_f32::<BigEndian>()?;
+                for i in &mut params {
+                    *i = source.read_f32::<BigEndian>()?;
                 }
                 let name = read_c_string(source)?;
                 trace!("... {}", name);
@@ -259,13 +260,13 @@ impl Chunk {
             support::ACTOR_TRANSFORM_CHUNK => {
                 trace!("Reading actor transform...");
                 let mut params = [0f32; 12];
-                for i in 0..12 {
-                    params[i] = source.read_f32::<BigEndian>()?;
+                for i in &mut params {
+                    *i = source.read_f32::<BigEndian>()?;
                 }
                 for row in 0..4 {
                     trace!(
                         "[{} {} {}]",
-                        params[row * 3 + 0],
+                        params[row * 3/*+ 0*/],
                         params[row * 3 + 1],
                         params[row * 3 + 2]
                     );

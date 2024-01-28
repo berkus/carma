@@ -98,7 +98,7 @@ impl PixelMap {
                 ); // B
                 pm.data.push(
                     255 - palette.data
-                        [(self.data[i as usize] as u32 * palette.unit_bytes + 0) as usize],
+                        [(self.data[i as usize] as u32 * palette.unit_bytes/* + 0*/) as usize],
                 ); // A
                 if self.name == "BGLSPIKE.PIX" {
                     trace!("spike alpha {}", pm.data.last().unwrap());

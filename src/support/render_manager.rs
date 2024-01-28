@@ -30,7 +30,7 @@ pub struct RenderManager {
     program: Program,
 }
 
-fn debug_tree(name: &String, actor_name: &String, stack: &Vec<Matrix4<f32>>) {
+fn debug_tree(name: &String, actor_name: &String, stack: &[Matrix4<f32>]) {
     debug!("{} for {}: stack depth {}", name, actor_name, stack.len());
     for x in stack.iter().rev() {
         debug!(".. {:?}", x);
@@ -56,7 +56,7 @@ impl RenderManager {
     }
 
     fn debug_indices(&self) {
-        for (name, _indices) in &self.indices {
+        for name in self.indices.keys() {
             trace!("Indices for {}:", name);
             // for () in &indices {
             //     trace!("  ", )
@@ -80,11 +80,8 @@ impl RenderManager {
     // of texture ID to the rect region, scale u,v appropriately in vertices.
     // In theory, whole of the game could fit in 4096x4096 megatex.
     fn bind_textures(&mut self, actor_name: &String, car: &Car, display: &Display) {
-        for (&mat, _) in &self.indices[actor_name] {
-            let textures = self
-                .bound_textures
-                .entry(actor_name.clone())
-                .or_insert(HashMap::new());
+        for &mat in self.indices[actor_name].keys() {
+            let textures = self.bound_textures.entry(actor_name.clone()).or_default();
             if mat == 0 {
                 RenderManager::bind_default_texture(textures, mat, display);
             } else {
@@ -115,12 +112,9 @@ impl RenderManager {
 
     pub fn prepare_car(&mut self, car: &Car, display: &Display) {
         for actor in car.actors.traverse() {
-            match actor.data() {
-                &ActorNode::MeshfileRef(ref name) => {
-                    debug!("Actor meshfile {}", name);
-                    self.prepare_car_actor(name, car, display);
-                }
-                _ => (),
+            if let ActorNode::MeshfileRef(name) = actor.data() {
+                debug!("Actor meshfile {}", name);
+                self.prepare_car_actor(name, car, display);
             }
         }
     }
@@ -137,9 +131,7 @@ impl RenderManager {
         let mut partitioned_by_material = HashMap::<u16, Vec<u16>>::new();
 
         for face in faces {
-            let indices = partitioned_by_material
-                .entry(face.material_id)
-                .or_insert(Vec::new());
+            let indices = partitioned_by_material.entry(face.material_id).or_default();
             indices.push(face.v1);
             indices.push(face.v2);
             indices.push(face.v3);
@@ -161,7 +153,7 @@ impl RenderManager {
                 .map(|(key, item)| {
                     (
                         *key,
-                        IndexBuffer::new(display, PrimitiveType::TrianglesList, &item).unwrap(),
+                        IndexBuffer::new(display, PrimitiveType::TrianglesList, item).unwrap(),
                     )
                 })
                 .collect(),
@@ -184,8 +176,8 @@ impl RenderManager {
         let mut actor_name = String::new();
 
         for actor in car.actors.traverse() {
-            match actor.data() {
-                &ActorNode::Actor { ref name, visible } => {
+            match *actor.data() {
+                ActorNode::Actor { ref name, visible } => {
                     actor_name = name.clone();
                     v = visible;
 
@@ -201,14 +193,14 @@ impl RenderManager {
 
                     debug_tree(&String::from("Actor"), &actor_name, &transform_stack);
                 }
-                &ActorNode::MeshfileRef(ref name) => {
+                ActorNode::MeshfileRef(ref name) => {
                     debug_tree(&format!("Mesh {}", name), &actor_name, &transform_stack);
                     if v {
                         trace!("Drawing actor {}", name);
-                        self.draw_actor(name, &transform_stack.last().unwrap(), target, camera);
+                        self.draw_actor(name, transform_stack.last().unwrap(), target, camera);
                     }
                 }
-                &ActorNode::Transform(t) => {
+                ActorNode::Transform(t) => {
                     let transform = Matrix4::from_translation(Vector3 {
                         x: t[9],
                         y: t[10],
@@ -255,7 +247,7 @@ impl RenderManager {
             ..Default::default()
         };
 
-        let model: [[f32; 4]; 4] = model.clone().into();
+        let model: [[f32; 4]; 4] = (*model).into();
 
         for (mat, indices) in &self.indices[mesh_name] {
             let uniforms = uniform! {
