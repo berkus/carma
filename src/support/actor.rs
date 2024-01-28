@@ -183,7 +183,7 @@ impl Actor {
         Ok(actor)
     }
 
-    pub fn load_from(fname: String) -> Result<Actor, Error> {
+    pub fn load_from<P: AsRef<std::path::Path>>(fname: P) -> Result<Actor, Error> {
         let file = File::open(fname)?;
         let mut file = BufReader::new(file);
         let m = Actor::load(&mut file)?;
