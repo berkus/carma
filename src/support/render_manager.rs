@@ -22,14 +22,13 @@ use {
 };
 
 /// Provide storage for in-memory level-data - models, meshes, textures etc.
+/// @todo use bevy AssetLoader and Asset<> resources (esp for the shader program)
 pub struct RenderManager {
     vertices: HashMap<String, VertexBuffer<Vertex>>,
     indices: HashMap<String, HashMap<u16, IndexBuffer<u16>>>, // MaterialId -> index buffer
     bound_textures: HashMap<String, HashMap<u16, SrgbTexture2d>>, // MaterialId -> texture
     program: Program,
 }
-// @todo these become resources
-// esp the shader program
 
 fn debug_tree(name: &String, actor_name: &String, stack: &Vec<Matrix4<f32>>) {
     debug!("{} for {}: stack depth {}", name, actor_name, stack.len());
@@ -65,6 +64,7 @@ impl RenderManager {
         }
     }
 
+    // @todo just map uv of a default black in megatexture
     fn bind_default_texture(
         textures: &mut HashMap<u16, SrgbTexture2d>,
         mat: u16,
@@ -76,7 +76,7 @@ impl RenderManager {
         textures.insert(mat, black_texture);
     }
 
-    // @todo Prepare megatexture from all these small textures and keep a map
+    // @todo Prepare megatexture from all these small textures and keep a bevy::TextureAtlas
     // of texture ID to the rect region, scale u,v appropriately in vertices.
     // In theory, whole of the game could fit in 4096x4096 megatex.
     fn bind_textures(&mut self, actor_name: &String, car: &Car, display: &Display) {

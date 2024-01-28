@@ -12,6 +12,7 @@ use {
         mesh::{Face, UvCoord},
         read_c_string, Error, Vertex,
     },
+    anyhow::Result,
     byteorder::{BigEndian, ReadBytesExt},
     log::*,
     std::io::BufRead,
@@ -27,7 +28,7 @@ struct ChunkHeader {
 }
 
 impl ChunkHeader {
-    pub fn load<R: ReadBytesExt>(source: &mut R) -> Result<ChunkHeader, Error> {
+    pub fn load<R: ReadBytesExt>(source: &mut R) -> Result<ChunkHeader> {
         let mut h = ChunkHeader::default();
         h.chunk_type = source.read_u32::<BigEndian>()?;
         h.size = source.read_u32::<BigEndian>()?;
@@ -82,7 +83,8 @@ pub enum Chunk {
 }
 
 impl Chunk {
-    pub fn load<R: ReadBytesExt + BufRead>(source: &mut R) -> Result<Chunk, Error> {
+    //#[throws]
+    pub fn load<R: ReadBytesExt + BufRead>(source: &mut R) -> Result<Chunk> {
         let header = ChunkHeader::load(source)?;
         match header.chunk_type {
             support::NULL_CHUNK => Ok(Chunk::Null()),

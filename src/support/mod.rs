@@ -8,9 +8,6 @@
 //
 #![allow(dead_code)]
 
-// extern crate genmesh;
-// extern crate obj;
-
 use {
     anyhow::{anyhow, Result},
     byteorder::{BigEndian, ReadBytesExt},
@@ -48,11 +45,11 @@ pub struct Vertex {
 implement_vertex!(Vertex, position, normal, tex_coords);
 
 impl Vertex {
-    pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Result<Vertex, Error> {
+    pub fn load<R: ReadBytesExt>(reader: &mut R) -> Result<Vertex> {
         let mut vertex = Vertex::default();
-        vertex.position[0] = rdr.read_f32::<BigEndian>()?;
-        vertex.position[1] = rdr.read_f32::<BigEndian>()?;
-        vertex.position[2] = rdr.read_f32::<BigEndian>()?;
+        vertex.position[0] = reader.read_f32::<BigEndian>()?;
+        vertex.position[1] = reader.read_f32::<BigEndian>()?;
+        vertex.position[2] = reader.read_f32::<BigEndian>()?;
         Ok(vertex)
     }
 }

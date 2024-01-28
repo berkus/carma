@@ -8,6 +8,7 @@
 //
 use {
     crate::support::{self, resource::Chunk, Error},
+    anyhow::{anyhow, Result},
     byteorder::ReadBytesExt,
     log::*,
     std::{
@@ -72,7 +73,7 @@ pub struct TextureReference {
 
 impl PixelMap {
     /// Convert indexed-color image to RGBA using provided palette.
-    pub fn remap_via_palette(&self, palette: &PixelMap) -> Result<PixelMap, Error> {
+    pub fn remap_via_palette(&self, palette: &PixelMap) -> Result<PixelMap> {
         let mut pm = self.clone();
         pm.data = Vec::<u8>::with_capacity(self.data.len() * 4);
         pm.unit_bytes = 4;
@@ -166,14 +167,18 @@ impl PixelMap {
         Ok(())
     }
 
-    pub fn load<R: ReadBytesExt + BufRead>(reader: &mut R) -> Result<PixelMap, Error> {
+    pub fn load<R: ReadBytesExt + BufRead>(reader: &mut R) -> Result<PixelMap> {
         let mut pm = PixelMap::default();
 
         // Read chunks until last chunk is encountered.
         // Certain chunks initialize certain properties.
         loop {
-            let c = Chunk::load(reader)?;
-            match c {
+            match Chunk::load(reader)? {
+                Chunk::FileHeader { file_type } => {
+                    if file_type != support::PIXELMAP_FILE_TYPE {
+                        return Err(anyhow!("Invalid pixelmap file type {}", file_type));
+                    }
+                }
                 Chunk::PixelmapHeader {
                     name,
                     w,
@@ -205,11 +210,6 @@ impl PixelMap {
                     );
                 }
                 Chunk::Null() => break,
-                Chunk::FileHeader { file_type } => {
-                    if file_type != support::PIXELMAP_FILE_TYPE {
-                        panic!("Invalid pixelmap file type {}", file_type);
-                    }
-                }
                 _ => unimplemented!(), // unexpected type here
             }
         }
@@ -218,9 +218,8 @@ impl PixelMap {
     }
 
     /// Load one or more named textures from a single file
-    pub fn load_from<P: AsRef<std::path::Path>>(fname: P) -> Result<Vec<PixelMap>, Error> {
-        let file = File::open(fname)?;
-        let mut file = BufReader::new(file);
+    pub fn load_from<P: AsRef<std::path::Path>>(fname: P) -> Result<Vec<PixelMap>> {
+        let mut file = BufReader::new(File::open(fname)?);
         let mut pmaps = Vec::<PixelMap>::new();
         loop {
             let pmap = PixelMap::load(&mut file);
@@ -240,6 +239,7 @@ impl PixelMap {
     }
 }
 
+// @todo Use bevy::Texture directly?
 impl Texture {
     pub fn new() -> Texture {
         Texture {

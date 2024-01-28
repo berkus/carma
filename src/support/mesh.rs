@@ -6,11 +6,11 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-#[allow(unused_imports)]
-use cgmath::{InnerSpace, Vector3, Zero};
 use {
     crate::support::{self, resource::Chunk, Error, Vertex},
+    anyhow::{anyhow, Result},
     byteorder::{BigEndian, ReadBytesExt},
+    cgmath::{InnerSpace, Vector3, Zero},
     std::{
         fs::File,
         io::{BufRead, BufReader},
@@ -24,7 +24,7 @@ pub struct UvCoord {
 }
 
 impl UvCoord {
-    pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Result<UvCoord, Error> {
+    pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Result<UvCoord> {
         let mut uv = UvCoord::default();
         uv.u = rdr.read_f32::<BigEndian>()?;
         uv.v = rdr.read_f32::<BigEndian>()?;
@@ -42,7 +42,7 @@ pub struct Face {
 }
 
 impl Face {
-    pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Result<Face, Error> {
+    pub fn load<R: ReadBytesExt>(rdr: &mut R) -> Result<Face> {
         let mut s = Face::default();
         s.v1 = rdr.read_u16::<BigEndian>()?;
         s.v2 = rdr.read_u16::<BigEndian>()?;
@@ -53,6 +53,8 @@ impl Face {
     }
 }
 
+// @todo use bevy_render::mesh::Mesh
+
 #[derive(Default)]
 pub struct Mesh {
     pub name: String,
@@ -62,7 +64,7 @@ pub struct Mesh {
 }
 
 impl Mesh {
-    pub fn load<R: ReadBytesExt + BufRead>(rdr: &mut R) -> Result<Mesh, Error> {
+    pub fn load<R: ReadBytesExt + BufRead>(reader: &mut R) -> Result<Mesh> {
         let mut m = Mesh::default();
         let mut fmlist = Vec::<u16>::new();
         let mut uvcoords = Vec::<UvCoord>::new();
@@ -70,11 +72,17 @@ impl Mesh {
         // Read chunks until last chunk is encountered.
         // Certain chunks initialize certain properties.
         loop {
-            let c = Chunk::load(rdr)?;
-            match c {
+            match Chunk::load(reader)? {
+                Chunk::FileHeader { file_type } => {
+                    if file_type != support::MESH_FILE_TYPE {
+                        return Err(anyhow!("Invalid mesh file type {}", file_type));
+                    }
+                }
                 Chunk::FileName { name, subtype } => {
                     m.name = name;
-                    assert!(subtype == support::MODEL_FILE_SUBTYPE);
+                    if subtype != support::MODEL_FILE_SUBTYPE {
+                        return Err(anyhow!("Invalid mesh file subtype {}", subtype));
+                    }
                 }
                 Chunk::VertexList(r) => {
                     m.vertices = r;
@@ -92,11 +100,6 @@ impl Mesh {
                     fmlist = r;
                 }
                 Chunk::Null() => break,
-                Chunk::FileHeader { file_type } => {
-                    if file_type != support::MESH_FILE_TYPE {
-                        panic!("Invalid mesh file type {}", file_type);
-                    }
-                }
                 _ => unimplemented!(), // unexpected type here
             }
         }
@@ -117,7 +120,7 @@ impl Mesh {
     }
 
     // Single mesh file may contain multiple meshes
-    pub fn load_from(fname: String) -> Result<Vec<Mesh>, Error> {
+    pub fn load_from(fname: String) -> Result<Vec<Mesh>> {
         let file = File::open(fname)?;
         let mut file = BufReader::new(file);
         let mut meshes = Vec::<Mesh>::new();

@@ -8,6 +8,7 @@
 //
 use {cgmath::*, glium::glutin};
 
+// @todo this converts to an entity with some components and a system to process movement
 pub struct CameraState {
     aspect_ratio: f32,
     fov: f32,
