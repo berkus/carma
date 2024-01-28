@@ -51,6 +51,7 @@ impl std::fmt::Display for PixelMap {
 */
 #[derive(Default)]
 pub struct Texture {
+    // @todo use bevy::prelude::TextureAtlas
     pub w: u16,
     pub h: u16,
     pub data: Vec<u8>,

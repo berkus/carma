@@ -4,7 +4,7 @@
 //
 // Part of Roadkill Project.
 //
-// Copyright 2010-2018, Berkus <berkus+github@metta.systems>
+// Copyright 2010-2024, Berkus <berkus+github@metta.systems>
 //
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -159,6 +159,12 @@ fn setup_cars(
 #[throws]
 fn main() {
     setup_logging().context("failed to initialize logging")?;
+    // ❌ Resource loading from files
+    // ❌ Texture placement in atlas
+    // ❌ Compose animatable models from disparate Car resources
+    // ❌ Set up bevy animation systems for each model
+    // ❌ Set up view and camera
+    // ❌ Render
 
     // let cars = setup_textures()?;
 
