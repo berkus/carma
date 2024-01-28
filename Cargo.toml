@@ -1,6 +1,6 @@
 [package]
 authors = ["Berkus Decker <berkus+cargo@metta.systems>"]
-edition = "2018"
+edition = "2021"
 name = "carma"
 version = "0.0.1"
 
