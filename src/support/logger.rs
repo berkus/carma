@@ -1,7 +1,7 @@
 use fehler::throws;
 
 #[throws(fern::InitError)]
-fn setup_logging() {
+pub fn setup_logging() {
     let base_config = fern::Dispatch::new().format(|out, message, record| {
         out.finish(format_args!(
             "{}[{}][{}] {}",
