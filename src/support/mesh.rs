@@ -6,13 +6,15 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use byteorder::{BigEndian, ReadBytesExt};
 #[allow(unused_imports)]
 use cgmath::{InnerSpace, Vector3, Zero};
-use crate::support::{self, resource::Chunk, Error, Vertex};
-use std::{
-    fs::File,
-    io::{BufRead, BufReader},
+use {
+    crate::support::{self, resource::Chunk, Error, Vertex},
+    byteorder::{BigEndian, ReadBytesExt},
+    std::{
+        fs::File,
+        io::{BufRead, BufReader},
+    },
 };
 
 #[derive(Copy, Clone, Default)]
@@ -151,8 +153,7 @@ impl Mesh {
 #[cfg(test)]
 mod tests {
 
-    use super::*;
-    use std::io::Cursor;
+    use {super::*, std::io::Cursor};
 
     #[test]
     fn test_load_face() {
@@ -194,5 +195,4 @@ mod tests {
             -Vector3::unit_z()
         );
     }
-
 } // tests mod

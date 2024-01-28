@@ -6,22 +6,24 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use cgmath::Vector3;
-use crate::support::{
-    actor::{Actor, ActorNode},
-    material::Material,
-    mesh::Mesh,
-    path_subst,
-    texture::PixelMap,
-    Error,
-};
-use log::*;
-use std::{
-    collections::{HashMap, HashSet},
-    fs::File,
-    io::{BufRead, BufReader},
-    iter::Iterator,
-    path::{Path, PathBuf},
+use {
+    crate::support::{
+        actor::{Actor, ActorNode},
+        material::Material,
+        mesh::Mesh,
+        path_subst,
+        texture::PixelMap,
+        Error,
+    },
+    cgmath::Vector3,
+    log::*,
+    std::{
+        collections::{HashMap, HashSet},
+        fs::File,
+        io::{BufRead, BufReader},
+        iter::Iterator,
+        path::{Path, PathBuf},
+    },
 };
 
 // Car assembles the gameplay object (a car in this case) from various model and texture files.
@@ -54,7 +56,8 @@ fn parse_vector(line: &String) -> Vector3<f32> {
 /// Read systems in a single damage spec clause.
 fn read_systems<Iter: Iterator<Item = String>>(input: &mut Iter) {
     // read condition flag for this clause
-    /*let condition =*/    input.next().unwrap();
+    /*let condition =*/
+    input.next().unwrap();
     // read systems count, read this many systems
     let systems_count = input.next().unwrap().parse().unwrap();
     for _ in 0..systems_count {
@@ -350,7 +353,8 @@ impl Car {
         let description_file = File::open(description_file_name)?;
         let description_file = BufReader::new(description_file);
 
-        let mut input_lines = description_file.lines()
+        let mut input_lines = description_file
+            .lines()
             .map(|line| line.unwrap())
             .filter(|line| !line.starts_with("//")) // Skip whole-line comments
             .filter(|line| !line.is_empty()) // Skip empty lines
@@ -429,7 +433,8 @@ impl Car {
                     split.next().unwrap().parse().unwrap(),
                     String::from(split.next().unwrap()),
                 )
-            }).collect();
+            })
+            .collect();
         debug!("Actors to load: {:?}", load_actors);
 
         let reflective_material = input_lines.next().unwrap();

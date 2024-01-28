@@ -11,17 +11,19 @@
 // extern crate genmesh;
 // extern crate obj;
 
-use byteorder::{BigEndian, ReadBytesExt};
-use cgmath::Vector3;
-use glium::implement_vertex;
-use std::{
-    self,
-    convert::From,
-    io::BufRead,
-    ops::Sub,
-    path::{Path, PathBuf},
-    thread,
-    time::{Duration, Instant},
+use {
+    byteorder::{BigEndian, ReadBytesExt},
+    cgmath::Vector3,
+    glium::implement_vertex,
+    std::{
+        self,
+        convert::From,
+        io::BufRead,
+        ops::Sub,
+        path::{Path, PathBuf},
+        thread,
+        time::{Duration, Instant},
+    },
 };
 
 pub mod actor;
@@ -228,9 +230,11 @@ pub const MODEL_FILE_SUBTYPE: u16 = 0x3;
 #[cfg(test)]
 mod tests {
 
-    use super::*;
-    use byteorder::ReadBytesExt;
-    use std::io::{BufReader, Cursor};
+    use {
+        super::*,
+        byteorder::ReadBytesExt,
+        std::io::{BufReader, Cursor},
+    };
 
     #[test]
     fn test_read_c_string() {
@@ -262,5 +266,4 @@ mod tests {
             path_subst(&Path::new("/old/file.ext"), &Path::new("path"), None)
         );
     }
-
 }

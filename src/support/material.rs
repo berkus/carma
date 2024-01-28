@@ -6,11 +6,13 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use byteorder::ReadBytesExt;
-use crate::support::{self, resource::Chunk, Error};
-use std::{
-    fs::File,
-    io::{BufRead, BufReader},
+use {
+    crate::support::{self, resource::Chunk, Error},
+    byteorder::ReadBytesExt,
+    std::{
+        fs::File,
+        io::{BufRead, BufReader},
+    },
 };
 
 // MAT file is an index of: material internal name, PIX file name and TAB file name.

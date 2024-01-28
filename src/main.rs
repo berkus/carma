@@ -55,10 +55,12 @@ fn setup_logging() -> Result<(), fern::InitError> {
     Ok(())
 }
 
-use std::fs::{self, DirEntry};
-use std::path::Path;
 #[cfg(feature = "convert")]
 use std::{fs::File, io::BufWriter, path::PathBuf};
+use std::{
+    fs::{self, DirEntry},
+    path::Path,
+};
 
 // one possible implementation of walking a directory only visiting files
 fn visit_dirs(dir: &Path, cb: &mut dyn for<'r> FnMut(&'r DirEntry)) -> Result<(), support::Error> {
