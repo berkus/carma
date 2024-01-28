@@ -34,6 +34,7 @@ pub mod render_manager;
 pub mod resource;
 pub mod texture;
 // pub mod animated_parameter;
+pub mod visitor;
 
 #[derive(Copy, Clone, Default)]
 pub struct Vertex {
