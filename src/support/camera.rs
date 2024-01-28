@@ -78,7 +78,7 @@ impl CameraState {
             y: 1.0,
             z: 0.0,
         };
-        Matrix4::look_at(self.position, Point3::from_vec(self.direction), up).into()
+        Matrix4::look_at_rh(self.position, Point3::from_vec(self.direction), up).into()
     }
 
     pub fn update(&mut self) {

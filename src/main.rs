@@ -189,7 +189,7 @@ fn main() {
         match event {
             Event::LoopDestroyed => return,
             Event::WindowEvent { event, .. } => match event {
-                WindowEvent::Resized(physical_size) => display.resize(physical_size),
+                // WindowEvent::Resized(physical_size) => display.resize(physical_size),
                 WindowEvent::CloseRequested => *control_flow = ControlFlow::Exit,
                 _ => camera.process_input(&event),
             },
