@@ -213,10 +213,12 @@ mod tests {
                 &Path::new("path"),
                 Some(String::from("ext2")),
             )
+            .expect("Should be able to subst path")
         );
         assert_eq!(
             PathBuf::from("/path/file.ext"),
             path_subst(&Path::new("/old/file.ext"), &Path::new("path"), None)
+                .expect("Should be able to subst path")
         );
     }
 }

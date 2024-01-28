@@ -1,4 +1,8 @@
-use bevy::asset::{BoxedFuture, LoadContext};
+use {
+    anyhow::Error,
+    bevy::asset::{BoxedFuture, LoadContext},
+    fehler::throws,
+};
 //
 // Part of Roadkill Project.
 //
@@ -50,12 +54,11 @@ fn expect_match(input: &mut impl Iterator<Item = String>, text: &str) -> Result<
 }
 
 /// Parse a three-component vector from a comma-separated string.
-fn parse_vector(line: &String) -> Result<Vector3<f32>> {
-    fn to_f(i: &str) -> Result<f32> {
-        i.trim().parse().map_err(|e| anyhow!(e))
-    }
-    let line: Vec<f32> = line.split(',').map(to_f).collect()?;
-    Ok(Vector3::from((line[0], line[1], line[2])))
+#[throws]
+fn parse_vector(line: &String) -> Vector3<f32> {
+    let line: Result<Vec<f32>, _> = line.split(',').map(|i| i.trim().parse::<f32>()).collect();
+    let line = line?;
+    Vector3::from((line[0], line[1], line[2]))
 }
 
 fn consume_line(input: &mut impl Iterator<Item = String>) -> Result<String> {

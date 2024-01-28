@@ -1,9 +1,13 @@
-use bevy::asset::{AssetLoader, LoadRequest};
+use bevy::{
+    asset::{io::Reader, Asset, AssetLoader, Handle, LoadContext},
+    reflect::TypePath,
+    render::mesh::Mesh,
+    utils::BoxedFuture,
+};
 
 // Use support/car to load car asset with mesh and textures...
-#[derive(AssetCollection, Resource)]
-struct CarAsset {
-    #[asset(key = "body")]
+#[derive(Asset, TypePath)]
+pub struct CarAsset {
     body: Handle<Mesh>,
     // #[asset(key = "combined_image")]
     // combined_image: Handle<Image>,
@@ -13,10 +17,13 @@ struct CarAsset {
     // player_standard_material: Handle<StandardMaterial>,
 }
 
-#[derive(Default)]
 pub struct CarAssetLoader;
 
 impl AssetLoader for CarAssetLoader {
+    type Asset = CarAsset;
+    type Settings = ();
+    type Error = anyhow::Error;
+
     // obsolete, move this to asset_io somehow?
     // fn from_bytes(&self, asset_path: &Path, _bytes: Vec<u8>) -> Result<Car> {
     //     info!("### Loading car {:?} via AssetLoader", asset_path);
@@ -25,9 +32,10 @@ impl AssetLoader for CarAssetLoader {
 
     fn load<'a>(
         &'a self,
-        bytes: &'a [u8],
-        load_context: &'a mut LoadContext,
-    ) -> BoxedFuture<'a, Result<(), AnyError>> {
+        _reader: &'a mut Reader,
+        _settings: &'a Self::Settings,
+        _load_context: &'a mut LoadContext,
+    ) -> BoxedFuture<'a, Result<Self::Asset, anyhow::Error>> {
         todo!()
     }
 

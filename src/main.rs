@@ -1,4 +1,3 @@
-//#![feature(try_trait)]
 #![allow(unused_imports)]
 
 //
@@ -10,7 +9,10 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    crate::support::{camera::CameraState, car::Car, render_manager::RenderManager},
+    crate::{
+        assets::car_asset::{CarAsset, CarAssetLoader},
+        support::{camera::CameraState, car::Car, render_manager::RenderManager},
+    },
     anyhow::{anyhow, Context, Error, Result},
     bevy::prelude::*,
     cgmath::Vector3,
@@ -21,10 +23,14 @@ use {
             event_loop::ControlFlow,
         },
         Surface,
-    }, log::info, std::path::Path, support::visitor::visit_files
+    },
+    log::info,
+    std::path::Path,
+    support::visitor::visit_files,
 };
 
-pub mod support;
+mod assets;
+mod support;
 
 // @todo these are all resource types under support, just implement AssetLoadRequestHandler for them?
 // ACT
@@ -34,8 +40,8 @@ pub mod support;
 // PIX
 
 fn setup_cars(
-    mut commands: Commands,
-    mut asset_server: ResMut<AssetServer>,
+    _commands: Commands,
+    asset_server: ResMut<AssetServer>,
     // mut textures: ResMut<Assets<Texture>>,
     // mut texture_atlases: ResMut<Assets<TextureAtlas>>,
 ) /*-> Result<Vec<Car>>*/
@@ -51,9 +57,7 @@ fn setup_cars(
     // add handler for ENC assets, then
     // asset_server.add_handler(crate::support::car::CarLoadRequestHandler);
     // asset_server.add_loader(crate::support::car::CarLoader);
-    asset_server
-        .load_asset_folder("DecodedData/DATA/CARS")
-        .unwrap();
+    let _handle = asset_server.load_folder("DecodedData/DATA/CARS");
 
     // let texture_handle = asset_server
     //     .load_sync(
@@ -134,13 +138,15 @@ fn main() {
     //
     // let mut camera = CameraState::new();
 
-    App::build()
-        .add_default_plugins()
-        .add_asset::<Car>()
-        // .add_asset_loader::<Car, CarAssetLoader>()
-        .add_startup_system(setup_cars.system())
-        // .add_system(animate_camera.system())
-        .run()
+    let mut app = App::new();
+    app.add_plugins(DefaultPlugins.build())
+        .add_systems(Startup, setup_cars)
+        // .add_system(animate_camera)
+        ;
+    app.register_asset_loader(CarAssetLoader)
+        .init_asset::<CarAsset>();
+
+    app.run();
 
     // events_loop.run(move |event, _, control_flow| {
     //     println!("{:?}", event);
