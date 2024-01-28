@@ -6,9 +6,9 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-pub mod support;
 use {
     crate::support::{camera::CameraState, car::Car, render_manager::RenderManager},
+    bevy::prelude::*,
     cgmath::Vector3,
     glium::{
         glutin::{
@@ -18,7 +18,13 @@ use {
         Surface,
     },
     log::info,
+    std::{
+        fs::{self, DirEntry},
+        path::Path,
+    },
 };
+
+pub mod support;
 
 fn setup_logging() -> Result<(), fern::InitError> {
     let base_config = fern::Dispatch::new().format(|out, message, record| {
@@ -51,11 +57,6 @@ fn setup_logging() -> Result<(), fern::InitError> {
     Ok(())
 }
 
-use std::{
-    fs::{self, DirEntry},
-    path::Path,
-};
-
 // one possible implementation of walking a directory only visiting files
 fn visit_dirs(dir: &Path, cb: &mut dyn for<'r> FnMut(&'r DirEntry)) -> Result<(), support::Error> {
     if dir.is_dir() {
@@ -72,8 +73,23 @@ fn visit_dirs(dir: &Path, cb: &mut dyn for<'r> FnMut(&'r DirEntry)) -> Result<()
     Ok(())
 }
 
-fn main() {
-    setup_logging().expect("failed to initialize logging");
+fn setup_textures(
+    mut commands: Commands,
+    asset_server: Res<AssetServer>,
+    mut textures: ResMut<Assets<Texture>>,
+    mut texture_atlases: ResMut<Assets<TextureAtlas>>,
+) {
+    // bevy @todo: load all textures into the texture atlas
+
+    let texture_handle = asset_server
+        .load_sync(
+            &mut textures,
+            "assets/textures/rpg/chars/gabe/gabe-idle-run.png",
+        )
+        .unwrap();
+    let texture = textures.get(&texture_handle).unwrap();
+    let texture_atlas = TextureAtlas::from_grid(texture_handle, texture.size, 7, 1);
+    let texture_atlas_handle = texture_atlases.add(texture_atlas);
 
     // Load all cars and arrange in a grid 6x7 (40 cars total)
 
@@ -99,7 +115,27 @@ fn main() {
     })
     .unwrap();
 
-    // Prepare window
+    commands
+        .spawn(Camera2dComponents::default())
+        .spawn(SpriteSheetComponents {
+            texture_atlas: texture_atlas_handle,
+            scale: Scale(6.0),
+            ..Default::default()
+        })
+        .with(Timer::from_seconds(0.1));
+}
+
+// @todo return result
+fn main() {
+    setup_logging().expect("failed to initialize logging");
+
+    App::build()
+        .add_default_plugins()
+        .add_startup_system(setup_textures.system())
+        .add_system(animate_camera.system())
+        .run();
+
+    // Prepare window -- move to bevy init
 
     let mut events_loop = glium::glutin::event_loop::EventLoop::new();
     let window = glium::glutin::window::WindowBuilder::new()

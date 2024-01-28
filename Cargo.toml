@@ -17,4 +17,5 @@ log = "0.4"
 fern = "0.6"
 chrono = "0.4"
 png = "0.17"
+bevy = "0.1"
 # todo: use failure
