@@ -17,6 +17,8 @@ use {
     },
 };
 
+// TODO replace with conversion to usual Bevy mesh
+
 #[derive(Copy, Clone, Default)]
 pub struct UvCoord {
     u: f32,
@@ -168,9 +170,9 @@ mod tests {
         assert_eq!(0xbabe, f.flags);
     }
 
-    #[cfg_attr(rustfmt, rustfmt_skip)]
     #[test]
     fn test_load_mesh() {
+        #[rustfmt::skip]
         let mut data = Cursor::new(vec![
             0x0, 0x0, 0x0, 0x36, // Chunk type - FILE_NAME_CHUNK
             0x0, 0x0, 0x0, 0x8, // Chunk size

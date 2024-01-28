@@ -130,20 +130,23 @@ pub fn path_subst<P: AsRef<Path>>(
     newdir: P,
     newext: Option<String>,
 ) -> Result<PathBuf> {
-    let fname = filepath.as_ref().file_name();
-    let mut dir = filepath.as_ref().to_path_buf();
-    if let Some(_) = fname {
-        dir.pop(); // remove file name
+    fn inner(filepath: &Path, newdir: &Path, newext: Option<String>) -> Result<PathBuf> {
+        let fname = filepath.as_ref().file_name();
+        let mut dir = filepath.as_ref().to_path_buf();
+        if let Some(_) = fname {
+            dir.pop(); // remove file name
+        }
+        dir.pop(); // remove parent dir
+        dir.push(newdir); // replace parent dir
+        if let Some(fname) = fname {
+            dir.push(fname); // add back file name
+        }
+        if let Some(ext) = newext {
+            dir.set_extension(ext);
+        }
+        Ok(dir)
     }
-    dir.pop(); // remove parent dir
-    dir.push(newdir); // replace parent dir
-    if let Some(fname) = fname {
-        dir.push(fname); // add back file name
-    }
-    if let Some(ext) = newext {
-        dir.set_extension(ext);
-    }
-    Ok(dir)
+    inner(&filepath, &newdir, newext)
 }
 
 pub const NULL_CHUNK: u32 = 0x0;

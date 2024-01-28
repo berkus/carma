@@ -49,10 +49,7 @@ impl Actor {
         let root_id = tree
             .insert(Node::new(ActorNode::Root), InsertBehavior::AsRoot)
             .unwrap();
-        Self {
-            tree: tree,
-            root_id: root_id,
-        }
+        Self { tree, root_id }
     }
 
     pub fn traverse(&self) -> PreOrderTraversal<ActorNode> {

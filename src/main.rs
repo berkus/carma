@@ -1,4 +1,4 @@
-#![feature(try_trait)]
+//#![feature(try_trait)]
 #![allow(unused_imports)]
 
 //
@@ -12,7 +12,7 @@
 use {
     crate::support::{
         camera::CameraState,
-        car::{Car, CarLoader},
+        car::{Car, CarAssetLoader},
         render_manager::RenderManager,
     },
     anyhow::{anyhow, Context, Error, Result},
@@ -186,7 +186,7 @@ fn main() {
     App::build()
         .add_default_plugins()
         .add_asset::<Car>()
-        .add_asset_loader::<Car, CarLoader>()
+        .add_asset_loader::<Car, CarAssetLoader>()
         .add_startup_system(setup_cars.system())
         // .add_system(animate_camera.system())
         .run()
@@ -218,4 +218,11 @@ fn main() {
     //         _ => (),
     //     }
     // });
+}
+
+fn setup() {
+    commands.spawn(Camera3dBundle {
+        transform: Transform::from_xyz(0.0, 6., 12.0).looking_at(Vec3::new(0., 1., 0.), Vec3::Y),
+        ..default()
+    });
 }
