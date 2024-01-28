@@ -6,14 +6,16 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use byteorder::{BigEndian, ReadBytesExt};
-use crate::support::{
-    self,
-    mesh::{Face, UvCoord},
-    read_c_string, Error, Vertex,
+use {
+    crate::support::{
+        self,
+        mesh::{Face, UvCoord},
+        read_c_string, Error, Vertex,
+    },
+    byteorder::{BigEndian, ReadBytesExt},
+    log::*,
+    std::io::BufRead,
 };
-use log::*;
-use std::io::BufRead;
 
 // A binary resource file consisting of chunks with specific size.
 // Reading from such file yields chunk results, some of these chunks are service,

@@ -6,18 +6,20 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use cgmath::{prelude::*, Matrix4, Vector3};
-use crate::support::{actor::ActorNode, camera::CameraState, car::Car, Vertex};
-use glium::{
-    self,
-    index::*,
-    texture::{RawImage2d, SrgbTexture2d},
-    uniform,
-    uniforms::*,
-    Display, IndexBuffer, Program, Surface, VertexBuffer,
+use {
+    crate::support::{actor::ActorNode, camera::CameraState, car::Car, Vertex},
+    cgmath::{prelude::*, Matrix4, Vector3},
+    glium::{
+        self,
+        index::*,
+        texture::{RawImage2d, SrgbTexture2d},
+        uniform,
+        uniforms::*,
+        Display, IndexBuffer, Program, Surface, VertexBuffer,
+    },
+    log::*,
+    std::{collections::HashMap, str, vec::Vec},
 };
-use log::*;
-use std::{collections::HashMap, str, vec::Vec};
 
 /// Provide storage for in-memory level-data - models, meshes, textures etc.
 pub struct RenderManager {
@@ -159,7 +161,8 @@ impl RenderManager {
                         *key,
                         IndexBuffer::new(display, PrimitiveType::TrianglesList, &item).unwrap(),
                     )
-                }).collect(),
+                })
+                .collect(),
         );
 
         // each material from partitioned_by_material - load and bind it in bound_textures
@@ -273,7 +276,8 @@ impl RenderManager {
                     &self.program,
                     &uniforms,
                     &params,
-                ).unwrap();
+                )
+                .unwrap();
         }
     }
 }

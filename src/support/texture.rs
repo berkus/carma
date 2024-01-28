@@ -6,13 +6,15 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-use byteorder::ReadBytesExt;
-use crate::support::{self, resource::Chunk, Error};
-use log::*;
-use png;
-use std::{
-    fs::File,
-    io::{BufRead, BufReader, Write},
+use {
+    crate::support::{self, resource::Chunk, Error},
+    byteorder::ReadBytesExt,
+    log::*,
+    png,
+    std::{
+        fs::File,
+        io::{BufRead, BufReader, Write},
+    },
 };
 
 // Pixmap consists of two chunks: name and data
