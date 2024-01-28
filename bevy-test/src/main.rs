@@ -126,3 +126,6 @@ fn uv_debug_texture() -> Image {
         TextureFormat::Rgba8UnormSrgb,
     )
 }
+
+// generate Mesh from the model file
+//

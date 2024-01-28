@@ -51,7 +51,10 @@ fn expect_match(input: &mut impl Iterator<Item = String>, text: &str) -> Result<
 
 /// Parse a three-component vector from a comma-separated string.
 fn parse_vector(line: &String) -> Result<Vector3<f32>> {
-    let line: Vec<f32> = line.split(',').map(|i| i.trim().parse()?).map_ok(collect)?;
+    fn to_f(i: &str) -> Result<f32> {
+        i.trim().parse().map_err(|e| anyhow!(e))
+    }
+    let line: Vec<f32> = line.split(',').map(to_f).collect()?;
     Ok(Vector3::from((line[0], line[1], line[2])))
 }
 

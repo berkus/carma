@@ -1,4 +1,6 @@
 //
+// DELETE WHOLE FILE
+//
 // Part of Roadkill Project.
 //
 // Copyright 2010, 2017, Stanislav Karchebnyy <berkus@madfire.net>

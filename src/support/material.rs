@@ -42,17 +42,17 @@ impl std::fmt::Display for Material {
 #[derive(Default)]
 pub struct MaterialLoader;
 
-impl AssetLoader for MaterialLoader {
-    fn from_bytes(&self, asset_path: &Path, _bytes: Vec<u8>) -> Result<Material> {
-        info!("### Loading car {:?} via AssetLoader", asset_path);
-        Material::load_from(asset_path)
-    }
+// impl AssetLoader for MaterialLoader {
+// fn from_bytes(&self, asset_path: &Path, _bytes: Vec<u8>) -> Result<Material> {
+//     info!("### Loading car {:?} via AssetLoader", asset_path);
+//     Material::load_from(asset_path)
+// }
 
-    fn extensions(&self) -> &[&str] {
-        static EXTENSIONS: &[&str] = &["ENC"];
-        EXTENSIONS
-    }
-}
+//     fn extensions(&self) -> &[&str] {
+//         static EXTENSIONS: &[&str] = &["ENC"];
+//         EXTENSIONS
+//     }
+// }
 
 impl Material {
     pub fn load<R: ReadBytesExt + BufRead>(reader: &mut R) -> Result<Material> {

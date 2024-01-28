@@ -10,11 +10,7 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    crate::support::{
-        camera::CameraState,
-        car::{Car, CarAssetLoader},
-        render_manager::RenderManager,
-    },
+    crate::support::{camera::CameraState, car::Car, render_manager::RenderManager},
     anyhow::{anyhow, Context, Error, Result},
     bevy::prelude::*,
     cgmath::Vector3,
@@ -186,7 +182,7 @@ fn main() {
     App::build()
         .add_default_plugins()
         .add_asset::<Car>()
-        .add_asset_loader::<Car, CarAssetLoader>()
+        // .add_asset_loader::<Car, CarAssetLoader>()
         .add_startup_system(setup_cars.system())
         // .add_system(animate_camera.system())
         .run()
@@ -220,9 +216,9 @@ fn main() {
     // });
 }
 
-fn setup() {
-    commands.spawn(Camera3dBundle {
-        transform: Transform::from_xyz(0.0, 6., 12.0).looking_at(Vec3::new(0., 1., 0.), Vec3::Y),
-        ..default()
-    });
-}
+// fn setup() {
+//     commands.spawn(Camera3dBundle {
+//         transform: Transform::from_xyz(0.0, 6., 12.0).looking_at(Vec3::new(0., 1., 0.), Vec3::Y),
+//         ..default()
+//     });
+// }
