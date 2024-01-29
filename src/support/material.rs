@@ -20,7 +20,7 @@ use {
 };
 
 // MAT file is an index of: material internal name, PIX file name and TAB file name.
-// @todo: keep material properties and internal name, replace pix and tab with megatexture reference
+// @todo ❌ keep material properties and internal name, replace pix and tab with megatexture reference
 #[derive(Default, Debug)]
 pub struct Material {
     params: [f32; 12],
@@ -98,7 +98,7 @@ impl Material {
         loop {
             let mat = Material::load(&mut file);
             match mat {
-                Err(_) => break, // fixme: allow only Eof here
+                Err(_) => break, // @fixme allow only Eof here
                 Ok(mat) => materials.push(mat),
             }
         }

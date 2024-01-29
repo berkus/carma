@@ -104,7 +104,7 @@ fn read_funk(input: &mut impl Iterator<Item = String>) -> Result<()> {
     expect_match(input, "START OF FUNK")?;
     // for now just ignore everything here, read until END OF FUNK
     loop {
-        // @todo read funk loop with NEXT FUNK as trigger
+        // @todo ❌ read funk loop with NEXT FUNK as trigger
         // read_funk();
         // NEXT FUNK
         let line = consume_line(input)?;
@@ -124,7 +124,7 @@ fn read_grooves(input: &mut impl Iterator<Item = String>) -> Result<()> {
     expect_match(input, "START OF GROOVE")?;
     // for now just ignore everything here, read until END OF GROOVE
     loop {
-        // @todo read groove loop with NEXT GROOVE as trigger
+        // @todo ❌ read groove loop with NEXT GROOVE as trigger
         // read_groove();
         // NEXT GROOVE
         let line = consume_line(input)?;
@@ -159,7 +159,7 @@ fn read_some_metadata(input: &mut impl Iterator<Item = String>) -> Result<()> {
 }
 
 // @fixme used to patch actors now
-// @todo should support extra wheels
+// @todo ❌ should support extra wheels
 pub struct Mechanics {
     pub lrwheel_pos: Vector3<f32>,
     pub rrwheel_pos: Vector3<f32>,
@@ -253,7 +253,7 @@ fn read_mechanics_block_v3(input: &mut impl Iterator<Item = String>) -> Result<(
     // 0,-0.18,-0.52                               // extra point 1            v. 3
     // -0.07,0.07,0.18                         // extra point 2            v. 3
     // 0.07,0.07,0.18                          // extra point 3            v. 3
-    read_vector(input)?;
+    read_vector(input)?; // @todo ❌ must be a vector of Vec3tors
     Ok(())
 }
 
@@ -310,7 +310,7 @@ fn read_meshes<P: AsRef<Path>>(
     Ok(())
 }
 
-// @todo this could be patched into the TextureBuilder
+// @todo ❌ this should be added to the TextureAtlas
 fn read_materials<P: AsRef<Path>>(
     fname: P,
     load_materials: &HashSet<String>,
@@ -323,7 +323,7 @@ fn read_materials<P: AsRef<Path>>(
         info!("### Opening material {:?}", mat_file_name);
         let materials = Material::load_from(mat_file_name)?;
         for mat in materials {
-            car_materials.insert(mat.name.clone(), mat); // @todo make this texture handles
+            car_materials.insert(mat.name.clone(), mat); // @todo ❌ make this Handle<Texture>
         }
     }
     Ok(())
@@ -413,6 +413,7 @@ impl Car {
         let stealworthy = consume_line(&mut input_lines)?;
         trace!("Cannot be stolen (without cheat): {}", stealworthy);
 
+        // @todo ❌ who knows what...
         read_clauses(&mut input_lines)?;
         read_clauses(&mut input_lines)?;
         read_clauses(&mut input_lines)?;
@@ -496,11 +497,12 @@ impl Car {
         read_funk(&mut input_lines)?;
         read_grooves(&mut input_lines)?;
 
+        // @todo ❌ who knows what...
         read_some_metadata(&mut input_lines)?;
         read_some_metadata(&mut input_lines)?;
         read_some_metadata(&mut input_lines)?;
 
-        let mechanics = consume_line(&mut input_lines)?;
+        let mechanics = consume_line(&mut input_lines)?; // @fixme ❌ Can't use expect_match() here
         if !mechanics.starts_with("START OF MECHANICS STUFF") {
             return Err(anyhow!(
                 "Expected START OF MECHANICS STUFF, got {:?} instead",
@@ -525,7 +527,7 @@ impl Car {
         let some_materials = read_vector(&mut input_lines)?;
         debug!("Some other materials to use: {:?}", some_materials);
 
-        // @todo More post-mechanics stuff
+        // @todo ❌ More post-mechanics stuff
 
         //
         // Meshes

@@ -57,7 +57,7 @@ impl Vertex {
 }
 
 // This is used only for vector math, using positions
-// Not a general implementation - todo: replace with sub fun
+// Not a general implementation - @todo replace with sub fun
 impl Sub for Vertex {
     type Output = Vector3<f32>;
 
@@ -120,7 +120,7 @@ pub fn read_c_string<R: BufRead>(reader: &mut R) -> Result<String, Error> {
     /*let num_bytes =*/
     reader.read_until(0, &mut buf)?;
     buf.pop();
-    let s = String::from_utf8(buf)?; //@todo from_utf8_lossy
+    let s = String::from_utf8(buf)?; // @todo ❌ from_utf8_lossy
     Ok(s)
 }
 

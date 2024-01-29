@@ -22,7 +22,7 @@ use {
 };
 
 /// Provide storage for in-memory level-data - models, meshes, textures etc.
-/// @todo use bevy AssetLoader and Asset<> resources (esp for the shader program)
+/// @todo ❌ use bevy AssetLoader and Asset<> resources (esp for the shader program)
 pub struct RenderManager {
     vertices: HashMap<String, VertexBuffer<Vertex>>,
     indices: HashMap<String, HashMap<u16, IndexBuffer<u16>>>, // MaterialId -> index buffer
@@ -175,6 +175,7 @@ impl RenderManager {
 
         let mut actor_name = String::new();
 
+        // @fixme split those actors into Entities?
         for actor in car.actors.traverse() {
             match *actor.data() {
                 ActorNode::Actor { ref name, visible } => {
@@ -233,7 +234,7 @@ impl RenderManager {
     {
         trace!("Rendering {} with model {:?}", mesh_name, model);
 
-        // the direction of the light - @todo more light sources?
+        // the direction of the light - @todo ❌ more light sources?
         let light = [-5.0, 5.0, 10.0f32];
         // Ambient lighting: 0.5, 0.5, 0.5, 1.0
 

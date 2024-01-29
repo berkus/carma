@@ -80,7 +80,7 @@ impl PixelMap {
         pm.unit_bytes = 4;
 
         for i in 0..pm.units {
-            // temp use color index 0 as transparency
+            // @fixme use color index 0 as transparency
             if self.data[i as usize] == 0 {
                 pm.data.push(0); // R
                 pm.data.push(0); // G

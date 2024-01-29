@@ -1,12 +1,16 @@
  ✅ Render all actors @done (2017-09-03 17:42)
  ✅ Fix model composition assembly (wheels in wrong places etc) @done (2017-09-05 23:05)
  ✅ Fix texturizer/shader issues @done (2017-09-07 21:45)
- ❌ BGLSPIKE.PIX in DecodedData/DATA/PIXELMAP/EAGYELE.PIX - check transparency
- ❌ Convert to megatexture
- ❌ Load models using Kaitai Struct
+ ❌ Read and render meshes, maybe only just some... deal with how bevy handles composite actors.
+ ❌ Read textures and add them to bevy::TextureAtlas, refer to them from the meshes.
+     ❌ Convert to megatexture
+     ❌ Texture placement in atlas
+
  ❌ Resource loading from files
- ❌ Texture placement in atlas
  ❌ Compose animatable models from disparate Car resources
  ❌ Set up bevy animation systems for each model
  ❌ Set up view and camera
  ❌ Render
+
+ ❌ BGLSPIKE.PIX in DecodedData/DATA/PIXELMAP/EAGYELE.PIX - check transparency
+ ❌ Load models using Kaitai Struct
