@@ -33,6 +33,7 @@ use {
 };
 
 // Car assembles the gameplay object (a car in this case) from various model and texture files.
+#[derive(Component)]
 pub struct Car {
     pub name: String,
     pub actors: Actor,
