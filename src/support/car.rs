@@ -1,8 +1,3 @@
-use {
-    anyhow::Error,
-    bevy::asset::{BoxedFuture, LoadContext},
-    fehler::throws,
-};
 //
 // Part of Roadkill Project.
 //
@@ -19,8 +14,13 @@ use {
         path_subst,
         texture::PixelMap,
     },
-    anyhow::{anyhow, Error as AnyError, Result},
+    anyhow::{anyhow, Error, Result},
+    bevy::{
+        asset::{BoxedFuture, LoadContext},
+        prelude::*,
+    },
     cgmath::Vector3,
+    fehler::throws,
     log::*,
     std::{
         collections::{HashMap, HashSet},
