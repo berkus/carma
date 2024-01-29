@@ -17,7 +17,8 @@ use {
     },
 };
 
-// TODO replace with conversion to usual Bevy mesh
+// @todo ❌ replace with conversion to usual Bevy mesh
+// @todo ❌ impl Into<Mesh>/TryInto<Mesh>?
 
 #[derive(Copy, Clone, Default)]
 pub struct UvCoord {
@@ -57,7 +58,7 @@ impl Face {
     }
 }
 
-// @todo use bevy_render::mesh::Mesh
+// @todo ❌ use bevy_render::mesh::Mesh
 
 #[derive(Default)]
 pub struct Mesh {

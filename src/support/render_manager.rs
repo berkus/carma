@@ -64,7 +64,7 @@ impl RenderManager {
         }
     }
 
-    // @todo just map uv of a default black in megatexture
+    // @todo ❌ just map uv of a default black in megatexture
     fn bind_default_texture(
         textures: &mut HashMap<u16, SrgbTexture2d>,
         mat: u16,
@@ -76,7 +76,7 @@ impl RenderManager {
         textures.insert(mat, black_texture);
     }
 
-    // @todo Prepare megatexture from all these small textures and keep a bevy::TextureAtlas
+    // @todo ❌ Prepare megatexture from all these small textures and keep a bevy::TextureAtlas
     // of texture ID to the rect region, scale u,v appropriately in vertices.
     // In theory, whole of the game could fit in 4096x4096 megatex.
     fn bind_textures(&mut self, actor_name: &String, car: &Car, display: &Display) {

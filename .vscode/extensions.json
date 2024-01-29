@@ -10,5 +10,6 @@
         "belfz.search-crates-io",
         "TabNine.tabnine-vscode",
         "vadimcn.vscode-lldb",
+        "jgclark.vscode-todo-highlight",
     ]
 }

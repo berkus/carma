@@ -44,7 +44,7 @@ pub struct Vertex {
     pub tex_coords: [f32; 2],
 }
 
-implement_vertex!(Vertex, position, normal, tex_coords);
+implement_vertex!(Vertex, position, normal, tex_coords); // @fixme ❌ glium-specific
 
 impl Vertex {
     pub fn load<R: ReadBytesExt>(reader: &mut R) -> Result<Vertex> {
@@ -85,6 +85,7 @@ pub enum Action {
     Continue,
 }
 
+// @fixme ❌ drop this fn
 pub fn start_loop<F>(mut callback: F)
 where
     F: FnMut() -> Action,

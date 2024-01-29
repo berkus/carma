@@ -18,7 +18,7 @@ use {
 };
 
 // Pixmap consists of two chunks: name and data
-// TODO: use shared_data_t for pixmap contents to avoid copying.
+// @todo ❌ use SharedData for pixmap contents to avoid copying.
 #[derive(Default, Clone)]
 pub struct PixelMap {
     pub name: String,
@@ -41,17 +41,17 @@ impl std::fmt::Display for PixelMap {
     }
 }
 
-// @todo impl From<PixelMap> for bevy::Texture {}
+// @todo ❌ impl From<PixelMap> for bevy::Texture {}
 
 /**
 * Megatexture for storing all loaded textures.
 * Usually 1024x1024 or 4096x4096 texture with multiple smaller textures inside.
 
-@todo drop local Texture and use bevy::TextureAtlas
+@todo ❌ drop local Texture and use bevy::TextureAtlas
 */
 #[derive(Default)]
 pub struct Texture {
-    // @todo use bevy::prelude::TextureAtlas
+    // @todo ❌ use bevy::prelude::TextureAtlas
     pub w: u16,
     pub h: u16,
     pub data: Vec<u8>,
@@ -60,7 +60,7 @@ pub struct Texture {
 /**
 * Named reference into the megatexture.
 
-@todo use bevy Handle<Texture> or sth like this to get the texture out of the atlas
+@todo ❌ use bevy Handle<Texture> or sth like this to get the texture out of the atlas
 We need only u and v for the texture because it's all already part of the megatexture.
 */
 pub struct TextureReference {
@@ -240,7 +240,7 @@ impl PixelMap {
     }
 }
 
-// @todo Use bevy::Texture directly?
+// @todo ❌ Use bevy::Texture directly?
 impl Texture {
     pub fn new() -> Texture {
         Texture {
