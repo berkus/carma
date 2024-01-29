@@ -537,7 +537,7 @@ impl Car {
         debug!("Meshes to load: {:?}", load_models);
 
         // Read meshes referenced from text description
-        read_meshes(fname.as_ref(), &load_models, &mut car_meshes)?;
+        read_meshes(&fname, &load_models, &mut car_meshes)?;
 
         // Load actor file.
         let mut actor_file_name = fname.as_ref().to_path_buf();
