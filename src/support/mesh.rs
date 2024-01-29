@@ -143,15 +143,16 @@ impl Mesh {
     }
 
     pub fn calc_normals(&mut self) {
-        for n in 0..self.faces.len() {
-            let normal = Mesh::calc_normal(
-                Vector3::<f32>::from(self.vertices[self.faces[n].v1 as usize].position),
-                Vector3::<f32>::from(self.vertices[self.faces[n].v2 as usize].position),
-                Vector3::<f32>::from(self.vertices[self.faces[n].v3 as usize].position),
-            );
-            self.vertices[self.faces[n].v1 as usize].normal = normal.into();
-            self.vertices[self.faces[n].v2 as usize].normal = normal.into();
-            self.vertices[self.faces[n].v3 as usize].normal = normal.into();
+        for face in &self.faces {
+            let normal: [f32; 3] = Self::calc_normal(
+                self.vertices[face.v1 as usize].position.into(),
+                self.vertices[face.v2 as usize].position.into(),
+                self.vertices[face.v3 as usize].position.into(),
+            )
+            .into();
+            self.vertices[face.v1 as usize].normal = normal;
+            self.vertices[face.v2 as usize].normal = normal;
+            self.vertices[face.v3 as usize].normal = normal;
         }
     }
 }

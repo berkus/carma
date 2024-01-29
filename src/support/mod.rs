@@ -39,9 +39,9 @@ pub mod visitor;
 
 #[derive(Copy, Clone, Default)]
 pub struct Vertex {
-    pub position: [f32; 3],
-    pub normal: [f32; 3],
-    pub tex_coords: [f32; 2],
+    pub position: [f32; 3],   // x,y,z
+    pub normal: [f32; 3],     // x,y,z
+    pub tex_coords: [f32; 2], // u,v
 }
 
 implement_vertex!(Vertex, position, normal, tex_coords); // @fixme ❌ glium-specific
