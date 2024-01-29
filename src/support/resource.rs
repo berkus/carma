@@ -15,6 +15,7 @@ use {
     anyhow::Result,
     bevy::prelude::*,
     byteorder::{BigEndian, ReadBytesExt},
+    fehler::throws,
     std::io::BufRead,
 };
 
@@ -84,24 +85,24 @@ pub enum Chunk {
 }
 
 impl Chunk {
-    //#[throws]
-    pub fn load<R: ReadBytesExt + BufRead>(source: &mut R) -> Result<Chunk> {
+    #[throws(anyhow::Error)]
+    pub fn load<R: ReadBytesExt + BufRead>(source: &mut R) -> Chunk {
         let header = ChunkHeader::load(source)?;
         match header.chunk_type {
-            support::NULL_CHUNK => Ok(Chunk::Null()),
+            support::NULL_CHUNK => Chunk::Null(),
             support::FILE_HEADER_CHUNK => {
                 trace!("Reading file header...");
                 assert_eq!(header.size, 8);
                 let file_type = source.read_u32::<BigEndian>()?;
                 source.read_u32::<BigEndian>()?; // dummy?
-                Ok(Chunk::FileHeader { file_type })
+                Chunk::FileHeader { file_type }
             }
             support::FILE_NAME_CHUNK => {
                 let subtype = source.read_u16::<BigEndian>()?;
                 trace!("Reading filename entry... (subtype {})", subtype);
                 let name = read_c_string(source)?;
                 trace!("... {}", name);
-                Ok(Chunk::FileName { name, subtype })
+                Chunk::FileName { name, subtype }
             }
             support::VERTEX_LIST_CHUNK => {
                 trace!("Reading vertex list...");
@@ -111,7 +112,7 @@ impl Chunk {
                     let v = Vertex::load(source)?;
                     r.push(v);
                 }
-                Ok(Chunk::VertexList(r))
+                Chunk::VertexList(r)
             }
             support::UVMAP_LIST_CHUNK => {
                 trace!("Reading uvmap list...");
@@ -121,7 +122,7 @@ impl Chunk {
                     let v = UvCoord::load(source)?;
                     r.push(v);
                 }
-                Ok(Chunk::UvMapList(r))
+                Chunk::UvMapList(r)
             }
             support::FACE_LIST_CHUNK => {
                 trace!("Reading face list...");
@@ -131,7 +132,7 @@ impl Chunk {
                     let v = Face::load(source)?;
                     r.push(v);
                 }
-                Ok(Chunk::FaceList(r))
+                Chunk::FaceList(r)
             }
             support::MATERIAL_LIST_CHUNK => {
                 trace!("Reading material list...");
@@ -142,7 +143,7 @@ impl Chunk {
                     trace!("... {}", v);
                     r.push(v);
                 }
-                Ok(Chunk::MaterialList(r))
+                Chunk::MaterialList(r)
             }
             support::MATERIAL_DESC_CHUNK => {
                 trace!("Reading material descriptor...");
@@ -152,7 +153,7 @@ impl Chunk {
                 }
                 let name = read_c_string(source)?;
                 trace!("... {}", name);
-                Ok(Chunk::MaterialDesc { params, name })
+                Chunk::MaterialDesc { params, name }
             }
             support::FACE_MAT_LIST_CHUNK => {
                 trace!("Reading face material list...");
@@ -166,7 +167,7 @@ impl Chunk {
                     let v = source.read_u16::<BigEndian>()?;
                     r.push(v);
                 }
-                Ok(Chunk::FaceMatList(r))
+                Chunk::FaceMatList(r)
             }
             support::PIXELMAP_HEADER_CHUNK => {
                 trace!("Reading pixelmap header...");
@@ -187,13 +188,13 @@ impl Chunk {
                     what1,
                     what2
                 );
-                Ok(Chunk::PixelmapHeader {
+                Chunk::PixelmapHeader {
                     name,
                     w,
                     h,
                     mipmap_w,
                     mipmap_h,
-                })
+                }
             }
             support::PIXELMAP_DATA_CHUNK => {
                 trace!("Reading pixelmap data...");
@@ -207,23 +208,23 @@ impl Chunk {
 
                 source.read_exact(&mut data)?;
 
-                Ok(Chunk::PixelmapData {
+                Chunk::PixelmapData {
                     units,
                     unit_bytes,
                     data,
-                })
+                }
             }
             support::PIXELMAP_REF_CHUNK => {
                 trace!("Reading pixelmap ref...");
                 let pixelmap_name = read_c_string(source)?;
                 trace!("... {}", pixelmap_name);
-                Ok(Chunk::PixelmapRef(pixelmap_name))
+                Chunk::PixelmapRef(pixelmap_name)
             }
             support::RENDERTAB_REF_CHUNK => {
                 trace!("Reading rendertab ref...");
                 let rendertab_name = read_c_string(source)?;
                 trace!("... {}", rendertab_name);
-                Ok(Chunk::RenderTabRef(rendertab_name))
+                Chunk::RenderTabRef(rendertab_name)
             }
             support::ACTOR_NAME_CHUNK => {
                 trace!("Reading actor name...");
@@ -231,31 +232,31 @@ impl Chunk {
                 source.read_u8()?; // what2
                 let name = read_c_string(source)?;
                 trace!("... {}", name);
-                Ok(Chunk::ActorName { name, visible })
+                Chunk::ActorName { name, visible }
             }
             support::ACTOR_NODE_DOWN_CHUNK => {
                 trace!("Reading actor node down...");
-                Ok(Chunk::ActorNodeDown())
+                Chunk::ActorNodeDown()
             }
             support::UNKNOWN_29_CHUNK => {
                 trace!("Reading unknown 29...");
-                Ok(Chunk::Unknown29())
+                Chunk::Unknown29()
             }
             support::ACTOR_NODE_UP_CHUNK => {
                 trace!("Reading actor node up...");
-                Ok(Chunk::ActorNodeUp())
+                Chunk::ActorNodeUp()
             }
             support::MESHFILE_REF_CHUNK => {
                 trace!("Reading meshfile ref...");
                 let mesh_name = read_c_string(source)?;
                 trace!("... {}", mesh_name);
-                Ok(Chunk::MeshFileRef(mesh_name))
+                Chunk::MeshFileRef(mesh_name)
             }
             support::MATERIAL_REF_CHUNK => {
                 trace!("Reading material ref...");
                 let material_name = read_c_string(source)?;
                 trace!("... {}", material_name);
-                Ok(Chunk::MaterialRef(material_name))
+                Chunk::MaterialRef(material_name)
             }
             support::ACTOR_TRANSFORM_CHUNK => {
                 trace!("Reading actor transform...");
@@ -284,11 +285,11 @@ impl Chunk {
                 // actor->scale.x[1][2] = v.y;
                 // actor->scale.x[2][2] = v.z;
                 // CHECK_READ(actor->translate.read(f));
-                Ok(Chunk::ActorTransform(params))
+                Chunk::ActorTransform(params)
             }
             support::MAP_BOUNDINGBOX_CHUNK => {
                 trace!("Reading map bounding box (or?)...");
-                Ok(Chunk::MapBoundingBox())
+                Chunk::MapBoundingBox()
             }
             _ => unimplemented!(), // should not appear here, in general chunk reader is possible
         }
