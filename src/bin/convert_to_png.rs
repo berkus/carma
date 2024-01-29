@@ -3,6 +3,12 @@ use {
     std::{fs::File, io::BufWriter, path::PathBuf},
 };
 
+fn main() {
+    convert_all_pixmaps().expect("Listing failed");
+    convert_game_pixmap(String::from("DecodedData/DATA/PIXELMAP/EAGYELE.PIX"))
+        .expect("Conversion failed");
+}
+
 // /// Load palette once and then apply to a bunch of pixmap data
 fn convert_all_pixmaps() -> Result<(), support::Error> {
     let palette =
@@ -15,6 +21,12 @@ fn convert_all_pixmaps() -> Result<(), support::Error> {
             }
         }
     })
+}
+
+fn convert_game_pixmap(fname: String) -> Result<(), support::Error> {
+    let palette =
+        &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRRENDER.PAL"))?[0];
+    convert_pixmap(fname, palette)
 }
 
 fn convert_pixmap(fname: String, palette: &PixelMap) -> Result<(), support::Error> {
@@ -44,16 +56,4 @@ fn convert_menu_pixmap(fname: String) -> Result<(), support::Error> {
     let palette =
         &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRACEFLC.PAL"))?[0];
     convert_pixmap(fname, palette)
-}
-
-fn convert_game_pixmap(fname: String) -> Result<(), support::Error> {
-    let palette =
-        &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRRENDER.PAL"))?[0];
-    convert_pixmap(fname, palette)
-}
-
-fn main() {
-    convert_all_pixmaps().expect("Listing failed");
-    convert_game_pixmap(String::from("DecodedData/DATA/PIXELMAP/EAGYELE.PIX"))
-        .expect("Conversion failed");
 }

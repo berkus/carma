@@ -27,3 +27,9 @@ chrono = "0.4"
 
 [dev-dependencies]
 png = "0.17"
+
+[[bin]]
+name = "carma"
+
+[[bin]]
+name = "convert_to_png"
