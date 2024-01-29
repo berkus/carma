@@ -10,7 +10,7 @@ use {
 
 // one possible implementation of walking a directory only visiting files
 #[throws]
-pub fn visit_files(dir: &Path, cb: &mut dyn for<'r> FnMut(&'r DirEntry) -> Result<()>) {
+pub fn visit_files<P: AsRef<Path>>(dir: P, cb: &mut dyn for<'r> FnMut(&'r DirEntry) -> Result<()>) {
     if dir.is_dir() {
         for entry in fs::read_dir(dir)? {
             let entry = entry?;
