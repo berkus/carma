@@ -40,7 +40,7 @@ pub struct Face {
     pub v1: u16, // vertex indices (works with glDrawElements() e.g.)
     pub v2: u16,
     pub v3: u16,
-    flags: u16, // looks like flags, always only one bit set -- not always, see CITYA81.DAT!!
+    flags: u16, // looks like flags, mostly only one bit set -- but not always, see CITYA81.DAT!!
     pub material_id: u16, // comes from FACE_MAT_LIST chunk
 }
 
