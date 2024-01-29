@@ -21,7 +21,7 @@ use {
     },
     cgmath::Vector3,
     fehler::throws,
-    log::*,
+    // log::*,
     std::{
         collections::{HashMap, HashSet},
         fs::File,

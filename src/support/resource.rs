@@ -13,8 +13,8 @@ use {
         read_c_string, Error, Vertex,
     },
     anyhow::Result,
+    bevy::prelude::*,
     byteorder::{BigEndian, ReadBytesExt},
-    log::*,
     std::io::BufRead,
 };
 
