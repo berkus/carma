@@ -112,12 +112,6 @@ fn setup_cars(
 #[throws]
 fn main() {
     support::logger::setup_logging().expect("failed to initialize logging");
-    // ❌ Resource loading from files
-    // ❌ Texture placement in atlas
-    // ❌ Compose animatable models from disparate Car resources
-    // ❌ Set up bevy animation systems for each model
-    // ❌ Set up view and camera
-    // ❌ Render
 
     // let cars = setup_textures()?;
 
