@@ -6,9 +6,17 @@
     "todohighlight.include": [
         "**/*.txt",
         "**/*.md",
-        "**/*.rs"
+        "**/*.rs",
+        "**/TODO"
     ],
     "todohighlight.keywords": [
+        {
+            "text": "@done",
+            "color": "#fff",
+            "isWholeLine": true,
+            "backgroundColor": "green",
+            "overviewRulerColor": "rgba(0,189,0,0.8)"
+        },
         {
             "text": "@todo",
             "color": "#fff",
