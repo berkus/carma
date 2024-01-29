@@ -26,7 +26,7 @@ use {
 };
 
 pub mod actor;
-// pub mod camera;
+pub mod camera;
 pub mod car;
 pub mod logger;
 pub mod material;
