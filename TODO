@@ -14,3 +14,5 @@
 
  ❌ BGLSPIKE.PIX in DecodedData/DATA/PIXELMAP/EAGYELE.PIX - check transparency
  ❌ Load models using Kaitai Struct
+
+ ❌ https://github.com/BamPeers/rust-ci-github-actions-workflow/blob/main/.github/workflows/release-packaging.yaml
