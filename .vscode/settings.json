@@ -7,7 +7,7 @@
         "**/*.txt",
         "**/*.md",
         "**/*.rs",
-        "**/TODO"
+        "**/TODO",
     ],
     "todohighlight.keywords": [
         {
@@ -28,6 +28,6 @@
             "color": "#fff",
             "backgroundColor": "#f06292",
             "overviewRulerColor": "rgba(240,98,146,0.8)"
-        }
+        },
     ],
 }
