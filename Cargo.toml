@@ -9,7 +9,10 @@ resolver = "2"
 anyhow = "1.0"
 thiserror = "1.0"
 fehler = "1.0"
-bevy = "0.12"
+# Release
+# bevy = "0.12"
+# Debug
+bevy = { version = "0.12", features = ["dynamic_linking"] }
 bevy_egui = "0.24"
 bevy_asset_loader = "0.19"
 smooth-bevy-cameras = "0.10"
@@ -33,3 +36,11 @@ name = "carma"
 
 [[bin]]
 name = "convert_to_png"
+
+# Enable a small amount of optimization in debug mode
+[profile.dev]
+opt-level = 1
+
+# Enable high optimizations for dependencies (incl. Bevy), but not for our code:
+[profile.dev.package."*"]
+opt-level = 3

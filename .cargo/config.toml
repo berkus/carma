@@ -1,0 +1,7 @@
+# From https://github.com/bevyengine/bevy/blob/main/.cargo/config_fast_builds.toml
+[target.aarch64-apple-darwin]
+rustflags = [
+  "-Clink-arg=-fuse-ld=/opt/homebrew/opt/llvm/bin/ld64.lld",
+  "-Zshare-generics=y",
+  "-Zthreads=0",
+]
