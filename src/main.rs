@@ -141,8 +141,8 @@ fn main() {
 
     let mut app = App::new();
 
-    // app.register_asset_loader(CarAssetLoader)
-    //     .init_asset::<CarAsset>();
+    app.register_asset_loader(CarAssetLoader)
+        .init_asset::<CarAsset>();
 
     app.add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
         .add_plugins(LookTransformPlugin)
@@ -151,6 +151,21 @@ fn main() {
         .add_systems(Startup, setup)
         .add_systems(Update, rotate);
     // .add_system(animate_camera)
+
+    // app.configure_sets(Update, (
+    //     MainMenuSet
+    //         .run_if(in_state(MainMenu)),
+    //     GameplaySet
+    //         .run_if(in_state(InGame)),
+    //     InputSet
+    //         .in_set(GameplaySet),
+    //     EnemyAiSet
+    //         .in_set(GameplaySet)
+    //         .run_if(not(cutscene))
+    //         .after(player_movement),
+    //     AudioSet
+    //         .run_if(not(audio_muted)),
+    // ));
 
     app.run();
 
