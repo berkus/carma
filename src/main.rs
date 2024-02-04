@@ -121,23 +121,10 @@ fn main() {
     support::logger::setup_logging().expect("failed to initialize logging");
 
     // let cars = setup_textures()?;
-
-    // Prepare window -- move to bevy init
-
-    // let mut events_loop = glium::glutin::event_loop::EventLoop::new();
-    // let window = glium::glutin::window::WindowBuilder::new()
-    //     .with_title("carma")
-    //     .with_inner_size(glium::glutin::dpi::LogicalSize::new(800.0, 600.0));
-    // let windowed_context = glium::glutin::ContextBuilder::new();
-    //
-    // let display = glium::Display::new(window, windowed_context, &events_loop)?;
-    //
     // let mut render_manager = RenderManager::new(&display);
     // for car in &cars {
     //     render_manager.prepare_car(car, &display);
     // }
-    //
-    // let mut camera = CameraState::new();
 
     let mut app = App::new();
 
@@ -169,33 +156,11 @@ fn main() {
 
     app.run();
 
-    // events_loop.run(move |event, _, control_flow| {
-    //     println!("{:?}", event);
-    //     *control_flow = ControlFlow::Wait;
-    //
-    //     camera.update();
-    //
-    //     match event {
-    //         Event::LoopDestroyed => return,
-    //         Event::WindowEvent { event, .. } => match event {
-    //             // WindowEvent::Resized(physical_size) => display.resize(physical_size),
-    //             WindowEvent::CloseRequested => *control_flow = ControlFlow::Exit,
-    //             _ => camera.process_input(&event),
-    //         },
     //         Event::RedrawRequested(_) => {
-    //             let mut frame = display.draw();
-    //             frame.clear_color(0.4, 0.4, 0.4, 0.0);
-    //             frame.clear_depth(1.0);
-    //
     //             for car in &cars {
     //                 render_manager.draw_car(car, &mut frame, &camera);
     //             }
-    //             frame.finish().unwrap();
-    //             // windowed_context.swap_buffers().unwrap();
     //         }
-    //         _ => (),
-    //     }
-    // });
 }
 
 /// A marker component for our shapes so we can query them separately from the ground plane
