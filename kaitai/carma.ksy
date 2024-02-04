@@ -19,15 +19,11 @@ types:
       - id: type
         type: u4
         enum: chunk_type
-      - id: size
+      - id: size_int
         type: u4
     instances:
       size:
-        value: size
-        if: type != chunk_type::material_list
-      size:
-        value: size + 16
-        if: type == chunk_type::material_list
+        value: 'type == chunk_type::material_list ? size_int + 16 : size_int'
   chunk:
     seq:
       - id: header
