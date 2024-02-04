@@ -129,17 +129,16 @@ fn main() {
 
     let mut app = App::new();
 
-    app.register_asset_loader(CarAssetLoader)
-        .init_asset::<CarAsset>();
-
     app.add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
         .add_plugins(WorldInspectorPlugin::new())
         .add_plugins(LookTransformPlugin)
         .add_plugins(UnrealCameraPlugin::default())
-        .add_systems(Startup, setup_cars)
-        .add_systems(Startup, setup)
+        .add_systems(Startup, (setup_cars, setup))
         .add_systems(Update, rotate);
     // .add_system(animate_camera)
+
+    app.register_asset_loader(CarAssetLoader)
+        .init_asset::<CarAsset>();
 
     // app.configure_sets(Update, (
     //     MainMenuSet
