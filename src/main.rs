@@ -18,6 +18,7 @@ use {
         prelude::*,
         render::render_resource::{Extent3d, TextureDimension, TextureFormat},
     },
+    bevy_inspector_egui::quick::WorldInspectorPlugin,
     cgmath::Vector3,
     fehler::throws,
     glium::{
@@ -132,6 +133,7 @@ fn main() {
         .init_asset::<CarAsset>();
 
     app.add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
+        .add_plugins(WorldInspectorPlugin::new())
         .add_plugins(LookTransformPlugin)
         .add_plugins(UnrealCameraPlugin::default())
         .add_systems(Startup, setup_cars)

@@ -27,6 +27,7 @@ id_tree = "1.8"
 num = "0.4"
 fern = "0.6"
 chrono = "0.4"
+bevy-inspector-egui = { version = "0.22.1", features = ["highlight_changes"] }
 
 [dev-dependencies]
 png = "0.17"
