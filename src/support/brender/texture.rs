@@ -7,10 +7,15 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    crate::support::{self, resource::Chunk, Error},
+    crate::support::{
+        self,
+        brender::resource::{Chunk, FileInfoChunk, FromStream, PixelMapChunk, PixelsChunk},
+        Error,
+    },
     anyhow::{anyhow, Result},
     bevy::prelude::*,
     byteorder::ReadBytesExt,
+    fehler::throws,
     std::{
         fs::File,
         io::{BufRead, BufReader, Write},
@@ -74,6 +79,8 @@ pub struct TextureReference {
 
 impl PixelMap {
     /// Convert indexed-color image to RGBA using provided palette.
+    ///
+    /// `Palette = shade tab` in BRender parlance.
     pub fn remap_via_palette(&self, palette: &PixelMap) -> Result<PixelMap> {
         let mut pm = self.clone();
         pm.data = Vec::<u8>::with_capacity(self.data.len() * 4);
@@ -109,18 +116,12 @@ impl PixelMap {
         Ok(pm)
     }
 
-    #[cfg(convert)]
     pub fn write_png_remapped_via<W: Write>(
         &self,
         palette: &PixelMap,
         w: &mut W,
     ) -> Result<(), Error> {
         self.dump();
-
-        let mut encoder = png::Encoder::new(w, self.w as u32, self.h as u32);
-        encoder.set_color(png::ColorType::Rgb);
-        encoder.set_depth(png::BitDepth::Eight);
-        let mut writer = encoder.write_header().unwrap();
 
         let mut data = Vec::<u8>::with_capacity(self.data.len() * 4);
 
@@ -164,58 +165,10 @@ impl PixelMap {
             _ => unimplemented!(),
         }
 
-        writer.write_image_data(&data).unwrap();
+        use image::ImageEncoder;
+        let png = image::codecs::png::PngEncoder::new(w);
+        png.write_image(&data, self.w.into(), self.h.into(), image::ColorType::Rgb8);
         Ok(())
-    }
-
-    pub fn load<R: ReadBytesExt + BufRead>(reader: &mut R) -> Result<PixelMap> {
-        let mut pm = PixelMap::default();
-
-        // Read chunks until last chunk is encountered.
-        // Certain chunks initialize certain properties.
-        loop {
-            match Chunk::load(reader)? {
-                Chunk::FileHeader { file_type } => {
-                    if file_type != support::PIXELMAP_FILE_TYPE {
-                        return Err(anyhow!("Invalid pixelmap file type {}", file_type));
-                    }
-                }
-                Chunk::PixelmapHeader {
-                    name,
-                    w,
-                    h,
-                    mipmap_w,
-                    mipmap_h,
-                } => {
-                    pm.name = name.clone();
-                    pm.w = w;
-                    pm.h = h;
-                    pm.use_w = mipmap_w;
-                    pm.use_h = mipmap_h;
-                    debug!(
-                        "Pixelmap {} ({}x{} use {}x{})",
-                        name, w, h, mipmap_w, mipmap_h
-                    );
-                }
-                Chunk::PixelmapData {
-                    units,
-                    unit_bytes,
-                    data,
-                } => {
-                    pm.units = units;
-                    pm.unit_bytes = unit_bytes;
-                    pm.data = data;
-                    debug!(
-                        "Pixelmap data in {} units, {} bytes each",
-                        units, unit_bytes
-                    );
-                }
-                Chunk::Null() => break,
-                _ => unimplemented!(), // unexpected type here
-            }
-        }
-
-        Ok(pm)
     }
 
     /// Load one or more named textures from a single file
@@ -223,7 +176,7 @@ impl PixelMap {
         let mut file = BufReader::new(File::open(fname)?);
         let mut pmaps = Vec::<PixelMap>::new();
         loop {
-            let pmap = PixelMap::load(&mut file);
+            let pmap = PixelMap::from_stream(&mut file);
             match pmap {
                 Err(_) => break, // fixme: allow only Eof here
                 Ok(pmap) => pmaps.push(pmap),
@@ -237,6 +190,62 @@ impl PixelMap {
             "Pixelmap {}: {}x{}, mm {}x{}, {}x{} bytes",
             self.name, self.w, self.h, self.use_w, self.use_h, self.units, self.unit_bytes
         );
+    }
+}
+
+impl FromStream for PixelMap {
+    type Output = PixelMap;
+    #[throws(support::Error)]
+    fn from_stream<R: ReadBytesExt + BufRead>(source: &mut R) -> Self::Output {
+        let mut pm = PixelMap::default();
+
+        // Read chunks until last chunk is encountered.
+        // Certain chunks initialize certain properties.
+        loop {
+            match Chunk::load(source)? {
+                Chunk::FileInfo(FileInfoChunk { file_type, .. }) => {
+                    // if file_type != support::PIXELMAP_FILE_TYPE {
+                    //     return Err(anyhow!("Invalid pixelmap file type {}", file_type));
+                    // }
+                }
+                Chunk::PixelMap(PixelMapChunk {
+                    r#type,
+                    row_bytes,
+                    width,
+                    height,
+                    origin_x,
+                    origin_y,
+                    identifier,
+                }) => {
+                    pm.name = identifier.clone();
+                    pm.w = width;
+                    pm.h = height;
+                    pm.use_w = origin_x;
+                    pm.use_h = origin_y;
+                    debug!(
+                        "Pixelmap {} (type {}, {}x{} origin {}x{})",
+                        identifier, r#type, width, height, origin_x, origin_y
+                    );
+                }
+                Chunk::Pixels(PixelsChunk {
+                    units,
+                    unit_bytes,
+                    data,
+                }) => {
+                    pm.units = units;
+                    pm.unit_bytes = unit_bytes;
+                    pm.data = data;
+                    debug!(
+                        "Pixelmap data in {} units, {} bytes each",
+                        units, unit_bytes
+                    );
+                }
+                Chunk::End() => break,
+                _ => unimplemented!(), // unexpected type here
+            }
+        }
+
+        pm
     }
 }
 

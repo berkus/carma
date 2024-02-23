@@ -7,7 +7,7 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    crate::support::{self, resource::Chunk, Error},
+    crate::support::{self, brender::resource::Chunk, Error},
     anyhow::{anyhow, Result},
     bevy::asset::AssetLoader,
     byteorder::ReadBytesExt,
@@ -55,28 +55,29 @@ pub struct MaterialLoader;
 // }
 
 impl Material {
-    pub fn load<R: ReadBytesExt + BufRead>(reader: &mut R) -> Result<Material> {
-        let mut mat = Material::default();
+    pub fn load<R: ReadBytesExt + BufRead>(_reader: &mut R) -> Result<Material> {
+        let /*mut*/ mat = Material::default();
 
+        // @todo material loader using stack
         // Read chunks until last chunk is encountered.
         // Certain chunks initialize certain properties.
-        loop {
-            match Chunk::load(reader)? {
-                Chunk::FileHeader { file_type } => {
-                    if file_type != support::MATERIAL_FILE_TYPE {
-                        return Err(anyhow!("Invalid material file type {}", file_type));
-                    }
-                }
-                Chunk::MaterialDesc { name, params } => {
-                    mat.params = params;
-                    mat.name = name;
-                }
-                Chunk::PixelmapRef(name) => mat.pixelmap_name = name,
-                Chunk::RenderTabRef(name) => mat.rendertab_name = name,
-                Chunk::Null() => break,
-                _ => unimplemented!(), // unexpected type here
-            }
-        }
+        // loop {
+        //     match Chunk::load(reader)? {
+        //         Chunk::FileHeader { file_type } => {
+        //             if file_type != support::MATERIAL_FILE_TYPE {
+        //                 return Err(anyhow!("Invalid material file type {}", file_type));
+        //             }
+        //         }
+        //         Chunk::MaterialDesc { name, params } => {
+        //             mat.params = params;
+        //             mat.name = name;
+        //         }
+        //         Chunk::PixelmapRef(name) => mat.pixelmap_name = name,
+        //         Chunk::RenderTabRef(name) => mat.rendertab_name = name,
+        //         Chunk::Null() => break,
+        //         _ => unimplemented!(), // unexpected type here
+        //     }
+        // }
 
         Ok(mat)
     }

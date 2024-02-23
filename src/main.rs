@@ -9,16 +9,19 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    crate::{
-        assets::car_asset::{CarAsset, CarAssetLoader},
-        support::{camera::CameraState, car::Car, render_manager::RenderManager},
-    },
     anyhow::{anyhow, Context, Error, Result},
     bevy::{
         prelude::*,
         render::render_resource::{Extent3d, TextureDimension, TextureFormat},
     },
     bevy_inspector_egui::quick::WorldInspectorPlugin,
+    carma::{
+        assets::car_asset::{CarAsset, CarAssetLoader},
+        support::{
+            camera::CameraState, car::Car, logger, render_manager::RenderManager,
+            visitor::visit_files,
+        },
+    },
     cgmath::Vector3,
     fehler::throws,
     glium::{
@@ -34,11 +37,7 @@ use {
         LookTransformPlugin,
     },
     std::{f32::consts::PI, path::Path},
-    support::visitor::visit_files,
 };
-
-mod assets;
-mod support;
 
 // @todo these are all resource types under support, just implement AssetLoadRequestHandler for them?
 // ACT
@@ -119,7 +118,7 @@ fn setup_cars(
 
 #[throws]
 fn main() {
-    support::logger::setup_logging().expect("failed to initialize logging");
+    logger::setup_logging().expect("failed to initialize logging");
 
     // let cars = setup_textures()?;
     // let mut render_manager = RenderManager::new(&display);

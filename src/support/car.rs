@@ -8,11 +8,11 @@
 //
 use {
     crate::support::{
-        actor::{Actor, ActorNode},
-        material::Material,
-        mesh::Mesh,
+        brender::actor::{Actor, ActorNode},
+        brender::material::Material,
+        brender::mesh::Mesh,
+        brender::texture::PixelMap,
         path_subst,
-        texture::PixelMap,
     },
     anyhow::{anyhow, Error, Result},
     bevy::{

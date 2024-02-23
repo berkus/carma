@@ -8,11 +8,13 @@
 
  ❌ Resource loading from files
  ❌ Compose animatable models from disparate Car resources
+    ❌ Load model/actor etc using load stacks - see BRender fileops
  ❌ Set up bevy animation systems for each model
  ❌ Set up view and camera
  ❌ Render
 
  ❌ BGLSPIKE.PIX in DecodedData/DATA/PIXELMAP/EAGYELE.PIX - check transparency
+    - afaik this is handled slightly differently
  ❌ Load models using Kaitai Struct
 
  ❌ https://github.com/BamPeers/rust-ci-github-actions-workflow/blob/main/.github/workflows/release-packaging.yaml

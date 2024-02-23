@@ -35,7 +35,7 @@ types:
           switch-on: header.type
           cases:
             chunk_type::actor: actor_chunk
-            chunk_type::actor_model: actor_model_chunk
+            chunk_type::actor_model: name_ref_chunk
             chunk_type::actor_material: actor_material_chunk
             chunk_type::actor_clip_plane: action_dummy_chunk
             chunk_type::actor_transform: action_dummy_chunk
@@ -44,8 +44,8 @@ types:
             chunk_type::actor_bounds: action_dummy_chunk
             chunk_type::actor_add_child: action_dummy_chunk
             chunk_type::file_info: file_info_chunk
-            chunk_type::colour_map_ref: colour_map_ref_chunk
-            chunk_type::index_shade_ref: index_shade_ref_chunk
+            chunk_type::colour_map_ref: name_ref_chunk
+            chunk_type::index_shade_ref: name_ref_chunk
             chunk_type::material_index: material_index_chunk
             chunk_type::vertices: vertices_chunk
             chunk_type::vertex_uv: vertex_uv_chunk
@@ -76,14 +76,9 @@ types:
       - id: identifier
         type: strz
         encoding: ascii
-  actor_model_chunk:
+  name_ref_chunk:
     seq:
-      - id: name
-        type: strz
-        encoding: ascii
-  actor_material_chunk:
-    seq:
-      - id: name
+      - id: identifier
         type: strz
         encoding: ascii
   file_info_chunk:
@@ -222,11 +217,6 @@ types:
         type: u2
       - id: flags
         type: u1
-  pixelmap_ref_chunk:
-    seq:
-      - id: identifier
-        type: strz
-        encoding: ascii
   transform_matrix34_chunk:
     seq:
       - id: row0
@@ -274,16 +264,6 @@ types:
     seq:
       - id: t
         type: vec3f
-  colour_map_ref_chunk:
-    seq:
-      - id: name
-        type: strz
-        encoding: ascii
-  index_shade_ref_chunk:
-    seq:
-      - id: name
-        type: strz
-        encoding: ascii
   color:
     seq:
       - id: r

@@ -7,10 +7,7 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    crate::{
-        support::{actor::ActorNode, car::Car, Vertex},
-        CameraState,
-    },
+    crate::support::{brender::actor::ActorNode, camera::CameraState, car::Car, Vertex},
     cgmath::{prelude::*, Matrix4, Vector3},
     glium::{
         self,
