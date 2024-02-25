@@ -23,7 +23,6 @@ use {
         collections::{HashMap, HashSet},
         fs::File,
         io::{BufRead, BufReader},
-        iter::Iterator,
         path::Path,
     },
 };

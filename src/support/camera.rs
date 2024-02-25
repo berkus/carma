@@ -29,6 +29,12 @@ pub struct CameraState {
     rotating_right: bool,
 }
 
+impl Default for CameraState {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl CameraState {
     pub fn new() -> CameraState {
         CameraState {

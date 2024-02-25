@@ -10,15 +10,14 @@ use {
     crate::support::{brender::actor::ActorNode, camera::CameraState, car::Car, Vertex},
     cgmath::{prelude::*, Matrix4, Vector3},
     glium::{
-        self,
-        index::*,
+        index::PrimitiveType,
         texture::{RawImage2d, SrgbTexture2d},
         uniform,
         uniforms::*,
         Display, IndexBuffer, Program, Surface, VertexBuffer,
     },
     log::*,
-    std::{collections::HashMap, str, vec::Vec},
+    std::{collections::HashMap, str},
 };
 
 /// Provide storage for in-memory level-data - models, meshes, textures etc.

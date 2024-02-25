@@ -13,7 +13,6 @@ use {
     cgmath::Vector3,
     glium::implement_vertex,
     std::{
-        self,
         ops::Sub,
         path::{Path, PathBuf},
         thread,

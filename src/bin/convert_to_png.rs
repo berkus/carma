@@ -59,6 +59,7 @@ fn convert_pixmap(fname: String, palette: &PixelMap) -> Result<()> {
 }
 
 /// Uses different palette for race-selection part
+#[allow(unused)]
 fn convert_menu_pixmap(fname: String) -> Result<()> {
     let palette =
         &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRACEFLC.PAL"))?[0];

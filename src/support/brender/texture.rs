@@ -116,6 +116,7 @@ impl PixelMap {
         Ok(pm)
     }
 
+    #[allow(clippy::identity_op)] // keep +0 in formulas
     pub fn write_png_remapped_via<W: Write>(
         &self,
         palette: &PixelMap,
