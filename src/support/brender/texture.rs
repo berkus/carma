@@ -203,14 +203,14 @@ impl FromStream for PixelMap {
         // Certain chunks initialize certain properties.
         loop {
             match Chunk::load(source)? {
-                Chunk::FileInfo(FileInfoChunk { file_type, .. }) => {
+                Chunk::FileInfo(FileInfoChunk { file_type: _, .. }) => {
                     // if file_type != support::PIXELMAP_FILE_TYPE {
                     //     return Err(anyhow!("Invalid pixelmap file type {}", file_type));
                     // }
                 }
                 Chunk::PixelMap(PixelMapChunk {
                     r#type,
-                    row_bytes,
+                    row_bytes: _,
                     width,
                     height,
                     origin_x,
