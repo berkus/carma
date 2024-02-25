@@ -61,6 +61,8 @@ pub enum Error {
     Utf8(#[from] std::str::Utf8Error),
     #[error("from utf-8 conversion error {0:?}")]
     FromUtf8(#[from] std::string::FromUtf8Error),
+    #[error("image i/o error {0:?}")]
+    ImageIO(#[from] image::ImageError),
 }
 
 pub enum Action {

@@ -167,7 +167,7 @@ impl PixelMap {
 
         use image::ImageEncoder;
         let png = image::codecs::png::PngEncoder::new(w);
-        png.write_image(&data, self.w.into(), self.h.into(), image::ColorType::Rgb8);
+        png.write_image(&data, self.w.into(), self.h.into(), image::ColorType::Rgb8)?;
         Ok(())
     }
 
