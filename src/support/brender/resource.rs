@@ -48,7 +48,7 @@ impl FromStream for ChunkHeader {
     }
 }
 
-struct NameRefChunk {
+pub struct NameRefChunk {
     identifier: String,
 }
 
@@ -218,7 +218,7 @@ impl FromStream for FileInfoChunk {
 // =================
 // Model chunks: (BrModelLoadMany)
 
-struct ModelChunk {
+pub struct ModelChunk {
     flags: u16,
     identifier: String,
 }
@@ -233,7 +233,7 @@ impl FromStream for ModelChunk {
     }
 }
 
-struct MaterialIndexChunk {
+pub struct MaterialIndexChunk {
     materials: Vec<String>,
 }
 
@@ -320,7 +320,7 @@ impl FromStream for VertexUV {
     }
 }
 
-struct VerticesChunk {
+pub struct VerticesChunk {
     vertices: Vec<Vertex>,
 }
 
@@ -338,7 +338,7 @@ impl FromStream for VerticesChunk {
     }
 }
 
-struct VertexUvChunk {
+pub struct VertexUvChunk {
     uvs: Vec<VertexUV>,
 }
 
@@ -383,7 +383,7 @@ impl FromStream for Face {
     }
 }
 
-struct FacesChunk {
+pub struct FacesChunk {
     faces: Vec<Face>,
 }
 
@@ -401,7 +401,7 @@ impl FromStream for FacesChunk {
     }
 }
 
-struct FaceMaterialChunk {
+pub struct FaceMaterialChunk {
     face_material_indexes: Vec<u16>,
 }
 
@@ -420,7 +420,7 @@ impl FromStreamExt for FaceMaterialChunk {
     }
 }
 
-struct PivotChunk {
+pub struct PivotChunk {
     pivot: Vec3f,
 }
 
@@ -453,7 +453,7 @@ impl FromStream for Colour {
 // =================
 // Material chunks: (BrMaterialLoadMany)
 
-struct MaterialChunk {
+pub struct MaterialChunk {
     color: Colour,
     opacity: u8,
     ka: f32,
@@ -505,8 +505,8 @@ impl FromStream for MaterialChunk {
     }
 }
 
-type ColorMapRefChunk = NameRefChunk;
-type IndexShadeRefChunk = NameRefChunk;
+pub type ColorMapRefChunk = NameRefChunk;
+pub type IndexShadeRefChunk = NameRefChunk;
 
 // =================
 // PixelMap chunks: (BrPixelmapLoadMany)
@@ -573,7 +573,7 @@ impl FromStream for PixelsChunk {
 // =================
 // Actor chunks: (BrActorLoadMany)
 
-struct ActorChunk {
+pub struct ActorChunk {
     r#type: u8,       // actor_type
     render_style: u8, // actor_render_style
     identifier: String,
@@ -594,17 +594,17 @@ impl FromStream for ActorChunk {
     }
 }
 
-type ActorModelChunk = NameRefChunk;
-type ActorMaterialChunk = NameRefChunk;
+pub type ActorModelChunk = NameRefChunk;
+pub type ActorMaterialChunk = NameRefChunk;
 
-struct ActorTransformActionChunk {} // empty, simply attach transform on top of stack to the actor
-struct ActorLightActionChunk {} // empty, simply attach light on top of stack to the actor
-struct ActorCameraActionChunk {} // empty, simply attach camera on top of stack to the actor
-struct ActorBoundsActionChunk {} // empty, simply attach bounds on top of stack to the actor
-struct ActorClipPlaneActionChunk {} // empty, simply attach clip plane on top of stack to the actor
-struct ActorAddChildActionChunk {} // empty, simply attach actor on top of stack to the actor
+pub struct ActorTransformActionChunk {} // empty, simply attach transform on top of stack to the actor
+pub struct ActorLightActionChunk {} // empty, simply attach light on top of stack to the actor
+pub struct ActorCameraActionChunk {} // empty, simply attach camera on top of stack to the actor
+pub struct ActorBoundsActionChunk {} // empty, simply attach bounds on top of stack to the actor
+pub struct ActorClipPlaneActionChunk {} // empty, simply attach clip plane on top of stack to the actor
+pub struct ActorAddChildActionChunk {} // empty, simply attach actor on top of stack to the actor
 
-struct TransformMatrix34Chunk {
+pub struct TransformMatrix34Chunk {
     m: Vec<Vec3f>, // 4-element vector of Vec3f
 }
 
@@ -620,7 +620,7 @@ impl FromStream for TransformMatrix34Chunk {
     }
 }
 
-struct TransformQuatChunk {
+pub struct TransformQuatChunk {
     q_x: f32,
     q_y: f32,
     q_z: f32,
@@ -647,9 +647,9 @@ impl FromStream for TransformQuatChunk {
     }
 }
 
-type Angle = f32;
+pub type Angle = f32;
 
-struct TransformEulerChunk {
+pub struct TransformEulerChunk {
     e_order: u8,
     e_a: Angle,
     e_b: Angle,
@@ -676,7 +676,7 @@ impl FromStream for TransformEulerChunk {
     }
 }
 
-struct TransformLookUpChunk {
+pub struct TransformLookUpChunk {
     look: Vec3f,
     up: Vec3f,
     t: Vec3f,
@@ -693,7 +693,7 @@ impl FromStream for TransformLookUpChunk {
     }
 }
 
-struct TransformTranslationChunk {
+pub struct TransformTranslationChunk {
     t: Vec3f,
 }
 
@@ -706,7 +706,7 @@ impl FromStream for TransformTranslationChunk {
     }
 }
 
-struct BoundsChunk {
+pub struct BoundsChunk {
     min: Vec3f,
     max: Vec3f,
 }
@@ -721,7 +721,7 @@ impl FromStream for BoundsChunk {
     }
 }
 
-struct LightChunk {
+pub struct LightChunk {
     light_type: u8,
     color: Colour,
     attn_c: f32,
@@ -757,7 +757,7 @@ impl FromStream for LightChunk {
     }
 }
 
-struct CameraChunk {
+pub struct CameraChunk {
     camera_type: u8,
     fov: Angle,
     hither_z: f32,
@@ -787,7 +787,7 @@ impl FromStream for CameraChunk {
     }
 }
 
-struct PlaneChunk {
+pub struct PlaneChunk {
     equation: Vec4f,
 }
 
