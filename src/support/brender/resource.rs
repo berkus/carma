@@ -7,11 +7,7 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    crate::support::{
-        self,
-        brender::{mesh::UvCoord, read_c_string},
-        Error,
-    },
+    crate::support::{self, brender::read_c_string, Error},
     bevy::prelude::*,
     byteorder::{BigEndian, ReadBytesExt},
     fehler::throws,

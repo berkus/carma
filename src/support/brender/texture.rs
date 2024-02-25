@@ -12,7 +12,7 @@ use {
         brender::resource::{Chunk, FileInfoChunk, FromStream, PixelMapChunk, PixelsChunk},
         Error,
     },
-    anyhow::{anyhow, Result},
+    anyhow::Result,
     bevy::prelude::*,
     byteorder::ReadBytesExt,
     fehler::throws,

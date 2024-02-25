@@ -7,15 +7,11 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    crate::support::{self, brender::resource::Chunk, Error},
-    anyhow::{anyhow, Result},
-    bevy::asset::AssetLoader,
+    anyhow::Result,
     byteorder::ReadBytesExt,
-    log::*,
     std::{
         fs::File,
         io::{BufRead, BufReader},
-        path::Path,
     },
 };
 

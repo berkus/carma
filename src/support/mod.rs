@@ -9,14 +9,11 @@
 #![allow(dead_code)]
 
 use {
-    anyhow::{anyhow, Result},
-    byteorder::{BigEndian, ReadBytesExt},
+    anyhow::Result,
     cgmath::Vector3,
     glium::implement_vertex,
     std::{
         self,
-        convert::From,
-        io::BufRead,
         ops::Sub,
         path::{Path, PathBuf},
         thread,

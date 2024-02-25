@@ -7,11 +7,9 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    crate::support::{self, brender::resource::Chunk, Error},
-    anyhow::{anyhow, Result},
+    anyhow::Result,
     byteorder::ReadBytesExt,
     id_tree::*,
-    log::*,
     std::{
         fs::File,
         io::{BufRead, BufReader},
@@ -108,7 +106,7 @@ impl Actor {
     // @todo rewrite using load stack
     //#[throws]
     pub fn load<R: ReadBytesExt + BufRead>(_reader: &mut R) -> Result<Actor> {
-        use id_tree::InsertBehavior::*;
+        // use id_tree::InsertBehavior::*;
 
         let /*mut*/ actor = Actor::new(TreeBuilder::new().with_node_capacity(5).build());
 

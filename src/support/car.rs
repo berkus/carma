@@ -15,10 +15,7 @@ use {
         path_subst,
     },
     anyhow::{anyhow, Error, Result},
-    bevy::{
-        asset::{BoxedFuture, LoadContext},
-        prelude::*,
-    },
+    bevy::prelude::*,
     cgmath::Vector3,
     fehler::throws,
     // log::*,
@@ -27,9 +24,8 @@ use {
         fs::File,
         io::{BufRead, BufReader},
         iter::Iterator,
-        path::{Path, PathBuf},
+        path::Path,
     },
-    thiserror::Error as ThisError,
 };
 
 // Car assembles the gameplay object (a car in this case) from various model and texture files.

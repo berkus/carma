@@ -7,10 +7,10 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    crate::support::{self, brender::resource::Chunk, Error, Vertex},
-    anyhow::{anyhow, Result},
-    byteorder::{BigEndian, ReadBytesExt},
-    cgmath::{InnerSpace, Vector3, Zero},
+    crate::support::Vertex,
+    anyhow::Result,
+    byteorder::ReadBytesExt,
+    cgmath::{InnerSpace, Vector3},
     std::{
         fs::File,
         io::{BufRead, BufReader},
