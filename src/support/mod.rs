@@ -36,7 +36,7 @@ pub struct Vertex {
     pub tex_coords: [f32; 2], // u,v
 }
 
-implement_vertex!(Vertex, position, normal, tex_coords); // @fixme ❌ glium-specific
+implement_vertex!(Vertex, position, normal, tex_coords); // @fixme ❌ glium-specific - use bevy_render
 
 // This is used only for vector math, using positions
 // Not a general implementation - @todo replace with sub fun
