@@ -28,7 +28,7 @@ pub mod logger;
 pub mod render_manager;
 pub mod visitor;
 
-// Vertex in resource.rs
+// Vertex and VertexUV in resource.rs
 #[derive(Copy, Clone, Default)]
 pub struct Vertex {
     pub position: [f32; 3],   // x,y,z

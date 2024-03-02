@@ -14,11 +14,15 @@ use {
     std::io::BufRead,
 };
 
+//------------------------------------------------------------------
+/// Read resource from a stream.
 pub trait FromStream {
     type Output;
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Result<Self::Output, Error>;
 }
 
+//------------------------------------------------------------------
+/// Read an array resource with a specified count from a stream.
 pub trait FromStreamExt {
     type Output;
     fn from_stream_ext<S: ReadBytesExt + BufRead>(
@@ -27,6 +31,7 @@ pub trait FromStreamExt {
     ) -> Result<Self::Output, Error>;
 }
 
+//------------------------------------------------------------------
 /// A binary resource file consisting of chunks with specific size.
 /// Reading from such file yields array of chunk results, some of
 /// these chunks are service, some are useful to the client.
@@ -48,6 +53,8 @@ impl FromStream for ChunkHeader {
     }
 }
 
+//------------------------------------------------------------------
+/// A by-name reference.
 pub struct NameRefChunk {
     identifier: String,
 }
@@ -62,6 +69,8 @@ impl FromStream for NameRefChunk {
     }
 }
 
+//------------------------------------------------------------------
+/// Chunk types.
 pub mod chunk {
     pub const END: u32 = 0x0;
     pub const PIXELMAP: u32 = 0x3;
@@ -105,6 +114,8 @@ pub mod chunk {
     pub const PLANE: u32 = 0x38;
 }
 
+//------------------------------------------------------------------
+/// Types for FILE_INFO chunk.
 pub mod file_type {
     pub const NONE: u32 = 0x0;
     pub const ACTORS: u32 = 0x1;
@@ -117,6 +128,8 @@ pub mod file_type {
     pub const TREE: u32 = 0x5eed;
 }
 
+//------------------------------------------------------------------
+/// Types for ACTOR chunk.
 pub mod actor_type {
     pub const NONE: u32 = 0x0;
     pub const MODEL: u32 = 0x1;
@@ -127,6 +140,8 @@ pub mod actor_type {
     pub const CLIP_PLANE: u32 = 0x7;
 }
 
+//------------------------------------------------------------------
+/// Rendering style for ACTOR chunk.
 pub mod actor_render_style {
     pub const DEFAULT: u32 = 0x0;
     pub const NONE: u32 = 0x1;
@@ -138,6 +153,8 @@ pub mod actor_render_style {
     pub const BOUNDING_FACES: u32 = 0x7;
 }
 
+//------------------------------------------------------------------
+/// Order of rotations in a Euler transform.
 pub mod euler_angle_order {
     pub const XYZ_S: u32 = 0x0;
     pub const XYX_S: u32 = 0x1;
@@ -165,6 +182,8 @@ pub mod euler_angle_order {
     pub const ZYZ_R: u32 = 0x17;
 }
 
+//------------------------------------------------------------------
+/// Type for LIGHT chunk.
 pub mod light_type {
     pub const POINT: u32 = 0x0;
     pub const DIRECT: u32 = 0x1;
@@ -174,11 +193,15 @@ pub mod light_type {
     pub const VIEW_SPOT: u32 = 0x6;
 }
 
+//------------------------------------------------------------------
+/// Type for CAMERA chunk.
 pub mod camera_type {
     pub const PARALLEL: u32 = 0x0;
     pub const PERSPECTIVE: u32 = 0x1;
 }
 
+//------------------------------------------------------------------
+/// Type for payload of a PIXELMAP chunk.
 pub mod pixelmap_type {
     pub const INDEX_1: u8 = 0x0;
     pub const INDEX_2: u8 = 0x1;
@@ -200,6 +223,7 @@ pub mod pixelmap_type {
 // =================
 // Universal chunks:
 
+//------------------------------------------------------------------
 pub struct FileInfoChunk {
     pub file_type: u32,
     pub version: u32,
@@ -218,6 +242,7 @@ impl FromStream for FileInfoChunk {
 // =================
 // Model chunks: (BrModelLoadMany)
 
+//------------------------------------------------------------------
 pub struct ModelChunk {
     flags: u16,
     identifier: String,
@@ -233,6 +258,7 @@ impl FromStream for ModelChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub struct MaterialIndexChunk {
     materials: Vec<String>,
 }
@@ -252,6 +278,7 @@ impl FromStream for MaterialIndexChunk {
     }
 }
 
+//------------------------------------------------------------------
 struct Vec2f {
     x: f32,
     y: f32,
@@ -267,6 +294,7 @@ impl FromStream for Vec2f {
     }
 }
 
+//------------------------------------------------------------------
 type Vertex = Vec3f;
 
 struct Vec3f {
@@ -286,6 +314,7 @@ impl FromStream for Vec3f {
     }
 }
 
+//------------------------------------------------------------------
 struct Vec4f {
     x: f32,
     y: f32,
@@ -305,6 +334,7 @@ impl FromStream for Vec4f {
     }
 }
 
+//------------------------------------------------------------------
 struct VertexUV {
     u: f32,
     v: f32,
@@ -320,6 +350,7 @@ impl FromStream for VertexUV {
     }
 }
 
+//------------------------------------------------------------------
 pub struct VerticesChunk {
     vertices: Vec<Vertex>,
 }
@@ -338,6 +369,7 @@ impl FromStream for VerticesChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub struct VertexUvChunk {
     uvs: Vec<VertexUV>,
 }
@@ -356,6 +388,7 @@ impl FromStream for VertexUvChunk {
     }
 }
 
+//------------------------------------------------------------------
 struct Face {
     v1: u16,
     v2: u16,
@@ -383,6 +416,7 @@ impl FromStream for Face {
     }
 }
 
+//------------------------------------------------------------------
 pub struct FacesChunk {
     faces: Vec<Face>,
 }
@@ -401,6 +435,7 @@ impl FromStream for FacesChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub struct FaceMaterialChunk {
     face_material_indexes: Vec<u16>,
 }
@@ -420,6 +455,7 @@ impl FromStreamExt for FaceMaterialChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub struct PivotChunk {
     pivot: Vec3f,
 }
@@ -433,6 +469,7 @@ impl FromStream for PivotChunk {
     }
 }
 
+//------------------------------------------------------------------
 struct Colour {
     r: f32,
     g: f32,
@@ -453,6 +490,7 @@ impl FromStream for Colour {
 // =================
 // Material chunks: (BrMaterialLoadMany)
 
+//------------------------------------------------------------------
 pub struct MaterialChunk {
     color: Colour,
     opacity: u8,
@@ -505,12 +543,16 @@ impl FromStream for MaterialChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub type ColorMapRefChunk = NameRefChunk;
+
+//------------------------------------------------------------------
 pub type IndexShadeRefChunk = NameRefChunk;
 
 // =================
 // PixelMap chunks: (BrPixelmapLoadMany)
 
+//------------------------------------------------------------------
 pub struct PixelMapChunk {
     pub r#type: u8, // pixelmap_type::
     pub row_bytes: u16,
@@ -545,6 +587,7 @@ impl FromStream for PixelMapChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub struct PixelsChunk {
     pub units: u32,
     pub unit_bytes: u32,
@@ -573,6 +616,7 @@ impl FromStream for PixelsChunk {
 // =================
 // Actor chunks: (BrActorLoadMany)
 
+//------------------------------------------------------------------
 pub struct ActorChunk {
     r#type: u8,       // actor_type
     render_style: u8, // actor_render_style
@@ -594,16 +638,31 @@ impl FromStream for ActorChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub type ActorModelChunk = NameRefChunk;
+
+//------------------------------------------------------------------
 pub type ActorMaterialChunk = NameRefChunk;
 
+//------------------------------------------------------------------
 pub struct ActorTransformActionChunk {} // empty, simply attach transform on top of stack to the actor
+
+//------------------------------------------------------------------
 pub struct ActorLightActionChunk {} // empty, simply attach light on top of stack to the actor
+
+//------------------------------------------------------------------
 pub struct ActorCameraActionChunk {} // empty, simply attach camera on top of stack to the actor
+
+//------------------------------------------------------------------
 pub struct ActorBoundsActionChunk {} // empty, simply attach bounds on top of stack to the actor
+
+//------------------------------------------------------------------
 pub struct ActorClipPlaneActionChunk {} // empty, simply attach clip plane on top of stack to the actor
+
+//------------------------------------------------------------------
 pub struct ActorAddChildActionChunk {} // empty, simply attach actor on top of stack to the actor
 
+//------------------------------------------------------------------
 pub struct TransformMatrix34Chunk {
     m: Vec<Vec3f>, // 4-element vector of Vec3f
 }
@@ -620,6 +679,7 @@ impl FromStream for TransformMatrix34Chunk {
     }
 }
 
+//------------------------------------------------------------------
 pub struct TransformQuatChunk {
     q_x: f32,
     q_y: f32,
@@ -647,8 +707,10 @@ impl FromStream for TransformQuatChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub type Angle = f32;
 
+//------------------------------------------------------------------
 pub struct TransformEulerChunk {
     e_order: u8,
     e_a: Angle,
@@ -676,6 +738,7 @@ impl FromStream for TransformEulerChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub struct TransformLookUpChunk {
     look: Vec3f,
     up: Vec3f,
@@ -693,6 +756,7 @@ impl FromStream for TransformLookUpChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub struct TransformTranslationChunk {
     t: Vec3f,
 }
@@ -706,6 +770,7 @@ impl FromStream for TransformTranslationChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub struct BoundsChunk {
     min: Vec3f,
     max: Vec3f,
@@ -721,6 +786,7 @@ impl FromStream for BoundsChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub struct LightChunk {
     light_type: u8,
     color: Colour,
@@ -757,6 +823,7 @@ impl FromStream for LightChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub struct CameraChunk {
     camera_type: u8,
     fov: Angle,
@@ -787,6 +854,7 @@ impl FromStream for CameraChunk {
     }
 }
 
+//------------------------------------------------------------------
 pub struct PlaneChunk {
     equation: Vec4f,
 }
@@ -800,6 +868,7 @@ impl FromStream for PlaneChunk {
     }
 }
 
+//------------------------------------------------------------------
 /// All chunk types (probably useless, use ModelLoadChunks, ActorLoadChunks etc)
 pub enum Chunk {
     // =================
