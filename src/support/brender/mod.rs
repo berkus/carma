@@ -2,7 +2,9 @@ use {super::Error, std::io::BufRead};
 
 pub mod actor;
 pub mod material;
-pub mod mesh;
+// pub mod mesh;
+pub mod model;
+pub mod pixelmap;
 pub mod resource;
 pub mod texture;
 

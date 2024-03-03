@@ -10,7 +10,7 @@ use {
     crate::support::{self, brender::read_c_string, Error},
     bevy::prelude::*,
     byteorder::{BigEndian, ReadBytesExt},
-    fehler::throws,
+    fehler::{throw, throws},
     std::io::BufRead,
 };
 
@@ -56,7 +56,7 @@ impl FromStream for ChunkHeader {
 //------------------------------------------------------------------
 /// A by-name reference.
 pub struct NameRefChunk {
-    identifier: String,
+    pub identifier: String,
 }
 
 impl FromStream for NameRefChunk {
@@ -118,7 +118,7 @@ pub mod chunk {
 /// Types for FILE_INFO chunk.
 pub mod file_type {
     pub const NONE: u32 = 0x0;
-    pub const ACTORS: u32 = 0x1;
+    pub const ACTOR: u32 = 0x1;
     pub const PIXELMAP: u32 = 0x2;
     pub const LIGHT: u32 = 0x3;
     pub const CAMERA: u32 = 0x4;
@@ -335,9 +335,9 @@ impl FromStream for Vec4f {
 }
 
 //------------------------------------------------------------------
-struct VertexUV {
-    u: f32,
-    v: f32,
+pub struct VertexUV {
+    pub u: f32,
+    pub v: f32,
 }
 
 impl FromStream for VertexUV {
@@ -371,7 +371,7 @@ impl FromStream for VerticesChunk {
 
 //------------------------------------------------------------------
 pub struct VertexUvChunk {
-    uvs: Vec<VertexUV>,
+    pub uvs: Vec<VertexUV>,
 }
 
 impl FromStream for VertexUvChunk {
@@ -389,6 +389,7 @@ impl FromStream for VertexUvChunk {
 }
 
 //------------------------------------------------------------------
+#[derive(Default)]
 struct Face {
     v1: u16,
     v2: u16,
@@ -437,7 +438,7 @@ impl FromStream for FacesChunk {
 
 //------------------------------------------------------------------
 pub struct FaceMaterialChunk {
-    face_material_indexes: Vec<u16>,
+    pub face_material_indices: Vec<u16>,
 }
 
 impl FromStreamExt for FaceMaterialChunk {
@@ -450,14 +451,14 @@ impl FromStreamExt for FaceMaterialChunk {
             face_material_indexes.push(index);
         }
         Self::Output {
-            face_material_indexes,
+            face_material_indices,
         }
     }
 }
 
 //------------------------------------------------------------------
 pub struct PivotChunk {
-    pivot: Vec3f,
+    pub pivot: Vec3f,
 }
 
 impl FromStream for PivotChunk {
@@ -926,11 +927,12 @@ pub enum Chunk {
     Plane(PlaneChunk),
 }
 
-impl Chunk {
-    // wip: general chunk reader, no logic, just i/o
-    // @todo impl FromStream
+impl FromStream for Chunk {
+    type Output = Chunk;
+
+    /// General chunk reader, no logic, just i/o.
     #[throws(support::Error)]
-    pub fn load<R: ReadBytesExt + BufRead>(source: &mut R) -> Chunk {
+    fn from_stream<R: ReadBytesExt + BufRead>(source: &mut R) -> Chunk {
         let header = ChunkHeader::from_stream(source)?;
         match header.chunk_type {
             // =================
@@ -1098,5 +1100,105 @@ impl Chunk {
 
             _ => unimplemented!(),
         }
+    }
+}
+
+/*
+ * Resource stack values.
+ */
+pub enum ResourceTag {
+    Mark(), // Mark compound structure start
+    ImagePlane(),
+    PixelMap(Box<PixelMapChunk>),
+    Material(Box<MaterialChunk>),
+    Actor(Box<ActorChunk>),
+    MaterialIndex(Box<MaterialIndexChunk>),
+    Vertices(Box<VerticesChunk>),
+    Faces(Box<FacesChunk>),
+    Model(Box<ModelChunk>),
+    Anim,
+    AnimName,
+    AnimTransform,
+    AnimCount,
+    AnimRate,
+    FileInfo(Box<FileInfoChunk>),
+    Pivot(Box<PivotChunk>),
+    Transform(),
+    Light(Box<LightChunk>),
+    Camera(Box<CameraChunk>),
+    Bounds(Box<BoundsChunk>),
+    Plane(Box<PlaneChunk>),
+}
+
+pub mod stack {
+    pub const MARK: u32 = 0;
+    pub const IMAGE_PLANE: u32 = 1;
+    pub const PIXELMAP: u32 = 2;
+    pub const MATERIAL: u32 = 3;
+    pub const ACTOR: u32 = 4;
+    pub const MATERIAL_INDEX: u32 = 5;
+    pub const VERTICES: u32 = 6;
+    pub const FACES: u32 = 7;
+    pub const MODEL: u32 = 8;
+    pub const ANIM: u32 = 9;
+    pub const ANIM_NAME: u32 = 10;
+    pub const ANIM_TRANSFORM: u32 = 11;
+    pub const ANIM_COUNT: u32 = 12;
+    pub const ANIM_RATE: u32 = 13;
+    pub const FILE_INFO: u32 = 14;
+    pub const PIVOT: u32 = 15;
+    pub const TRANSFORM: u32 = 16;
+    pub const LIGHT: u32 = 17;
+    pub const CAMERA: u32 = 18;
+    pub const BOUNDS: u32 = 19;
+    pub const PLANE: u32 = 20;
+}
+
+//------------------------------------------------------------------
+/// Loading stack for resource chunks.
+/// The per-resource loaders use it to consutrct
+#[derive(Default)]
+pub struct ResourceStack {
+    stack: Vec<(u32, ResourceTag)>,
+}
+
+impl ResourceStack {
+    pub fn push(&mut self, tag: u32, resource: ResourceTag) {
+        self.stack.push((tag, resource));
+    }
+    #[throws]
+    pub fn pop<T>(&mut self, expected_tag: u32) -> ResourceTag {
+        let (tag, resource) = self.stack.pop()?;
+        if tag != expected_tag {
+            throw!(support::Error::InvalidResourceType {
+                expected: expected_tag,
+                received: tag,
+            });
+        }
+        resource
+    }
+    /// Give mutable access to the stack top.
+    pub fn top<T>(&mut self, expected_tag: T) -> Option<&mut ResourceTag> {
+        let (tag, mut resource) = self.stack.last()?;
+        Some(resource)
+    }
+}
+
+//------------------------------------------------------------------
+// Tests.
+//------------------------------------------------------------------
+
+#[cfg(test)]
+mod tests {
+    use {super::*, std::io::Cursor};
+
+    #[test]
+    fn test_load_face() {
+        let mut data = Cursor::new(vec![0xde, 0xad, 0xbe, 0xef, 0xca, 0xfe, 0xba, 0xbe, 0]);
+        let f = Face::from_stream(&mut data).unwrap();
+        assert_eq!(0xdead, f.v1);
+        assert_eq!(0xbeef, f.v2);
+        assert_eq!(0xcafe, f.v3);
+        assert_eq!(0xbabe, f.flags);
     }
 }

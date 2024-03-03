@@ -7,8 +7,10 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    anyhow::Result,
+    super::resource::{Chunk, FromStream},
+    crate::support,
     byteorder::ReadBytesExt,
+    fehler::throws,
     std::{
         fs::File,
         io::{BufRead, BufReader},
@@ -50,34 +52,43 @@ pub struct MaterialLoader;
 //     }
 // }
 
-impl Material {
-    pub fn load<R: ReadBytesExt + BufRead>(_reader: &mut R) -> Result<Material> {
+impl FromStream for Material {
+    type Output = Material;
+    /// @todo material loader using stack
+    /// Read chunks until last chunk is encountered.
+    /// Certain chunks initialize certain properties.
+    #[throws(support::Error)]
+    fn from_stream<R: ReadBytesExt + BufRead>(source: &mut R) -> Self::Output {
         let /*mut*/ mat = Material::default();
 
-        // @todo material loader using stack
-        // Read chunks until last chunk is encountered.
-        // Certain chunks initialize certain properties.
-        // loop {
-        //     match Chunk::load(reader)? {
-        //         Chunk::FileHeader { file_type } => {
-        //             if file_type != support::MATERIAL_FILE_TYPE {
-        //                 return Err(anyhow!("Invalid material file type {}", file_type));
-        //             }
-        //         }
-        //         Chunk::MaterialDesc { name, params } => {
-        //             mat.params = params;
-        //             mat.name = name;
-        //         }
-        //         Chunk::PixelmapRef(name) => mat.pixelmap_name = name,
-        //         Chunk::RenderTabRef(name) => mat.rendertab_name = name,
-        //         Chunk::Null() => break,
-        //         _ => unimplemented!(), // unexpected type here
-        //     }
-        // }
+        loop {
+            match Chunk::from_stream(source)? {
+                Chunk::End() => break,
+                Chunk::Material(_) => {}
+                Chunk::ColorMapRef(_) => {}
+                Chunk::IndexShadeRef(_) => {}
+                Chunk::IndexBlendRef() => {}
+                //        Chunk:ScreendoorRef => ,
+                //         Chunk::FileHeader { file_type } => {
+                //             if file_type != support::MATERIAL_FILE_TYPE {
+                //                 return Err(anyhow!("Invalid material file type {}", file_type));
+                //             }
+                //         }
+                //         Chunk::MaterialDesc { name, params } => {
+                //             mat.params = params;
+                //             mat.name = name;
+                //         }
+                //         Chunk::PixelmapRef(name) => mat.pixelmap_name = name,
+                //         Chunk::RenderTabRef(name) => mat.rendertab_name = name,
+                _ => unimplemented!(), // unexpected type here
+            }
+        }
 
-        Ok(mat)
+        mat
     }
+}
 
+impl Material {
     /**
      * Load multiple materials from a file.
     //
@@ -89,16 +100,18 @@ impl Material {
     //
     // atelier-assets handles this scenario in a cleaner way (and we're considering a move to that)
      */
-    pub fn load_from<P: AsRef<std::path::Path>>(filename: P) -> Result<Vec<Material>> {
+    // @sa brender's `BrMaterialLoadMany()`
+    #[throws(support::Error)]
+    pub fn load_from<P: AsRef<std::path::Path>>(filename: P) -> Vec<Material> {
         let mut file = BufReader::new(File::open(filename)?);
         let mut materials = Vec::<Material>::new();
         loop {
-            let mat = Material::load(&mut file);
+            let mat = Material::from_stream(&mut file);
             match mat {
                 Err(_) => break, // @fixme allow only Eof here
                 Ok(mat) => materials.push(mat),
             }
         }
-        Ok(materials)
+        materials
     }
 }

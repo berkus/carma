@@ -91,13 +91,13 @@ impl RenderManager {
                     let mut name = m.pixelmap_name.clone();
                     if name.is_empty() {
                         // @fixme hack
-                        name = material.replace(".MAT", ".pix").to_lowercase();
+                        name = material.to_lowercase().replace(".mat", ".pix");
                     }
                     if let Some(tex) = car.textures.get(&name) {
                         trace!("Found texture {}", tex);
                         let image = RawImage2d::from_raw_rgba_reversed(
                             &tex.data,
-                            (tex.w as u32, tex.h as u32),
+                            (tex.width as u32, tex.height as u32),
                         );
                         let bound_texture = SrgbTexture2d::new(display, image).unwrap();
                         textures.insert(mat, bound_texture);

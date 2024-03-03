@@ -7,8 +7,12 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    anyhow::Result,
+    super::resource::{
+        file_type, stack, Chunk, FileInfoChunk, FromStream, ResourceStack, ResourceTag,
+    },
+    crate::support::{self, Error},
     byteorder::ReadBytesExt,
+    fehler::{throw, throws},
     id_tree::*,
     std::{
         fs::File,
@@ -36,152 +40,130 @@ pub enum ActorNode {
     MaterialRef(String),
 }
 
+#[derive(Default)]
+enum ActorData {
+    #[default]
+    None,
+    Light(),
+    Camera(),
+    Bounds(),
+    Plane(),
+}
+
+#[derive(Default)]
 pub struct Actor {
-    tree: Tree<ActorNode>,
-    root_id: NodeId,
+    transform: (),
+    materials: (),
+    data: ActorData,
 }
 
 impl Actor {
-    pub fn new(tree: Tree<ActorNode>) -> Self {
-        let mut tree = tree;
-        let root_id = tree
-            .insert(Node::new(ActorNode::Root), InsertBehavior::AsRoot)
-            .unwrap();
-        Self { tree, root_id }
+    pub fn load_many<P: AsRef<std::path::Path>>(filename: P) -> Result<Actor, Error> {
+        let mut file = BufReader::new(File::open(filename)?);
+        <Self as FromStream>::from_stream(&mut file)
     }
+}
 
-    pub fn traverse(&self) -> PreOrderTraversal<ActorNode> {
-        self.tree.traverse_pre_order(&self.root_id).unwrap()
-    }
+impl FromStream for Actor {
+    type Output = Actor;
 
-    pub fn get_node_id_depth(&self, node: &NodeId) -> usize {
-        let mut depth = 1;
-        for _ in self.tree.ancestors(node).unwrap() {
-            depth += 1;
-        }
-        depth
-    }
+    #[throws]
+    fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
+        let mut stack = ResourceStack::default();
 
-    pub fn get_node_depth(&self, node: &Node<ActorNode>) -> usize {
-        if let Some(parent_id) = node.parent() {
-            self.get_node_id_depth(parent_id) + 1
-        } else {
-            1
-        }
-    }
-
-    pub fn dump(&self) {
-        for node in self.tree.traverse_pre_order(&self.root_id).unwrap() {
-            if let Some(parent) = node.parent() {
-                print!("  ");
-                for _ in self.tree.ancestors(parent).unwrap() {
-                    print!("  ");
-                }
-            }
-            println!("{:?}", node.data());
-        }
-    }
-
-    pub fn dump_actor_points(&self) {
-        for node in self.tree.traverse_pre_order(&self.root_id).unwrap() {
-            if let &ActorNode::Root = node.data() {
-                println!("{:?}", node.data());
-            }
-            if let &ActorNode::Actor {
-                name: _,
-                visible: _,
-            } = node.data()
-            {
-                if let Some(parent) = node.parent() {
-                    print!("  ");
-                    for _ in self.tree.ancestors(parent).unwrap() {
-                        print!("  ");
+        // Read chunks until last chunk is encountered.
+        // Certain chunks initialize certain properties.
+        loop {
+            match Chunk::from_stream(source)? {
+                Chunk::End() => break,
+                Chunk::FileInfo(FileInfoChunk { file_type, .. }) => {
+                    if file_type != file_type::ACTOR {
+                        throw!(support::Error::InvalidResourceType {
+                            expected: file_type::ACTOR,
+                            received: file_type,
+                        });
                     }
                 }
-                println!("{:?}", node.data());
+
+                Chunk::Actor(actor) => {
+                    stack.push(stack::ACTOR, ResourceTag::Actor(Box::new(actor)));
+                }
+                Chunk::ActorModel(model) => {
+                    let mut actor = stack.top(stack::ACTOR);
+                    actor.model = Models::find(model.identifier);
+                }
+                Chunk::ActorTransform(_) => {
+                    let transform = stack.pop(stack::TRANSFORM);
+                    let mut actor = stack.top(stack::ACTOR);
+                    actor.transform = transform;
+                }
+                Chunk::ActorMaterial(material) => {
+                    let mut actor = stack.top(stack::ACTOR);
+                    actor.material = Materials::find(material.identifier);
+                }
+                Chunk::ActorLight(_) => {
+                    let light: Result<ResourceTag, Error> = stack.pop(stack::LIGHT);
+                    actor.data = ActorData::Light(light);
+                }
+                Chunk::ActorCamera(_) => {
+                    let camera: Result<ResourceTag, Error> = stack.pop(stack::CAMERA);
+                    actor.data = ActorData::Camera(camera);
+                }
+                Chunk::ActorBounds(_) => {
+                    let bounds = stack.pop(stack::BOUNDS);
+                    let mut actor = stack.top(stack::ACTOR);
+                    actor.data = ActorData::Bounds(bounds);
+                }
+                Chunk::ActorClipPlane(_) => {
+                    let plane = stack.pop(stack::PLANE);
+                    let mut actor = stack.top(stack::ACTOR);
+                    actor.data = ActorData::ClipPlane(plane);
+                }
+                Chunk::ActorAddChild(_) => {
+                    let child = stack.pop(stack::ACTOR);
+                    let mut actor = stack.top(stack::ACTOR);
+                    actor.chidren.push(child);
+                }
+
+                Chunk::TransformMatrix34(_) => {
+                    stack.push(stack::TRANSFORM, transform);
+                }
+                Chunk::TransformMatrix34LP(_) => {
+                    stack.push(stack::TRANSFORM, transform);
+                }
+                Chunk::TransformQuat(_) => {
+                    stack.push(stack::TRANSFORM, transform);
+                }
+                Chunk::TransformEuler(_) => {
+                    stack.push(stack::TRANSFORM, transform);
+                }
+                Chunk::TransformLookUp(_) => {
+                    stack.push(stack::TRANSFORM, transform);
+                }
+                Chunk::TransformTranslation(_) => {
+                    stack.push(stack::TRANSFORM, transform);
+                }
+                Chunk::TransformIdentity() => {
+                    stack.push(stack::TRANSFORM, transform);
+                }
+
+                Chunk::Bounds(_) => {
+                    stack.push(stack::BOUNDS, bounds);
+                }
+                Chunk::Light(_) => {
+                    stack.push(stack::LIGHT, light);
+                }
+                Chunk::Camera(_) => {
+                    stack.push(stack::CAMERA, camera);
+                }
+                Chunk::Plane(_) => {
+                    stack.push(stack::PLANE, plane);
+                }
+
+                _ => unimplemented!(), // unexpected type here
             }
         }
-    }
 
-    // @todo rewrite using load stack
-    //#[throws]
-    pub fn load<R: ReadBytesExt + BufRead>(_reader: &mut R) -> Result<Actor> {
-        // use id_tree::InsertBehavior::*;
-
-        let /*mut*/ actor = Actor::new(TreeBuilder::new().with_node_capacity(5).build());
-
-        {
-            let /*mut*/ current_actor = actor.root_id.clone();
-            let /*mut*/ _last_actor = current_actor.clone();
-
-            // Read chunks until last chunk is encountered.
-            // Certain chunks initialize certain properties.
-            // loop {
-            //     match Chunk::load(reader)? {
-            //         Chunk::FileHeader { file_type } => {
-            //             if file_type != support::ACTOR_FILE_TYPE {
-            //                 return Err(anyhow!("Invalid model file type {}", file_type));
-            //             }
-            //         }
-            //         Chunk::ActorName { name, visible } => {
-            //             trace!("Actor {} visible {}", name, visible);
-            //             let child_id: NodeId = actor
-            //                 .tree
-            //                 .insert(
-            //                     Node::new(ActorNode::Actor { name, visible }),
-            //                     UnderNode(&current_actor),
-            //                 )
-            //                 .unwrap();
-            //             last_actor = child_id.clone();
-            //         }
-            //         Chunk::ActorTransform(transform) => {
-            //             actor
-            //                 .tree
-            //                 .insert(
-            //                     Node::new(ActorNode::Transform(transform)),
-            //                     // Transform is unconditionally attached to the last loaded actor
-            //                     UnderNode(&last_actor),
-            //                 )
-            //                 .unwrap();
-            //         }
-            //         Chunk::MaterialRef(name) => {
-            //             actor
-            //                 .tree
-            //                 .insert(
-            //                     Node::new(ActorNode::MaterialRef(name)),
-            //                     UnderNode(&current_actor),
-            //                 )
-            //                 .unwrap();
-            //         }
-            //         Chunk::MeshFileRef(name) => {
-            //             actor
-            //                 .tree
-            //                 .insert(
-            //                     Node::new(ActorNode::MeshfileRef(name)),
-            //                     UnderNode(&current_actor),
-            //                 )
-            //                 .unwrap();
-            //         }
-            //         Chunk::ActorNodeDown() => {
-            //             current_actor = last_actor.clone();
-            //         }
-            //         Chunk::ActorNodeUp() => {
-            //             let node = actor.tree.get(&current_actor).unwrap();
-            //             if let Some(parent) = node.parent() {
-            //                 current_actor = parent.clone();
-            //             }
-            //         }
-            //         Chunk::Null() => break,
-            //         _ => unimplemented!(), // unexpected type here
-            //     }
-            // }
-        }
-
-        Ok(actor)
-    }
-
-    pub fn load_from<P: AsRef<std::path::Path>>(filename: P) -> Result<Actor> {
-        let mut file = BufReader::new(File::open(filename)?);
-        Actor::load(&mut file)
+        actor
     }
 }

@@ -7,44 +7,15 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    crate::support::{
-        self,
-        brender::resource::{Chunk, FileInfoChunk, FromStream, PixelMapChunk, PixelsChunk},
-        Error,
-    },
-    anyhow::Result,
+    super::pixelmap::PixelMap,
+    crate::support::{self, brender::resource::FromStream, Error},
     bevy::prelude::*,
-    byteorder::ReadBytesExt,
     fehler::throws,
     std::{
         fs::File,
-        io::{BufRead, BufReader, Write},
+        io::{BufReader, Write},
     },
 };
-
-// Pixmap consists of two chunks: name and data
-// @todo ❌ use SharedData for pixmap contents to avoid copying.
-#[derive(Default, Clone)]
-pub struct PixelMap {
-    pub name: String,
-    pub w: u16, // Actual texture w & h
-    pub h: u16,
-    use_w: u16, // and how much of that is used for useful data
-    use_h: u16,
-    pub units: u32,
-    pub unit_bytes: u32,
-    pub data: Vec<u8>, // temp pub
-}
-
-impl std::fmt::Display for PixelMap {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(
-            f,
-            "{} ({}x{}, use {}x{}) {} units {} bytes each",
-            self.name, self.w, self.h, self.use_w, self.use_h, self.units, self.unit_bytes
-        )
-    }
-}
 
 // @todo ❌ impl From<PixelMap> for bevy::Texture {}
 
@@ -81,7 +52,8 @@ impl PixelMap {
     /// Convert indexed-color image to RGBA using provided palette.
     ///
     /// `Palette = shade tab` in BRender parlance.
-    pub fn remap_via_palette(&self, palette: &PixelMap) -> Result<PixelMap> {
+    #[throws(support::Error)]
+    pub fn remap_via_palette(&self, palette: &PixelMap) -> PixelMap {
         let mut pm = self.clone();
         pm.data = Vec::<u8>::with_capacity(self.data.len() * 4);
         pm.unit_bytes = 4;
@@ -113,7 +85,7 @@ impl PixelMap {
             }
         }
 
-        Ok(pm)
+        pm
     }
 
     #[allow(clippy::identity_op)] // keep +0 in formulas
@@ -168,12 +140,18 @@ impl PixelMap {
 
         use image::ImageEncoder;
         let png = image::codecs::png::PngEncoder::new(w);
-        png.write_image(&data, self.w.into(), self.h.into(), image::ColorType::Rgb8)?;
+        png.write_image(
+            &data,
+            self.width.into(),
+            self.height.into(),
+            image::ColorType::Rgb8,
+        )?;
         Ok(())
     }
 
     /// Load one or more named textures from a single file
-    pub fn load_from<P: AsRef<std::path::Path>>(fname: P) -> Result<Vec<PixelMap>> {
+    #[throws(support::Error)]
+    pub fn load_from<P: AsRef<std::path::Path>>(fname: P) -> Vec<PixelMap> {
         let mut file = BufReader::new(File::open(fname)?);
         let mut pmaps = Vec::<PixelMap>::new();
         loop {
@@ -183,70 +161,11 @@ impl PixelMap {
                 Ok(pmap) => pmaps.push(pmap),
             }
         }
-        Ok(pmaps)
+        pmaps
     }
 
     fn dump(&self) {
-        info!(
-            "Pixelmap {}: {}x{}, mm {}x{}, {}x{} bytes",
-            self.name, self.w, self.h, self.use_w, self.use_h, self.units, self.unit_bytes
-        );
-    }
-}
-
-impl FromStream for PixelMap {
-    type Output = PixelMap;
-    #[throws(support::Error)]
-    fn from_stream<R: ReadBytesExt + BufRead>(source: &mut R) -> Self::Output {
-        let mut pm = PixelMap::default();
-
-        // Read chunks until last chunk is encountered.
-        // Certain chunks initialize certain properties.
-        loop {
-            match Chunk::load(source)? {
-                Chunk::FileInfo(FileInfoChunk { file_type: _, .. }) => {
-                    // if file_type != support::PIXELMAP_FILE_TYPE {
-                    //     return Err(anyhow!("Invalid pixelmap file type {}", file_type));
-                    // }
-                }
-                Chunk::PixelMap(PixelMapChunk {
-                    r#type,
-                    row_bytes: _,
-                    width,
-                    height,
-                    origin_x,
-                    origin_y,
-                    identifier,
-                }) => {
-                    pm.name = identifier.clone();
-                    pm.w = width;
-                    pm.h = height;
-                    pm.use_w = origin_x;
-                    pm.use_h = origin_y;
-                    debug!(
-                        "Pixelmap {} (type {}, {}x{} origin {}x{})",
-                        identifier, r#type, width, height, origin_x, origin_y
-                    );
-                }
-                Chunk::Pixels(PixelsChunk {
-                    units,
-                    unit_bytes,
-                    data,
-                }) => {
-                    pm.units = units;
-                    pm.unit_bytes = unit_bytes;
-                    pm.data = data;
-                    debug!(
-                        "Pixelmap data in {} units, {} bytes each",
-                        units, unit_bytes
-                    );
-                }
-                Chunk::End() => break,
-                _ => unimplemented!(), // unexpected type here
-            }
-        }
-
-        pm
+        info!("Pixelmap {}", self);
     }
 }
 

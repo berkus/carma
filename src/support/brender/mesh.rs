@@ -7,7 +7,7 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    crate::support::Vertex,
+    crate::support::{brender::resource::VertexUV, Vertex},
     anyhow::Result,
     byteorder::ReadBytesExt,
     cgmath::{InnerSpace, Vector3},
@@ -21,94 +21,18 @@ use {
 // @todo ❌ impl Into<Mesh>/TryInto<Mesh>?
 
 // VertexUV in resource.rs
-#[derive(Copy, Clone, Default)]
-pub struct UvCoord {
-    u: f32,
-    v: f32,
-}
+type UvCoord = VertexUV;
 
-// Face in resource.rs
-#[derive(Default)]
-pub struct Face {
-    pub v1: u16, // vertex indices (works with glDrawElements() e.g.)
-    pub v2: u16,
-    pub v3: u16,
-    flags: u16, // looks like flags, mostly only one bit set -- but not always, see CITYA81.DAT!!
-    pub material_id: u16, // comes from FACE_MAT_LIST chunk
-}
-
-// @todo ❌ use bevy_render::mesh::Mesh
-
-#[derive(Default)]
-pub struct Mesh {
-    pub name: String,
-    pub vertices: Vec<Vertex>,
-    pub faces: Vec<Face>,
-    pub material_names: Vec<String>,
-}
-
+// This should be Model @todo
 impl Mesh {
-    pub fn load<R: ReadBytesExt + BufRead>(_reader: &mut R) -> Result<Mesh> {
-        let mut m = Mesh::default();
-        let /*mut*/ fmlist = Vec::<u16>::new();
-        let /*mut*/ uvcoords = Vec::<UvCoord>::new();
-
-        // @todo meshes do not have separate loader?
-        // Read chunks until last chunk is encountered.
-        // Certain chunks initialize certain properties.
-        // loop {
-        //     match Chunk::load(reader)? {
-        //         Chunk::FileHeader { file_type } => {
-        //             if file_type != support::MESH_FILE_TYPE {
-        //                 return Err(anyhow!("Invalid mesh file type {}", file_type));
-        //             }
-        //         }
-        //         Chunk::FileName { name, subtype } => {
-        //             m.name = name;
-        //             if subtype != support::MODEL_FILE_SUBTYPE {
-        //                 return Err(anyhow!("Invalid mesh file subtype {}", subtype));
-        //             }
-        //         }
-        //         Chunk::VertexList(r) => {
-        //             m.vertices = r;
-        //         }
-        //         Chunk::UvMapList(r) => {
-        //             uvcoords = r;
-        //         }
-        //         Chunk::FaceList(r) => {
-        //             m.faces = r;
-        //         }
-        //         Chunk::MaterialList(r) => {
-        //             m.material_names = r;
-        //         }
-        //         Chunk::FaceMatList(r) => {
-        //             fmlist = r;
-        //         }
-        //         Chunk::Null() => break,
-        //         _ => unimplemented!(), // unexpected type here
-        //     }
-        // }
-
-        for (i, fm) in fmlist.iter().enumerate().take(m.faces.len()) {
-            m.faces[i].material_id = *fm;
-        }
-
-        for (n, uvcoord) in uvcoords.iter().enumerate() {
-            // Carma uses 0.0,0.0 for the top left corner, OpenGL for the bottom left.
-            m.vertices[n].tex_coords = [uvcoord.u, 1.0 - uvcoord.v];
-        }
-
-        m.calc_normals();
-        Ok(m)
-    }
-
     // Single mesh file may contain multiple meshes
-    pub fn load_from(fname: String) -> Result<Vec<Mesh>> {
+    #[throws(support::Error)]
+    pub fn load_many(fname: String) -> Vec<Mesh> {
         let file = File::open(fname)?;
         let mut file = BufReader::new(file);
         let mut meshes = Vec::<Mesh>::new();
         loop {
-            let m = Mesh::load(&mut file);
+            let m = Mesh::from_stream(&mut file);
             match m {
                 Err(_) => break, // fixme: allow only Eof here
                 Ok(m) => meshes.push(m),
@@ -139,18 +63,7 @@ impl Mesh {
 
 #[cfg(test)]
 mod tests {
-
     use {super::*, std::io::Cursor};
-
-    #[test]
-    fn test_load_face() {
-        let mut data = Cursor::new(vec![0xde, 0xad, 0xbe, 0xef, 0xca, 0xfe, 0xba, 0xbe, 0]);
-        let f = Face::load(&mut data).unwrap();
-        assert_eq!(0xdead, f.v1);
-        assert_eq!(0xbeef, f.v2);
-        assert_eq!(0xcafe, f.v3);
-        assert_eq!(0xbabe, f.flags);
-    }
 
     #[test]
     fn test_load_mesh() {
@@ -163,7 +76,7 @@ mod tests {
             0x0, 0x0, 0x0, 0x0, // Chunk type - NULL_CHUNK
             0x0, 0x0, 0x0, 0x0, // Chunk size
         ]);
-        let m = Mesh::load(&mut data).unwrap();
+        let m = Mesh::from_stream(&mut data).unwrap();
         assert_eq!("hello", m.name);
         // assert_eq!(0xbeef, m.v2);
         // assert_eq!(0xcafe, m.v3);

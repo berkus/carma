@@ -8,10 +8,12 @@
 //
 use {
     crate::support::{
-        brender::actor::{Actor, ActorNode},
-        brender::material::Material,
-        brender::mesh::Mesh,
-        brender::texture::PixelMap,
+        brender::{
+            actor::{Actor, ActorNode},
+            material::Material,
+            model::Model,
+            pixelmap::PixelMap,
+        },
         path_subst,
     },
     anyhow::{anyhow, Error, Result},
