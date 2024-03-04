@@ -23,7 +23,7 @@ use {
 // VertexUV in resource.rs
 type UvCoord = VertexUV;
 
-// This should be Model @todo
+// This should be in Model @todo
 impl Mesh {
     // Single mesh file may contain multiple meshes
     #[throws(support::Error)]
@@ -41,7 +41,7 @@ impl Mesh {
         Ok(meshes)
     }
 
-    // Calculate normal from vertices in counter-clockwise order.
+    /// Calculate normal from vertices in counter-clockwise order.
     pub fn calc_normal(v1: Vector3<f32>, v2: Vector3<f32>, v3: Vector3<f32>) -> Vector3<f32> {
         (v1 - v2).cross(v2 - v3).normalize()
     }

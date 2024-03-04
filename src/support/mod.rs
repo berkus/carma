@@ -25,7 +25,9 @@ pub mod brender;
 pub mod camera;
 pub mod car;
 pub mod logger;
+pub mod mesh;
 pub mod render_manager;
+pub mod texture;
 pub mod visitor;
 
 // Vertex and VertexUV in resource.rs
