@@ -1159,31 +1159,28 @@ pub mod stack {
 /// The per-resource loaders use it to consutrct
 #[derive(Default)]
 pub struct ResourceStack {
-    stack: Vec<Box<dyn Any>>,
+    stack: Vec<(u32, ResourceTag)>,
 }
 
 impl ResourceStack {
-    pub fn push(&mut self, resource: ResourceTag) {
-        self.stack.push(resource);
+    pub fn push(&mut self, tag: u32, resource: ResourceTag) {
+        self.stack.push((tag, resource));
     }
     #[throws]
-    pub fn pop<T>(&mut self) -> ResourceTag {
-        if let Some(resource) = self.stack.pop()?.downcast_ref::<T>() {
-            return resource;
+    pub fn pop<T>(&mut self, expected_tag: u32) -> ResourceTag {
+        let (tag, resource) = self.stack.pop()?;
+        if tag != expected_tag {
+            throw!(support::Error::InvalidResourceType {
+                expected: expected_tag,
+                received: tag,
+            });
         }
-
-        throw!(support::Error::InvalidResourceType {
-            expected: T::Tag,
-            received: tag,
-        });
+        resource
     }
-
     /// Give mutable access to the stack top.
-    pub fn top<T>(&mut self) -> Option<&mut ResourceTag> {
-        if let Some(resource) = self.stack.last()?.downcast_ref::<T>() {
-            return Some(resource);
-        }
-        None
+    pub fn top<T>(&mut self, expected_tag: T) -> Option<&mut ResourceTag> {
+        let (tag, mut resource) = self.stack.last()?;
+        Some(resource)
     }
 }
 
@@ -1205,6 +1202,7 @@ mod tests {
         assert_eq!(0xbabe, f.flags);
     }
 }
+<<<<<<< ours:libcarma/src/support/brender/resource.rs
 
 // #[proc_macro_derive(Component)]
 // pub fn component_macro_derive(input: TokenStream) -> TokenStream {
@@ -1272,3 +1270,5 @@ mod tests {
 //         component.do_second_component_thing();
 //     }
 // }
+=======
+>>>>>>> theirs:src/support/brender/resource.rs

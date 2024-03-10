@@ -90,16 +90,16 @@ impl FromStream for Actor {
                 }
                 Chunk::ActorModel(model) => {
                     let mut actor = stack.top(stack::ACTOR);
-                    actor.model = Models::find(model.identifier); // World::query<Model>?
+                    actor.model = Models::find(model.identifier);
                 }
                 Chunk::ActorTransform(_) => {
-                    let transform = stack.pop(stack::TRANSFORM)?;
-                    let mut actor = stack.top(stack::ACTOR)?;
+                    let transform = stack.pop(stack::TRANSFORM);
+                    let mut actor = stack.top(stack::ACTOR);
                     actor.transform = transform;
                 }
                 Chunk::ActorMaterial(material) => {
                     let mut actor = stack.top(stack::ACTOR);
-                    actor.material = Materials::find(material.identifier); // World::query<Material>?
+                    actor.material = Materials::find(material.identifier);
                 }
                 Chunk::ActorLight(_) => {
                     let light: Result<ResourceTag, Error> = stack.pop(stack::LIGHT);
