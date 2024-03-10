@@ -1,0 +1,22 @@
+[package]
+authors = ["Berkus Decker <berkus+cargo@metta.systems>"]
+edition = "2021"
+name = "carma"
+version = "0.0.3"
+publish = false
+
+[features]
+default = ["fastdev"]
+fastdev = ["libcarma/fastdev"]
+
+[dependencies]
+libcarma = { path = "../libcarma", version = "*" }
+
+[dev-dependencies]
+png = "0.17"
+
+[[bin]]
+name = "carma"
+
+[[bin]]
+name = "convert_to_png"
