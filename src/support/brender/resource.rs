@@ -1163,28 +1163,32 @@ pub mod stack {
 /// The per-resource loaders use it to consutrct
 #[derive(Default)]
 pub struct ResourceStack {
-    stack: Vec<(u32, ResourceTag)>,
+    stack: Vec<Box<dyn Any>>,
 }
 
 impl ResourceStack {
-    pub fn push(&mut self, tag: u32, resource: ResourceTag) {
-        self.stack.push((tag, resource));
+    pub fn push(&mut self, resource: ResourceTag) {
+        self.stack.push(resource);
     }
+
     #[throws]
-    pub fn pop<T>(&mut self, expected_tag: u32) -> ResourceTag {
-        let (tag, resource) = self.stack.pop()?;
-        if tag != expected_tag {
-            throw!(support::Error::InvalidResourceType {
-                expected: expected_tag,
-                received: tag,
-            });
+    pub fn pop<T>(&mut self) -> ResourceTag {
+        if let Some(resource) = self.stack.pop()?.downcast_ref::<T>() {
+            return resource;
         }
-        resource
+
+        throw!(support::Error::InvalidResourceType {
+            expected: T::Tag,
+            received: tag,
+        });
     }
+
     /// Give mutable access to the stack top.
-    pub fn top<T>(&mut self, expected_tag: T) -> Option<&mut ResourceTag> {
-        let (tag, mut resource) = self.stack.last()?;
-        Some(resource)
+    pub fn top<T>(&mut self) -> Option<&mut ResourceTag> {
+        if let Some(resource) = self.stack.last()?.downcast_ref::<T>() {
+            return Some(resource);
+        }
+        None
     }
 }
 
@@ -1206,7 +1210,6 @@ mod tests {
         assert_eq!(0xbabe, f.flags);
     }
 }
-<<<<<<< ours:libcarma/src/support/brender/resource.rs
 
 // use std::any::Any;
 
@@ -1260,5 +1263,3 @@ mod tests {
 //         component.do_second_component_thing();
 //     }
 // }
-=======
->>>>>>> theirs:src/support/brender/resource.rs
