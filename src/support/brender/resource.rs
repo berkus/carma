@@ -1106,6 +1106,10 @@ impl FromStream for Chunk {
 /*
  * Resource stack values.
  */
+trait ResourceTag {
+    fn as_any(&self) -> &dyn Any;
+}
+
 pub enum ResourceTag {
     Mark(), // Mark compound structure start
     ImagePlane(),
@@ -1203,20 +1207,6 @@ mod tests {
     }
 }
 <<<<<<< ours:libcarma/src/support/brender/resource.rs
-
-// #[proc_macro_derive(Component)]
-// pub fn component_macro_derive(input: TokenStream) -> TokenStream {
-//     let ast: DeriveInput = syn::parse(input).unwrap();
-//     let name = &ast.ident;
-//     let gen = quote! {
-//         impl Component for #name {
-//             fn as_any(&self) -> &dyn Any {
-//                 self
-//             }
-//         }
-//     };
-//     gen.into()
-// }
 
 // use std::any::Any;
 
