@@ -1,6 +1,7 @@
 [package]
-name = "proc-macros"
+name = "carma_derive"
 publish = false
+edition = "2021"
 
 [lib]
 proc-macro = true

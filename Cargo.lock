@@ -1367,6 +1367,7 @@ dependencies = [
  "bevy_asset_loader",
  "bevy_egui",
  "byteorder",
+ "carma_derive",
  "cgmath",
  "chrono",
  "derive_builder",
@@ -1380,6 +1381,14 @@ dependencies = [
  "png",
  "smooth-bevy-cameras",
  "thiserror",
+]
+
+[[package]]
+name = "carma_derive"
+version = "0.0.0"
+dependencies = [
+ "quote",
+ "syn 2.0.48",
 ]
 
 [[package]]

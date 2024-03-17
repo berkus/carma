@@ -6,6 +6,7 @@ version = "0.0.3"
 resolver = "2"
 
 [dependencies]
+carma_derive = { path = "./carma_derive" }
 anyhow = "1.0"
 thiserror = "1.0"
 fehler = "1.0"
