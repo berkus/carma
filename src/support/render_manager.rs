@@ -7,10 +7,9 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    crate::support::{brender::actor::ActorNode, camera::CameraState, car::Car, Vertex},
-    cgmath::{prelude::*, Matrix4, Vector3},
+    crate::support::{camera::CameraState, car::Car, Vertex},
+    cgmath::Matrix4,
     glium::{
-        index::PrimitiveType,
         texture::{RawImage2d, SrgbTexture2d},
         uniform,
         uniforms::*,
@@ -109,116 +108,117 @@ impl RenderManager {
         }
     }
 
-    pub fn prepare_car(&mut self, car: &Car, display: &Display) {
-        for actor in car.actors.traverse() {
-            if let ActorNode::MeshfileRef(name) = actor.data() {
-                debug!("Actor meshfile {}", name);
-                self.prepare_car_actor(name, car, display);
-            }
-        }
+    pub fn prepare_car(&mut self, _car: &Car, _display: &Display) {
+        // for actor in car.actors.traverse() {
+        //     if let ActorNode::MeshfileRef(name) = actor.data() {
+        //         debug!("Actor meshfile {}", name);
+        //         self.prepare_car_actor(name, car, display);
+        //     }
+        // }
     }
 
-    pub fn prepare_car_actor(&mut self, name: &String, car: &Car, display: &Display) {
+    pub fn prepare_car_actor(&mut self, name: &String, _car: &Car, _display: &Display) {
         debug!("prepare_car_actor({}): loading vertices", name);
-        let vbo = VertexBuffer::<Vertex>::new(display, &car.meshes[name].vertices).unwrap();
-        self.vertices.insert(name.clone(), vbo);
+        // let vbo = VertexBuffer::<Vertex>::new(display, &car.meshes[name].vertices).unwrap();
+        // self.vertices.insert(name.clone(), vbo);
 
-        debug!("prepare_car_actor({}): partitioning faces", name);
+        // debug!("prepare_car_actor({}): partitioning faces", name);
 
-        let faces = &car.meshes[name].faces;
+        // let faces = &car.meshes[name].faces;
 
-        let mut partitioned_by_material = HashMap::<u16, Vec<u16>>::new();
+        // let mut partitioned_by_material = HashMap::<u16, Vec<u16>>::new();
 
-        for face in faces {
-            let indices = partitioned_by_material.entry(face.material_id).or_default();
-            indices.push(face.v1);
-            indices.push(face.v2);
-            indices.push(face.v3);
-        }
+        // for face in faces {
+        //     let indices = partitioned_by_material.entry(face.material_id).or_default();
+        //     indices.push(face.v1);
+        //     indices.push(face.v2);
+        //     indices.push(face.v3);
+        // }
 
-        for (mat, list) in &partitioned_by_material {
-            debug!(
-                "Material {}: {} vertices, {} faces",
-                mat,
-                list.len(),
-                list.len() as f32 / 3f32
-            );
-        }
+        // for (mat, list) in &partitioned_by_material {
+        //     debug!(
+        //         "Material {}: {} vertices, {} faces",
+        //         mat,
+        //         list.len(),
+        //         list.len() as f32 / 3f32
+        //     );
+        // }
 
-        self.indices.insert(
-            name.clone(),
-            partitioned_by_material
-                .iter()
-                .map(|(key, item)| {
-                    (
-                        *key,
-                        IndexBuffer::new(display, PrimitiveType::TrianglesList, item).unwrap(),
-                    )
-                })
-                .collect(),
-        );
+        // self.indices.insert(
+        //     name.clone(),
+        //     partitioned_by_material
+        //         .iter()
+        //         .map(|(key, item)| {
+        //             (
+        //                 *key,
+        //                 IndexBuffer::new(display, PrimitiveType::TrianglesList, item).unwrap(),
+        //             )
+        //         })
+        //         .collect(),
+        // );
 
-        // each material from partitioned_by_material - load and bind it in bound_textures
-        // then remap to a set of HashMap from String material name to Vec<u16> indices
-        self.bind_textures(name, car, display);
+        // // each material from partitioned_by_material - load and bind it in bound_textures
+        // // then remap to a set of HashMap from String material name to Vec<u16> indices
+        // self.bind_textures(name, car, display);
     }
 
     /// Draw all visible actors
-    pub fn draw_car<T>(&self, car: &Car, target: &mut T, camera: &CameraState)
+    pub fn draw_car<T>(&self, _car: &Car, _target: &mut T, _camera: &CameraState)
     where
         T: Surface,
     {
-        let mut v = false;
-        let mut transform_stack = Vec::<Matrix4<f32>>::new();
-        transform_stack.push(Matrix4::from_translation(car.base_translation) * Matrix4::identity());
+        // let mut v = false;
+        // let mut transform_stack = Vec::<Matrix4<f32>>::new();
+        // transform_stack.push(Matrix4::from_translation(car.base_translation) * Matrix4::identity());
 
-        let mut actor_name = String::new();
+        // let mut actor_name = String::new();
 
         // @fixme split those actors into Entities?
-        for actor in car.actors.traverse() {
-            match *actor.data() {
-                ActorNode::Actor { ref name, visible } => {
-                    actor_name = name.clone();
-                    v = visible;
+        // for actor in car.actors.traverse() {
+        //     match *actor.data() {
+        //         ActorNode::Actor { ref name, visible } => {
+        //             actor_name = name.clone();
+        //             v = visible;
 
-                    let depth = car.actors.get_node_depth(actor) - 1;
-                    trace!("Actor {} depth {}", name, depth);
-                    if depth < transform_stack.len() {
-                        let pop_count = transform_stack.len() - depth;
-                        trace!("Restoring transform - {} times", pop_count);
-                        for _ in 0..pop_count {
-                            transform_stack.pop().unwrap();
-                        }
-                    }
+        //             // let depth = car.actors.get_node_depth(actor) - 1;
+        //             let depth = 0;
+        //             trace!("Actor {} depth {}", name, depth);
+        //             if depth < transform_stack.len() {
+        //                 let pop_count = transform_stack.len() - depth;
+        //                 trace!("Restoring transform - {} times", pop_count);
+        //                 for _ in 0..pop_count {
+        //                     transform_stack.pop().unwrap();
+        //                 }
+        //             }
 
-                    debug_tree(&String::from("Actor"), &actor_name, &transform_stack);
-                }
-                ActorNode::MeshfileRef(ref name) => {
-                    debug_tree(&format!("Mesh {}", name), &actor_name, &transform_stack);
-                    if v {
-                        trace!("Drawing actor {}", name);
-                        self.draw_actor(name, transform_stack.last().unwrap(), target, camera);
-                    }
-                }
-                ActorNode::Transform(t) => {
-                    let transform = Matrix4::from_translation(Vector3 {
-                        x: t[9],
-                        y: t[10],
-                        z: t[11],
-                    }) * Matrix4::from_nonuniform_scale(t[0], t[4], t[8]);
+        //             debug_tree(&String::from("Actor"), &actor_name, &transform_stack);
+        //         }
+        //         ActorNode::MeshfileRef(ref name) => {
+        //             debug_tree(&format!("Mesh {}", name), &actor_name, &transform_stack);
+        //             if v {
+        //                 trace!("Drawing actor {}", name);
+        //                 self.draw_actor(name, transform_stack.last().unwrap(), target, camera);
+        //             }
+        //         }
+        //         ActorNode::Transform(t) => {
+        //             let transform = Matrix4::from_translation(Vector3 {
+        //                 x: t[9],
+        //                 y: t[10],
+        //                 z: t[11],
+        //             }) * Matrix4::from_nonuniform_scale(t[0], t[4], t[8]);
 
-                    let model = transform * transform_stack.last().unwrap();
-                    transform_stack.push(model);
+        //             let model = transform * transform_stack.last().unwrap();
+        //             transform_stack.push(model);
 
-                    debug_tree(
-                        &String::from("Transform(after)"),
-                        &actor_name,
-                        &transform_stack,
-                    );
-                }
-                _ => (),
-            }
-        }
+        //             debug_tree(
+        //                 &String::from("Transform(after)"),
+        //                 &actor_name,
+        //                 &transform_stack,
+        //             );
+        //         }
+        //         _ => (),
+        //     }
+        // }
     }
 
     /// Uses single mesh, but specific indices to draw with each material.

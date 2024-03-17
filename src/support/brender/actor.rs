@@ -7,13 +7,18 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    super::resource::{
-        file_type, stack, Chunk, FileInfoChunk, FromStream, ResourceStack, ResourceTag,
+    super::{
+        model::Model,
+        resource::{
+            file_type, BoundsChunk, CameraChunk, Chunk, FileInfoChunk, FromStream, LightChunk,
+            PlaneChunk, ResourceStack, ResourceTag, TransformEulerChunk, TransformLookUpChunk,
+            TransformMatrix34Chunk, TransformQuatChunk, TransformTranslationChunk,
+        },
     },
-    crate::support::{self, Error},
+    crate::support::Error,
     byteorder::ReadBytesExt,
-    fehler::{throw, throws},
-    id_tree::*,
+    carma_derive::ResourceTag,
+    culpa::{throw, throws},
     std::{
         fs::File,
         io::{BufRead, BufReader},
@@ -29,47 +34,52 @@ use {
 //       +--Transform()
 //       +--MeshfileRef
 //
-#[derive(Debug)]
-pub enum ActorNode {
-    Root,
-    Actor { name: String, visible: bool },
-    // First 3x3 is scale? or maybe SQT?
-    // Last 3 is translate, -x is to the left, -z is to the front
-    Transform([f32; 12]),
-    MeshfileRef(String),
-    MaterialRef(String),
+
+#[derive(Default, ResourceTag)]
+enum Transform {
+    #[default]
+    Identity,
+    Matrix34(TransformMatrix34Chunk),
+    Matrix34LP(TransformMatrix34Chunk),
+    Euler(TransformEulerChunk),
+    Quat(TransformQuatChunk),
+    LookUp(TransformLookUpChunk),
+    Translation(TransformTranslationChunk),
 }
 
 #[derive(Default)]
 enum ActorData {
     #[default]
     None,
-    Light(),
-    Camera(),
-    Bounds(),
-    Plane(),
+    Light(Box<LightChunk>),
+    Camera(Box<CameraChunk>),
+    Bounds(Box<BoundsChunk>),
+    ClipPlane(Box<PlaneChunk>),
 }
 
-#[derive(Default)]
+#[derive(Default, ResourceTag)]
 pub struct Actor {
-    transform: (),
-    materials: (),
+    model: Box<Model>,
+    transform: Transform,
+    material: (),
     data: ActorData,
+    children: Vec<Box<Actor>>,
 }
 
 impl Actor {
-    pub fn load_many<P: AsRef<std::path::Path>>(filename: P) -> Result<Actor, Error> {
+    #[throws]
+    pub fn load_many<P: AsRef<std::path::Path>>(filename: P) -> Box<Actor> {
         let mut file = BufReader::new(File::open(filename)?);
-        <Self as FromStream>::from_stream(&mut file)
+        <Self as FromStream>::from_stream(&mut file)?
     }
 }
 
 impl FromStream for Actor {
-    type Output = Actor;
+    type Output = Box<Actor>;
 
     #[throws]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
-        let mut stack = ResourceStack::default();
+        let mut stack = ResourceStack::new();
 
         // Read chunks until last chunk is encountered.
         // Certain chunks initialize certain properties.
@@ -78,92 +88,105 @@ impl FromStream for Actor {
                 Chunk::End() => break,
                 Chunk::FileInfo(FileInfoChunk { file_type, .. }) => {
                     if file_type != file_type::ACTOR {
-                        throw!(support::Error::InvalidResourceType {
-                            expected: file_type::ACTOR,
-                            received: file_type,
-                        });
+                        throw!(
+                            Error::InvalidResourceType /*{
+                                                       expected: file_type::ACTOR,
+                                                       received: file_type,
+                                                       }*/
+                        );
                     }
                 }
 
                 Chunk::Actor(actor) => {
-                    stack.push(stack::ACTOR, ResourceTag::Actor(Box::new(actor)));
+                    stack.push(Box::new(actor));
                 }
-                Chunk::ActorModel(model) => {
-                    let mut actor = stack.top(stack::ACTOR);
-                    actor.model = Models::find(model.identifier); // World::query<Model>?
+                Chunk::ActorModel(_model) => {
+                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
+                    // @todo ❌ Use [Direct ECS World Access](https://bevy-cheatbook.github.io/programming/world.html) here.
+                    actor.model = Box::new(Model::default()); //Models::find(model.identifier); // World::query<Model>?
                 }
                 Chunk::ActorTransform(_) => {
-                    let transform = stack.pop(stack::TRANSFORM)?;
-                    let mut actor = stack.top(stack::ACTOR)?;
-                    actor.transform = transform;
+                    // We should just pop transform and attach it to the actor on stack
+                    let transform = stack.pop::<Transform>()?;
+                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
+                    actor.transform = *transform;
                 }
-                Chunk::ActorMaterial(material) => {
-                    let mut actor = stack.top(stack::ACTOR);
-                    actor.material = Materials::find(material.identifier); // World::query<Material>?
+                Chunk::ActorMaterial(_material) => {
+                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
+                    // @todo ❌ Use [Direct ECS World Access](https://bevy-cheatbook.github.io/programming/world.html) here.
+                    actor.material = (); // Materials::find(material.identifier); // World::query<Material>?
                 }
                 Chunk::ActorLight(_) => {
-                    let light: Result<ResourceTag, Error> = stack.pop(stack::LIGHT);
+                    // We should just pop light and attach it to the actor on stack
+                    let light = stack.pop::<LightChunk>()?;
+                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
                     actor.data = ActorData::Light(light);
                 }
                 Chunk::ActorCamera(_) => {
-                    let camera: Result<ResourceTag, Error> = stack.pop(stack::CAMERA);
+                    // We should just pop camera and attach it to the actor on stack
+                    let camera = stack.pop::<CameraChunk>()?;
+                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
                     actor.data = ActorData::Camera(camera);
                 }
                 Chunk::ActorBounds(_) => {
-                    let bounds = stack.pop(stack::BOUNDS);
-                    let mut actor = stack.top(stack::ACTOR);
+                    // We should just pop bounds and attach it to the actor on stack
+                    let bounds = stack.pop::<BoundsChunk>()?;
+                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
                     actor.data = ActorData::Bounds(bounds);
                 }
                 Chunk::ActorClipPlane(_) => {
-                    let plane = stack.pop(stack::PLANE);
-                    let mut actor = stack.top(stack::ACTOR);
+                    // We should just pop clip plane and attach it to the actor on stack
+                    let plane = stack.pop::<PlaneChunk>()?;
+                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
                     actor.data = ActorData::ClipPlane(plane);
                 }
                 Chunk::ActorAddChild(_) => {
-                    let child = stack.pop(stack::ACTOR);
-                    let mut actor = stack.top(stack::ACTOR);
-                    actor.chidren.push(child);
+                    // @todo We should just pop actor and attach it to the actor on stack
+                    let child = stack.pop::<Actor>()?;
+                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
+                    actor.children.push(child);
                 }
 
-                Chunk::TransformMatrix34(_) => {
-                    stack.push(stack::TRANSFORM, transform);
+                Chunk::TransformMatrix34(transform) => {
+                    stack.push(Box::new(Transform::Matrix34(transform)));
                 }
-                Chunk::TransformMatrix34LP(_) => {
-                    stack.push(stack::TRANSFORM, transform);
+                Chunk::TransformMatrix34LP(transform) => {
+                    stack.push(Box::new(Transform::Matrix34LP(transform)));
                 }
-                Chunk::TransformQuat(_) => {
-                    stack.push(stack::TRANSFORM, transform);
+                Chunk::TransformQuat(transform) => {
+                    stack.push(Box::new(Transform::Quat(transform)));
                 }
-                Chunk::TransformEuler(_) => {
-                    stack.push(stack::TRANSFORM, transform);
+                Chunk::TransformEuler(transform) => {
+                    stack.push(Box::new(Transform::Euler(transform)));
                 }
-                Chunk::TransformLookUp(_) => {
-                    stack.push(stack::TRANSFORM, transform);
+                Chunk::TransformLookUp(transform) => {
+                    stack.push(Box::new(Transform::LookUp(transform)));
                 }
-                Chunk::TransformTranslation(_) => {
-                    stack.push(stack::TRANSFORM, transform);
+                Chunk::TransformTranslation(transform) => {
+                    stack.push(Box::new(Transform::Translation(transform)));
                 }
                 Chunk::TransformIdentity() => {
-                    stack.push(stack::TRANSFORM, transform);
+                    stack.push(Box::new(Transform::Identity));
                 }
 
-                Chunk::Bounds(_) => {
-                    stack.push(stack::BOUNDS, bounds);
+                Chunk::Bounds(bounds) => {
+                    stack.push(Box::new(bounds));
                 }
-                Chunk::Light(_) => {
-                    stack.push(stack::LIGHT, light);
+                Chunk::Light(light) => {
+                    stack.push(Box::new(light));
                 }
-                Chunk::Camera(_) => {
-                    stack.push(stack::CAMERA, camera);
+                Chunk::Camera(camera) => {
+                    stack.push(Box::new(camera));
                 }
-                Chunk::Plane(_) => {
-                    stack.push(stack::PLANE, plane);
+                Chunk::Plane(plane) => {
+                    stack.push(Box::new(plane));
                 }
 
                 _ => unimplemented!(), // unexpected type here
             }
         }
 
+        let actor = stack.pop::<Actor>()?;
         actor
     }
 }

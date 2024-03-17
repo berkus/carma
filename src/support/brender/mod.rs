@@ -1,4 +1,4 @@
-use {super::Error, std::io::BufRead};
+use {super::Error, culpa::throws, std::io::BufRead};
 
 pub mod actor;
 pub mod material;
@@ -7,13 +7,14 @@ pub mod pixelmap;
 pub mod resource;
 
 // Load a C-style 0-terminated string from the file and return it
-pub fn read_c_string<R: BufRead>(reader: &mut R) -> Result<String, Error> {
+#[throws(Error)]
+pub fn read_c_string<R: BufRead>(reader: &mut R) -> String {
     let mut buf = vec![];
     /*let num_bytes =*/
     reader.read_until(0, &mut buf)?;
     buf.pop();
     let s = String::from_utf8_lossy(&buf);
-    Ok(s.to_string())
+    s.to_string()
 }
 
 #[cfg(test)]

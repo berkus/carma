@@ -1,6 +1,6 @@
 use {
     anyhow::Result,
-    carma::support::{brender::texture::PixelMap, visitor::visit_files},
+    carma::support::{brender::pixelmap::PixelMap, visitor::visit_files},
     log::info,
     std::{
         fs::File,
@@ -18,7 +18,7 @@ fn main() {
 // /// Load palette once and then apply to a bunch of pixmap data
 fn convert_all_pixmaps() -> Result<()> {
     let palette =
-        &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRRENDER.PAL"))?[0];
+        &PixelMap::load_many(String::from("DecodedData/DATA/REG/PALETTES/DRRENDER.PAL"))?[0];
     visit_files(Path::new("DecodedData"), &mut |dir_entry| {
         if let Ok(file_type) = dir_entry.file_type() {
             let fname = String::from(dir_entry.path().to_str().unwrap());
@@ -32,12 +32,12 @@ fn convert_all_pixmaps() -> Result<()> {
 
 fn convert_game_pixmap(fname: String) -> Result<()> {
     let palette =
-        &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRRENDER.PAL"))?[0];
+        &PixelMap::load_many(String::from("DecodedData/DATA/REG/PALETTES/DRRENDER.PAL"))?[0];
     convert_pixmap(fname, palette)
 }
 
 fn convert_pixmap(fname: String, palette: &PixelMap) -> Result<()> {
-    let pmap = PixelMap::load_from(fname.clone())
+    let pmap = PixelMap::load_many(fname.clone())
         .expect(format!("Couldnt open pix file {:?}", fname).as_ref());
     // let mut counter = 0;
     for pix in pmap {
@@ -62,6 +62,6 @@ fn convert_pixmap(fname: String, palette: &PixelMap) -> Result<()> {
 #[allow(unused)]
 fn convert_menu_pixmap(fname: String) -> Result<()> {
     let palette =
-        &PixelMap::load_from(String::from("DecodedData/DATA/REG/PALETTES/DRACEFLC.PAL"))?[0];
+        &PixelMap::load_many(String::from("DecodedData/DATA/REG/PALETTES/DRACEFLC.PAL"))?[0];
     convert_pixmap(fname, palette)
 }

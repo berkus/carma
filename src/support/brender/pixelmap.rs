@@ -2,7 +2,7 @@ use {
     super::resource::{Chunk, FileInfoChunk, FromStream, PixelMapChunk, PixelsChunk},
     crate::support,
     byteorder::ReadBytesExt,
-    fehler::{throw, throws},
+    culpa::{throw, throws},
     log::debug,
     std::io::prelude::BufRead,
     support::brender::resource::file_type,
@@ -38,10 +38,12 @@ impl FromStream for PixelMap {
                 Chunk::End() => break,
                 Chunk::FileInfo(FileInfoChunk { file_type, .. }) => {
                     if file_type != file_type::PIXELMAP {
-                        throw!(support::Error::InvalidResourceType {
-                            expected: file_type::PIXELMAP,
-                            received: file_type,
-                        });
+                        throw!(
+                            support::Error::InvalidResourceType /*{
+                                                                expected: file_type::PIXELMAP,
+                                                                received: file_type,
+                                                                }*/
+                        );
                     }
                 }
                 Chunk::PixelMap(PixelMapChunk {

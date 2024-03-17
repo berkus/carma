@@ -10,7 +10,7 @@ use {
     super::resource::{Chunk, FromStream},
     crate::support,
     byteorder::ReadBytesExt,
-    fehler::throws,
+    culpa::throws,
     std::{
         fs::File,
         io::{BufRead, BufReader},

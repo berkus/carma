@@ -8,18 +8,13 @@
 //
 use {
     crate::support::{
-        brender::{
-            actor::{Actor, ActorNode},
-            material::Material,
-            model::Model,
-            pixelmap::PixelMap,
-        },
+        brender::{actor::Actor, material::Material, model::Model, pixelmap::PixelMap},
         path_subst,
     },
     anyhow::{anyhow, Error, Result},
     bevy::prelude::*,
     cgmath::Vector3,
-    fehler::throws,
+    culpa::throws,
     // log::*,
     std::{
         collections::{HashMap, HashSet},
@@ -34,7 +29,7 @@ use {
 pub struct Car {
     pub name: String,
     pub actors: Actor,
-    pub meshes: HashMap<String, Mesh>,
+    pub meshes: HashMap<String, Model>,
     pub materials: HashMap<String, Material>,
     pub textures: HashMap<String, PixelMap>,
     pub base_translation: Vector3<f32>,
@@ -280,7 +275,7 @@ fn read_mechanics_v4(input: &mut impl Iterator<Item = String>) -> Result<Mechani
 fn read_meshes<P: AsRef<Path>>(
     fname: P,
     load_models: &[String],
-    car_meshes: &mut HashMap<String, Mesh>,
+    car_meshes: &mut HashMap<String, Model>,
 ) -> Result<()> {
     let mut load_models: Vec<String> = load_models.to_vec();
     load_models.sort();
@@ -292,16 +287,16 @@ fn read_meshes<P: AsRef<Path>>(
         let mut mesh_file_name = fname.as_ref().to_path_buf();
         mesh_file_name.set_file_name(mesh);
         let mesh_file_name = path_subst(mesh_file_name, "MODELS".into(), Some("DAT".into()))?;
-        info!("### Opening mesh file {:?}", mesh_file_name);
-        let meshes = Mesh::load_from(
+        info!("### Opening model file {:?}", mesh_file_name);
+        let meshes = Model::load_many(
             mesh_file_name
                 .clone()
                 .into_os_string()
                 .into_string()
                 .unwrap(),
         )?;
-        for mesh in meshes {
-            car_meshes.insert(mesh.name.clone(), mesh);
+        for model in meshes {
+            car_meshes.insert(model.name.clone(), *model); // @todo ❌ populate World resources
         }
     }
     Ok(())
@@ -328,8 +323,8 @@ fn read_materials<P: AsRef<Path>>(
 
 impl Car {
     pub fn dump(&self) {
-        self.actors.dump();
-        self.actors.dump_actor_points();
+        // self.actors.dump();
+        // self.actors.dump_actor_points();
         for tex in &self.textures {
             println!("Texture {}: {}", tex.0, tex.1);
         }
@@ -529,7 +524,7 @@ impl Car {
         //
         // Meshes
         //
-        let mut car_meshes = HashMap::<String, Mesh>::new();
+        let mut car_meshes = HashMap::<String, Model>::new();
 
         debug!("Meshes to load: {:?}", load_models);
 
@@ -542,17 +537,17 @@ impl Car {
         actor_file_name.set_file_name(&load_actors[&idx]); // Read mipmap 0 actor
         let actor_file_name = path_subst(actor_file_name, "ACTORS".into(), Some("ACT".into()))?;
         info!("### Opening actor {:?}", actor_file_name);
-        let car_actors = Actor::load_from(actor_file_name)?;
+        let car_actors = Actor::load_many(actor_file_name)?;
 
         // Read meshes referenced from actor file
         load_models.clear();
-        for actor in car_actors.traverse() {
-            if let ActorNode::MeshfileRef(name) = actor.data() {
-                if !car_meshes.contains_key(name) {
-                    load_models.push(name.clone())
-                }
-            }
-        }
+        // for actor in car_actors.traverse() {
+        //     if let ActorNode::MeshfileRef(name) = actor.data() {
+        //         if !car_meshes.contains_key(name) {
+        //             load_models.push(name.clone())
+        //         }
+        //     }
+        // }
 
         debug!("Extra meshes to load: {:?}", load_models);
         read_meshes(&fname, &load_models, &mut car_meshes)?;
@@ -582,7 +577,7 @@ impl Car {
         pal_file_name.set_file_name("DRRENDER.PAL");
         let pal_file_name = path_subst(pal_file_name, "REG/PALETTES".into(), None)?;
         info!("### Opening palette {:?}", pal_file_name);
-        let palette = &PixelMap::load_from(pal_file_name)?[0];
+        let palette = &PixelMap::load_many(pal_file_name)?[0]; // @todo Insert into World resources
 
         for x in 0..palette.units {
             trace!(
@@ -600,7 +595,7 @@ impl Car {
             pix_file_name.set_file_name(pixmap);
             let pix_file_name = path_subst(pix_file_name, "PIXELMAP".into(), None)?;
             info!("### Opening pixelmap {:?}", pix_file_name);
-            let pix = PixelMap::load_from(pix_file_name)?;
+            let pix = PixelMap::load_many(pix_file_name)?;
             for pmap in pix {
                 let pmap = pmap.remap_via_palette(palette)?;
                 car_textures.insert(pmap.name.clone(), pmap);
@@ -609,7 +604,7 @@ impl Car {
 
         Ok(Car {
             name: car_name,
-            actors: car_actors,
+            actors: *car_actors,
             meshes: car_meshes,
             materials: car_materials,
             textures: car_textures,

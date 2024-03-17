@@ -1,6 +1,6 @@
 use {
     anyhow::{Error, Result},
-    fehler::throws,
+    culpa::throws,
     std::{
         fs::{self, DirEntry},
         path::Path,

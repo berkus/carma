@@ -1,4 +1,4 @@
-use fehler::throws;
+use culpa::throws;
 
 #[throws(fern::InitError)]
 pub fn setup_logging() {

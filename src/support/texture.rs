@@ -7,10 +7,13 @@
 // (See file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 use {
-    super::pixelmap::PixelMap,
-    crate::support::{self, brender::resource::FromStream, Error},
+    crate::support::{
+        self,
+        brender::{pixelmap::PixelMap, resource::FromStream},
+        Error,
+    },
     bevy::prelude::*,
-    fehler::throws,
+    culpa::throws,
     std::{
         fs::File,
         io::{BufReader, Write},
@@ -151,7 +154,7 @@ impl PixelMap {
 
     /// Load one or more named textures from a single file
     #[throws(support::Error)]
-    pub fn load_from<P: AsRef<std::path::Path>>(fname: P) -> Vec<PixelMap> {
+    pub fn load_many<P: AsRef<std::path::Path>>(fname: P) -> Vec<PixelMap> {
         let mut file = BufReader::new(File::open(fname)?);
         let mut pmaps = Vec::<PixelMap>::new();
         loop {

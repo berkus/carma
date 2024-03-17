@@ -10,7 +10,9 @@ use {
     crate::support::{self, brender::read_c_string, Error},
     bevy::prelude::*,
     byteorder::{BigEndian, ReadBytesExt},
-    fehler::{throw, throws},
+    carma_derive::ResourceTag,
+    core::any::Any,
+    culpa::{throw, throws},
     std::io::BufRead,
 };
 
@@ -250,6 +252,7 @@ pub struct ModelChunk {
 
 impl FromStream for ModelChunk {
     type Output = ModelChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let flags = source.read_u16::<BigEndian>()?;
@@ -260,15 +263,16 @@ impl FromStream for ModelChunk {
 
 //------------------------------------------------------------------
 pub struct MaterialIndexChunk {
-    materials: Vec<String>,
+    pub materials: Vec<String>,
 }
 
 impl FromStream for MaterialIndexChunk {
     type Output = MaterialIndexChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
-        let entries_count = source.read_u32::<BigEndian>()?;
-        let mut materials = Vec::<String>::with_capacity(entries_count as usize);
+        let entries_count = source.read_u32::<BigEndian>()? as usize;
+        let mut materials = Vec::<String>::with_capacity(entries_count);
         for _ in 0..entries_count {
             let v = read_c_string(source)?;
             trace!("... ref ({})", v);
@@ -279,13 +283,14 @@ impl FromStream for MaterialIndexChunk {
 }
 
 //------------------------------------------------------------------
-struct Vec2f {
+pub struct Vec2f {
     x: f32,
     y: f32,
 }
 
 impl FromStream for Vec2f {
     type Output = Vec2f;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let x = source.read_f32::<BigEndian>()?;
@@ -295,22 +300,23 @@ impl FromStream for Vec2f {
 }
 
 //------------------------------------------------------------------
-type Vertex = Vec3f;
+pub type Vertex = Vec3f;
 
-struct Vec3f {
-    x: f32,
-    y: f32,
-    z: f32,
+#[derive(Default, Debug)]
+pub struct Vec3f {
+    pub x: f32,
+    pub y: f32,
+    pub z: f32,
 }
 
 impl FromStream for Vec3f {
     type Output = Vec3f;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
-        let x = source.read_f32::<BigEndian>()?;
-        let y = source.read_f32::<BigEndian>()?;
+        let v = Vec2f::from_stream(source)?;
         let z = source.read_f32::<BigEndian>()?;
-        Self::Output { x, y, z }
+        Self::Output { x: v.x, y: v.y, z }
     }
 }
 
@@ -324,13 +330,17 @@ struct Vec4f {
 
 impl FromStream for Vec4f {
     type Output = Vec4f;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
-        let x = source.read_f32::<BigEndian>()?;
-        let y = source.read_f32::<BigEndian>()?;
-        let z = source.read_f32::<BigEndian>()?;
+        let v = Vec3f::from_stream(source)?;
         let w = source.read_f32::<BigEndian>()?;
-        Self::Output { x, y, z, w }
+        Self::Output {
+            x: v.x,
+            y: v.y,
+            z: v.z,
+            w,
+        }
     }
 }
 
@@ -342,21 +352,22 @@ pub struct VertexUV {
 
 impl FromStream for VertexUV {
     type Output = VertexUV;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
-        let u = source.read_f32::<BigEndian>()?;
-        let v = source.read_f32::<BigEndian>()?;
-        Self::Output { u, v }
+        let uv = Vec2f::from_stream(source)?;
+        Self::Output { u: uv.x, v: uv.y }
     }
 }
 
 //------------------------------------------------------------------
 pub struct VerticesChunk {
-    vertices: Vec<Vertex>,
+    pub vertices: Vec<Vertex>,
 }
 
 impl FromStream for VerticesChunk {
     type Output = VerticesChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let entries_count = source.read_u32::<BigEndian>()?;
@@ -376,6 +387,7 @@ pub struct VertexUvChunk {
 
 impl FromStream for VertexUvChunk {
     type Output = VertexUvChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let entries_count = source.read_u32::<BigEndian>()?;
@@ -390,16 +402,17 @@ impl FromStream for VertexUvChunk {
 
 //------------------------------------------------------------------
 #[derive(Default)]
-struct Face {
-    v1: u16,
-    v2: u16,
-    v3: u16,
-    smoothing: u16,
-    flags: u8,
+pub struct Face {
+    pub v1: u16,
+    pub v2: u16,
+    pub v3: u16,
+    pub smoothing: u16,
+    pub flags: u8,
 }
 
 impl FromStream for Face {
     type Output = Face;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let v1 = source.read_u16::<BigEndian>()?;
@@ -418,12 +431,14 @@ impl FromStream for Face {
 }
 
 //------------------------------------------------------------------
+#[derive(Default)]
 pub struct FacesChunk {
-    faces: Vec<Face>,
+    pub faces: Vec<Face>,
 }
 
 impl FromStream for FacesChunk {
     type Output = FacesChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let entries_count = source.read_u32::<BigEndian>()?;
@@ -443,12 +458,13 @@ pub struct FaceMaterialChunk {
 
 impl FromStreamExt for FaceMaterialChunk {
     type Output = FaceMaterialChunk;
+
     #[throws(support::Error)]
     fn from_stream_ext<S: ReadBytesExt + BufRead>(source: &mut S, count: usize) -> Self::Output {
-        let mut face_material_indexes = Vec::with_capacity(count);
+        let mut face_material_indices = Vec::with_capacity(count);
         for _ in 0..count {
             let index = source.read_u16::<BigEndian>()?;
-            face_material_indexes.push(index);
+            face_material_indices.push(index);
         }
         Self::Output {
             face_material_indices,
@@ -463,28 +479,32 @@ pub struct PivotChunk {
 
 impl FromStream for PivotChunk {
     type Output = PivotChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
-        let pivot = Vertex::from_stream(source)?;
+        let pivot = Vec3f::from_stream(source)?;
         Self::Output { pivot }
     }
 }
 
 //------------------------------------------------------------------
-struct Colour {
-    r: f32,
-    g: f32,
-    b: f32,
+pub struct Colour {
+    pub r: f32,
+    pub g: f32,
+    pub b: f32,
 }
 
 impl FromStream for Colour {
     type Output = Colour;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
-        let r = source.read_f32::<BigEndian>()?;
-        let g = source.read_f32::<BigEndian>()?;
-        let b = source.read_f32::<BigEndian>()?;
-        Self::Output { r, g, b }
+        let color = Vec3f::from_stream(source)?;
+        Self::Output {
+            r: color.x,
+            g: color.y,
+            b: color.z,
+        }
     }
 }
 
@@ -510,6 +530,7 @@ pub struct MaterialChunk {
 
 impl FromStream for MaterialChunk {
     type Output = MaterialChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let color = Colour::from_stream(source)?;
@@ -566,6 +587,7 @@ pub struct PixelMapChunk {
 
 impl FromStream for PixelMapChunk {
     type Output = PixelMapChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let r#type = source.read_u8()?;
@@ -597,6 +619,7 @@ pub struct PixelsChunk {
 
 impl FromStream for PixelsChunk {
     type Output = PixelsChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let units = source.read_u32::<BigEndian>()?;
@@ -619,13 +642,14 @@ impl FromStream for PixelsChunk {
 
 //------------------------------------------------------------------
 pub struct ActorChunk {
-    r#type: u8,       // actor_type
-    render_style: u8, // actor_render_style
+    r#type: u8,       // actor_type::
+    render_style: u8, // actor_render_style::
     identifier: String,
 }
 
 impl FromStream for ActorChunk {
     type Output = ActorChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let r#type = source.read_u8()?;
@@ -670,6 +694,7 @@ pub struct TransformMatrix34Chunk {
 
 impl FromStream for TransformMatrix34Chunk {
     type Output = TransformMatrix34Chunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let mut m = Vec::with_capacity(4);
@@ -691,18 +716,16 @@ pub struct TransformQuatChunk {
 
 impl FromStream for TransformQuatChunk {
     type Output = TransformQuatChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
-        let q_x = source.read_f32::<BigEndian>()?;
-        let q_y = source.read_f32::<BigEndian>()?;
-        let q_z = source.read_f32::<BigEndian>()?;
-        let q_w = source.read_f32::<BigEndian>()?;
+        let q = Vec4f::from_stream(source)?;
         let t = Vec3f::from_stream(source)?;
         Self::Output {
-            q_x,
-            q_y,
-            q_z,
-            q_w,
+            q_x: q.x,
+            q_y: q.y,
+            q_z: q.z,
+            q_w: q.w,
             t,
         }
     }
@@ -722,18 +745,17 @@ pub struct TransformEulerChunk {
 
 impl FromStream for TransformEulerChunk {
     type Output = TransformEulerChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let e_order = source.read_u8()?;
-        let e_a = source.read_f32::<BigEndian>()?;
-        let e_b = source.read_f32::<BigEndian>()?;
-        let e_c = source.read_f32::<BigEndian>()?;
+        let e = Vec3f::from_stream(source)?;
         let t = Vec3f::from_stream(source)?;
         Self::Output {
             e_order,
-            e_a,
-            e_b,
-            e_c,
+            e_a: e.x,
+            e_b: e.y,
+            e_c: e.z,
             t,
         }
     }
@@ -748,6 +770,7 @@ pub struct TransformLookUpChunk {
 
 impl FromStream for TransformLookUpChunk {
     type Output = TransformLookUpChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let look = Vec3f::from_stream(source)?;
@@ -764,6 +787,7 @@ pub struct TransformTranslationChunk {
 
 impl FromStream for TransformTranslationChunk {
     type Output = TransformTranslationChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let t = Vec3f::from_stream(source)?;
@@ -772,6 +796,7 @@ impl FromStream for TransformTranslationChunk {
 }
 
 //------------------------------------------------------------------
+#[derive(ResourceTag)]
 pub struct BoundsChunk {
     min: Vec3f,
     max: Vec3f,
@@ -779,6 +804,7 @@ pub struct BoundsChunk {
 
 impl FromStream for BoundsChunk {
     type Output = BoundsChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let min = Vec3f::from_stream(source)?;
@@ -788,6 +814,7 @@ impl FromStream for BoundsChunk {
 }
 
 //------------------------------------------------------------------
+#[derive(ResourceTag)]
 pub struct LightChunk {
     light_type: u8,
     color: Colour,
@@ -801,6 +828,7 @@ pub struct LightChunk {
 
 impl FromStream for LightChunk {
     type Output = LightChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let light_type = source.read_u8()?;
@@ -825,6 +853,7 @@ impl FromStream for LightChunk {
 }
 
 //------------------------------------------------------------------
+#[derive(ResourceTag)]
 pub struct CameraChunk {
     camera_type: u8,
     fov: Angle,
@@ -836,6 +865,7 @@ pub struct CameraChunk {
 
 impl FromStream for CameraChunk {
     type Output = CameraChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let camera_type = source.read_u8()?;
@@ -856,12 +886,14 @@ impl FromStream for CameraChunk {
 }
 
 //------------------------------------------------------------------
+#[derive(ResourceTag)]
 pub struct PlaneChunk {
     equation: Vec4f,
 }
 
 impl FromStream for PlaneChunk {
     type Output = PlaneChunk;
+
     #[throws(support::Error)]
     fn from_stream<S: ReadBytesExt + BufRead>(source: &mut S) -> Self::Output {
         let equation = Vec4f::from_stream(source)?;
@@ -1020,7 +1052,6 @@ impl FromStream for Chunk {
             chunk::ACTOR_TRANSFORM => {
                 trace!("Attaching actor transform...");
                 Chunk::ActorTransform(ActorTransformActionChunk {})
-                // @todo We should just pop transform and attach it to the actor on stack -- do it in actor reader tho
             }
             chunk::ACTOR_MATERIAL => {
                 trace!("Reading actor material ref...");
@@ -1029,27 +1060,22 @@ impl FromStream for Chunk {
             chunk::ACTOR_LIGHT => {
                 trace!("Attaching actor light...");
                 Chunk::ActorLight(ActorLightActionChunk {})
-                // @todo We should just pop light and attach it to the actor on stack -- do it in actor reader tho
             }
             chunk::ACTOR_CAMERA => {
                 trace!("Attaching actor camera...");
                 Chunk::ActorCamera(ActorCameraActionChunk {})
-                // @todo We should just pop camera and attach it to the actor on stack -- do it in actor reader tho
             }
             chunk::ACTOR_BOUNDS => {
                 trace!("Attaching actor bounds...");
                 Chunk::ActorBounds(ActorBoundsActionChunk {})
-                // @todo We should just pop bounds and attach it to the actor on stack -- do it in actor reader tho
             }
             chunk::ACTOR_CLIP_PLANE => {
                 trace!("Attaching actor clip plane...");
                 Chunk::ActorClipPlane(ActorClipPlaneActionChunk {})
-                // @todo We should just pop clip plane and attach it to the actor on stack -- do it in actor reader tho
             }
             chunk::ACTOR_ADD_CHILD => {
                 trace!("Attaching sub-actor to actor...");
                 Chunk::ActorAddChild(ActorAddChildActionChunk {})
-                // @todo We should just pop actor and attach it to the actor on stack -- do it in actor reader tho
             }
 
             chunk::TRANSFORM_MATRIX34 => {
@@ -1106,57 +1132,36 @@ impl FromStream for Chunk {
 /*
  * Resource stack values.
  */
-trait ResourceTag {
+pub trait ResourceTag {
     fn as_any(&self) -> &dyn Any;
 }
 
-pub enum ResourceTag {
-    Mark(), // Mark compound structure start
-    ImagePlane(),
-    PixelMap(Box<PixelMapChunk>),
-    Material(Box<MaterialChunk>),
-    Actor(Box<ActorChunk>),
-    MaterialIndex(Box<MaterialIndexChunk>),
-    Vertices(Box<VerticesChunk>),
-    Faces(Box<FacesChunk>),
-    Model(Box<ModelChunk>),
-    Anim,
-    AnimName,
-    AnimTransform,
-    AnimCount,
-    AnimRate,
-    FileInfo(Box<FileInfoChunk>),
-    Pivot(Box<PivotChunk>),
-    Transform(),
-    Light(Box<LightChunk>),
-    Camera(Box<CameraChunk>),
-    Bounds(Box<BoundsChunk>),
-    Plane(Box<PlaneChunk>),
-}
+// ResourceTags:
+// Actor
+// Model
+// enum Transform for set of transform chunks
+//
+// LightChunk
+// CameraChunk
+// BoundsChunk
+// PlaneChunk
 
-pub mod stack {
-    pub const MARK: u32 = 0;
-    pub const IMAGE_PLANE: u32 = 1;
-    pub const PIXELMAP: u32 = 2;
-    pub const MATERIAL: u32 = 3;
-    pub const ACTOR: u32 = 4;
-    pub const MATERIAL_INDEX: u32 = 5;
-    pub const VERTICES: u32 = 6;
-    pub const FACES: u32 = 7;
-    pub const MODEL: u32 = 8;
-    pub const ANIM: u32 = 9;
-    pub const ANIM_NAME: u32 = 10;
-    pub const ANIM_TRANSFORM: u32 = 11;
-    pub const ANIM_COUNT: u32 = 12;
-    pub const ANIM_RATE: u32 = 13;
-    pub const FILE_INFO: u32 = 14;
-    pub const PIVOT: u32 = 15;
-    pub const TRANSFORM: u32 = 16;
-    pub const LIGHT: u32 = 17;
-    pub const CAMERA: u32 = 18;
-    pub const BOUNDS: u32 = 19;
-    pub const PLANE: u32 = 20;
-}
+// pub enum ResourceTag2 {
+//     // unused
+//     ImagePlane(),
+//     PixelMap(Box<PixelMapChunk>),
+//     Material(Box<MaterialChunk>),
+//     MaterialIndex(Box<MaterialIndexChunk>),
+//     Vertices(Box<VerticesChunk>),
+//     Faces(Box<FacesChunk>),
+//     Anim,
+//     AnimName,
+//     AnimTransform,
+//     AnimCount,
+//     AnimRate,
+//     FileInfo(Box<FileInfoChunk>),
+//     Pivot(Box<PivotChunk>),
+// }
 
 //------------------------------------------------------------------
 /// Loading stack for resource chunks.
@@ -1167,28 +1172,35 @@ pub struct ResourceStack {
 }
 
 impl ResourceStack {
-    pub fn push(&mut self, resource: ResourceTag) {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    pub fn push(&mut self, resource: Box<dyn Any>) {
         self.stack.push(resource);
     }
 
     #[throws]
-    pub fn pop<T>(&mut self) -> ResourceTag {
-        if let Some(resource) = self.stack.pop()?.downcast_ref::<T>() {
+    pub fn pop<T: ResourceTag>(&mut self) -> Box<T> {
+        let _any = self.stack.pop().ok_or_else(|| support::Error::EmptyStack)?;
+        if let Some(resource) = any.downcast_ref::<T>() {
             return resource;
         }
 
-        throw!(support::Error::InvalidResourceType {
-            expected: T::Tag,
-            received: tag,
-        });
+        throw!(
+            Error::InvalidResourceType /*{
+                                       expected: T::Tag,
+                                       received: tag,
+                                       }*/
+        );
     }
 
     /// Give mutable access to the stack top.
-    pub fn top<T>(&mut self) -> Option<&mut ResourceTag> {
-        if let Some(resource) = self.stack.last()?.downcast_ref::<T>() {
-            return Some(resource);
-        }
-        None
+    pub fn top<T: ResourceTag + 'static>(&mut self) -> Option<&mut Box<T>> {
+        self.stack
+            .last_mut()?
+            // .ok_or_else(|| support::Error::EmptyStack)?
+            .downcast_mut::<Box<T>>()
     }
 }
 
@@ -1202,23 +1214,28 @@ mod tests {
 
     #[test]
     fn test_load_face() {
-        let mut data = Cursor::new(vec![0xde, 0xad, 0xbe, 0xef, 0xca, 0xfe, 0xba, 0xbe, 0]);
+        let mut data = Cursor::new(vec![0xde, 0xad, 0xbe, 0xef, 0xca, 0xfe, 0xba, 0xbe, 0xed]);
         let f = Face::from_stream(&mut data).unwrap();
         assert_eq!(0xdead, f.v1);
         assert_eq!(0xbeef, f.v2);
         assert_eq!(0xcafe, f.v3);
-        assert_eq!(0xbabe, f.flags);
+        assert_eq!(0xbabe, f.smoothing);
+        assert_eq!(0xed, f.flags);
+    }
+
+    #[test]
+    fn test_stack_hetero() {
+        #[derive(ResourceTag)]
+        struct Res1;
+        #[derive(ResourceTag)]
+        struct Res2;
+        let mut stack = ResourceStack::new();
+        stack.push(Box::new(Res1));
+        stack.push(Box::new(Res2));
+        stack.pop::<Res2>().expect("Should have the right type");
+        stack.top::<Res1>().expect("Should have the right type");
     }
 }
-
-// use std::any::Any;
-
-// trait Component {
-//     // fn as_any(&self) -> &(dyn Any + '_) /*where Self: Sized*/ {
-//     //     &self
-//     // }
-//     fn as_any(&self) -> &dyn Any;
-// }
 
 // struct A;
 // struct B;
@@ -1232,20 +1249,6 @@ mod tests {
 //     fn do_second_component_thing(&self) {
 //         println!("Second component thing");
 //     }
-// }
-
-// impl Component for A {
-//     fn as_any(&self) -> &dyn Any {
-//         self
-//     }
-
-// }
-
-// impl Component for B {
-//     fn as_any(&self) -> &dyn Any {
-//         self
-//     }
-
 // }
 
 // fn main() {

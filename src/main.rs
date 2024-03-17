@@ -23,7 +23,7 @@ use {
         },
     },
     cgmath::Vector3,
-    fehler::throws,
+    culpa::throws,
     glium::{
         glutin::{
             event::{Event, WindowEvent},
