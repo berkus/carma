@@ -246,8 +246,8 @@ impl FromStream for FileInfoChunk {
 
 //------------------------------------------------------------------
 pub struct ModelChunk {
-    flags: u16,
-    identifier: String,
+    pub flags: u16,
+    pub identifier: String,
 }
 
 impl FromStream for ModelChunk {
@@ -1133,7 +1133,8 @@ impl FromStream for Chunk {
  * Resource stack values.
  */
 pub trait ResourceTag {
-    fn as_any(&self) -> &dyn Any;
+    // fn as_any(&self) -> &dyn Any;
+    // fn as_any_mut(&mut self) -> &mut dyn Any;
 }
 
 // ResourceTags:
@@ -1165,7 +1166,7 @@ pub trait ResourceTag {
 
 //------------------------------------------------------------------
 /// Loading stack for resource chunks.
-/// The per-resource loaders use it to consutrct
+/// The per-resource loaders use it to construct final Actor or Model object.
 #[derive(Default)]
 pub struct ResourceStack {
     stack: Vec<Box<dyn Any>>,
@@ -1188,9 +1189,10 @@ impl ResourceStack {
 
     /// Give mutable access to the stack top.
     #[throws]
-    pub fn top<T: ResourceTag + 'static>(&mut self) -> &mut Box<T> {
+    pub fn top<T: ResourceTag + 'static>(&mut self) -> &mut T {
         let box_ = self.stack.last_mut().ok_or(Error::EmptyStack)?;
-        box_.downcast_mut::<Box<T>>()
+        (*box_)
+            .downcast_mut::<T>()
             .ok_or(Error::InvalidResourceType)?
     }
 }

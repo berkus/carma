@@ -136,7 +136,9 @@ impl FromStream for Model {
                 //         return Err(anyhow!("Invalid mesh file subtype {}", subtype));
                 //     }
                 // }
-                Chunk::Model(model) => {
+                Chunk::Model(model_chunk) => {
+                    let mut model = Model::default();
+                    model.name = model_chunk.identifier;
                     stack.push(Box::new(model));
                 }
                 Chunk::MaterialIndex(MaterialIndexChunk { materials }) => {
@@ -233,10 +235,10 @@ mod tests {
     fn test_load_model() {
         #[rustfmt::skip]
         let mut data = Cursor::new(vec![
-            0x0, 0x0, 0x0, 0x36, // Chunk type - FILE_INFO_CHUNK
+            0x0, 0x0, 0x0, 0x36, // Chunk type - MODEL
             0x0, 0x0, 0x0, 0x8, // Chunk size
-            0x0, 0x3, // subtype u16
-            b'h', b'e', b'l', b'l', b'o', 0, // Chunk contents
+            0x0, 0x3, // flags u16
+            b'h', b'e', b'l', b'l', b'o', 0, // identifier
             0x0, 0x0, 0x0, 0x0, // Chunk type - NULL_CHUNK
             0x0, 0x0, 0x0, 0x0, // Chunk size
         ]);

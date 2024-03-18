@@ -6,9 +6,12 @@ pub fn resource_tag_derive_macro(input: TokenStream) -> TokenStream {
     let name = &ast.ident;
     let gen = quote! {
         impl ResourceTag for #name {
-            fn as_any(&self) -> &dyn core::any::Any {
-                self
-            }
+            // fn as_any(&self) -> &dyn core::any::Any {
+            //     self
+            // }
+            // fn as_any_mut(&mut self) -> &mut dyn core::any::Any {
+            //     self
+            // }
         }
     };
     gen.into()
