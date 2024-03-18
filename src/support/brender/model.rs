@@ -140,29 +140,29 @@ impl FromStream for Model {
                     stack.push(Box::new(model));
                 }
                 Chunk::MaterialIndex(MaterialIndexChunk { materials }) => {
-                    let model = stack.top::<Model>().ok_or(Error::InvalidResourceType)?;
+                    let model = stack.top::<Model>()?;
                     model.material_names = materials;
                 }
                 Chunk::Vertices(VerticesChunk { vertices }) => {
-                    let model = stack.top::<Model>().ok_or(Error::InvalidResourceType)?;
+                    let model = stack.top::<Model>()?;
                     model.vertices = vertices;
                 }
                 Chunk::VertexUV(VertexUvChunk { uvs }) => {
-                    let model = stack.top::<Model>().ok_or(Error::InvalidResourceType)?;
+                    let model = stack.top::<Model>()?;
                     model.vertex_uvs = uvs;
                 }
                 Chunk::Faces(faces) => {
-                    let model = stack.top::<Model>().ok_or(Error::InvalidResourceType)?;
+                    let model = stack.top::<Model>()?;
                     model.faces = faces;
                 }
                 Chunk::FaceMaterial(FaceMaterialChunk {
                     face_material_indices,
                 }) => {
-                    let model = stack.top::<Model>().ok_or(Error::InvalidResourceType)?;
+                    let model = stack.top::<Model>()?;
                     model.face_material_indices = face_material_indices;
                 }
                 Chunk::Pivot(PivotChunk { pivot }) => {
-                    let model = stack.top::<Model>().ok_or(Error::InvalidResourceType)?;
+                    let model = stack.top::<Model>()?;
                     model.pivot = pivot;
                 }
                 _ => unimplemented!(), // unexpected type for a model file

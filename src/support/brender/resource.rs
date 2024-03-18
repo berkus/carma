@@ -12,7 +12,7 @@ use {
     byteorder::{BigEndian, ReadBytesExt},
     carma_derive::ResourceTag,
     core::any::Any,
-    culpa::{throw, throws},
+    culpa::throws,
     std::io::BufRead,
 };
 
@@ -1181,26 +1181,17 @@ impl ResourceStack {
     }
 
     #[throws]
-    pub fn pop<T: ResourceTag>(&mut self) -> Box<T> {
-        let _any = self.stack.pop().ok_or_else(|| support::Error::EmptyStack)?;
-        if let Some(resource) = any.downcast_ref::<T>() {
-            return resource;
-        }
-
-        throw!(
-            Error::InvalidResourceType /*{
-                                       expected: T::Tag,
-                                       received: tag,
-                                       }*/
-        );
+    pub fn pop<T: ResourceTag + 'static>(&mut self) -> Box<T> {
+        let box_ = self.stack.pop().ok_or(Error::EmptyStack)?;
+        box_.downcast::<T>().or(Err(Error::InvalidResourceType))?
     }
 
     /// Give mutable access to the stack top.
-    pub fn top<T: ResourceTag + 'static>(&mut self) -> Option<&mut Box<T>> {
-        self.stack
-            .last_mut()?
-            // .ok_or_else(|| support::Error::EmptyStack)?
-            .downcast_mut::<Box<T>>()
+    #[throws]
+    pub fn top<T: ResourceTag + 'static>(&mut self) -> &mut Box<T> {
+        let box_ = self.stack.last_mut().ok_or(Error::EmptyStack)?;
+        box_.downcast_mut::<Box<T>>()
+            .ok_or(Error::InvalidResourceType)?
     }
 }
 
@@ -1226,14 +1217,19 @@ mod tests {
     #[test]
     fn test_stack_hetero() {
         #[derive(ResourceTag)]
-        struct Res1;
+        struct Res1 {
+            pub x: usize,
+        }
         #[derive(ResourceTag)]
         struct Res2;
         let mut stack = ResourceStack::new();
-        stack.push(Box::new(Res1));
+        stack.push(Box::new(Res1 { x: 0 }));
         stack.push(Box::new(Res2));
         stack.pop::<Res2>().expect("Should have the right type");
         stack.top::<Res1>().expect("Should have the right type");
+        assert_eq!(stack.top::<Res1>().unwrap().x, 0);
+        stack.top::<Res1>().unwrap().x = 1;
+        assert_eq!(stack.top::<Res1>().unwrap().x, 1);
     }
 }
 

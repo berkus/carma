@@ -101,49 +101,49 @@ impl FromStream for Actor {
                     stack.push(Box::new(actor));
                 }
                 Chunk::ActorModel(_model) => {
-                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
+                    let actor = stack.top::<Actor>()?;
                     // @todo ❌ Use [Direct ECS World Access](https://bevy-cheatbook.github.io/programming/world.html) here.
                     actor.model = Box::new(Model::default()); //Models::find(model.identifier); // World::query<Model>?
                 }
                 Chunk::ActorTransform(_) => {
                     // We should just pop transform and attach it to the actor on stack
                     let transform = stack.pop::<Transform>()?;
-                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
+                    let actor = stack.top::<Actor>()?;
                     actor.transform = *transform;
                 }
                 Chunk::ActorMaterial(_material) => {
-                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
+                    let actor = stack.top::<Actor>()?;
                     // @todo ❌ Use [Direct ECS World Access](https://bevy-cheatbook.github.io/programming/world.html) here.
                     actor.material = (); // Materials::find(material.identifier); // World::query<Material>?
                 }
                 Chunk::ActorLight(_) => {
                     // We should just pop light and attach it to the actor on stack
                     let light = stack.pop::<LightChunk>()?;
-                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
+                    let actor = stack.top::<Actor>()?;
                     actor.data = ActorData::Light(light);
                 }
                 Chunk::ActorCamera(_) => {
                     // We should just pop camera and attach it to the actor on stack
                     let camera = stack.pop::<CameraChunk>()?;
-                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
+                    let actor = stack.top::<Actor>()?;
                     actor.data = ActorData::Camera(camera);
                 }
                 Chunk::ActorBounds(_) => {
                     // We should just pop bounds and attach it to the actor on stack
                     let bounds = stack.pop::<BoundsChunk>()?;
-                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
+                    let actor = stack.top::<Actor>()?;
                     actor.data = ActorData::Bounds(bounds);
                 }
                 Chunk::ActorClipPlane(_) => {
                     // We should just pop clip plane and attach it to the actor on stack
                     let plane = stack.pop::<PlaneChunk>()?;
-                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
+                    let actor = stack.top::<Actor>()?;
                     actor.data = ActorData::ClipPlane(plane);
                 }
                 Chunk::ActorAddChild(_) => {
                     // @todo We should just pop actor and attach it to the actor on stack
                     let child = stack.pop::<Actor>()?;
-                    let actor = stack.top::<Actor>().ok_or(Error::InvalidResourceType)?;
+                    let actor = stack.top::<Actor>()?;
                     actor.children.push(child);
                 }
 
