@@ -1,4 +1,6 @@
 //
+// DELETE WHOLE FILE
+//
 // Part of Roadkill Project.
 //
 // Copyright 2010, 2017, Stanislav Karchebnyy <berkus@madfire.net>
@@ -8,6 +10,7 @@
 //
 use {cgmath::*, glium::glutin};
 
+// @todo ❌ this converts to an entity with some components and a system to process movement
 pub struct CameraState {
     aspect_ratio: f32,
     fov: f32,
@@ -24,6 +27,12 @@ pub struct CameraState {
     moving_backward: bool,
     rotating_left: bool,
     rotating_right: bool,
+}
+
+impl Default for CameraState {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl CameraState {
